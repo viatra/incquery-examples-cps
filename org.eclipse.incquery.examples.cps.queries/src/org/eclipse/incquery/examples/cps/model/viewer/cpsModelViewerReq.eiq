@@ -1,0 +1,14 @@
+package org.eclipse.incquery.examples.cps.model.viewer
+
+import "http://org.eclipse.incquery/model/cps"
+
+@Item(item = request, label = "Request")
+@Format(color = "#777777", textColor = "#000000")
+pattern requests(request) {
+	Request(request);
+}
+
+@Edge(source = r, target = a)
+pattern connectApp(r : Request, a : ApplicationInstance) {
+	Request.requirements.applications(r,a);
+}

@@ -1,0 +1,37 @@
+package org.eclipse.incquery.examples.cps.model.validation
+
+import "http://org.eclipse.incquery/model/cps"
+
+@Constraint(location = app, message = "$app.id$ is not allocated but it is running", severity = "error", targetEditorId = "org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID")
+pattern notAllocatedButRunning(app : ApplicationInstance) {
+	ApplicationInstance.state(app, ::Running);
+	neg find allocatedApplication(app);
+}
+
+private pattern allocatedApplication(app : ApplicationInstance) {
+	ApplicationInstance.allocatedTo(app, _);
+}
+
+@Constraint(location = host, message = "The available CPU ($host.availableCpu$) of $host.id$ is greater than the total ($host.totalCpu$)", severity = "error", targetEditorId = "org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID")
+pattern availableGreaterThanTotalCpu(host : HostInstance) {
+	HostInstance.availableCpu(host, aCpu);
+	HostInstance.totalCpu(host, tCpu);
+	
+	check(aCpu > tCpu);
+}
+
+@Constraint(location = host, message = "The available HDD ($host.availableHdd$) of $host.id$ is greater than the total ($host.totalHdd$)", severity = "error", targetEditorId = "org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID")
+pattern availableGreaterThanTotalHdd(host : HostInstance) {
+	HostInstance.availableHdd(host, aHdd);
+	HostInstance.totalHdd(host, tHdd);
+	
+	check(aHdd > tHdd);
+}
+
+@Constraint(location = host, message = "The available RAM ($host.availableRam$) of $host.id$ is greater than the total ($host.totalRam$)", severity = "error", targetEditorId = "org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID")
+pattern availableGreaterThanTotalRam(host : HostInstance) {
+	HostInstance.availableRam(host, aRam);
+	HostInstance.totalRam(host, tRam);
+	
+	check(aRam > tRam);
+}

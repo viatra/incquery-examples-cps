@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cpstraceability:CPSToDeployment xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cps="http://org.eclipse.incquery/model/cps" xmlns:cpstraceability="http://org.eclipse.incquery/model/cps-traceability" xmlns:deployment="http://org.eclipse.incquery/model/deployment">
+  <cps href="example.model#/"/>
+  <deployment href="example.deployment#/"/>
+  <traces>
+    <cpsElements xsi:type="cps:HostInstance" href="example.model#//@hostTypes.2/@instances.0"/>
+    <deploymentElements xsi:type="deployment:DeploymentHost" href="example.deployment#152.66.102.6"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:HostInstance" href="example.model#//@hostTypes.1/@instances.2"/>
+    <deploymentElements xsi:type="deployment:DeploymentHost" href="example.deployment#152.66.102.5"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:ApplicationInstance" href="example.model#//@appTypes.1/@instances.1"/>
+    <deploymentElements xsi:type="deployment:DeploymentApplication" href="example.deployment#//@hosts.0/@applications.1"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:ApplicationInstance" href="example.model#//@appTypes.1/@instances.2"/>
+    <deploymentElements xsi:type="deployment:DeploymentApplication" href="example.deployment#//@hosts.0/@applications.2"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:ApplicationInstance" href="example.model#//@appTypes.0/@instances.0"/>
+    <deploymentElements xsi:type="deployment:DeploymentApplication" href="example.deployment#//@hosts.1/@applications.0"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:ApplicationInstance" href="example.model#//@appTypes.1/@instances.0"/>
+    <deploymentElements xsi:type="deployment:DeploymentApplication" href="example.deployment#//@hosts.0/@applications.0"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:StateMachine" href="example.model#//@appTypes.0/@behavior"/>
+  </traces>
+</cpstraceability:CPSToDeployment>

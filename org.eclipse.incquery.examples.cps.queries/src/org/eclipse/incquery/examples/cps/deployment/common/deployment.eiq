@@ -1,0 +1,7 @@
+package org.eclipse.incquery.examples.cps.deployment.common
+
+import "http://org.eclipse.incquery/model/deployment"
+
+pattern deploymentElements(element) {
+	DeploymentElement(element);
+}

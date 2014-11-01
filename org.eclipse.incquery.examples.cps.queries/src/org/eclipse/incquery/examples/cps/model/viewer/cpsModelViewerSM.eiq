@@ -1,0 +1,23 @@
+package org.eclipse.incquery.examples.cps.model.viewer
+
+import "http://org.eclipse.incquery/model/cps"
+
+@Format(color = "#2DF618", textColor = "#000000")
+@Item(item = state, label = "$machine.id$ $state.id$")
+pattern initialState(machine, state) {
+	StateMachine.initial(machine, state);
+}
+
+@Format(color = "#2A79EE", textColor = "#000000")
+@Item(item = state, label = "$machine.id$ $state.id$")
+pattern states(machine, state) {
+	StateMachine.states(machine, state);
+	neg find initialState(machine, state);
+}
+
+@Format(lineColor = "#000000")
+@Edge(source = sourceState, target = targetState, label = "$transition.action$")
+pattern transitions(sourceState, targetState, transition) {
+	State.outgoingTransitions(sourceState, transition);
+	Transition.targetState(transition, targetState);
+}
