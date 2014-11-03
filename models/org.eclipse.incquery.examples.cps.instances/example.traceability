@@ -28,5 +28,52 @@
   </traces>
   <traces>
     <cpsElements xsi:type="cps:StateMachine" href="example.model#//@appTypes.0/@behavior"/>
+    <deploymentElements xsi:type="deployment:DeploymentBehavior" href="example.deployment#//@hosts.1/@applications.0/@behavior"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:StateMachine" href="example.model#//@appTypes.1/@behavior"/>
+    <deploymentElements xsi:type="deployment:DeploymentBehavior" href="example.deployment#//@hosts.0/@applications.1/@behavior"/>
+    <deploymentElements xsi:type="deployment:DeploymentBehavior" href="example.deployment#//@hosts.0/@applications.2/@behavior"/>
+    <deploymentElements xsi:type="deployment:DeploymentBehavior" href="example.deployment#//@hosts.0/@applications.0/@behavior"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:State" href="example.model#//@appTypes.1/@behavior/@states.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorState" href="example.deployment#//@hosts.0/@applications.1/@behavior/@states.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorState" href="example.deployment#//@hosts.0/@applications.2/@behavior/@states.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorState" href="example.deployment#//@hosts.0/@applications.0/@behavior/@states.0"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:State" href="example.model#//@appTypes.1/@behavior/@states.1"/>
+    <deploymentElements xsi:type="deployment:BehaviorState" href="example.deployment#//@hosts.0/@applications.1/@behavior/@states.1"/>
+    <deploymentElements xsi:type="deployment:BehaviorState" href="example.deployment#//@hosts.0/@applications.2/@behavior/@states.1"/>
+    <deploymentElements xsi:type="deployment:BehaviorState" href="example.deployment#//@hosts.0/@applications.0/@behavior/@states.1"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:State" href="example.model#//@appTypes.0/@behavior/@states.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorState" href="example.deployment#//@hosts.1/@applications.0/@behavior/@states.0"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:State" href="example.model#//@appTypes.0/@behavior/@states.1"/>
+    <deploymentElements xsi:type="deployment:BehaviorState" href="example.deployment#//@hosts.1/@applications.0/@behavior/@states.1"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:Transition" href="example.model#//@appTypes.1/@behavior/@states.0/@outgoingTransitions.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorTransition" href="example.deployment#//@hosts.0/@applications.1/@behavior/@transitions.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorTransition" href="example.deployment#//@hosts.0/@applications.2/@behavior/@transitions.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorTransition" href="example.deployment#//@hosts.0/@applications.0/@behavior/@transitions.0"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:Transition" href="example.model#//@appTypes.1/@behavior/@states.1/@outgoingTransitions.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorTransition" href="example.deployment#//@hosts.0/@applications.1/@behavior/@transitions.1"/>
+    <deploymentElements xsi:type="deployment:BehaviorTransition" href="example.deployment#//@hosts.0/@applications.2/@behavior/@transitions.1"/>
+    <deploymentElements xsi:type="deployment:BehaviorTransition" href="example.deployment#//@hosts.0/@applications.0/@behavior/@transitions.1"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:Transition" href="example.model#//@appTypes.0/@behavior/@states.0/@outgoingTransitions.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorTransition" href="example.deployment#//@hosts.1/@applications.0/@behavior/@transitions.0"/>
+  </traces>
+  <traces>
+    <cpsElements xsi:type="cps:Transition" href="example.model#//@appTypes.0/@behavior/@states.1/@outgoingTransitions.0"/>
+    <deploymentElements xsi:type="deployment:BehaviorTransition" href="example.deployment#//@hosts.1/@applications.0/@behavior/@transitions.1"/>
   </traces>
 </cpstraceability:CPSToDeployment>

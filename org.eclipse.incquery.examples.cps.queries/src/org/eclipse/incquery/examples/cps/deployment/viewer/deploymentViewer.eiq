@@ -1,9 +1,54 @@
 package org.eclipse.incquery.examples.cps.deployment.viewer
 
 import "http://org.eclipse.incquery/model/deployment"
-import org.eclipse.incquery.examples.cps.deployment.common.deploymentElements
 
-@Item(item = element)
-pattern deploymentElementItems(element) {
-	find deploymentElements(element);
+@Item(item = host, label = "Host $host.ip$")
+pattern deploymentHostItem(host) {
+	DeploymentHost(host);
 }
+
+@Item(item = app, label = "App $app.id$")
+pattern deploymentApplicationItem(app) {
+	DeploymentApplication(app);
+}
+
+@Edge(source = host, target = app, label = "apps")
+pattern deploymentHostApplicationEdge(host, app) {
+	DeploymentHost.applications(host, app);
+}
+
+@Item(item = behavior, label = "Behavior $behavior.description$")
+pattern deploymentBehaviorItem(behavior) {
+	DeploymentBehavior(behavior);
+}
+
+@Edge(source = app, target = behavior, label = "behavior")
+pattern deploymentApplicationBehaviorEdge(app, behavior) {
+	DeploymentApplication.behavior(app, behavior);
+}
+
+@Item(item = state, label = "State $state.description$")
+pattern depoymentStateItem(state) {
+	BehaviorState(state);
+}
+
+@Edge(source = behavior, target = state, label = "states")
+pattern deploymentBehaviorStateEdge(behavior, state) {
+	DeploymentBehavior.states(behavior, state);
+}
+
+@Item(item = transition, label = "Tr $transition.description$")
+pattern depoymentTransitionItem(transition) {
+	BehaviorTransition(transition);
+}
+
+@Edge(source = state, target = transition, label = "out")
+pattern deploymentStateOutgoingEdge(state, transition) {
+	BehaviorState.outgoing(state, transition);
+}
+
+@Edge(source = transition, target = state, label = "in")
+pattern deploymentTransitionOutEdge(transition, state) {
+	BehaviorTransition.to(transition, state);
+}
+

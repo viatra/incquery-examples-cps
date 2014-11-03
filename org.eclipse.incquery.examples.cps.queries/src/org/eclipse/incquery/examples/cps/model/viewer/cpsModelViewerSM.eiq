@@ -2,13 +2,28 @@ package org.eclipse.incquery.examples.cps.model.viewer
 
 import "http://org.eclipse.incquery/model/cps"
 
+@Item(item = machine, label = "$machine.id$")
+pattern statemachines(machine) {
+	StateMachine(machine);
+}
+
+@Edge(source = app, target = machine, label = "behavior")
+pattern machineOfAppType(app, machine) {
+	ApplicationType.behavior(app, machine);
+}
+
+@Edge(source = machine, target = state, label = "states")
+pattern cpsStatemachineStateEdge(machine, state) {
+	StateMachine.states(machine, state);
+}
+
 @Format(color = "#2DF618", textColor = "#000000")
 @Item(item = state, label = "$machine.id$ $state.id$")
 pattern initialState(machine, state) {
 	StateMachine.initial(machine, state);
 }
 
-@Format(color = "#2A79EE", textColor = "#000000")
+@Format(color = "#00F8EF", textColor = "#000000")
 @Item(item = state, label = "$machine.id$ $state.id$")
 pattern states(machine, state) {
 	StateMachine.states(machine, state);

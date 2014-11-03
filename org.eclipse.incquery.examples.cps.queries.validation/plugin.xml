@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?><plugin>
+  <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.idIsNotUnique" point="org.eclipse.incquery.validation.runtime.constraint">
+    <constraint class="org.eclipse.incquery.examples.cps.model.validation.IdIsNotUniqueConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.idIsNotUnique">
+      <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.initialStateNotContainedByStateMachine" point="org.eclipse.incquery.validation.runtime.constraint">
+    <constraint class="org.eclipse.incquery.examples.cps.model.validation.InitialStateNotContainedByStateMachineConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.initialStateNotContainedByStateMachine">
+      <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
+    </constraint>
+  </extension>
   <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.availableGreaterThanTotalRam" point="org.eclipse.incquery.validation.runtime.constraint">
     <constraint class="org.eclipse.incquery.examples.cps.model.validation.AvailableGreaterThanTotalRamConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.availableGreaterThanTotalRam">
-      <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
       <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
     </constraint>
   </extension>
   <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.notAllocatedButRunning" point="org.eclipse.incquery.validation.runtime.constraint">
     <constraint class="org.eclipse.incquery.examples.cps.model.validation.NotAllocatedButRunningConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.notAllocatedButRunning">
       <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
-      <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
     </constraint>
   </extension>
   <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.availableGreaterThanTotalCpu" point="org.eclipse.incquery.validation.runtime.constraint">
     <constraint class="org.eclipse.incquery.examples.cps.model.validation.AvailableGreaterThanTotalCpuConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.availableGreaterThanTotalCpu">
-      <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
       <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
     </constraint>
   </extension>
   <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.availableGreaterThanTotalHdd" point="org.eclipse.incquery.validation.runtime.constraint">
     <constraint class="org.eclipse.incquery.examples.cps.model.validation.AvailableGreaterThanTotalHddConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.availableGreaterThanTotalHdd">
       <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.nodeIpIsNotUnique" point="org.eclipse.incquery.validation.runtime.constraint">
+    <constraint class="org.eclipse.incquery.examples.cps.model.validation.NodeIpIsNotUniqueConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.nodeIpIsNotUnique">
+      <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.multipleApplicationInstanceInCommunicationGroup" point="org.eclipse.incquery.validation.runtime.constraint">
+    <constraint class="org.eclipse.incquery.examples.cps.model.validation.MultipleApplicationInstanceInCommunicationGroupConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.multipleApplicationInstanceInCommunicationGroup">
+      <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.multipleTransitionsWithSameAction" point="org.eclipse.incquery.validation.runtime.constraint">
+    <constraint class="org.eclipse.incquery.examples.cps.model.validation.MultipleTransitionsWithSameActionConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.multipleTransitionsWithSameAction">
       <enabledForEditor editorId="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"/>
     </constraint>
   </extension>
