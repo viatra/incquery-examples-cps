@@ -194,12 +194,8 @@
           name="org.eclipse.mylyn.github.feature.feature.group"/>
       <requirement
           name="org.eclipse.egit.mylyn.feature.group"/>
-      <requirement
-          name="org.sonar.ide.eclipse.jdt.feature.feature.group"/>
       <repository
           url="http://download.eclipse.org/releases/luna"/>
-      <repository
-          url="http://dist.sonar-ide.codehaus.org/eclipse/"/>
     </setupTask>
   </setupTask>
   <stream name="master">
