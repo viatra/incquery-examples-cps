@@ -5,13 +5,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
     xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
+    xmlns:mylyn="http://www.eclipse.org/oomph/setup/mylyn/1.0"
     xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore"
     name="emf.incquery.demo"
-    label="EMF-IncQuery Demo">
+    label="EMF-IncQuery CPS Demo">
   <setupTask
       xsi:type="jdt:JRETask"
       version="JavaSE-1.7"
@@ -105,9 +106,116 @@
         rootFolder="${git.clone.cps.location}"
         locateNestedProjects="true"/>
   </setupTask>
-  <stream name="master"/>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Mylyn">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        id=""
+        type="PASSWORD"
+        name="github.user.password"
+        label="GitHub password for Issues/Pull requests"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="eiq.cps.demo.milestone"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="eiq.cps.demo.milestone.id"/>
+    <setupTask
+        xsi:type="mylyn:MylynQueriesTask"
+        connectorKind="github"
+        repositoryURL="https://github.com/IncQueryLabs/incquery-examples-cps"
+        userID="${github.user.id}"
+        password="${github.user.password}">
+      <query
+          summary="${scope.project.label} bugs in ${eiq.cps.demo.milestone}">
+        <attribute
+            key="milestone"
+            value="${eiq.cps.demo.milestone.id}"/>
+        <attribute
+            key="state"
+            value="open::"/>
+        <attribute
+            key="labels"
+            value="bug::"/>
+      </query>
+      <query
+          summary="${scope.project.label} features in ${eiq.cps.demo.milestone}"
+          url="">
+        <attribute
+            key="milestone"
+            value="${eiq.cps.demo.milestone.id}"/>
+        <attribute
+            key="state"
+            value="open::"/>
+        <attribute
+            key="labels"
+            value="enhancement::"/>
+      </query>
+      <query
+          summary="${scope.project.label} resolved in ${eiq.cps.demo.milestone}">
+        <attribute
+            key="milestone"
+            value="${eiq.cps.demo.milestone.id}"/>
+        <attribute
+            key="state"
+            value="closed::"/>
+      </query>
+    </setupTask>
+    <setupTask
+        xsi:type="mylyn:MylynQueriesTask"
+        connectorKind="githubPullRequests"
+        repositoryURL="http://github.com/IncQueryLabs/incquery-examples-cps/pulls"
+        userID="${github.user.id}"
+        password="${github.user.password}">
+      <query
+          summary="${scope.project.label} pull requests"
+          url="">
+        <attribute
+            key="state"
+            value="open::closed::"/>
+      </query>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <requirement
+          name="org.eclipse.mylyn.ide_feature.feature.group"/>
+      <requirement
+          name="org.eclipse.mylyn.java_feature.feature.group"/>
+      <requirement
+          name="org.eclipse.mylyn.pde_feature.feature.group"/>
+      <requirement
+          name="org.eclipse.mylyn.team_feature.feature.group"/>
+      <requirement
+          name="org.eclipse.mylyn_feature.feature.group"/>
+      <requirement
+          name="org.eclipse.mylyn.git.feature.group"/>
+      <requirement
+          name="org.eclipse.mylyn.github.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.egit.mylyn.feature.group"/>
+      <requirement
+          name="org.sonar.ide.eclipse.jdt.feature.feature.group"/>
+      <repository
+          url="http://download.eclipse.org/releases/luna"/>
+      <repository
+          url="http://dist.sonar-ide.codehaus.org/eclipse/"/>
+    </setupTask>
+  </setupTask>
+  <stream name="master">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="eiq.cps.demo.milestone"
+        value="0.1.0"
+        defaultValue=""/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="eiq.cps.demo.milestone.id"
+        value="1"
+        defaultValue=""/>
+  </stream>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
-  <description>EMF-IncQuery Demo provides a full example set for many extensions and use cases of the EMF-IncQuery framework.</description>
+  <description>EMF-IncQuery CPS Demo provides a full example set for many extensions and use cases of the EMF-IncQuery framework.</description>
 </setup:Project>
