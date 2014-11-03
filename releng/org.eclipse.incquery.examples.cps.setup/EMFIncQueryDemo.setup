@@ -4,13 +4,18 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
+    xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
     xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore"
     name="emf.incquery.demo"
     label="EMF-IncQuery Demo">
+  <setupTask
+      xsi:type="jdt:JRETask"
+      version="JavaSE-1.7"
+      location="${jre.location-1.7}"/>
   <setupTask
       xsi:type="git:GitCloneTask"
       id="git.clone.cps"
@@ -31,34 +36,6 @@
       </detail>
     </annotation>
     <description>${scope.project.label}</description>
-  </setupTask>
-  <setupTask
-      xsi:type="setup:VariableTask"
-      name="setup.oomph.p2"
-      value="${oomph.update.url}"/>
-  <setupTask
-      xsi:type="setup:VariableTask"
-      name="setup.egit.p2"
-      value="http://download.eclipse.org/egit/updates"/>
-  <setupTask
-      xsi:type="setup.p2:P2Task"
-      label="Oomph">
-    <requirement
-        name="org.eclipse.oomph.targlets.feature.group"/>
-    <requirement
-        name="org.eclipse.oomph.setup.targlets.feature.group"/>
-    <requirement
-        name="org.eclipse.oomph.setup.git.feature.group"/>
-    <requirement
-        name="org.eclipse.oomph.setup.projects.feature.group"/>
-    <requirement
-        name="org.eclipse.oomph.setup.workingsets.feature.group"/>
-    <requirement
-        name="org.eclipse.egit.feature.group"/>
-    <repository
-        url="${setup.egit.p2}"/>
-    <repository
-        url="${setup.oomph.p2}"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
