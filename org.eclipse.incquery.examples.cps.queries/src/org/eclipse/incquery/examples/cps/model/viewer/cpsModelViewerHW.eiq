@@ -13,7 +13,7 @@ pattern connectTypesAndInstancesHost(type, instance) {
 	HostType.instances(type,instance);
 }
 
-@Edge(source = i1, target = i2)
+@Edge(source = i1, target = i2, label = "comm")
 pattern communications(i1, i2) {
 	HostInstance.communicateWith(i1,i2);
 }

@@ -17,7 +17,7 @@
     <instances id="Camera" allocatedTo="//@hostTypes.2/@instances.0"/>
     <behavior id="LPC-sm" initial="//@appTypes.1/@behavior/@states.0">
       <states id="Init">
-        <outgoingTransitions id="tr_lpc-send" targetState="//@appTypes.1/@behavior/@states.1" action="sendMessage(LPC,msg)"/>
+        <outgoingTransitions id="tr_lpc-send" targetState="//@appTypes.1/@behavior/@states.1" action="sendMessage(Archiving,msg)"/>
       </states>
       <states id="Sent">
         <outgoingTransitions id="tr_lpc-finish" targetState="//@appTypes.1/@behavior/@states.0"/>

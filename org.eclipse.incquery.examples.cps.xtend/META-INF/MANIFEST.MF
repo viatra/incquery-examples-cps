@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CPS Demonstrator Transformations
 Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xtend;singleton:=true
 Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: IncQueryLabs Ltd.
 Export-Package: org.eclipse.incquery.examples.cps.xtend,
  org.eclipse.incquery.examples.cps.xtend.util
 Require-Bundle: org.eclipse.incquery.examples.cps.model,
@@ -17,4 +18,3 @@ Require-Bundle: org.eclipse.incquery.examples.cps.model,
  org.eclipse.xtext.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.apache.log4j
-Bundle-Vendor: IncQueryLabs Ltd.
