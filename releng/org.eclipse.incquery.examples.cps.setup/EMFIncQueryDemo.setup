@@ -198,6 +198,11 @@
           url="http://download.eclipse.org/releases/luna"/>
     </setupTask>
   </setupTask>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.incquery.cps.demo.setup"
+      value="=https://raw.githubusercontent.com/IncQueryLabs/incquery-examples-cps/master/releng/org.eclipse.incquery.examples.cps.setup/EMFIncQueryDemo.setup->${git.clone.cps.location|uri}/releng/org.eclipse.incquery.examples.cps.setup/"
+      vm="true"/>
   <stream name="master">
     <setupTask
         xsi:type="setup:VariableTask"
