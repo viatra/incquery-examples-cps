@@ -1,5 +1,8 @@
 *.class
 bin
+target
+plugin.xml_gen
+MANIFEST.MF_gen
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
