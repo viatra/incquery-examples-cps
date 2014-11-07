@@ -56,12 +56,16 @@
         name="org.eclipse.gef4.geometry.feature.group"/>
     <requirement
         name="org.eclipse.gef4.zest.sdk.feature.group"/>
+    <requirement
+        name="org.eclipse.viatra2.emf.runtime.feature.feature.group"/>
     <repository
         url="http://download.eclipse.org/incquery/updates-extra/release/"/>
     <repository
         url="http://download.eclipse.org/releases/luna"/>
     <repository
         url="http://download.eclipse.org/tools/gef/gef4/updates/integration"/>
+    <repository
+        url="https://hudson.eclipse.org/viatra/job/viatra2-emf-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra2.emf.update/target/repository/"/>
   </setupTask>
   <setupTask
       xsi:type="setup.targlets:TargletTask">
@@ -89,6 +93,8 @@
           name="org.eclipse.gef4.geometry.feature.group"/>
       <requirement
           name="org.eclipse.gef4.zest.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.viatra2.emf.runtime.feature.feature.group"/>
       <repositoryList
           name="Dependencies">
         <repository
@@ -97,6 +103,8 @@
             url="http://download.eclipse.org/releases/luna"/>
         <repository
             url="http://download.eclipse.org/tools/gef/gef4/updates/integration"/>
+        <repository
+            url="https://hudson.eclipse.org/viatra/job/viatra2-emf-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra2.emf.update/target/repository/"/>
       </repositoryList>
     </targlet>
   </setupTask>
