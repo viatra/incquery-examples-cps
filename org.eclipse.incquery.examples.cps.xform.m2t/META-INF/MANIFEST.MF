@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CPS Demonstrator Transformations
-Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xtend;singleton:=true
+Bundle-Name: CPS Demonstrator Model-to-Text Transformations
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2t;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: IncQueryLabs Ltd.
-Export-Package: org.eclipse.incquery.examples.cps.xtend,
- org.eclipse.incquery.examples.cps.xtend.util
+Export-Package: org.eclipse.incquery.examples.cps.xform.m2t,
+ org.eclipse.incquery.examples.cps.xform.m2t.util
 Require-Bundle: org.eclipse.incquery.examples.cps.model,
  org.eclipse.emf.ecore,
  org.eclipse.incquery.runtime,

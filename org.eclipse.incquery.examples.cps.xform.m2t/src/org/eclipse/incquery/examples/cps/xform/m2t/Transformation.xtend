@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xtend
+package org.eclipse.incquery.examples.cps.xform.m2t
 
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.incquery.runtime.api.IncQueryEngine

@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xtend
+package org.eclipse.incquery.examples.cps.xform.m2t
 
 import "http://org.eclipse.incquery/model/cps"
 
