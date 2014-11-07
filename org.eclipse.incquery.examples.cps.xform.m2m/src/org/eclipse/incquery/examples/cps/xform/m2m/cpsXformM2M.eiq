@@ -14,3 +14,7 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 	CPS2DeplyomentTrace.cpsElements(trace, cpsElement);
 	CPS2DeplyomentTrace.deploymentElements(trace, depElement);
 }
+
+pattern hostInstances(hostType, hostInstance) {
+	HostType.instances(hostType, hostInstance);
+}

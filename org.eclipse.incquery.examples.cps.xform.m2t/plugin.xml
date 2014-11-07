@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><plugin>
   <extension point="org.eclipse.ui.commands">
-    <command defaultHandler="org.eclipse.incquery.examples.cps.xform.m2t.Generator" id="org.eclipse.incquery.examples.cps.xtend.handler.generator" name="Generate JSON"/>
+    <command defaultHandler="org.eclipse.incquery.examples.cps.xform.m2t.Generator" id="org.eclipse.incquery.examples.cps.xform.m2t.handler.generator" name="Generate JSON"/>
   </extension>
   <extension point="org.eclipse.ui.menus">
     <menuContribution allPopups="false" locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
-      <command commandId="org.eclipse.incquery.examples.cps.xtend.handler.generator" label="Generate JSON" style="push"/>
+      <command commandId="org.eclipse.incquery.examples.cps.xform.m2t.handler.generator" label="Generate JSON" style="push"/>
     </menuContribution>
-  </extension>
-  <extension id="org.eclipse.incquery.examples.cps.xtend.Rules" point="org.eclipse.incquery.runtime.queryspecification">
-    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.xtend.Rules" id="org.eclipse.incquery.examples.cps.xtend.Rules"/>
   </extension>
   <extension id="org.eclipse.incquery.examples.cps.xform.m2t.Rules" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.xform.m2t.Rules" id="org.eclipse.incquery.examples.cps.xform.m2t.Rules"/>
