@@ -1,7 +1,5 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.incquery.examples.cps.xform.m2m.CPS2DeploymentTransformation
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.junit.Test
