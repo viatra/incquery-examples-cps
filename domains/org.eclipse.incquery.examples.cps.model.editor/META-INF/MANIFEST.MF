@@ -4,11 +4,11 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.incquery.examples.cps.model.editor;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
-Bundle-Activator: org.eclipse.incquery.examples.cps.model.presentation.ModelEditorPlugin$Implementation
+Bundle-Activator: org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.ModelEditorPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.eclipse.incquery.examples.cps.model.presentation
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;visibility:=reexport,
  org.eclipse.incquery.examples.cps.model.edit;visibility:=reexport,

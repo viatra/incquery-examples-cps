@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.incquery.examples.cps.deployment/src"
     modelPluginID="org.eclipse.incquery.examples.cps.deployment" modelName="Deployment"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+    complianceLevel="6.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
   <foreignModel>deployment.ecore</foreignModel>
   <genPackages prefix="Deployment" basePackage="org.eclipse.incquery.examples.cps"
       disposableProviderFactory="true" ecorePackage="deployment.ecore#/">

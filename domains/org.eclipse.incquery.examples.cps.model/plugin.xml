@@ -10,7 +10,7 @@
       <!-- @generated model -->
       <package
             uri="http://org.eclipse.incquery/model/cps"
-            class="org.eclipse.incquery.examples.cps.model.ModelPackage"
+            class="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage"
             genModel="model/model.genmodel"/>
    </extension>
 

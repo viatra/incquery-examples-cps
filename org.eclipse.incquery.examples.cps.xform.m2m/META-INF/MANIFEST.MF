@@ -11,6 +11,7 @@ Require-Bundle: org.eclipse.incquery.examples.cps.traceability,
  org.eclipse.incquery.examples.cps.model,
  org.eclipse.emf.ecore,
  org.eclipse.incquery.runtime,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtext.xbase.lib,
+ org.junit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j

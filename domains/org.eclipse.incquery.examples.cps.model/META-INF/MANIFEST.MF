@@ -6,12 +6,12 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.incquery.examples.cps.model,
- org.eclipse.incquery.examples.cps.model.impl,
- org.eclipse.incquery.examples.cps.model.util
+Export-Package: org.eclipse.incquery.examples.cps.cyberPhysicalSystem,
+ org.eclipse.incquery.examples.cps.cyberPhysicalSystem.impl,
+ org.eclipse.incquery.examples.cps.cyberPhysicalSystem.util
 Require-Bundle: org.eclipse.incquery.runtime,
  org.eclipse.incquery.querybasedfeatures.runtime,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

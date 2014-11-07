@@ -3,12 +3,8 @@
 package org.eclipse.incquery.examples.cps.traceability.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.incquery.examples.cps.deployment.provider.DeploymentEditPlugin;
-
-import org.eclipse.incquery.examples.cps.model.provider.ModelEditPlugin;
 
 /**
  * This is the central singleton for the Traceability edit plugin.
@@ -43,7 +39,7 @@ public final class TraceabilityEditPlugin extends EMFPlugin {
 		super
 		  (new ResourceLocator [] {
 		     DeploymentEditPlugin.INSTANCE,
-		     ModelEditPlugin.INSTANCE,
+		     org.eclipse.incquery.examples.cps.cyberPhysicalSystem.provider.ModelEditPlugin.INSTANCE,
 		   });
 	}
 

@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.incquery.examples.cps.traceability/src"
     modelPluginID="org.eclipse.incquery.examples.cps.traceability" modelName="Traceability"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="7.0" copyrightFields="false" usedGenPackages="../../org.eclipse.incquery.examples.cps.deployment/model/deployment.genmodel#//deployment ../../org.eclipse.incquery.examples.cps.model/model/model.genmodel#//model"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.incquery.examples.cps.deployment/model/deployment.genmodel#//deployment ../../org.eclipse.incquery.examples.cps.model/model/model.genmodel#//cyberPhysicalSystem"
     operationReflection="true" importOrganizing="true">
   <foreignModel>traceability.ecore</foreignModel>
   <genPackages prefix="Traceability" basePackage="org.eclipse.incquery.examples.cps"

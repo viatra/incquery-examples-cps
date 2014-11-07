@@ -5,13 +5,9 @@ package org.eclipse.incquery.examples.cps.traceability.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage;
-
-import org.eclipse.incquery.examples.cps.model.ModelPackage;
-
 import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory;
@@ -86,7 +82,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 
 		// Initialize simple dependencies
 		DeploymentPackage.eINSTANCE.eClass();
-		ModelPackage.eINSTANCE.eClass();
+		CyberPhysicalSystemPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theTraceabilityPackage.createPackageContents();
@@ -228,7 +224,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		ModelPackage theModelPackage = (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
+		CyberPhysicalSystemPackage theCyberPhysicalSystemPackage = (CyberPhysicalSystemPackage)EPackage.Registry.INSTANCE.getEPackage(CyberPhysicalSystemPackage.eNS_URI);
 		DeploymentPackage theDeploymentPackage = (DeploymentPackage)EPackage.Registry.INSTANCE.getEPackage(DeploymentPackage.eNS_URI);
 
 		// Create type parameters
@@ -239,12 +235,12 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(cpsToDeploymentEClass, CPSToDeployment.class, "CPSToDeployment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCPSToDeployment_Cps(), theModelPackage.getCyberPhysicalSystem(), null, "cps", null, 0, 1, CPSToDeployment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCPSToDeployment_Cps(), theCyberPhysicalSystemPackage.getCyberPhysicalSystem(), null, "cps", null, 0, 1, CPSToDeployment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCPSToDeployment_Deployment(), theDeploymentPackage.getDeployment(), null, "deployment", null, 0, 1, CPSToDeployment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCPSToDeployment_Traces(), this.getCPS2DeplyomentTrace(), null, "traces", null, 0, -1, CPSToDeployment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cps2DeplyomentTraceEClass, CPS2DeplyomentTrace.class, "CPS2DeplyomentTrace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCPS2DeplyomentTrace_CpsElements(), theModelPackage.getIdentifiable(), null, "cpsElements", null, 0, -1, CPS2DeplyomentTrace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCPS2DeplyomentTrace_CpsElements(), theCyberPhysicalSystemPackage.getIdentifiable(), null, "cpsElements", null, 0, -1, CPS2DeplyomentTrace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCPS2DeplyomentTrace_DeploymentElements(), theDeploymentPackage.getDeploymentElement(), null, "deploymentElements", null, 0, -1, CPS2DeplyomentTrace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource

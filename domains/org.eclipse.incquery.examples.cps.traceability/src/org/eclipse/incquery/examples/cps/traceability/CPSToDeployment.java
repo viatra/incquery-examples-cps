@@ -3,12 +3,8 @@
 package org.eclipse.incquery.examples.cps.traceability;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.incquery.examples.cps.deployment.Deployment;
-
-import org.eclipse.incquery.examples.cps.model.CyberPhysicalSystem;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,12 +34,12 @@ public interface CPSToDeployment extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Cps</em>' reference.
-	 * @see #setCps(CyberPhysicalSystem)
+	 * @see #setCps(org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem)
 	 * @see org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage#getCPSToDeployment_Cps()
 	 * @model
 	 * @generated
 	 */
-	CyberPhysicalSystem getCps();
+	org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem getCps();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.incquery.examples.cps.traceability.CPSToDeployment#getCps <em>Cps</em>}' reference.
@@ -53,7 +49,7 @@ public interface CPSToDeployment extends EObject {
 	 * @see #getCps()
 	 * @generated
 	 */
-	void setCps(CyberPhysicalSystem value);
+	void setCps(org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem value);
 
 	/**
 	 * Returns the value of the '<em><b>Deployment</b></em>' reference.

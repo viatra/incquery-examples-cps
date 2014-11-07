@@ -12,12 +12,12 @@
             id="org.eclipse.emf.ecore.Wizard.category.ID"
             name="%_UI_Wizard_category"/>
       <wizard
-            id="org.eclipse.incquery.examples.cps.model.presentation.ModelModelWizardID"
-            name="%_UI_ModelModelWizard_label"
-            class="org.eclipse.incquery.examples.cps.model.presentation.ModelModelWizard"
+            id="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemModelWizardID"
+            name="%_UI_CyberPhysicalSystemModelWizard_label"
+            class="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemModelWizard"
             category="org.eclipse.emf.ecore.Wizard.category.ID"
-            icon="icons/full/obj16/ModelModelFile.gif">
-         <description>%_UI_ModelModelWizard_description</description>
+            icon="icons/full/obj16/CyberPhysicalSystemModelFile.gif">
+         <description>%_UI_CyberPhysicalSystemModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>
       </wizard>
    </extension>
@@ -25,13 +25,12 @@
    <extension point="org.eclipse.ui.editors">
       <!-- @generated model -->
       <editor
-            id="org.eclipse.incquery.examples.cps.model.presentation.ModelEditorID"
-            name="%_UI_ModelEditor_label"
-            icon="icons/full/obj16/ModelModelFile.gif"
-            extensions="model"
-            class="org.eclipse.incquery.examples.cps.model.presentation.ModelEditor"
-            contributorClass="org.eclipse.incquery.examples.cps.model.presentation.ModelActionBarContributor">
+            id="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID"
+            name="%_UI_CyberPhysicalSystemEditor_label"
+            icon="icons/full/obj16/CyberPhysicalSystemModelFile.gif"
+            extensions="cyberphysicalsystem"
+            class="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditor"
+            contributorClass="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemActionBarContributor">
       </editor>
    </extension>
-
 </plugin>

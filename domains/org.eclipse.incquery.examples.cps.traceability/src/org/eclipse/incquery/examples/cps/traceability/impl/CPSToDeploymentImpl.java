@@ -3,25 +3,16 @@
 package org.eclipse.incquery.examples.cps.traceability.impl;
 
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.incquery.examples.cps.deployment.Deployment;
-
-import org.eclipse.incquery.examples.cps.model.CyberPhysicalSystem;
-
 import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage;
@@ -50,7 +41,7 @@ public class CPSToDeploymentImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 * @ordered
 	 */
-	protected CyberPhysicalSystem cps;
+	protected org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem cps;
 
 	/**
 	 * The cached value of the '{@link #getDeployment() <em>Deployment</em>}' reference.
@@ -96,10 +87,10 @@ public class CPSToDeploymentImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CyberPhysicalSystem getCps() {
+	public org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem getCps() {
 		if (cps != null && cps.eIsProxy()) {
 			InternalEObject oldCps = (InternalEObject)cps;
-			cps = (CyberPhysicalSystem)eResolveProxy(oldCps);
+			cps = (org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem)eResolveProxy(oldCps);
 			if (cps != oldCps) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TraceabilityPackage.CPS_TO_DEPLOYMENT__CPS, oldCps, cps));
@@ -113,7 +104,7 @@ public class CPSToDeploymentImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CyberPhysicalSystem basicGetCps() {
+	public org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem basicGetCps() {
 		return cps;
 	}
 
@@ -122,8 +113,8 @@ public class CPSToDeploymentImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCps(CyberPhysicalSystem newCps) {
-		CyberPhysicalSystem oldCps = cps;
+	public void setCps(org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem newCps) {
+		org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem oldCps = cps;
 		cps = newCps;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TraceabilityPackage.CPS_TO_DEPLOYMENT__CPS, oldCps, cps));
@@ -223,7 +214,7 @@ public class CPSToDeploymentImpl extends MinimalEObjectImpl.Container implements
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case TraceabilityPackage.CPS_TO_DEPLOYMENT__CPS:
-				setCps((CyberPhysicalSystem)newValue);
+				setCps((org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem)newValue);
 				return;
 			case TraceabilityPackage.CPS_TO_DEPLOYMENT__DEPLOYMENT:
 				setDeployment((Deployment)newValue);
@@ -245,7 +236,7 @@ public class CPSToDeploymentImpl extends MinimalEObjectImpl.Container implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case TraceabilityPackage.CPS_TO_DEPLOYMENT__CPS:
-				setCps((CyberPhysicalSystem)null);
+				setCps((org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem)null);
 				return;
 			case TraceabilityPackage.CPS_TO_DEPLOYMENT__DEPLOYMENT:
 				setDeployment((Deployment)null);

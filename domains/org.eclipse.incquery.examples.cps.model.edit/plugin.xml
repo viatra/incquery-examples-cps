@@ -10,7 +10,7 @@
       <!-- @generated model -->
       <factory
             uri="http://org.eclipse.incquery/model/cps"
-            class="org.eclipse.incquery.examples.cps.model.provider.ModelItemProviderAdapterFactory"
+            class="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.provider.CyberPhysicalSystemItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider

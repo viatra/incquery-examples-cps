@@ -1,13 +1,12 @@
 package org.eclipse.incquery.examples.cps.view;
 
-import org.eclipse.incquery.examples.cps.model.presentation.ModelEditor;
-
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.gef4.layout.LayoutAlgorithm;
 import org.eclipse.gef4.layout.algorithms.SpaceTreeLayoutAlgorithm;
 import org.eclipse.gef4.zest.core.viewers.GraphViewer;
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditor;
 import org.eclipse.incquery.runtime.api.IQuerySpecification;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
@@ -110,8 +109,8 @@ public abstract class AbstractCpsViewPart extends ViewPart implements IPartListe
 		@Override
 		public void partActivated(IWorkbenchPartReference partRef) {
 			activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-			if (activeEditor instanceof ModelEditor) {
-				ModelEditor edp = (ModelEditor) activeEditor;
+			if (activeEditor instanceof CyberPhysicalSystemEditor) {
+				CyberPhysicalSystemEditor edp = (CyberPhysicalSystemEditor) activeEditor;
 				ResourceSet resourceSet = edp.getEditingDomain().getResourceSet();
 				
 				if(engine != null && resourceSet == engine.getScope())

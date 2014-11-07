@@ -8,7 +8,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentElement;
-import org.eclipse.incquery.examples.cps.model.Identifiable;
 import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace;
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage;
 
@@ -35,7 +34,7 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Identifiable> cpsElements;
+	protected EList<org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable> cpsElements;
 
 	/**
 	 * The cached value of the '{@link #getDeploymentElements() <em>Deployment Elements</em>}' reference list.
@@ -71,9 +70,9 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Identifiable> getCpsElements() {
+	public EList<org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable> getCpsElements() {
 		if (cpsElements == null) {
-			cpsElements = new EObjectResolvingEList<Identifiable>(Identifiable.class, this, TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS);
+			cpsElements = new EObjectResolvingEList<org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable>(org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable.class, this, TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS);
 		}
 		return cpsElements;
 	}
@@ -117,7 +116,7 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS:
 				getCpsElements().clear();
-				getCpsElements().addAll((Collection<? extends Identifiable>)newValue);
+				getCpsElements().addAll((Collection<? extends org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable>)newValue);
 				return;
 			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS:
 				getDeploymentElements().clear();
