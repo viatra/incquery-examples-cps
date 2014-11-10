@@ -1,19 +1,18 @@
 package org.eclipse.incquery.examples.cps.xform.m2m
 
 import com.google.common.base.Stopwatch
+import com.google.common.collect.ImmutableSet
 import java.util.concurrent.TimeUnit
-import org.apache.log4j.Level
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
-import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
+import org.eclipse.incquery.examples.cps.xform.m2m.rules.ApplicationRules
+import org.eclipse.incquery.examples.cps.xform.m2m.rules.HostRules
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.api.ExecutionSchema
 import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas
 import org.eclipse.incquery.runtime.evm.specific.Schedulers
 
 import static com.google.common.base.Preconditions.*
-import org.eclipse.incquery.examples.cps.xform.m2m.rules.HostMappingRule
 
 class CPS2DeploymentTransformation {
 	
@@ -31,29 +30,36 @@ class CPS2DeploymentTransformation {
 		checkArgument(mapping.deployment != null, "Deployment not defined in mapping!")
 		checkArgument(engine != null, "Engine cannot be null!")
 		
-		logger.info('''
+		info('''
 			Executing transformation on:
 				Cyber-physical system: «mapping.cps.id»''')
 		
-		
-		logger.info("Preparing queries on engine.")
+		info("Preparing queries on engine.")
 		val watch = Stopwatch.createStarted
 		prepare(engine)
-		logger.info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	
-		logger.info("Preparing transformation rules.")
+		info("Preparing transformation rules.")
 		watch.reset.start
+		
+		val rulesBuilder = ImmutableSet.builder
+		rulesBuilder.addAll(HostRules.getRules(engine))
+		rulesBuilder.addAll(ApplicationRules.getRules(engine))
+		val rules = rulesBuilder.build
+		
 		val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)
 		schema = ExecutionSchemas.createIncQueryExecutionSchema(engine, schedulerFactory)
-		schema.logger.level = Level.DEBUG
+		schema.logger.level = getEffectiveLevel
+		rules.forEach[
+			schema.addRule(it)
+		]
 		
-		schema.addRule(new HostMappingRule(engine).specification)
-		logger.info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 		
-		logger.info("Initial execution of transformation rules.")
+		info("Initial execution of transformation rules.")
 		watch.reset.start
 		schema.startUnscheduledExecution
-		logger.info('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		info('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	}
 	
 }

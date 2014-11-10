@@ -11,7 +11,7 @@ import static com.google.common.base.Preconditions.*
 
 abstract class AbstractRule<M extends IPatternMatch> {
 	
-	protected extension Logger logger = Logger.getLogger("cps.xform.CPS2DeploymentTransformation")
+	protected extension Logger logger = Logger.getLogger("cps.xform.AbstractRule")
 	protected extension DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
 	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
 	protected extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
@@ -19,6 +19,7 @@ abstract class AbstractRule<M extends IPatternMatch> {
 	
 	new(IncQueryEngine engine){
 		this.engine = engine
+		debug('''Creating rule «this.class.simpleName»''')
 	}
 	
 	def RuleSpecification<M> getSpecification()

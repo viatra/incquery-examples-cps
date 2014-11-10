@@ -1,7 +1,6 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
 import org.eclipse.incquery.examples.cps.xform.m2m.CPS2DeploymentTransformation
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.junit.Test
 
 import static org.junit.Assert.*
@@ -63,10 +62,7 @@ class TransformationApiTest extends CPS2DepTest {
 		logger.info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
-		
-		val engine = AdvancedIncQueryEngine.createUnmanagedEngine(cps2dep.eResource.resourceSet);
-		val xform = new CPS2DeploymentTransformation
-		xform.execute(cps2dep, engine)
+		executeTransformation(cps2dep)
 		
 		assertTrue("Empty model modified (traces added)", cps2dep.traces.empty)
 		

@@ -15,6 +15,59 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 	CPS2DeplyomentTrace.deploymentElements(trace, depElement);
 }
 
+/* ============================================
+ * ==== 		                 		   ====
+ * ====			    HOST RULES 			   ====
+ * ====		                 			   ====
+ * ============================================ */
+
 pattern hostInstances(hostType, hostInstance) {
 	HostType.instances(hostType, hostInstance);
+}
+
+pattern mappedHostInstance(hostInstance, depHost) {
+	find hostInstances(_, hostInstance);
+	find cps2depTrace(_, _, hostInstance, depHost);
+	Deployment.hosts(_, depHost);
+}
+
+pattern unMappedHostInstance(hostType, hostInstance) {
+	find hostInstances(hostType, hostInstance);
+	neg find cps2depTrace(_, _, hostInstance, _);
+}
+
+pattern deletedDeploymentHost(depHost, trace) {
+	neg find hostInstances(_, host);
+	find cps2depTrace(_, trace, host, depHost);
+	Deployment.hosts(_, depHost);
+}
+
+/* ============================================
+ * ==== 		                 		   ====
+ * ====			APPLICATION RULES 		   ====
+ * ====		                 			   ====
+ * ============================================ */
+ 
+pattern applicationInstances(appType, appInstance, host) {
+	ApplicationType.instances(appType, appInstance);
+	ApplicationInstance.allocatedTo(appInstance, host);
+} 
+
+pattern mappedApplicationInstance(appInstance, depApp, host, depHost) {
+	find applicationInstances(_, appInstance, host);
+	find mappedHostInstance(host, depHost);
+	find cps2depTrace(_, _, appInstance, depApp);
+	DeploymentHost.applications(_, depApp);
+}
+
+pattern unmappedApplicationInstance(appType, appInstance, depHost) {
+	find applicationInstances(appType, appInstance, host);
+	find mappedHostInstance(host, depHost);
+	neg find cps2depTrace(_, _, appInstance, _);
+}
+
+pattern deletedApplicationInstance(depApp, depHost, trace) {
+	neg find applicationInstances(_, app, _);
+	find cps2depTrace(_, trace, app, depApp);
+	DeploymentHost.applications(depHost, depApp);
 }
