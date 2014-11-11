@@ -4,7 +4,6 @@ import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFactory
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
