@@ -4,7 +4,10 @@ import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFactory
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
@@ -12,8 +15,6 @@ import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 import org.eclipse.incquery.examples.cps.xform.m2m.CPS2DeploymentTransformation
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.junit.BeforeClass
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 
 class CPS2DepTest {
 
@@ -97,6 +98,14 @@ class CPS2DepTest {
 	def prepareAppInstance(CPSToDeployment cps2dep, HostInstance hostInstance) {
 		val app = cps2dep.createApplicationTypeWithId("single.cps.app")
 		val instance = app.createApplicationInstanceWithId("simple.cps.app.instance", hostInstance)
+		instance
+	}
+	
+	def prepareStateMachine(ApplicationType app, String smId) {
+		val instance = createStateMachine => [
+			id = smId
+		]
+		app.behavior = instance
 		instance
 	}
 	

@@ -15,6 +15,20 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 	CPS2DeplyomentTrace.deploymentElements(trace, depElement);
 }
 
+pattern identifiable(identifiable) {
+	Identifiable(identifiable);
+}
+
+pattern deploymentElements(depElement) {
+	DeploymentElement(depElement);
+}
+
+pattern illegalTrace(trace) {
+	find cps2depTrace(_, trace, cpsElem, depElem);
+	neg find identifiable(cpsElem);
+	neg find deploymentElements(depElem);
+}
+
 /* ============================================
  * ==== 		                 		   ====
  * ====			    HOST RULES 			   ====
@@ -31,15 +45,14 @@ pattern mappedHostInstance(hostInstance, depHost) {
 	Deployment.hosts(_, depHost);
 }
 
-pattern unMappedHostInstance(hostType, hostInstance) {
+pattern unmappedHostInstance(hostType, hostInstance) {
 	find hostInstances(hostType, hostInstance);
 	neg find cps2depTrace(_, _, hostInstance, _);
 }
 
-pattern deletedDeploymentHost(depHost, trace) {
+pattern deletedDeploymentHost(depHost : DeploymentHost, trace) {
 	neg find hostInstances(_, host);
 	find cps2depTrace(_, trace, host, depHost);
-	Deployment.hosts(_, depHost);
 }
 
 /* ============================================
@@ -48,26 +61,81 @@ pattern deletedDeploymentHost(depHost, trace) {
  * ====		                 			   ====
  * ============================================ */
  
-pattern applicationInstances(appType, appInstance, host) {
+pattern allocatedApplicationInstances(appType, appInstance, host) {
+	find applicationInstance(appType, appInstance, host);
+	find hostInstances(_, host);
+}
+
+pattern applicationInstance(appType, appInstance, host){
 	ApplicationType.instances(appType, appInstance);
 	ApplicationInstance.allocatedTo(appInstance, host);
-} 
+}
+
+pattern deploymentHostApplications(depHost, depApp) {
+	DeploymentHost.applications(depHost, depApp);
+}
 
 pattern mappedApplicationInstance(appInstance, depApp, host, depHost) {
-	find applicationInstances(_, appInstance, host);
+	find allocatedApplicationInstances(_, appInstance, host);
 	find mappedHostInstance(host, depHost);
 	find cps2depTrace(_, _, appInstance, depApp);
-	DeploymentHost.applications(_, depApp);
+	find deploymentHostApplications(_, depApp);
 }
 
 pattern unmappedApplicationInstance(appType, appInstance, depHost) {
-	find applicationInstances(appType, appInstance, host);
+	find allocatedApplicationInstances(appType, appInstance, host);
 	find mappedHostInstance(host, depHost);
 	neg find cps2depTrace(_, _, appInstance, _);
 }
 
-pattern deletedApplicationInstance(depApp, depHost, trace) {
-	neg find applicationInstances(_, app, _);
+pattern deletedApplicationInstance(depApp, trace) {
+	neg find applicationInstance(_, app, _);
+	DeploymentApplication(depApp);
 	find cps2depTrace(_, trace, app, depApp);
-	DeploymentHost.applications(depHost, depApp);
+} or {
+	find applicationInstance(_, app, host);
+	neg find hostInstances(_, host);
+	find cps2depTrace(_, trace, app, depApp);
+}
+
+/* ============================================
+ * ==== 		                 		   ====
+ * ====		   STATE MACHINE RULES 		   ====
+ * ====		                 			   ====
+ * ============================================ */
+ 
+pattern allocatedStateMachines(appInstance, stateMachine) {
+	find applicationBehavior(appType, stateMachine);
+	find allocatedApplicationInstances(appType, appInstance, _);
+}
+
+pattern applicationBehavior(appType, stateMachine) {
+	ApplicationType.behavior(appType, stateMachine);
+}
+
+pattern deploymentApplicationBehavior(depApp, depBehavior) {
+	DeploymentApplication.behavior(depApp, depBehavior);
+}
+
+pattern mappedStateMachine(stateMachine, depBehavior, appInstance, depApp) {
+	find allocatedStateMachines(appInstance, stateMachine);
+	find mappedApplicationInstance(appInstance, depApp, _, _);
+	find cps2depTrace(_, _, stateMachine, depBehavior);
+	find deploymentApplicationBehavior(depApp, depBehavior);
+}
+
+pattern unmappedStateMachine(appInstance, stateMachine, depApp) {
+	find allocatedStateMachines(appInstance, stateMachine);
+	find mappedApplicationInstance(appInstance, depApp, _, _);
+	neg find mappedStateMachine(stateMachine, _, appInstance, _);
+}
+
+pattern deletedStateMachine(depBehavior, trace) {
+	find applicationBehavior(appType, stateMachine);
+	neg find allocatedApplicationInstances(appType, _, _);
+	find cps2depTrace(_, trace, stateMachine, depBehavior);
+} or {
+	neg find applicationBehavior(_, stateMachine);
+	DeploymentBehavior(depBehavior);
+	find cps2depTrace(_, trace, stateMachine, depBehavior);
 }

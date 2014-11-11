@@ -8,6 +8,7 @@ import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles
 import org.eclipse.incquery.runtime.evm.specific.Rules
 import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 
 class ApplicationRules {
 	static def getRules(IncQueryEngine engine) {
@@ -114,9 +115,13 @@ class ApplicationRemoval extends AbstractRule<DeletedApplicationInstanceMatch> {
 	
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [DeletedApplicationInstanceMatch match |
-			val depAppId = match.depApp.id
+			val depApp = match.depApp as DeploymentApplication
+			val depAppId = depApp.id
 			debug('''Removing application with ID: «depAppId»''')
-			match.depHost.applications -= match.depApp
+			val hosts = engine.deploymentHostApplications.getAllValuesOfdepHost(depApp)
+			if(!hosts.empty){
+				hosts.head.applications -= depApp
+			}
 			rootMapping.traces -= match.trace
 			debug('''Removed application with ID: «depAppId»''')
 		])

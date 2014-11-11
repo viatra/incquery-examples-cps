@@ -11,7 +11,7 @@ class HostMappingTest extends CPS2DepTest {
 	@Test
 	def singleHost() {
 		val testId = "singleHost"
-		logger.info("START TEST: " + testId)
+		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val instance = cps2dep.prepareHostInstance
@@ -19,7 +19,7 @@ class HostMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertHostMapping(instance)
 		
-		logger.info("END TEST: " + testId)
+		info("END TEST: " + testId)
 	}
 	
 	def assertHostMapping(CPSToDeployment cps2dep, HostInstance instance) {
@@ -36,7 +36,7 @@ class HostMappingTest extends CPS2DepTest {
 	@Test
 	def hostIncremental() {
 		val testId = "hostIncremental"
-		logger.info("START TEST: " + testId)
+		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		cps2dep.executeTransformation
@@ -44,13 +44,13 @@ class HostMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertHostMapping(instance)
 		
-		logger.info("END TEST: " + testId)
+		info("END TEST: " + testId)
 	}
 	
 	@Test
 	def deleteHost() {
 		val testId = "deleteHost"
-		logger.info("START TEST: " + testId)
+		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		
@@ -60,19 +60,19 @@ class HostMappingTest extends CPS2DepTest {
 		
 		executeTransformation(cps2dep)
 		
-		logger.info("Removing host instance from model")
+		info("Removing host instance from model")
 		host.instances -= instance
 
 		assertTrue("Host not removed from deployment", cps2dep.deployment.hosts.empty)
 		assertTrue("Trace not removed", cps2dep.traces.empty)
 		
-		logger.info("END TEST: " + testId)
+		info("END TEST: " + testId)
 	}
 	
 	@Test
 	def changeHostIp() {
 		val testId = "changeHostIp"
-		logger.info("START TEST: " + testId)
+		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		
@@ -82,11 +82,11 @@ class HostMappingTest extends CPS2DepTest {
 		
 		executeTransformation(cps2dep)
 		
-		logger.info("Changing host IP")
+		info("Changing host IP")
 		instance.nodeIp = "1.1.1.2"
 
 		assertTrue("Host IP not changed in deployment", cps2dep.deployment.hosts.head.ip == instance.nodeIp)
 		
-		logger.info("END TEST: " + testId)
+		info("END TEST: " + testId)
 	}
 }

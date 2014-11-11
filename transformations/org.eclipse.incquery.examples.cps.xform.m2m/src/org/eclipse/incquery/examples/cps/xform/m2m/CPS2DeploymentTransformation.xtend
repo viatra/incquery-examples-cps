@@ -7,6 +7,7 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.rules.ApplicationRules
 import org.eclipse.incquery.examples.cps.xform.m2m.rules.HostRules
+import org.eclipse.incquery.examples.cps.xform.m2m.rules.StateMachineRules
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.api.ExecutionSchema
 import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas
@@ -45,6 +46,8 @@ class CPS2DeploymentTransformation {
 		val rulesBuilder = ImmutableSet.builder
 		rulesBuilder.addAll(HostRules.getRules(engine))
 		rulesBuilder.addAll(ApplicationRules.getRules(engine))
+		rulesBuilder.addAll(StateMachineRules.getRules(engine))
+//		rulesBuilder.addAll(TraceRules.getRules(engine))
 		val rules = rulesBuilder.build
 		
 		val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)

@@ -2,7 +2,7 @@ package org.eclipse.incquery.examples.cps.xform.m2m.rules
 
 import org.eclipse.incquery.examples.cps.xform.m2m.DeletedDeploymentHostMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.MappedHostInstanceMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.UnMappedHostInstanceMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.UnmappedHostInstanceMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles
@@ -19,7 +19,7 @@ class HostRules {
 	}
 }
 
-class HostMapping extends AbstractRule<UnMappedHostInstanceMatch> {
+class HostMapping extends AbstractRule<UnmappedHostInstanceMatch> {
 	
 	new(IncQueryEngine engine) {
 		super(engine)
@@ -27,14 +27,14 @@ class HostMapping extends AbstractRule<UnMappedHostInstanceMatch> {
 	
 	override getSpecification() {
 		Rules.newMatcherRuleSpecification(
-			unMappedHostInstance,
+			unmappedHostInstance,
 			Lifecycles.getDefault(false, false),
 			#{appearedJob}
 		)
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [UnMappedHostInstanceMatch match |
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [UnmappedHostInstanceMatch match |
 			val nodeIp = match.hostInstance.nodeIp
 			debug('''Mapping host with IP: «nodeIp»''')
 			val host = createDeploymentHost => [
@@ -109,9 +109,10 @@ class HostRemoval extends AbstractRule<DeletedDeploymentHostMatch> {
 	
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [DeletedDeploymentHostMatch match |
-			val hostIp = match.depHost.ip
+			val depHost = match.depHost
+			val hostIp = depHost.ip
 			logger.debug('''Removing host with IP: «hostIp»''')
-			rootMapping.deployment.hosts -= match.depHost
+			rootMapping.deployment.hosts -= depHost
 			rootMapping.traces -= match.trace
 			logger.debug('''Removed host with IP: «hostIp»''')
 		])
