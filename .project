@@ -10,7 +10,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1415808052381</id>
+			<id>1415876529611</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
@@ -19,7 +19,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1415808052387</id>
+			<id>1415876529617</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
@@ -28,16 +28,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1415808052393</id>
-			<name></name>
-			<type>5</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-releng</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1415808052398</id>
+			<id>1415876529622</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
@@ -46,12 +37,30 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1415808052403</id>
+			<id>1415876529628</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-projectRelativePath-matches-false-false-transformations</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1415876529634</id>
+			<name></name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-addons</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1415876529642</id>
+			<name></name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-tests</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
