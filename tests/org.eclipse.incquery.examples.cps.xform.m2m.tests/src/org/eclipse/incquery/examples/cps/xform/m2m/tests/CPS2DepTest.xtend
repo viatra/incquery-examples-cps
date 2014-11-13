@@ -12,20 +12,50 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.StateMachine
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
-import org.eclipse.incquery.examples.cps.xform.m2m.CPS2DeploymentTransformation
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
+import org.junit.After
 import org.junit.BeforeClass
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
+import org.junit.runners.Parameterized.Parameters
 
+import static org.junit.Assert.*
+
+@RunWith(Parameterized)
 class CPS2DepTest {
 
 	protected extension Logger logger = Logger.getLogger("cps.xform.CPS2DepTest")
 	protected extension CyberPhysicalSystemFactory cpsFactory = CyberPhysicalSystemFactory.eINSTANCE
 	protected extension DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
 	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
+	protected extension CPSTransformationWrapper xform
+	
+	@Parameters
+    public static def transformations() {
+        #[
+        	#[new ExplicitTraceability()].toArray
+        ]
+    }
+    
+    new(CPSTransformationWrapper wrapper){
+    	xform = wrapper
+    }
 	
 	@BeforeClass
 	def static setupRootLogger() {
 		Logger.getLogger("cps.xform").level = Level.TRACE
+	}
+	
+	@Test
+	def parameterizedRun(){
+		assertNotNull("Transformation wrapper is null", xform)
+	}
+	
+	@After
+	def cleanup() {
+		cleanupTransformation
 	}
 	
 	def prepareEmptyModel(String cpsId) {
@@ -50,7 +80,7 @@ class CPS2DepTest {
 		cps2dep
 	}
 	
-	def createHostTypeWithId(CPSToDeployment cps2dep, String hostId) {
+	def prepareHostTypeWithId(CPSToDeployment cps2dep, String hostId) {
 		info('''Adding host type (ID: «hostId») to model''')
 		val host = createHostType => [
 			id = hostId
@@ -59,7 +89,7 @@ class CPS2DepTest {
 		host
 	}
 	
-	def createHostInstanceWithIP(HostType host, String instanceId, String ip) {
+	def prepareHostInstanceWithIP(HostType host, String instanceId, String ip) {
 		info('''Adding host instance (IP: «ip») to host type «host.id»''')
 		val instance = createHostInstance => [
 			id = instanceId
@@ -70,13 +100,13 @@ class CPS2DepTest {
 	}
 	
 	def prepareHostInstance(CPSToDeployment cps2dep) {
-		val host = cps2dep.createHostTypeWithId("single.cps.host")
+		val host = cps2dep.prepareHostTypeWithId("single.cps.host")
 		val ip = "1.1.1.1"
-		val hostInstance = host.createHostInstanceWithIP("single.cps.host.instance", ip)
+		val hostInstance = host.prepareHostInstanceWithIP("single.cps.host.instance", ip)
 		hostInstance
 	}
 	
-	def createApplicationTypeWithId(CPSToDeployment cps2dep, String appId) {
+	def prepareApplicationTypeWithId(CPSToDeployment cps2dep, String appId) {
 		info('''Adding application type (ID: «appId») to model''')
 		val appType = createApplicationType => [
 			id = appId
@@ -85,7 +115,7 @@ class CPS2DepTest {
 		appType
 	}
 	
-	def createApplicationInstanceWithId(ApplicationType app, String appId, HostInstance host) {
+	def prepareApplicationInstanceWithId(ApplicationType app, String appId, HostInstance host) {
 		info('''Adding application instance (ID: «appId») to model''')
 		val instance = createApplicationInstance => [
 			id = appId
@@ -96,8 +126,8 @@ class CPS2DepTest {
 	}
 
 	def prepareAppInstance(CPSToDeployment cps2dep, HostInstance hostInstance) {
-		val app = cps2dep.createApplicationTypeWithId("single.cps.app")
-		val instance = app.createApplicationInstanceWithId("simple.cps.app.instance", hostInstance)
+		val app = cps2dep.prepareApplicationTypeWithId("single.cps.app")
+		val instance = app.prepareApplicationInstanceWithId("simple.cps.app.instance", hostInstance)
 		instance
 	}
 	
@@ -115,12 +145,6 @@ class CPS2DepTest {
 		]
 		sm.states += state
 		state
-	}
-	
-	def executeTransformation(CPSToDeployment cps2dep) {
-		val engine = AdvancedIncQueryEngine.createUnmanagedEngine(cps2dep.eResource.resourceSet);
-		val xform = new CPS2DeploymentTransformation
-		xform.execute(cps2dep, engine)
 	}
 	
 }

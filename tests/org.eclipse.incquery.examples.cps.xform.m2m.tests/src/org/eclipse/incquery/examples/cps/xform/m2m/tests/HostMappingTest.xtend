@@ -5,8 +5,13 @@ import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.junit.Test
 
 import static org.junit.Assert.*
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 
 class HostMappingTest extends CPS2DepTest {
+	
+	new(CPSTransformationWrapper wrapper) {
+		super(wrapper)
+	}
 	
 	@Test
 	def singleHost() {
@@ -15,7 +20,9 @@ class HostMappingTest extends CPS2DepTest {
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val instance = cps2dep.prepareHostInstance
-		cps2dep.executeTransformation
+				
+		cps2dep.initializeTransformation
+		executeTransformation
 		
 		cps2dep.assertHostMapping(instance)
 		
@@ -39,8 +46,12 @@ class HostMappingTest extends CPS2DepTest {
 		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
-		cps2dep.executeTransformation
+				
+		cps2dep.initializeTransformation
+		executeTransformation
+
 		val instance = cps2dep.prepareHostInstance
+		executeTransformation
 		
 		cps2dep.assertHostMapping(instance)
 		
@@ -54,14 +65,16 @@ class HostMappingTest extends CPS2DepTest {
 		
 		val cps2dep = prepareEmptyModel(testId)
 		
-		val host = cps2dep.createHostTypeWithId("single.cps.host")
+		val host = cps2dep.prepareHostTypeWithId("single.cps.host")
 		val ip = "1.1.1.1"
-		val instance = host.createHostInstanceWithIP("single.cps.host.instance", ip)
+		val instance = host.prepareHostInstanceWithIP("single.cps.host.instance", ip)
 		
-		executeTransformation(cps2dep)
+		cps2dep.initializeTransformation
+		executeTransformation
 		
 		info("Removing host instance from model")
 		host.instances -= instance
+		executeTransformation
 
 		assertTrue("Host not removed from deployment", cps2dep.deployment.hosts.empty)
 		assertTrue("Trace not removed", cps2dep.traces.empty)
@@ -76,14 +89,16 @@ class HostMappingTest extends CPS2DepTest {
 		
 		val cps2dep = prepareEmptyModel(testId)
 		
-		val host = cps2dep.createHostTypeWithId("single.cps.host")
+		val host = cps2dep.prepareHostTypeWithId("single.cps.host")
 		val ip = "1.1.1.1"
-		val instance = host.createHostInstanceWithIP("single.cps.host.instance", ip)
-		
-		executeTransformation(cps2dep)
-		
+		val instance = host.prepareHostInstanceWithIP("single.cps.host.instance", ip)
+				
+		cps2dep.initializeTransformation
+		executeTransformation
+
 		info("Changing host IP")
 		instance.nodeIp = "1.1.1.2"
+		executeTransformation
 
 		assertTrue("Host IP not changed in deployment", cps2dep.deployment.hosts.head.ip == instance.nodeIp)
 		

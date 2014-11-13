@@ -142,7 +142,7 @@ pattern deletedStateMachine(depBehavior, trace) {
 
 /* ============================================
  * ==== 		                 		   ====
- * ====		   STATE MACHINE RULES 		   ====
+ * ====			   STATE RULES 		 	   ====
  * ====		                 			   ====
  * ============================================ */
 

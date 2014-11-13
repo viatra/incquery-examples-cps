@@ -65,4 +65,9 @@ class CPS2DeploymentTransformation {
 		info('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	}
 	
+	def dispose() {
+		if(schema != null){
+			schema.dispose
+		}
+	}
 }

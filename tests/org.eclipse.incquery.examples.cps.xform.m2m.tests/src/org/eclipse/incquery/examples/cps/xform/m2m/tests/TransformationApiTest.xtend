@@ -1,19 +1,22 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
-import org.eclipse.incquery.examples.cps.xform.m2m.CPS2DeploymentTransformation
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.junit.Test
 
 import static org.junit.Assert.*
 
 class TransformationApiTest extends CPS2DepTest {
 	
-	@Test(expected = IllegalArgumentException)
+	new(CPSTransformationWrapper wrapper) {
+		super(wrapper)
+	}
+	
+	@Test(expected = NullPointerException)
 	def noMapping() {
 		val testId = "noMapping"
 		info("START TEST: " + testId)
 		
-		val xform = new CPS2DeploymentTransformation
-		xform.execute(null, null)
+		initializeTransformation(null)
 		
 		info("END TEST: " + testId)
 	}
@@ -25,8 +28,7 @@ class TransformationApiTest extends CPS2DepTest {
 		
 		val cps2dep = prepareEmptyModel(testId)
 		cps2dep.cps = null
-		val xform = new CPS2DeploymentTransformation
-		xform.execute(cps2dep, null)
+		initializeTransformation(cps2dep)
 		
 		info("END TEST: " + testId)
 	}
@@ -38,23 +40,22 @@ class TransformationApiTest extends CPS2DepTest {
 		
 		val cps2dep = prepareEmptyModel(testId)
 		cps2dep.deployment = null
-		val xform = new CPS2DeploymentTransformation
-		xform.execute(cps2dep, null)
+		initializeTransformation(cps2dep)
 		
 		info("END TEST: " + testId)
 	}
-	
-	@Test(expected = IllegalArgumentException)
-	def nullEngine() {
-		val testId = "nullEngine"
-		info("START TEST: " + testId)
-		
-		val cps2dep = prepareEmptyModel(testId)
-		val xform = new CPS2DeploymentTransformation
-		xform.execute(cps2dep, null)
-		
-		info("END TEST: " + testId)
-	}
+//	
+//	@Test(expected = IllegalArgumentException)
+//	def nullEngine() {
+//		val testId = "nullEngine"
+//		info("START TEST: " + testId)
+//		
+//		val cps2dep = prepareEmptyModel(testId)
+//		initializeTransformation(cps2dep)
+//		cleanupTransformation
+//		
+//		info("END TEST: " + testId)
+//	}
 	
 	@Test
 	def emptyModel() {
@@ -62,7 +63,8 @@ class TransformationApiTest extends CPS2DepTest {
 		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
-		executeTransformation(cps2dep)
+		initializeTransformation(cps2dep)
+		executeTransformation
 		
 		assertTrue("Empty model modified (traces added)", cps2dep.traces.empty)
 		

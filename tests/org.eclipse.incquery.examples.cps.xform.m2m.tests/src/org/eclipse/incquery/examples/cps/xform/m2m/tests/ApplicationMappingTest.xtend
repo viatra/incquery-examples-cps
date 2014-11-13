@@ -5,8 +5,13 @@ import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.junit.Test
 
 import static org.junit.Assert.*
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 
 class ApplicationMappingTest extends CPS2DepTest {
+	
+	new(CPSTransformationWrapper wrapper) {
+		super(wrapper)
+	}
 	
 	@Test
 	def singleApplication() {
@@ -16,7 +21,9 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
 		val instance = cps2dep.prepareAppInstance(hostInstance)
-		cps2dep.executeTransformation
+		
+		cps2dep.initializeTransformation
+		executeTransformation
 		
 		cps2dep.assertApplicationMapping(instance)
 		
@@ -41,8 +48,12 @@ class ApplicationMappingTest extends CPS2DepTest {
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
-		cps2dep.executeTransformation
+
+		cps2dep.initializeTransformation
+		executeTransformation
+
 		val instance = cps2dep.prepareAppInstance(hostInstance)
+		executeTransformation
 		
 		cps2dep.assertApplicationMapping(instance)
 		
@@ -57,10 +68,13 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
 		val instance = cps2dep.prepareAppInstance(hostInstance)
-		cps2dep.executeTransformation
+		
+		cps2dep.initializeTransformation
+		executeTransformation
 		
 		info("Removing application instance from model")
 		instance.type.instances -= instance
+		executeTransformation
 
 		val applications = cps2dep.deployment.hosts.head.applications
 		assertTrue("Application not removed from deployment", applications.empty)
@@ -77,10 +91,13 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
 		val instance = cps2dep.prepareAppInstance(hostInstance)
-		cps2dep.executeTransformation
+		
+		cps2dep.initializeTransformation
+		executeTransformation
 		
 		info("Removing application instance from model")
 		hostInstance.applications -= instance
+		executeTransformation
 
 		val applications = cps2dep.deployment.hosts.head.applications
 		assertTrue("Application not removed from deployment", applications.empty)
@@ -97,12 +114,15 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
 		val instance = cps2dep.prepareAppInstance(hostInstance)
-		cps2dep.executeTransformation
+				
+		cps2dep.initializeTransformation
+		executeTransformation
 		
-		val host = cps2dep.createHostTypeWithId("single.cps.host2")
-		val hostInstance2 = host.createHostInstanceWithIP("single.cps.host2.instance", "1.1.1.2")
+		val host = cps2dep.prepareHostTypeWithId("single.cps.host2")
+		val hostInstance2 = host.prepareHostInstanceWithIP("single.cps.host2.instance", "1.1.1.2")
 		info("Reallocating application instance to host2")
 		hostInstance2.applications += instance
+		executeTransformation
 
 		val applications = cps2dep.deployment.hosts.head.applications
 		assertTrue("Application not moved from host in deployment", applications.empty)
@@ -120,10 +140,13 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
 		val instance = cps2dep.prepareAppInstance(hostInstance)
-		cps2dep.executeTransformation
+				
+		cps2dep.initializeTransformation
+		executeTransformation
 		
 		info("Changing host IP")
 		instance.id = "simple.cps.app.instance2"
+		executeTransformation
 
 		val applications = cps2dep.deployment.hosts.head.applications
 		assertEquals("Application ID not changed in deployment", instance.id, applications.head.id)
@@ -139,10 +162,13 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
 		val instance = cps2dep.prepareAppInstance(hostInstance)
-		cps2dep.executeTransformation
-		
+				
+		cps2dep.initializeTransformation
+		executeTransformation
+
 		info("Deleting host instance")
 		cps2dep.cps.hostTypes.head.instances -= hostInstance
+		executeTransformation
 		
 		val traces = cps2dep.traces.filter[cpsElements.contains(instance)]
 		assertTrue("Traces not removed", traces.empty)
