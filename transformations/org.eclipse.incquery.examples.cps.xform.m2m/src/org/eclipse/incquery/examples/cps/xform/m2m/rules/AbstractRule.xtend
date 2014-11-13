@@ -3,10 +3,11 @@ package org.eclipse.incquery.examples.cps.xform.m2m.rules
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
-import org.eclipse.incquery.examples.cps.xform.m2m.CpsXformM2M
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.CpsXformM2M
 import org.eclipse.incquery.runtime.api.IPatternMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.api.RuleSpecification
+
 import static com.google.common.base.Preconditions.*
 
 abstract class AbstractRule<M extends IPatternMatch> {

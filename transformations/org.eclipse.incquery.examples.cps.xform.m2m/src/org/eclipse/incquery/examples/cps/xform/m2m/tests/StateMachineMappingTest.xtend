@@ -1,11 +1,11 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.StateMachine
+import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.junit.Test
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 
 class StateMachineMappingTest extends CPS2DepTest {
 	

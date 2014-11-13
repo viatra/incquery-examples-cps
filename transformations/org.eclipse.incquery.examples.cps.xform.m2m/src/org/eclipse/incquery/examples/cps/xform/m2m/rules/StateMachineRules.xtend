@@ -1,14 +1,14 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.rules
 
-import org.eclipse.incquery.examples.cps.xform.m2m.DeletedStateMachineMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.MappedStateMachineMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.UnmappedStateMachineMatch
+import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.DeletedStateMachineMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.MappedStateMachineMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.UnmappedStateMachineMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles
 import org.eclipse.incquery.runtime.evm.specific.Rules
 import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
-import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 
 class StateMachineRules {
     static def getRules(IncQueryEngine engine) {
@@ -58,7 +58,6 @@ class StateMachineMapping extends AbstractRule<UnmappedStateMachineMatch> {
 	}
 	
 }
-
 
 class StateMachineUpdate extends AbstractRule<MappedStateMachineMatch> {
 	

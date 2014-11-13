@@ -1,8 +1,8 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.rules
 
-import org.eclipse.incquery.examples.cps.xform.m2m.DeletedDeploymentHostMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.MappedHostInstanceMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.UnmappedHostInstanceMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.DeletedDeploymentHostMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.MappedHostInstanceMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.UnmappedHostInstanceMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles

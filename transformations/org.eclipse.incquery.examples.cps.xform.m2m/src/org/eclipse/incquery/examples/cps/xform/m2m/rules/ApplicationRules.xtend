@@ -1,14 +1,14 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.rules
 
-import org.eclipse.incquery.examples.cps.xform.m2m.DeletedApplicationInstanceMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.MappedApplicationInstanceMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.UnmappedApplicationInstanceMatch
+import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.DeletedApplicationInstanceMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.MappedApplicationInstanceMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.UnmappedApplicationInstanceMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles
 import org.eclipse.incquery.runtime.evm.specific.Rules
 import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
-import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 
 class ApplicationRules {
 	static def getRules(IncQueryEngine engine) {

@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2m
+package org.eclipse.incquery.examples.cps.xform.m2m.queries
 
 import "http://org.eclipse.incquery/model/cps"
 import "http://org.eclipse.incquery/model/deployment"
@@ -138,4 +138,46 @@ pattern deletedStateMachine(depBehavior, trace) {
 	neg find applicationBehavior(_, stateMachine);
 	DeploymentBehavior(depBehavior);
 	find cps2depTrace(_, trace, stateMachine, depBehavior);
+}
+
+/* ============================================
+ * ==== 		                 		   ====
+ * ====		   STATE MACHINE RULES 		   ====
+ * ====		                 			   ====
+ * ============================================ */
+
+pattern allocatedStateMachineState(stateMachine, state) {
+	find allocatedStateMachines(_, stateMachine);
+	find stateMachineState(stateMachine, state);
+}
+
+pattern stateMachineState(stateMachine, state) {
+	StateMachine.states(stateMachine, state);
+}
+
+pattern behaviorState(depBehavior, depState) {
+	DeploymentBehavior.states(depBehavior, depState);
+}
+
+pattern mappedState(state, depState, stateMachine, depBehavior) {
+	find allocatedStateMachineState(stateMachine, state);
+	find mappedStateMachine(stateMachine, depBehavior, _, _);
+	find cps2depTrace(_, _, state, depState);
+	find behaviorState(depBehavior, depState);
+}
+
+pattern unmappedState(state, stateMachine, depBehavior) {
+	find allocatedStateMachineState(stateMachine, state);
+	find mappedStateMachine(stateMachine, depBehavior, _, _);
+	neg find mappedState(state, _, stateMachine, depBehavior);
+}
+
+pattern deletedState(depState, trace) {
+	find stateMachineState(stateMachine, state);
+	neg find allocatedStateMachines(_, stateMachine);
+	find cps2depTrace(_, trace, state, depState);
+} or {
+	neg find stateMachineState(_, state);
+	BehaviorState(depState);
+	find cps2depTrace(_, trace, state, depState);
 }

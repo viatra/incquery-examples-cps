@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSet
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
+import org.eclipse.incquery.examples.cps.xform.m2m.queries.CpsXformM2M
 import org.eclipse.incquery.examples.cps.xform.m2m.rules.ApplicationRules
 import org.eclipse.incquery.examples.cps.xform.m2m.rules.HostRules
 import org.eclipse.incquery.examples.cps.xform.m2m.rules.StateMachineRules
@@ -14,6 +15,7 @@ import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas
 import org.eclipse.incquery.runtime.evm.specific.Schedulers
 
 import static com.google.common.base.Preconditions.*
+import org.eclipse.incquery.examples.cps.xform.m2m.rules.StateRules
 
 class CPS2DeploymentTransformation {
 	
@@ -44,6 +46,7 @@ class CPS2DeploymentTransformation {
 		rulesBuilder.addAll(HostRules.getRules(engine))
 		rulesBuilder.addAll(ApplicationRules.getRules(engine))
 		rulesBuilder.addAll(StateMachineRules.getRules(engine))
+		rulesBuilder.addAll(StateRules.getRules(engine))
 //		rulesBuilder.addAll(TraceRules.getRules(engine))
 		val rules = rulesBuilder.build
 		

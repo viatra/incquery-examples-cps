@@ -8,6 +8,7 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFactory
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.StateMachine
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
@@ -106,6 +107,14 @@ class CPS2DepTest {
 		]
 		app.behavior = instance
 		instance
+	}
+	
+	def prepareState(StateMachine sm, String stateId) {
+		val state = createState => [
+			id = stateId
+		]
+		sm.states += state
+		state
 	}
 	
 	def executeTransformation(CPSToDeployment cps2dep) {

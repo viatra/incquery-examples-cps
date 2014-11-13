@@ -4,8 +4,8 @@ Bundle-Name: CPS Demonstrator Model-To-Model Transformations
 Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2m;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: IncQueryLabs Ltd.
-Export-Package: org.eclipse.incquery.examples.cps.xform.m2m,
- org.eclipse.incquery.examples.cps.xform.m2m.util
+Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.queries,
+ org.eclipse.incquery.examples.cps.xform.m2m.queries.util
 Require-Bundle: org.eclipse.incquery.examples.cps.traceability,
  org.eclipse.incquery.examples.cps.deployment,
  org.eclipse.incquery.examples.cps.model,
