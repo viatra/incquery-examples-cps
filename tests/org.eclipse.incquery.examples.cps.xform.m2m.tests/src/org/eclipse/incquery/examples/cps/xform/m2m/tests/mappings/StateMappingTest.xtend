@@ -1,13 +1,17 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests
+package org.eclipse.incquery.examples.cps.xform.m2m.tests.mappings
 
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.State
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 
 import static org.junit.Assert.*
 
+@RunWith(Parameterized)
 class StateMappingTest extends CPS2DepTest {
 	
 	new(CPSTransformationWrapper wrapper) {
@@ -45,8 +49,8 @@ class StateMappingTest extends CPS2DepTest {
 	}
 	
 	@Test
-	def stateIncrmental() {
-		val testId = "stateIncrmental"
+	def stateIncremental() {
+		val testId = "stateIncremental"
 		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
@@ -293,7 +297,7 @@ class StateMappingTest extends CPS2DepTest {
 	}
 	
 	@Test
-	def moveApplicationInstance() {
+	def moveApplicationInstanceOfState() {
 		val testId = "moveApplicationInstance"
 		info("START TEST: " + testId)
 		

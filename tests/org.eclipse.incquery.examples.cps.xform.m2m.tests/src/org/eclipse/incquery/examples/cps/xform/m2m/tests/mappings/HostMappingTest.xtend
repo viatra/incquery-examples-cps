@@ -1,12 +1,16 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests
+package org.eclipse.incquery.examples.cps.xform.m2m.tests.mappings
 
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 
+@RunWith(Parameterized)
 class HostMappingTest extends CPS2DepTest {
 	
 	new(CPSTransformationWrapper wrapper) {
