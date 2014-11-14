@@ -1,12 +1,12 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.State
+import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.junit.Test
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 
 class StateMappingTest extends CPS2DepTest {
 	

@@ -14,5 +14,5 @@ Require-Bundle: com.google.guava,
  org.eclipse.incquery.runtime,
  org.junit,
  org.eclipse.incquery.runtime.evm,
- org.eclipse.incquery.examples.cps.xform.m2m
+ org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.incr.expl
 Import-Package: org.apache.log4j;version="1.2.15"

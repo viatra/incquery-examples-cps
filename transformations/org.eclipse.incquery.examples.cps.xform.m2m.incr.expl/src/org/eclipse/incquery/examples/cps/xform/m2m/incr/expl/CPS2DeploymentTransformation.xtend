@@ -1,21 +1,21 @@
-package org.eclipse.incquery.examples.cps.xform.m2m
+package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl
 
 import com.google.common.base.Stopwatch
 import com.google.common.collect.ImmutableSet
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
-import org.eclipse.incquery.examples.cps.xform.m2m.queries.CpsXformM2M
-import org.eclipse.incquery.examples.cps.xform.m2m.rules.ApplicationRules
-import org.eclipse.incquery.examples.cps.xform.m2m.rules.HostRules
-import org.eclipse.incquery.examples.cps.xform.m2m.rules.StateMachineRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.CpsXformM2M
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.ApplicationRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.HostRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.StateMachineRules
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.api.ExecutionSchema
 import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas
 import org.eclipse.incquery.runtime.evm.specific.Schedulers
 
 import static com.google.common.base.Preconditions.*
-import org.eclipse.incquery.examples.cps.xform.m2m.rules.StateRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.StateRules
 
 class CPS2DeploymentTransformation {
 	

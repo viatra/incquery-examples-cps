@@ -1,6 +1,6 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.rules
+package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules
 
-import org.eclipse.incquery.examples.cps.xform.m2m.queries.IllegalTraceMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.IllegalTraceMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles

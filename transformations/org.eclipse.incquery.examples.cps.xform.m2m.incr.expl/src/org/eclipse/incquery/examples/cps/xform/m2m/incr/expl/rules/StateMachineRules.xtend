@@ -1,9 +1,9 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.rules
+package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules
 
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
-import org.eclipse.incquery.examples.cps.xform.m2m.queries.DeletedStateMachineMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.queries.MappedStateMachineMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.queries.UnmappedStateMachineMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedStateMachineMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MappedStateMachineMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedStateMachineMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles
