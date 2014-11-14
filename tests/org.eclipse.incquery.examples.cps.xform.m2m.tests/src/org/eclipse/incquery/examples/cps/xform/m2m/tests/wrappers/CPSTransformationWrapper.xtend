@@ -4,7 +4,7 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 
 abstract class CPSTransformationWrapper {
-	protected extension Logger logger = Logger.getLogger("cps.xform.CPS2DepTest")
+	protected extension Logger logger = Logger.getLogger("cps.xform.CPSTransformationWrapper")
 	
 	def void initializeTransformation(CPSToDeployment cps2dep)
 	

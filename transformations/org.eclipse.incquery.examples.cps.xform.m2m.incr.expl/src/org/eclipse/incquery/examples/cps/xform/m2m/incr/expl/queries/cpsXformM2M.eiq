@@ -181,3 +181,89 @@ pattern deletedState(depState, trace) {
 	BehaviorState(depState);
 	find cps2depTrace(_, trace, state, depState);
 }
+
+/* ============================================
+ * ==== 		                 		   ====
+ * ====			 TRANSITION RULES	 	   ====
+ * ====		                 			   ====
+ * ============================================ */
+
+pattern allocatedStateMachineTransition(stateMachine, source, transition, target) {
+	find allocatedStateMachines(_, stateMachine);
+	find stateMachineState(stateMachine, source);
+	find stateMachineState(stateMachine, target);
+	find stateTransition(source, transition, target);
+}
+
+pattern stateTransition(source, transition, target) {
+	State.outgoingTransitions(source, transition);
+	Transition.targetState(transition, target);
+}
+
+pattern behaviorTransition(depBehavior, depTransition) {
+	DeploymentBehavior.transitions(depBehavior, depTransition);
+}
+
+pattern behaviorStateOutgoing(depState, depTransition) {
+	BehaviorState.outgoing(depState, depTransition);
+}
+
+pattern mappedTransitionSourceTarget(transition, depSource, depTarget, depBehavior) {
+	find mappedState(source, depSource, stateMachine, depBehavior);
+	find mappedState(target, depTarget, stateMachine, depBehavior);
+	find stateTransition(source, transition, target);
+}
+
+pattern mappedTransition(transition, depTransition, depBehavior) {
+	find allocatedStateMachineTransition(stateMachine, source, transition, target);
+	find mappedState(source, _, stateMachine, depBehavior);
+	find mappedState(target, _, stateMachine, depBehavior);
+	find cps2depTrace(_, _, transition, depTransition);
+	find behaviorTransition(depBehavior, depTransition);
+}
+
+pattern unmappedTransition(transition, depBehavior) {
+	find allocatedStateMachineTransition(stateMachine, source, transition, target);
+	find mappedState(source, _, stateMachine, depBehavior);
+	find mappedState(target, _, stateMachine, depBehavior);
+	neg find mappedTransition(transition, _, depBehavior);
+}
+
+pattern deletedTransition(depTransition, trace) {
+	find stateTransition(source, transition, _);
+	neg find allocatedStateMachineState(_, source);
+	find cps2depTrace(_, trace, transition, depTransition);
+} or {
+	find stateTransition(_, transition, target);
+	neg find allocatedStateMachineState(_, target);
+	find cps2depTrace(_, trace, transition, depTransition);
+} or {
+	neg find stateTransition(_, transition, _);
+	BehaviorTransition(depTransition);
+	find cps2depTrace(_, trace, transition, depTransition);
+}
+
+/* ============================================
+ * ==== 		                 		   ====
+ * ====			   ACTION RULES	 		   ====
+ * ====		                 			   ====
+ * ============================================ */
+
+pattern mappedTransitionsWithAction(transition, depTransition, appType, action) {
+	find applicationBehavior(appType, stateMachine);
+	find stateMachineState(stateMachine, source);
+	find stateTransition(source, transition, _);
+ 	Transition.action(transition, action);
+ 	
+	find mappedTransition(transition, depTransition, _);
+}
+
+pattern sendTransition(transition, depTransition, action) {
+ 	find mappedTransitionsWithAction(transition, depTransition, _, action);
+ 	check(action.startsWith("sendMessage"));
+}
+
+pattern waitTransition(transition, depTransition, appType, action) {
+ 	find mappedTransitionsWithAction(transition, depTransition, appType, action);
+ 	check(action.startsWith("waitMessage"));
+}

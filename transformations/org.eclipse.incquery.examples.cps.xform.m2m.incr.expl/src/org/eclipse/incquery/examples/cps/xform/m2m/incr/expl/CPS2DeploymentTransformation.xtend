@@ -9,13 +9,14 @@ import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.CpsXformM2M
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.ApplicationRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.HostRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.StateMachineRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.StateRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.TransitionRules
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.api.ExecutionSchema
 import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas
 import org.eclipse.incquery.runtime.evm.specific.Schedulers
 
 import static com.google.common.base.Preconditions.*
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.StateRules
 
 class CPS2DeploymentTransformation {
 	
@@ -47,6 +48,7 @@ class CPS2DeploymentTransformation {
 		rulesBuilder.addAll(ApplicationRules.getRules(engine))
 		rulesBuilder.addAll(StateMachineRules.getRules(engine))
 		rulesBuilder.addAll(StateRules.getRules(engine))
+		rulesBuilder.addAll(TransitionRules.getRules(engine))
 //		rulesBuilder.addAll(TraceRules.getRules(engine))
 		val rules = rulesBuilder.build
 		

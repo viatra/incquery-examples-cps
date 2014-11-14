@@ -44,4 +44,14 @@
       <enabledForEditor editorId="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID"/>
     </constraint>
   </extension>
+  <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.targetStateNotContainedBySameStateMachine" point="org.eclipse.incquery.validation.runtime.constraint">
+    <constraint class="org.eclipse.incquery.examples.cps.model.validation.TargetStateNotContainedBySameStateMachineConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.targetStateNotContainedBySameStateMachine">
+      <enabledForEditor editorId="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.incquery.examples.cps.model.validation.transitionWithoutTargetState" point="org.eclipse.incquery.validation.runtime.constraint">
+    <constraint class="org.eclipse.incquery.examples.cps.model.validation.TransitionWithoutTargetStateConstraint0" name="org.eclipse.incquery.examples.cps.model.validation.transitionWithoutTargetState">
+      <enabledForEditor editorId="org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID"/>
+    </constraint>
+  </extension>
 </plugin>

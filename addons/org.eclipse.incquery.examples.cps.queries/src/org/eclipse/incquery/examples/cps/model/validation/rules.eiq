@@ -97,6 +97,32 @@ private pattern statemachineState(statemachine, state) {
 }
 
 @Constraint(
+	location = transition,
+	message = "No target state set for $transition.id$",
+	severity = "error"
+)
+pattern transitionWithoutTargetState(transition) {
+	State.outgoingTransitions(source, transition);
+	neg find stateTransition(source, transition, _);
+}
+
+private pattern stateTransition(source, transition, target) {
+	State.outgoingTransitions(source, transition);
+	Transition.targetState(transition, target);
+}
+
+@Constraint(
+	location = transition,
+	message = "The target state $target.id$ of $transition.id$ is not in the same state machine",
+	severity = "error"
+)
+pattern targetStateNotContainedBySameStateMachine(transition, target) {
+	find stateTransition(source, transition, target);
+	find statemachineState(statemachine, source);
+	neg find statemachineState(statemachine, target);
+}
+
+@Constraint(
 	location = state,
 	message = "Multiple outgoing transitions of $state.id$ define the same action ($action$)",
 	severity = "error"

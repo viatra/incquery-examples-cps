@@ -36,20 +36,21 @@ class StateMapping extends AbstractRule<UnmappedStateMatch> {
 	
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [UnmappedStateMatch match |
-			val stateId = match.state.id
+			val state = match.state
+			val stateId = state.id
 			debug('''Mapping state with ID: «stateId»''')
 			val depState = createBehaviorState => [
 				description = stateId
 			]
 			match.depBehavior.states += depState
-			if(match.stateMachine.initial == match.state){
+			if(match.stateMachine.initial == state){
 				match.depBehavior.current = depState
 			}
-			val traces = engine.cps2depTrace.getAllValuesOftrace(null, match.state, null)
+			val traces = engine.cps2depTrace.getAllValuesOftrace(null, state, null)
 			if(traces.empty){
 				trace('''Creating new trace for state ''')
 				rootMapping.traces += createCPS2DeplyomentTrace => [
-					cpsElements += match.state
+					cpsElements += state
 					deploymentElements += depState
 				]
 			} else {
