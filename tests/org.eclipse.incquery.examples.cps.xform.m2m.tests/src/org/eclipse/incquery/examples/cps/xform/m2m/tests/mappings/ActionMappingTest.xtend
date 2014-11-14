@@ -31,7 +31,7 @@ class ActionMappingTest extends CPS2DepTest {
 		val source = sm.prepareState("simple.cps.sm.s1")
 		val target = sm.prepareState("simple.cps.sm.s2")
 		val transition = source.prepareTransition("simple.cps.sm.t", target)
-		transition.action = "sendMessage(simple.cps.app2, msgId)"
+		transition.action = "sendSignal(simple.cps.app2, msgId)"
 	
 		val host2 = cps2dep.prepareHostTypeWithId("single.cps.host2")
 		val ip = "1.1.1.2"
@@ -42,7 +42,7 @@ class ActionMappingTest extends CPS2DepTest {
 		val source2 = sm2.prepareState("simple.cps.sm2.s1")
 		val target2 = sm2.prepareState("simple.cps.sm2.s2")
 		val transition2 = source2.prepareTransition("simple.cps.sm2.t", target2)
-		transition2.action = "waitMessage(msgId)"
+		transition2.action = "waitForSignal(msgId)"
 	
 		cps2dep.initializeTransformation
 		executeTransformation
@@ -77,7 +77,7 @@ class ActionMappingTest extends CPS2DepTest {
 		val source = sm.prepareState("simple.cps.sm.s1")
 		val target = sm.prepareState("simple.cps.sm.s2")
 		val transition = source.prepareTransition("simple.cps.sm.t", target)
-		transition.action = "sendMessage(simple.cps.app2, msgId)"
+		transition.action = "sendSignal(simple.cps.app2, msgId)"
 	
 		cps2dep.initializeTransformation
 		executeTransformation
@@ -103,7 +103,7 @@ class ActionMappingTest extends CPS2DepTest {
 		val source = sm.prepareState("simple.cps.sm.s1")
 		val target = sm.prepareState("simple.cps.sm.s2")
 		val transition = source.prepareTransition("simple.cps.sm.t", target)
-		transition.action = "waitMessage(msgId)"
+		transition.action = "waitForSignal(msgId)"
 	
 		cps2dep.initializeTransformation
 		executeTransformation

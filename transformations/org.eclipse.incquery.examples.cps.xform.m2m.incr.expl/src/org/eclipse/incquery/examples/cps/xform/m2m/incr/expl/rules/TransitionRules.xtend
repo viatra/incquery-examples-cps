@@ -9,6 +9,7 @@ import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles
 import org.eclipse.incquery.runtime.evm.specific.Rules
 import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import java.util.regex.Pattern
 
 class TransitionRules {
 	static def getRules(IncQueryEngine engine) {
@@ -67,10 +68,10 @@ class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 			val sendMatches = engine.sendTransition.getAllMatches(transition, depTransition, null)
 			if(!sendMatches.empty){
 				val action = transition.action
-				val tokens = action.split("^sendMessage\\((.*),(.*)\\)$")
-				if(tokens.size == 2){
-					val appId = tokens.head
-					val msgId = tokens.last
+				val sendMatcher = Pattern.compile("^sendSignal\\((.*),(.*)\\)$").matcher(action)
+				if(sendMatcher.matches){
+					val appId = sendMatcher.group(1)
+					val msgId = sendMatcher.group(2)
 					trace('''Found send: «appId» - «msgId»''')
 				}
 			}

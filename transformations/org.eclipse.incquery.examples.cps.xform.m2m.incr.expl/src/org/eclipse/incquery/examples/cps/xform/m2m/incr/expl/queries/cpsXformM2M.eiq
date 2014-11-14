@@ -260,10 +260,14 @@ pattern mappedTransitionsWithAction(transition, depTransition, appType, action) 
 
 pattern sendTransition(transition, depTransition, action) {
  	find mappedTransitionsWithAction(transition, depTransition, _, action);
- 	check(action.startsWith("sendMessage"));
+ 	check(
+ 		SignalUtil.isSend(action)
+ 	);
 }
 
 pattern waitTransition(transition, depTransition, appType, action) {
  	find mappedTransitionsWithAction(transition, depTransition, appType, action);
- 	check(action.startsWith("waitMessage"));
+ 	check(
+ 		SignalUtil.isWait(action)
+ 	);
 }
