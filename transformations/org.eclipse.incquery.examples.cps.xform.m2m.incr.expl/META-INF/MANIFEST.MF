@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CPS Demonstrator Model-To-Model Transformations
-Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.incr.expl;singleton:=true
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2m.incr.expl;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: IncQueryLabs Ltd.
 Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.incr.expl,

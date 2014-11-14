@@ -48,18 +48,6 @@ class TransformationApiTest extends CPS2DepTest {
 		
 		info("END TEST: " + testId)
 	}
-//	
-//	@Test(expected = IllegalArgumentException)
-//	def nullEngine() {
-//		val testId = "nullEngine"
-//		info("START TEST: " + testId)
-//		
-//		val cps2dep = prepareEmptyModel(testId)
-//		initializeTransformation(cps2dep)
-//		cleanupTransformation
-//		
-//		info("END TEST: " + testId)
-//	}
 	
 	@Test
 	def emptyModel() {

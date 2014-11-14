@@ -86,6 +86,7 @@ class StateMappingTest extends CPS2DepTest {
 
 		val behavior = cps2dep.deployment.hosts.head.applications.head.behavior
 		val trace = cps2dep.traces.findFirst[cpsElements.contains(state)]
+		assertNotNull("Trace is not created", trace)
 		assertEquals("Initial property not transformed", trace.deploymentElements.head, behavior.current)
 		
 		info("END TEST: " + testId)
@@ -112,6 +113,7 @@ class StateMappingTest extends CPS2DepTest {
 
 		val behavior = cps2dep.deployment.hosts.head.applications.head.behavior
 		val trace = cps2dep.traces.findFirst[cpsElements.contains(state2)]
+		assertNotNull("Trace is not created", trace)
 		assertEquals("Initial property not changed", trace.deploymentElements.head, behavior.current)
 		
 		info("END TEST: " + testId)
@@ -136,7 +138,9 @@ class StateMappingTest extends CPS2DepTest {
 		executeTransformation
 		
 		val behavior = cps2dep.deployment.hosts.head.applications.head.behavior
-		assertEquals("Id not changed in deployment", state.id, behavior.states.head.description)
+		val depState = behavior.states.head
+		assertNotNull("State not transformed", depState)
+		assertEquals("Id not changed in deployment", state.id, depState.description)
 		
 		info("END TEST: " + testId)
 	}
@@ -155,6 +159,8 @@ class StateMappingTest extends CPS2DepTest {
 		cps2dep.initializeTransformation
 		executeTransformation
 
+		cps2dep.assertStateMapping(state)
+		
 		sm.states -= state
 		executeTransformation
 		
@@ -181,6 +187,8 @@ class StateMappingTest extends CPS2DepTest {
 		cps2dep.initializeTransformation
 		executeTransformation
 
+		cps2dep.assertStateMapping(state)
+
 		sm.states -= state
 		executeTransformation
 		
@@ -204,6 +212,8 @@ class StateMappingTest extends CPS2DepTest {
 		cps2dep.initializeTransformation
 		executeTransformation
 
+		cps2dep.assertStateMapping(state)
+
 		info("Removing state machine from app type.")
 		appInstance.type.behavior = null
 		executeTransformation
@@ -216,7 +226,7 @@ class StateMappingTest extends CPS2DepTest {
 	
 	@Test
 	def addApplicationInstanceOfState() {
-		val testId = "addApplicationInstance"
+		val testId = "addApplicationInstanceOfState"
 		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
@@ -243,8 +253,8 @@ class StateMappingTest extends CPS2DepTest {
 	}
 	
 	@Test
-	def removeApplicationInstanceOfState() {
-		val testId = "removeApplicationInstance"
+	def deleteApplicationInstanceOfState() {
+		val testId = "deleteApplicationInstanceOfState"
 		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
@@ -255,6 +265,8 @@ class StateMappingTest extends CPS2DepTest {
 				
 		cps2dep.initializeTransformation
 		executeTransformation
+		
+		cps2dep.assertStateMapping(state)
 
 		info("Removing instance from type")
 		appInstance.type.instances -= appInstance
@@ -323,15 +335,17 @@ class StateMappingTest extends CPS2DepTest {
 		val state2Traces = cps2dep.traces.filter[cpsElements.contains(state2)]
 		assertFalse("State not moved", state2Traces.empty)
 		val depState = state2Traces.head.deploymentElements.head
-		val behaviorTraces = cps2dep.traces.filter[deploymentElements.filter(typeof(DeploymentBehavior)).exists[states.contains(depState)]]
+		val behaviorTraces = cps2dep.traces.filter[
+			deploymentElements.filter(typeof(DeploymentBehavior)).exists[states.contains(depState)]
+		]
 		assertFalse("State not in app", behaviorTraces.empty)
 		
 		info("END TEST: " + testId)
 	}
 	
 	@Test
-	def deleteHostInstanceOfState() {
-		val testId = "deleteHostInstanceOfBehavior"
+	def removeHostInstanceOfState() {
+		val testId = "removeHostInstanceOfState"
 		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
@@ -342,6 +356,8 @@ class StateMappingTest extends CPS2DepTest {
 				
 		cps2dep.initializeTransformation
 		executeTransformation
+		
+		cps2dep.assertStateMapping(state)
 
 		info("Deleting host instance")
 		cps2dep.cps.hostTypes.head.instances -= hostInstance

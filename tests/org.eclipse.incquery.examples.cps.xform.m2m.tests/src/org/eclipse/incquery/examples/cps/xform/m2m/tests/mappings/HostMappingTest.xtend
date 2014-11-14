@@ -63,8 +63,8 @@ class HostMappingTest extends CPS2DepTest {
 	}
 	
 	@Test
-	def deleteHost() {
-		val testId = "deleteHost"
+	def removeHost() {
+		val testId = "removeHost"
 		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
@@ -75,6 +75,8 @@ class HostMappingTest extends CPS2DepTest {
 		
 		cps2dep.initializeTransformation
 		executeTransformation
+		
+		cps2dep.assertHostMapping(instance)
 		
 		info("Removing host instance from model")
 		host.instances -= instance

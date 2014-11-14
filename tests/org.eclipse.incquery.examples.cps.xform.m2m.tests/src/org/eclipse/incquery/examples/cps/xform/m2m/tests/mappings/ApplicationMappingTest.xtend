@@ -76,6 +76,8 @@ class ApplicationMappingTest extends CPS2DepTest {
 		cps2dep.initializeTransformation
 		executeTransformation
 		
+		cps2dep.assertApplicationMapping(instance)
+		
 		info("Removing application instance from model")
 		instance.type.instances -= instance
 		executeTransformation
@@ -98,6 +100,8 @@ class ApplicationMappingTest extends CPS2DepTest {
 		
 		cps2dep.initializeTransformation
 		executeTransformation
+		
+		cps2dep.assertApplicationMapping(instance)
 		
 		info("Removing application instance from model")
 		hostInstance.applications -= instance
@@ -159,8 +163,8 @@ class ApplicationMappingTest extends CPS2DepTest {
 	}
 	
 	@Test
-	def deleteHostInstanceOfApplication() {
-		val testId = "deleteHostInstanceOfApplication"
+	def removeHostInstanceOfApplication() {
+		val testId = "removeHostInstanceOfApplication"
 		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
@@ -170,6 +174,8 @@ class ApplicationMappingTest extends CPS2DepTest {
 		cps2dep.initializeTransformation
 		executeTransformation
 
+		cps2dep.assertApplicationMapping(instance)
+	
 		info("Deleting host instance")
 		cps2dep.cps.hostTypes.head.instances -= hostInstance
 		executeTransformation

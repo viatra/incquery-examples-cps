@@ -15,7 +15,7 @@ class ExplicitTraceability extends CPSTransformationWrapper {
 	}
 	
 	override executeTransformation() {
-		info("ExplicitTraceability is incremental")
+		info("Explicit Traceability transformation is incremental")
 	}
 	
 	override cleanupTransformation() {
@@ -26,5 +26,4 @@ class ExplicitTraceability extends CPSTransformationWrapper {
 			engine.dispose
 		}
 	}
-	
 }

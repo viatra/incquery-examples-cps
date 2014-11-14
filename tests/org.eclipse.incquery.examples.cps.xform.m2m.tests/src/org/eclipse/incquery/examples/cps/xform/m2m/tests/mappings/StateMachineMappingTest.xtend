@@ -80,6 +80,8 @@ class StateMachineMappingTest extends CPS2DepTest {
 		cps2dep.initializeTransformation
 		executeTransformation
 
+		cps2dep.assertStateMachineMapping(sm)
+		
 		info("Removing state machine from app type.")
 		appInstance.type.behavior = null
 		executeTransformation
@@ -155,6 +157,8 @@ class StateMachineMappingTest extends CPS2DepTest {
 		cps2dep.initializeTransformation
 		executeTransformation
 
+		cps2dep.assertStateMachineMapping(sm)
+		
 		info("Removing instance from type")
 		appInstance.type.instances -= appInstance
 		executeTransformation
@@ -224,8 +228,8 @@ class StateMachineMappingTest extends CPS2DepTest {
 	}
 	
 	@Test
-	def deleteHostInstanceOfBehavior() {
-		val testId = "deleteHostInstanceOfBehavior"
+	def removeHostInstanceOfBehavior() {
+		val testId = "removeHostInstanceOfBehavior"
 		info("START TEST: " + testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
@@ -235,7 +239,9 @@ class StateMachineMappingTest extends CPS2DepTest {
 				
 		cps2dep.initializeTransformation
 		executeTransformation
-
+	
+		cps2dep.assertStateMachineMapping(sm)
+		
 		info("Deleting host instance")
 		cps2dep.cps.hostTypes.head.instances -= hostInstance
 		executeTransformation
