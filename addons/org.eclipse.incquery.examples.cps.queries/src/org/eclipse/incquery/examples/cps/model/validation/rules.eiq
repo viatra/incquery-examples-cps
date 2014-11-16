@@ -145,13 +145,9 @@ private pattern actionOfTransition(transition, action) {
 	severity = "error"
 )
 pattern multipleApplicationInstanceInCommunicationGroup(sourceHostInstance, app) {
-	find appTypeInstanceAndHost(app, appInstance, hostInstance);
-	find appTypeInstanceAndHost(app, otherAppInstance, otherHostInstance);
+	find reachableAppInstance(sourceHostInstance, app, appInstance);
+	find reachableAppInstance(sourceHostInstance, app, otherAppInstance);
 	appInstance != otherAppInstance;
-
-	// there is a source hostInstance that could communicate with either hostInstance
-	find hostCommunication+(sourceHostInstance, hostInstance);
-	find hostCommunication+(sourceHostInstance, otherHostInstance);
 }
 
 pattern appTypeInstanceAndHost(app, appInstance, hostInstance) {
@@ -161,4 +157,18 @@ pattern appTypeInstanceAndHost(app, appInstance, hostInstance) {
 
 pattern hostCommunication(fromHost, toHost) {
 	HostInstance.communicateWith(fromHost, toHost);
+}
+
+pattern reachableHosts(source, target) {
+	find hostCommunication+(source, target);
+} or {
+	HostInstance(source);
+	HostInstance(target);
+	source == target;
+}
+
+pattern reachableAppInstance(sourceHostInstance, app, appInstance) {
+	find appTypeInstanceAndHost(app, appInstance, targetHostInstance);
+	// there is a source hostInstance that could communicate with either hostInstance
+	find reachableHosts(sourceHostInstance, targetHostInstance);
 }

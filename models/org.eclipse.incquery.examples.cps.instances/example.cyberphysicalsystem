@@ -4,7 +4,7 @@
     <instances id="IBM System Storage" allocatedTo="//@hostTypes.1/@instances.2"/>
     <behavior id="Archiving-sm" initial="//@appTypes.0/@behavior/@states.0">
       <states id="Wait">
-        <outgoingTransitions id="tr_arch_receive" targetState="//@appTypes.0/@behavior/@states.1" action="waitMessage(msg)"/>
+        <outgoingTransitions id="tr_arch_receive" targetState="//@appTypes.0/@behavior/@states.1" action="waitForSignal(msg)"/>
       </states>
       <states id="Received">
         <outgoingTransitions id="tr_arch-finish" targetState="//@appTypes.0/@behavior/@states.0"/>
@@ -17,7 +17,7 @@
     <instances id="Camera" allocatedTo="//@hostTypes.2/@instances.0"/>
     <behavior id="LPC-sm" initial="//@appTypes.1/@behavior/@states.0">
       <states id="Init">
-        <outgoingTransitions id="tr_lpc-send" targetState="//@appTypes.1/@behavior/@states.1" action="sendMessage(Archiving,msg)"/>
+        <outgoingTransitions id="tr_lpc-send" targetState="//@appTypes.1/@behavior/@states.1" action="sendSignal(Archiving,msg)"/>
       </states>
       <states id="Sent">
         <outgoingTransitions id="tr_lpc-finish" targetState="//@appTypes.1/@behavior/@states.0"/>
