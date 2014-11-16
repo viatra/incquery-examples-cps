@@ -11,6 +11,7 @@ import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.HostRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.StateMachineRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.StateRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.TransitionRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.TriggerRules
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.api.ExecutionSchema
 import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas
@@ -49,6 +50,7 @@ class CPS2DeploymentTransformation {
 		rulesBuilder.addAll(StateMachineRules.getRules(engine))
 		rulesBuilder.addAll(StateRules.getRules(engine))
 		rulesBuilder.addAll(TransitionRules.getRules(engine))
+		rulesBuilder.addAll(TriggerRules.getRules(engine))
 //		rulesBuilder.addAll(TraceRules.getRules(engine))
 		val rules = rulesBuilder.build
 		

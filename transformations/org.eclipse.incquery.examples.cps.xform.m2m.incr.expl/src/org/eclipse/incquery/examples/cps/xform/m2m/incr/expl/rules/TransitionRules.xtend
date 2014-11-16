@@ -9,7 +9,6 @@ import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles
 import org.eclipse.incquery.runtime.evm.specific.Rules
 import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
-import java.util.regex.Pattern
 
 class TransitionRules {
 	static def getRules(IncQueryEngine engine) {
@@ -52,7 +51,6 @@ class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 				depTransition.to = sourceTargetMatch.depTarget
 			}
 			
-			
 			val traces = engine.cps2depTrace.getAllValuesOftrace(null, transition, null)
 			if(traces.empty){
 				trace('''Creating new trace for transition ''')
@@ -63,17 +61,6 @@ class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 			} else {
 				trace('''Adding new transition to existing trace''')
 				traces.head.deploymentElements += depTransition
-			}
-
-			val sendMatches = engine.sendTransition.getAllMatches(transition, depTransition, null)
-			if(!sendMatches.empty){
-				val action = transition.action
-				val sendMatcher = Pattern.compile("^sendSignal\\((.*),(.*)\\)$").matcher(action)
-				if(sendMatcher.matches){
-					val appId = sendMatcher.group(1)
-					val msgId = sendMatcher.group(2)
-					trace('''Found send: «appId» - «msgId»''')
-				}
 			}
 
 			debug('''Mapped transition with ID: «transitionId»''')

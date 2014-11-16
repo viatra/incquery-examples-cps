@@ -4,25 +4,36 @@ import java.util.regex.Pattern
 
 class SignalUtil {
 	
+	static val waitPattern = Pattern.compile("^waitForSignal\\((.*)\\)$")
+	static val sendPattern = Pattern.compile("^sendSignal\\((.*),(.*)\\)$")
+	
 	static def isSend(String action) {
-		Pattern.matches("^sendSignal\\((.*),(.*)\\)$", action)
+		sendPattern.matcher(action).matches
 	}
 	
 	static def isWait(String action) {
-		Pattern.matches("^waitForSignal\\((.*)\\)$", action)
+		waitPattern.matcher(action).matches
 	}
 	
+	@Pure
 	static def getAppId(String action){
-		val matcher = Pattern.compile("^waitForSignal\\((.*)\\)$").matcher(action)
-		if(matcher.matches) {
-			matcher.group(1)
+		sendPattern.getGroupOfMatch(action, 1)
+	}
+	
+	@Pure
+	static def getSignalId(String action) {
+		val sendId = sendPattern.getGroupOfMatch(action, 2)
+		if(sendId == null) {
+			waitPattern.getGroupOfMatch(action, 1)
+		} else {
+			sendId
 		}
 	}
 	
-	static def getSignalId(String action) {
-		val matcher = Pattern.compile("^waitForSignal\\((.*)\\)$").matcher(action)
+	private static def getGroupOfMatch(Pattern pattern, String action, int group){
+		val matcher = pattern.matcher(action)
 		if(matcher.matches) {
-			matcher.group(2)
+			matcher.group(group).trim
 		}
 	}
 }

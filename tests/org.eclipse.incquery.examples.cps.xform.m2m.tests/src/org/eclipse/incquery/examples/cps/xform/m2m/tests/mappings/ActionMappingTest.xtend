@@ -1,5 +1,8 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests.mappings
 
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Transition
+import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
+import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.junit.Test
@@ -7,10 +10,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Transition
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.State
-import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 
 @RunWith(Parameterized)
 class ActionMappingTest extends CPS2DepTest {
@@ -33,17 +32,19 @@ class ActionMappingTest extends CPS2DepTest {
 		val transition = source.prepareTransition("simple.cps.sm.t", target)
 		transition.action = "sendSignal(simple.cps.app2, msgId)"
 	
-		val host2 = cps2dep.prepareHostTypeWithId("single.cps.host2")
+		val host2 = cps2dep.prepareHostTypeWithId("simple.cps.host2")
 		val ip = "1.1.1.2"
-		val hostInstance2 = host2.prepareHostInstanceWithIP("single.cps.host2.instance", ip)
-		val app2 = cps2dep.prepareApplicationTypeWithId("single.cps.app2")
+		val hostInstance2 = host2.prepareHostInstanceWithIP("simple.cps.host2.instance", ip)
+		val app2 = cps2dep.prepareApplicationTypeWithId("simple.cps.app2")
 		val appInstance2 = app2.prepareApplicationInstanceWithId("simple.cps.app2.instance", hostInstance2)
 		val sm2 = prepareStateMachine(appInstance2.type, "simple.cps.sm2")
 		val source2 = sm2.prepareState("simple.cps.sm2.s1")
 		val target2 = sm2.prepareState("simple.cps.sm2.s2")
 		val transition2 = source2.prepareTransition("simple.cps.sm2.t", target2)
 		transition2.action = "waitForSignal(msgId)"
-	
+		
+		hostInstance.communicateWith += hostInstance2
+		
 		cps2dep.initializeTransformation
 		executeTransformation
 		
@@ -138,8 +139,8 @@ class ActionMappingTest extends CPS2DepTest {
 	}
 	
 	@Test
-	def removeOnlyWait() {
-		val testId = "removeOnlyWait"
+	def removeLastWait() {
+		val testId = "removeLastWait"
 		info("START TEST: " + testId)
 		
 		fail()
@@ -311,6 +312,18 @@ class ActionMappingTest extends CPS2DepTest {
 	def removeHostInstanceOfSend() {
 		val testId = "removeHostInstanceOfSend"
 		info("START TEST: " + testId)
+		
+		fail()
+
+		info("END TEST: " + testId)
+	}
+	
+	@Test
+	def changeHostCommunication() {
+		val testId = "changeHostCommunication"
+		info("START TEST: " + testId)
+		
+		// TODO multiple tests!
 		
 		fail()
 

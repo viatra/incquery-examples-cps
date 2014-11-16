@@ -62,9 +62,9 @@ class CPSModelBuilderUtil {
 	}
 	
 	def prepareHostInstance(CPSToDeployment cps2dep) {
-		val host = cps2dep.prepareHostTypeWithId("single.cps.host")
+		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
 		val ip = "1.1.1.1"
-		val hostInstance = host.prepareHostInstanceWithIP("single.cps.host.instance", ip)
+		val hostInstance = host.prepareHostInstanceWithIP("simple.cps.host.instance", ip)
 		hostInstance
 	}
 	
@@ -88,7 +88,7 @@ class CPSModelBuilderUtil {
 	}
 
 	def prepareAppInstance(CPSToDeployment cps2dep, HostInstance hostInstance) {
-		val app = cps2dep.prepareApplicationTypeWithId("single.cps.app")
+		val app = cps2dep.prepareApplicationTypeWithId("simple.cps.app")
 		val instance = app.prepareApplicationInstanceWithId("simple.cps.app.instance", hostInstance)
 		instance
 	}

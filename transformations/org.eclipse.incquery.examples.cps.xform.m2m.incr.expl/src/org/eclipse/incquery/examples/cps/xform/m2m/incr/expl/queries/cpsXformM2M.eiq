@@ -271,3 +271,66 @@ pattern waitTransition(transition, depTransition, appType, action) {
  		SignalUtil.isWait(action)
  	);
 }
+
+pattern triggerPair(depTrigger, depTarget) {
+	find sendTransition(_, depTrigger, sendAction);
+	find waitTransition(_, depTarget, waitApp, waitAction);
+	
+	find cps2depTrace(cps2dep, _, _, depTrigger);
+	find cps2depTrace(cps2dep, _, _, depTarget);
+	
+	ApplicationType.id(waitApp, id);
+	check(
+		(id == SignalUtil.getAppId(sendAction))
+		&&
+		(SignalUtil.getSignalId(sendAction) == SignalUtil.getSignalId(waitAction))
+	);
+}
+
+pattern trigger(depSendTransition, depWaitTransition) {
+	find triggerPair(depSendTransition, depWaitTransition);
+	find deploymentApplicationTransition(depSendApp, depSendTransition);
+	find deploymentApplicationTransition(depWaitApp, depWaitTransition);
+	
+	find cps2depTrace(_, _, sourceAppInstance, depSendApp);
+	find cps2depTrace(_, _, targetAppInstance, depWaitApp);
+		
+	find communicatingAppInstances(sourceAppInstance, targetAppInstance);
+}
+
+pattern behaviorTransitionTrigger(depSendTransition, depWaitTransition) {
+	BehaviorTransition.trigger(depSendTransition, depWaitTransition);
+}
+
+pattern unmappedTrigger(depSendTransition, depWaitTransition){
+	neg find behaviorTransitionTrigger(depSendTransition, depWaitTransition);
+	find trigger(depSendTransition, depWaitTransition);
+}
+
+pattern deletedTrigger(depSendTransition, depWaitTransition){
+	find behaviorTransitionTrigger(depSendTransition, depWaitTransition);
+	neg find trigger(depSendTransition, depWaitTransition);
+}
+
+pattern deploymentApplicationTransition(depApp, depTransition) {
+	find deploymentApplicationBehavior(depApp, depBehavior);
+	find behaviorTransition(depBehavior, depTransition);
+}
+
+pattern communicatingAppInstances(sourceAppInstance, targetAppInstance) {
+	find applicationInstance(_, sourceAppInstance, sourceHostInstance);
+	find applicationInstance(_, targetAppInstance, targetHostInstance);
+	find reachableHosts(sourceHostInstance, targetHostInstance);
+}
+
+pattern hostCommunication(fromHost, toHost) {
+	HostInstance.communicateWith(fromHost, toHost);
+}
+
+pattern reachableHosts(source, target) {
+	find hostCommunication+(source, target);
+} or {
+	HostInstance(source);
+	HostInstance(target);
+	source == target;
+}
