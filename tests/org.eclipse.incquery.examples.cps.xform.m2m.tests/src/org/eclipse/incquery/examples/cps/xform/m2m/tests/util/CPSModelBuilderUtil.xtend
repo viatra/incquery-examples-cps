@@ -12,6 +12,7 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.StateMachine
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 
 class CPSModelBuilderUtil {
 	
@@ -30,6 +31,25 @@ class CPSModelBuilderUtil {
 			id = cpsId
 		]
 		cpsRes.contents += cps
+		
+		val dep = createDeployment
+		depRes.contents += dep
+		 
+		val cps2dep = createCPSToDeployment => [
+			it.cps = cps
+			it.deployment = dep
+		]
+		trcRes.contents += cps2dep
+		cps2dep
+	}
+	
+	def prepareCPSModel(String cpsUri) {
+		val rs = new ResourceSetImpl()
+		val cpsRes = rs.getResource(URI.createURI(cpsUri), true)
+		val depRes = rs.createResource(URI.createURI("dummyDeploymentUri"))
+		val trcRes = rs.createResource(URI.createURI("dummyTraceabilityUri"))
+		
+		val cps = cpsRes.contents.head as CyberPhysicalSystem
 		
 		val dep = createDeployment
 		depRes.contents += dep

@@ -10,6 +10,7 @@ class WrapperTest {
 	
 	@Test(expected = IllegalArgumentException)
 	def explicitTraceabilityNullEngine() {
+		
 		val testId = "explicitTraceabilityNullEngine"
 		info("START TEST: " + testId)
 		

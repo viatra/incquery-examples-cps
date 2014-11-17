@@ -8,7 +8,12 @@ import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTracea
 import org.junit.After
 import org.junit.BeforeClass
 import org.junit.runners.Parameterized.Parameters
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
+import org.junit.Ignore
 
+@RunWith(Parameterized)
 class CPS2DepTest {
 
 	protected extension Logger logger = Logger.getLogger("cps.xform.CPS2DepTest")
@@ -36,6 +41,22 @@ class CPS2DepTest {
 //	def parameterizedRun(){
 //		assertNotNull("Transformation wrapper is null", xform)
 //	}
+
+	@Ignore
+	@Test
+	def specificInputModel(){
+		val testId = "specificInputModel"
+		info("START TEST: " + testId)
+		
+		val cpsUri = "file://my-cps-git-location/models/org.eclipse.incquery.examples.cps.instances/example.cyberphysicalsystem"
+		
+		val cps2dep = prepareCPSModel(cpsUri)
+				
+		cps2dep.initializeTransformation
+		executeTransformation
+		
+		info("END TEST: " + testId)
+	}
 	
 	@After
 	def cleanup() {
