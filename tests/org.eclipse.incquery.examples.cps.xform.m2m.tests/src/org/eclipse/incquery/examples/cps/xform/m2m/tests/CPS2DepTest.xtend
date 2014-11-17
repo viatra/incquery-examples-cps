@@ -29,7 +29,7 @@ class CPS2DepTest {
 	
 	@BeforeClass
 	def static setupRootLogger() {
-		Logger.getLogger("cps.xform").level = Level.TRACE
+		Logger.getLogger("cps.xform").level = Level.INFO
 	}
 	
 //	@Test

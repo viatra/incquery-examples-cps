@@ -36,12 +36,12 @@ class CPS2DeploymentTransformation {
 			Executing transformation on:
 				Cyber-physical system: «mapping.cps.id»''')
 		
-		info("Preparing queries on engine.")
+		debug("Preparing queries on engine.")
 		val watch = Stopwatch.createStarted
 		prepare(engine)
-		info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		debug('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	
-		info("Preparing transformation rules.")
+		debug("Preparing transformation rules.")
 		watch.reset.start
 		
 		val rulesBuilder = ImmutableSet.builder
@@ -61,12 +61,12 @@ class CPS2DeploymentTransformation {
 			schema.addRule(it)
 		]
 		
-		info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		debug('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 		
-		info("Initial execution of transformation rules.")
+		debug("Initial execution of transformation rules.")
 		watch.reset.start
 		schema.startUnscheduledExecution
-		info('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		debug('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	}
 	
 	def dispose() {
