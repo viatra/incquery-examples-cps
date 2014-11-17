@@ -6,11 +6,13 @@
     xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
     xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0"
     xmlns:mylyn="http://www.eclipse.org/oomph/setup/mylyn/1.0"
+    xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
     xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore"
+    xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
     name="emf.incquery.demo"
     label="EMF-IncQuery CPS Demo">
   <setupTask
@@ -218,9 +220,48 @@
       vm="true"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
-      option="-XX:MaxPermSize"
+      option="-XX:MaxPermSize="
       value="256M"
       vm="true"/>
+  <setupTask
+      xsi:type="setup.workingsets:WorkingSetTask">
+    <workingSet
+        name="CPS Domains">
+      <predicate
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*/domains/.*"/>
+    </workingSet>
+    <workingSet
+        name="CPS Queries">
+      <predicate
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*/queries/.*"/>
+    </workingSet>
+    <workingSet
+        name="CPS Transformations">
+      <predicate
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*/transformations/.*"/>
+    </workingSet>
+    <workingSet
+        name="CPS Tests">
+      <predicate
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*/tests/.*"/>
+    </workingSet>
+    <workingSet
+        name="CPS Addons">
+      <predicate
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*/addons/.*"/>
+    </workingSet>
+    <workingSet
+        name="CPS Generator">
+      <predicate
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*/generator/.*"/>
+    </workingSet>
+  </setupTask>
   <stream name="master">
     <setupTask
         xsi:type="setup:VariableTask"
