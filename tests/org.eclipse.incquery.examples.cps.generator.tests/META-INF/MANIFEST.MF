@@ -5,4 +5,8 @@ Bundle-SymbolicName: org.eclipse.incquery.examples.cps.generator.tests
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: IncQueryLabs Ltd.
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.incquery.examples.cps.generator
+Require-Bundle: org.eclipse.incquery.examples.cps.generator,
+ org.eclipse.xtend.lib,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib
+
