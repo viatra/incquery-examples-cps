@@ -13,14 +13,14 @@ import static org.junit.Assert.*
 @RunWith(Parameterized)
 class ApplicationMappingTest extends CPS2DepTest {
 	
-	new(CPSTransformationWrapper wrapper) {
-		super(wrapper)
+	new(CPSTransformationWrapper wrapper, String wrapperType) {
+		super(wrapper, wrapperType)
 	}
 	
 	@Test
 	def singleApplication() {
 		val testId = "singleApplication"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -31,7 +31,7 @@ class ApplicationMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertApplicationMapping(instance)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	def assertApplicationMapping(CPSToDeployment cps2dep, ApplicationInstance instance) {
@@ -48,7 +48,7 @@ class ApplicationMappingTest extends CPS2DepTest {
 	@Test
 	def applicationIncremental() {
 		val testId = "applicationIncremental"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -61,13 +61,13 @@ class ApplicationMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertApplicationMapping(instance)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeApplicationFromType() {
 		val testId = "removeApplicationFromType"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -86,13 +86,13 @@ class ApplicationMappingTest extends CPS2DepTest {
 		assertTrue("Application not removed from deployment", applications.empty)
 		assertEquals("Trace not removed", 1, cps2dep.traces.size)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def deallocateApplication() {
 		val testId = "deallocateApplication"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -111,13 +111,13 @@ class ApplicationMappingTest extends CPS2DepTest {
 		assertTrue("Application not removed from deployment", applications.empty)
 		assertEquals("Trace not removed", 1, cps2dep.traces.size)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def reallocateApplication() {
 		val testId = "reallocateApplication"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -137,13 +137,13 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val applications2 = cps2dep.deployment.hosts.last.applications
 		assertFalse("Application not moved to host2 in deployment", applications2.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def changeApplicationId() {
 		val testId = "changeApplicationId"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -159,13 +159,13 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val applications = cps2dep.deployment.hosts.head.applications
 		assertEquals("Application ID not changed in deployment", instance.id, applications.head.id)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeHostInstanceOfApplication() {
 		val testId = "removeHostInstanceOfApplication"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -183,6 +183,6 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val traces = cps2dep.traces.filter[cpsElements.contains(instance)]
 		assertTrue("Traces not removed", traces.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 }

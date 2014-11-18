@@ -14,14 +14,14 @@ import static org.junit.Assert.*
 @RunWith(Parameterized)
 class ActionMappingTest extends CPS2DepTest {
 	
-	new(CPSTransformationWrapper wrapper) {
-		super(wrapper)
+	new(CPSTransformationWrapper wrapper, String wrapperType) {
+		super(wrapper, wrapperType)
 	}
 	
 	@Test
 	def sendWithSingleWait() {
 		val testId = "sendWithSingleWait"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -50,7 +50,7 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertActionMapping(transition, transition2)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	def assertActionMapping(CPSToDeployment cps2dep, Transition sendTransition, Transition waitTransition) {
@@ -69,7 +69,7 @@ class ActionMappingTest extends CPS2DepTest {
 	@Test
 	def sendWithoutWait() {
 		val testId = "sendWithoutWait"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -85,13 +85,13 @@ class ActionMappingTest extends CPS2DepTest {
 
 		cps2dep.assertNoTrigger(transition)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def waitWithoutSend() {
 		val testId = "waitWithoutSend"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -107,13 +107,13 @@ class ActionMappingTest extends CPS2DepTest {
 
 		cps2dep.assertNoTrigger(transition)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def sendWithMultipleWait() {
 		val testId = "sendWithMultipleWait"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -159,13 +159,13 @@ class ActionMappingTest extends CPS2DepTest {
 		assertTrue("Trigger incorrect (depWait)", depSend.trigger.contains(depWait))
 		assertTrue("Trigger incorrect (depWait3)", depSend.trigger.contains(depWait3))
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeSendActionOfTransition() {
 		val testId = "removeSendActionOfTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -200,13 +200,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertNoTrigger(transition)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeLastWaitTransition() {
 		val testId = "removeLastWaitTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -241,7 +241,7 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertNoTrigger(transition)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	def assertNoTrigger(CPSToDeployment cps2dep, Transition transition) {
@@ -255,7 +255,7 @@ class ActionMappingTest extends CPS2DepTest {
 	@Test
 	def removeWaitTransitionFromMultiple() {
 		val testId = "removeWaitTransitionFromMultiple"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -307,13 +307,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertActionMapping(transition, transition3)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def addFirstWaitTransition() {
 		val testId = "addFirstWaitTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -347,13 +347,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertActionMapping(transition, transition2)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def addSecondWaitTransition() {
 		val testId = "addecondWaitTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -405,13 +405,13 @@ class ActionMappingTest extends CPS2DepTest {
 		assertTrue("Trigger incorrect (depWait)", depSend.trigger.contains(depWait))
 		assertTrue("Trigger incorrect (depWait3)", depSend.trigger.contains(depWait3))
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def changeSendActionOfTransition() {
 		val testId = "changeSendActionOfTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -450,13 +450,13 @@ class ActionMappingTest extends CPS2DepTest {
 
 		cps2dep.assertActionMapping(transition, transition3)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def changeWaitActionOfTransition() {
 		val testId = "changeWaitActionOfTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -497,13 +497,13 @@ class ActionMappingTest extends CPS2DepTest {
 		cps2dep.assertActionMapping(transition2, transition3)
 		cps2dep.assertNoTrigger(transition)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def moveApplicationInstanceOfWait() {
 		val testId = "moveApplicationInstanceOfWait"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -540,13 +540,13 @@ class ActionMappingTest extends CPS2DepTest {
 		cps2dep.assertActionMapping(transition, transition2)
 		
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeApplicationInstanceOfWait() {
 		val testId = "removeApplicationInstanceOfWait"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -582,13 +582,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertNoTrigger(transition)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def addApplicationInstanceOfSend() {
 		val testId = "addApplicationInstanceOfSend"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -636,13 +636,13 @@ class ActionMappingTest extends CPS2DepTest {
 			assertEquals("Trigger incorrect", #[depWait], send.trigger)
 		]
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def moveApplicationInstanceOfSend() {
 		val testId = "moveApplicationInstanceOfSend"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -678,13 +678,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertActionMapping(transition, transition2)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeApplicationInstanceOfSend() {
 		val testId = "removeApplicationInstanceOfSend"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -721,13 +721,13 @@ class ActionMappingTest extends CPS2DepTest {
 		val sendTrace = cps2dep.traces.findFirst[cpsElements.contains(transition)]
 		assertNull("Send transition not removed", sendTrace)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def moveHostInstanceOfWait() {
 		val testId = "moveHostInstanceOfWait"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -763,13 +763,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertActionMapping(transition, transition2)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeHostInstanceOfWait() {
 		val testId = "removeHostInstanceOfWait"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -805,13 +805,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertNoTrigger(transition)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def addHostInstanceOfSend() {
 		val testId = "addHostInstanceOfSend"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -861,13 +861,13 @@ class ActionMappingTest extends CPS2DepTest {
 			assertEquals("Trigger incorrect", #[depWait], send.trigger)
 		]
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def moveHostInstanceOfSend() {
 		val testId = "moveHostInstanceOfSend"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -903,13 +903,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertActionMapping(transition, transition2)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeHostInstanceOfSend() {
 		val testId = "removeHostInstanceOfSend"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -946,13 +946,13 @@ class ActionMappingTest extends CPS2DepTest {
 		val sendTrace = cps2dep.traces.findFirst[cpsElements.contains(transition)]
 		assertNull("Send transition not removed", sendTrace)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def addHostCommunication() {
 		val testId = "addHostCommunication"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -986,13 +986,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertActionMapping(transition, transition2)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def addTransitiveHostCommunication() {
 		val testId = "addTransitiveHostCommunication"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -1029,13 +1029,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertActionMapping(transition, transition2)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeHostCommunication() {
 		val testId = "removeHostCommunication"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -1070,13 +1070,13 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertNoTrigger(transition)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeTransitiveHostCommunication() {
 		val testId = "removeTransitiveHostCommunication"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
@@ -1114,6 +1114,6 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertNoTrigger(transition)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 }

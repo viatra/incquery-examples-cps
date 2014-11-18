@@ -5,12 +5,14 @@ import org.eclipse.incquery.examples.cps.xform.m2m.batch.simple.CPS2DeploymentBa
 
 class BatchSimple extends CPSTransformationWrapper {
 
-	val xform = new CPS2DeploymentBatchTransformationSimple
+	CPS2DeploymentBatchTransformationSimple xform
 
 	override initializeTransformation(CPSToDeployment cps2dep) {
+		xform = new CPS2DeploymentBatchTransformationSimple(cps2dep)
 	}
 
 	override executeTransformation() {
+		xform.execute
 	}
 
 	override cleanupTransformation() {

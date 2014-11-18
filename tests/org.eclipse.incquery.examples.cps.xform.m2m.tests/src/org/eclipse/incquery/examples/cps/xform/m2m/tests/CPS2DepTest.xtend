@@ -22,18 +22,29 @@ class CPS2DepTest {
 	protected extension CPSTransformationWrapper xform
 	protected extension CPSModelBuilderUtil modelBuilder
 	
-	@Parameters
+	String wrapperType
+	
+	@Parameters(name = "{index}: {1}")
     public static def transformations() {
         #[
-        	#[new ExplicitTraceability()].toArray
-        	,#[new BatchIncQuery()].toArray
-        	,#[new BatchSimple()].toArray
+        	#[new ExplicitTraceability(), "ExplicitTraceability"].toArray
+        	,#[new BatchIncQuery(), "BatchIncQuery"].toArray
+        	,#[new BatchSimple(), "BatchSimple"].toArray
         ]
     }
     
-    new(CPSTransformationWrapper wrapper){
+    new(CPSTransformationWrapper wrapper, String wrapperType){
     	xform = wrapper
     	modelBuilder = new CPSModelBuilderUtil
+    	this.wrapperType = wrapperType
+    }
+    
+    def startTest(String testId){
+    	info('''START TEST: type: «wrapperType» ID: «testId»''')
+    }
+    
+    def endTest(String testId){
+    	info('''END TEST: type: «wrapperType» ID: «testId»''')
     }
 	
 	@BeforeClass
@@ -50,7 +61,7 @@ class CPS2DepTest {
 	@Test
 	def specificInputModel(){
 		val testId = "specificInputModel"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cpsUri = "file://my-cps-git-location/models/org.eclipse.incquery.examples.cps.instances/example.cyberphysicalsystem"
 		
@@ -59,7 +70,7 @@ class CPS2DepTest {
 		cps2dep.initializeTransformation
 		executeTransformation
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@After

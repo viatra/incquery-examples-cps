@@ -17,14 +17,14 @@ import static org.junit.Assert.*
 @RunWith(Parameterized)
 class TransitionMappingTest extends CPS2DepTest {
 	
-	new(CPSTransformationWrapper wrapper) {
-		super(wrapper)
+	new(CPSTransformationWrapper wrapper, String wrapperType) {
+		super(wrapper,wrapperType)
 	}
 	
 	@Test
 	def singleTransitionWithoutTarget() {
 		val testId = "singleTransitionWithoutTarget"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -42,7 +42,7 @@ class TransitionMappingTest extends CPS2DepTest {
 		val trace = cps2dep.traces.findFirst[cpsElements.contains(transition)]
 		assertNull("Trace should not be created", trace)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	def assertTransitionMapping(CPSToDeployment cps2dep, Transition transition, State source) {
@@ -65,7 +65,7 @@ class TransitionMappingTest extends CPS2DepTest {
 	@Test
 	def singleTransitionWithTargetState() {
 		val testId = "singleTransitionWithTargetState"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -86,13 +86,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		val depTarget = cps2dep.traces.findFirst[cpsElements.contains(target)].deploymentElements.head as BehaviorState
 		assertTrue("Target state not set", depTrans.to == depTarget)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def transitionIncremental() {
 		val testId = "transitionIncremental"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -109,13 +109,13 @@ class TransitionMappingTest extends CPS2DepTest {
 
 		cps2dep.assertTransitionMapping(transition, source)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def changeTransitionId() {
 		val testId = "changeTransitionId"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -137,13 +137,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		assertNotNull("Transition not transformed", depTrans)
 		assertEquals("Id not changed in deployment", transition.id, depTrans.description)
 				
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def changeTransitionTarget() {
 		val testId = "changeTransitionId"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -167,13 +167,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		val depTarget2 = behavior.states.findFirst[description == target2.id]
 		assertEquals("Target state not changed in deployment", depTarget2, depTrans.to)
 				
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeTransition() {
 		val testId = "removeTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -197,13 +197,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		val trace = cps2dep.traces.findFirst[cpsElements.contains(transition)]
 		assertNull("Trace not removed", trace)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeSourceState() {
 		val testId = "removeSourceState"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -227,13 +227,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		val trace = cps2dep.traces.findFirst[cpsElements.contains(transition)]
 		assertNull("Trace not removed", trace)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeTargetState() {
 		val testId = "removeTargetState"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -257,13 +257,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		val trace = cps2dep.traces.findFirst[cpsElements.contains(transition)]
 		assertNull("Trace not removed", trace)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def moveTransitionInsideStateMachine() {
 		val testId = "moveTransitionInsideStateMachine"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -293,13 +293,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		assertNotNull("Second source not found", depSource2)
 		assertEquals("Source state not changed", #[depTrans], depSource2.outgoing)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def addApplicationInstanceOfTransition() {
 		val testId = "addApplicationInstanceOfTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -323,13 +323,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		assertEquals("Incorrect number of traces created", 1, traces.size)
 		assertEquals("Trace is not complete (depElements)", 2, traces.head.deploymentElements.size)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def moveApplicationInstanceOfTransition() {
 		val testId = "moveApplicationInstanceOfTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -364,13 +364,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		]
 		assertFalse("Transition not in app", behaviorTraces.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeApplicationInstanceOfTransition() {
 		val testId = "removeApplicationInstanceOfTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -392,13 +392,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		val traces = cps2dep.traces.filter[cpsElements.contains(transition)]
 		assertTrue("Trace not removed", traces.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeHostInstanceOfTransition() {
 		val testId = "removeHostInstanceOfTransition"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -420,6 +420,6 @@ class TransitionMappingTest extends CPS2DepTest {
 		val traces = cps2dep.traces.filter[cpsElements.contains(transition)]
 		assertTrue("Traces not removed", traces.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 }

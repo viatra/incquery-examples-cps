@@ -14,14 +14,14 @@ import static org.junit.Assert.*
 @RunWith(Parameterized)
 class StateMachineMappingTest extends CPS2DepTest {
 	
-	new(CPSTransformationWrapper wrapper) {
-		super(wrapper)
+	new(CPSTransformationWrapper wrapper, String wrapperType) {
+		super(wrapper,wrapperType)
 	}
 	
 	@Test
 	def singleStateMachine() {
 		val testId = "singleStateMachine"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -33,7 +33,7 @@ class StateMachineMappingTest extends CPS2DepTest {
 
 		cps2dep.assertStateMachineMapping(sm)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	def assertStateMachineMapping(CPSToDeployment cps2dep, StateMachine sm) {
@@ -50,7 +50,7 @@ class StateMachineMappingTest extends CPS2DepTest {
 	@Test
 	def stateMachineIncremental() {
 		val testId = "stateMachineIncremental"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -64,13 +64,13 @@ class StateMachineMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertStateMachineMapping(sm)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeStateMachine() {
 		val testId = "removeStateMachine"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -91,13 +91,13 @@ class StateMachineMappingTest extends CPS2DepTest {
 		val trace = cps2dep.traces.findFirst[cpsElements.contains(sm)]
 		assertNull("Trace not removed", trace)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def changeStateMachineId() {
 		val testId = "changeStateMachineId"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -114,13 +114,13 @@ class StateMachineMappingTest extends CPS2DepTest {
 		val application = cps2dep.deployment.hosts.head.applications.head
 		assertEquals("Id not changed in deployment", sm.id, application.behavior.description)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def addApplicationInstance() {
 		val testId = "addApplicationInstance"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -141,13 +141,13 @@ class StateMachineMappingTest extends CPS2DepTest {
 		assertEquals("Incorrect number of traces created", 1, traces.size)
 		assertEquals("Trace is not complete (depElements)", 2, traces.head.deploymentElements.size)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeApplicationInstance() {
 		val testId = "removeApplicationInstance"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -166,13 +166,13 @@ class StateMachineMappingTest extends CPS2DepTest {
 		val traces = cps2dep.traces.filter[cpsElements.contains(sm)]
 		assertTrue("Trace not removed", traces.empty)
 
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def moveStateMachine() {
 		val testId = "moveStateMachine"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -194,13 +194,13 @@ class StateMachineMappingTest extends CPS2DepTest {
 		val appTraces = cps2dep.traces.filter[deploymentElements.filter(typeof(DeploymentApplication)).exists[behavior == depBehavior]]
 		assertFalse("State machine not moved", appTraces.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def moveApplicationInstance() {
 		val testId = "moveApplicationInstance"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -224,13 +224,13 @@ class StateMachineMappingTest extends CPS2DepTest {
 		val appTraces = cps2dep.traces.filter[deploymentElements.filter(typeof(DeploymentApplication)).exists[behavior == depBehavior]]
 		assertFalse("Behavior not in app", appTraces.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeHostInstanceOfBehavior() {
 		val testId = "removeHostInstanceOfBehavior"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val hostInstance = cps2dep.prepareHostInstance
@@ -249,6 +249,6 @@ class StateMachineMappingTest extends CPS2DepTest {
 		val traces = cps2dep.traces.filter[cpsElements.contains(sm)]
 		assertTrue("Traces not removed", traces.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 }

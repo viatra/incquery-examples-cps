@@ -13,14 +13,14 @@ import static org.junit.Assert.*
 @RunWith(Parameterized)
 class HostMappingTest extends CPS2DepTest {
 	
-	new(CPSTransformationWrapper wrapper) {
-		super(wrapper)
+	new(CPSTransformationWrapper wrapper, String wrapperType) {
+		super(wrapper, wrapperType)
 	}
 	
 	@Test
 	def singleHost() {
 		val testId = "singleHost"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		val instance = cps2dep.prepareHostInstance
@@ -30,7 +30,7 @@ class HostMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertHostMapping(instance)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	def assertHostMapping(CPSToDeployment cps2dep, HostInstance instance) {
@@ -47,7 +47,7 @@ class HostMappingTest extends CPS2DepTest {
 	@Test
 	def hostIncremental() {
 		val testId = "hostIncremental"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 				
@@ -59,13 +59,13 @@ class HostMappingTest extends CPS2DepTest {
 		
 		cps2dep.assertHostMapping(instance)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def removeHost() {
 		val testId = "removeHost"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		
@@ -85,13 +85,13 @@ class HostMappingTest extends CPS2DepTest {
 		assertTrue("Host not removed from deployment", cps2dep.deployment.hosts.empty)
 		assertTrue("Trace not removed", cps2dep.traces.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def changeHostIp() {
 		val testId = "changeHostIp"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		
@@ -108,6 +108,6 @@ class HostMappingTest extends CPS2DepTest {
 
 		assertTrue("Host IP not changed in deployment", cps2dep.deployment.hosts.head.ip == instance.nodeIp)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 }

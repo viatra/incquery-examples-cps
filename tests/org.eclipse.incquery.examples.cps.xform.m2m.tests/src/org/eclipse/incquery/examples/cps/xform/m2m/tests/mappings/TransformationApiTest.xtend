@@ -11,48 +11,48 @@ import static org.junit.Assert.*
 @RunWith(Parameterized)
 class TransformationApiTest extends CPS2DepTest {
 	
-	new(CPSTransformationWrapper wrapper) {
-		super(wrapper)
+	new(CPSTransformationWrapper wrapper, String wrapperType) {
+		super(wrapper, wrapperType)
 	}
 	
 	@Test(expected = NullPointerException)
 	def noMapping() {
 		val testId = "noMapping"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		initializeTransformation(null)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test(expected = IllegalArgumentException)
 	def nullCPS() {
 		val testId = "nullCPS"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		cps2dep.cps = null
 		initializeTransformation(cps2dep)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test(expected = IllegalArgumentException)
 	def nullDeployment() {
 		val testId = "nullDeployment"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		cps2dep.deployment = null
 		initializeTransformation(cps2dep)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 	@Test
 	def emptyModel() {
 		val testId = "emptyModel"
-		info("START TEST: " + testId)
+		startTest(testId)
 		
 		val cps2dep = prepareEmptyModel(testId)
 		initializeTransformation(cps2dep)
@@ -60,7 +60,7 @@ class TransformationApiTest extends CPS2DepTest {
 		
 		assertTrue("Empty model modified (traces added)", cps2dep.traces.empty)
 		
-		info("END TEST: " + testId)
+		endTest(testId)
 	}
 	
 
