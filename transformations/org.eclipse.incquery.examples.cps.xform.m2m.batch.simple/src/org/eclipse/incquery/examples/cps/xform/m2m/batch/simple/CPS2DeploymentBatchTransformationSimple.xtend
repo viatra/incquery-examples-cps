@@ -13,62 +13,71 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 
+import static com.google.common.base.Preconditions.*
+
 class CPS2DeploymentBatchTransformationSimple {
 	
-	def execute(CPSToDeployment mapping) {
-
+	CPSToDeployment mapping;
+	
+	new (CPSToDeployment mapping) {
+		checkNotNull(mapping != null, "Mapping cannot be null!")
+		checkArgument(mapping.cps != null, "CPS not defined in mapping!")
+		checkArgument(mapping.deployment != null, "Deployment not defined in mapping!")
+		
+		this.mapping = mapping;
+	}
+	
+	def execute() {
+		mapping.traces.clear
+		mapping.deployment.hosts.clear
 		// Transform host instances
-		val hosts = mapping.cps.hostInstances.map[transform(mapping)]
-		mapping.deployment.hosts.addAll(hosts)
+		val hosts = mapping.cps.hostInstances
+		val deploymentHosts = hosts.map[transform]
+		mapping.deployment.hosts.addAll(deploymentHosts)
 	}
 
-	def DeploymentHost transform(HostInstance hostInstance, CPSToDeployment mapping) {
+	def DeploymentHost transform(HostInstance hostInstance) {
 		var deploymentHost = DeploymentFactory.eINSTANCE.createDeploymentHost
 		deploymentHost.ip = hostInstance.nodeIp
-		createTrace(hostInstance, deploymentHost, mapping)
+		hostInstance.createTrace(deploymentHost)
 
 		// Transform application instances
-		var deploymentApps = hostInstance.applications.map[transform(mapping)]
+		val liveApplications = hostInstance.applications.filter[mapping.cps.appInstances.contains(it)]
+		var deploymentApps = liveApplications.map[transform]
 		deploymentHost.applications.addAll(deploymentApps)
 
 		return deploymentHost
 	}
 
-	def DeploymentApplication transform(ApplicationInstance appInstance, CPSToDeployment mapping) {
+	def DeploymentApplication transform(ApplicationInstance appInstance) {
 		var deploymentApp = DeploymentFactory.eINSTANCE.createDeploymentApplication()
 		deploymentApp.id = appInstance.id
-
-		val stateMachine = findApplicationBehavior(appInstance)
+		
+		appInstance.createTrace(deploymentApp)
+		
+		val stateMachine = appInstance.stateMachine
 
 		// Transform state machines
-		deploymentApp.createStateMachine(stateMachine, mapping)
+		//deploymentApp.createStateMachine(stateMachine)
 
 		return deploymentApp
 	}
 
-	def void createStateMachine(DeploymentApplication application, StateMachine stateMachine, CPSToDeployment mapping) {
+	def void createStateMachine(DeploymentApplication application, StateMachine stateMachine) {
 		val behavior = DeploymentFactory.eINSTANCE.createDeploymentBehavior
 		application.behavior = behavior
 
-		// Transform state machines
-		stateMachine.states.map[transform(mapping)]
+		behavior.description = stateMachine.id
 
+		stateMachine.createTrace(behavior)
+		
 	}
 
-	def BehaviorState transform(State state, CPSToDeployment mapping) {
-
-		//val behaviorState = DeploymentFactory.eINSTANCE.createBehaviorState
-		// TODO
-		return null;
-
-	}
-
-	// TODO remove it from here
-	def StateMachine findApplicationBehavior(ApplicationInstance appInstance) {
+	def StateMachine getStateMachine(ApplicationInstance appInstance) {
 		return appInstance.type.behavior;
 	}
 
-	def createTrace(Identifiable identifiable, DeploymentElement deploymentElement, CPSToDeployment mapping) {
+	def createTrace(Identifiable identifiable, DeploymentElement deploymentElement) {
 		var trace = TraceabilityFactory.eINSTANCE.createCPS2DeplyomentTrace
 		trace.cpsElements.add(identifiable)
 		trace.deploymentElements.add(deploymentElement)
