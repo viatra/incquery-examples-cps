@@ -16,7 +16,7 @@ class HostInstanceGenerationOperation implements IGeneratorOperation<CyberPhysic
 	
 	new(HostClass hostClass, HostType type){
 		this.hostClass = hostClass;
-		this.hostType = hostType;
+		this.hostType = type;
 		modelBuilder = new CPSModelBuilderUtil;
 		randUtil = new RandomUtils;
 	}
