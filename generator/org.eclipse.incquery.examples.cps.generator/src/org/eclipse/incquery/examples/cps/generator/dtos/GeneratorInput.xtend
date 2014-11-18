@@ -1,14 +1,17 @@
 package org.eclipse.incquery.examples.cps.generator.dtos
 
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorConstraints
 
 @Data
-class GeneratorInput {
+class GeneratorInput<ModelType extends EObject> extends GeneratorConfiguration<ModelType> {
 	long seed;
-	CyberPhysicalSystem cyberPhysicalSystem;
-	GeneratorConstraints constraints;
+	IGeneratorConstraints constraints;
 	
-	def copyOf(){
-		
+	new(long seed, IGeneratorConstraints constraints, ModelType modelRoot) {
+		this._seed = seed;
+		this._constraints = constraints;
+		this.modelRoot = modelRoot;
 	}
+	
 }

@@ -1,17 +1,37 @@
 package org.eclipse.incquery.examples.cps.generator.dtos
 
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.emf.ecore.EObject
+import java.util.Random
 
-
-class GeneratorFragment {
-	public val GeneratorInput input;
-	public CyberPhysicalSystem cyberPhysicalSystem;
-	public int numberOfSignals;
+class GeneratorFragment<ModelType extends EObject> extends GeneratorConfiguration<ModelType>{
+	val GeneratorInput<ModelType> input;
 	
-	new(GeneratorInput input) {
+	val Random rand;
+	
+	new(GeneratorInput<ModelType> input) {
 		this.input = input;
-		this.cyberPhysicalSystem = input.cyberPhysicalSystem;
-		this.numberOfSignals = 0;
+		this.modelRoot = input.modelRoot;
+		if(input != null){
+			this.rand = new Random(input.seed);
+		}else{
+			this.rand = new Random(0);
+		}
+		
+	}
+	
+	def getInput(){
+		return input;
+	}
+	
+	def getSeed(){
+		if(input != null){
+			return input.seed;
+		}
+		return 0;
+	}
+	
+	def getRandom(){
+		return rand;
 	}
 	
 }
