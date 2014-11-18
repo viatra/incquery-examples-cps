@@ -1,0 +1,11 @@
+package org.eclipse.incquery.examples.cps.generator.tests
+
+import "http://org.eclipse.incquery/model/cps"
+
+pattern AppTypes(appType : ApplicationType) {
+	ApplicationType(appType);
+}
+
+pattern HostTypes(hostType : HostType) {
+	HostType(hostType);
+}

@@ -63,11 +63,15 @@ class CPSModelBuilderUtil {
 	}
 	
 	def prepareHostTypeWithId(CPSToDeployment cps2dep, String hostId) {
+		prepareHostTypeWithId(cps2dep.cps, hostId);
+	}
+	
+	def prepareHostTypeWithId(CyberPhysicalSystem cps, String hostId) {
 		info('''Adding host type (ID: «hostId») to model''')
 		val host = createHostType => [
 			id = hostId
 		]
-		cps2dep.cps.hostTypes += host
+		cps.hostTypes += host
 		host
 	}
 	
@@ -89,11 +93,15 @@ class CPSModelBuilderUtil {
 	}
 	
 	def prepareApplicationTypeWithId(CPSToDeployment cps2dep, String appId) {
+		prepareApplicationTypeWithId(cps2dep.cps, appId);
+	}
+	
+	def prepareApplicationTypeWithId(CyberPhysicalSystem cps, String appId) {
 		info('''Adding application type (ID: «appId») to model''')
 		val appType = createApplicationType => [
 			id = appId
 		]
-		cps2dep.cps.appTypes += appType
+		cps.appTypes += appType
 		appType
 	}
 	
@@ -144,5 +152,9 @@ class CPSModelBuilderUtil {
 		]
 		source.outgoingTransitions += transition
 		transition
+	}
+	
+	def prepareCommunication(HostInstance srcHost, HostInstance trgHost) {
+		srcHost.communicateWith.add(trgHost);
 	}
 }
