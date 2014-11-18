@@ -12,6 +12,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.Ignore
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple
 
 @RunWith(Parameterized)
 class CPS2DepTest {
@@ -24,6 +26,8 @@ class CPS2DepTest {
     public static def transformations() {
         #[
         	#[new ExplicitTraceability()].toArray
+        	,#[new BatchIncQuery()].toArray
+        	,#[new BatchSimple()].toArray
         ]
     }
     
