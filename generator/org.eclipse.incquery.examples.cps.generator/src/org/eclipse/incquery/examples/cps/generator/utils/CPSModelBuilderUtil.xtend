@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests.util
+package org.eclipse.incquery.examples.cps.generator.utils
 
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
