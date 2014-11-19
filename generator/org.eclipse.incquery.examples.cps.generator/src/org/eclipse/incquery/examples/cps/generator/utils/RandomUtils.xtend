@@ -57,6 +57,10 @@ class RandomUtils {
 	}
 	
 	def <ListElement>randElementExcept(Collection<ListElement> list, Collection<ListElement> excepted, Random rand) throws ModelGeneratorException {
+		if(excepted.containsAll(list)){
+			return null;
+		}
+		
 		if(list.size == 1){
 			return list.get(0);
 		}

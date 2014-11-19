@@ -17,14 +17,23 @@ class CPSPhaseHostCommunication implements IGenratorPhase<CyberPhysicalSystem, C
 		val operations = Lists.newArrayList();
 		
 		// Generate communications
-		var List<HostInstance> targetInstances = Lists.newArrayList;
-		for(hostClass : fragment.hostInstances.keys){
-			for(hostInstance : fragment.hostInstances.get(hostClass)){
-				val numberOfCommLinks = hostClass.numberOfCommunicationLines.randInt(fragment.random);
-				for(i : 0 ..< numberOfCommLinks){
-					val targetHostInstance = fragment.hostInstances.values.randElementExcept(targetInstances, fragment.random);
-					targetInstances.add(targetHostInstance);
-					operations.add(new HostInstanceCommunicatesWithOperation(hostInstance, targetHostInstance));
+		if(fragment.hostInstances.values.size > 1){ // Skip if only one host instance exists
+			for(hostClass : fragment.hostInstances.keys){ // HostClasses store the configuration
+				for(hostInstance : fragment.hostInstances.get(hostClass)){ // Every HostInstance 
+					// Initialize list of forbidden targets
+					var List<HostInstance> forbiddenTargetInstances = Lists.newArrayList;
+					// Add itself to the forbidden targets
+					forbiddenTargetInstances.add(hostInstance); 
+					// Calculate the number of new communication links
+					val numberOfCommLinks = hostClass.numberOfCommunicationLines.randInt(fragment.random); 
+					// Create communication links
+					for(i : 0 ..< numberOfCommLinks){
+						val targetHostInstance = fragment.hostInstances.values.randElementExcept(forbiddenTargetInstances, fragment.random);
+						if(targetHostInstance != null){
+							forbiddenTargetInstances.add(targetHostInstance);
+							operations.add(new HostInstanceCommunicatesWithOperation(hostInstance, targetHostInstance));
+						}
+					}
 				}
 			}
 		}
