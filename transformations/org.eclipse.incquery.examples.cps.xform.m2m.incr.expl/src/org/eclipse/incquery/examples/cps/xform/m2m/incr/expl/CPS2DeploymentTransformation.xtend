@@ -56,7 +56,6 @@ class CPS2DeploymentTransformation {
 		
 		val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)
 		schema = ExecutionSchemas.createIncQueryExecutionSchema(engine, schedulerFactory)
-		schema.logger.level = getEffectiveLevel
 		rules.forEach[
 			schema.addRule(it)
 		]
