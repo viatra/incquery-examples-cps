@@ -3,7 +3,7 @@ package org.eclipse.incquery.examples.cps.generator.tests.constraints
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
-import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
+import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
 
 class SimpleCPSConstraints implements ICPSConstraints {
 	

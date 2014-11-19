@@ -14,8 +14,10 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
 Export-Package: org.eclipse.incquery.examples.cps.generator,
  org.eclipse.incquery.examples.cps.generator.dtos,
+ org.eclipse.incquery.examples.cps.generator.exceptions,
  org.eclipse.incquery.examples.cps.generator.impl,
  org.eclipse.incquery.examples.cps.generator.impl.dtos,
+ org.eclipse.incquery.examples.cps.generator.impl.interfaces,
  org.eclipse.incquery.examples.cps.generator.impl.operations,
  org.eclipse.incquery.examples.cps.generator.interfaces,
  org.eclipse.incquery.examples.cps.generator.utils

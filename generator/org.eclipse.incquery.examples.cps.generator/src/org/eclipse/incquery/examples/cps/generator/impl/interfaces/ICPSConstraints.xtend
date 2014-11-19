@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.interfaces
+package org.eclipse.incquery.examples.cps.generator.impl.interfaces
 
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass

@@ -11,7 +11,7 @@ import org.eclipse.incquery.examples.cps.generator.ModelGenerator
 import org.eclipse.incquery.examples.cps.generator.impl.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSGeneratorInput
-import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
+import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.SimpleCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.utils.PersistenceUtil
