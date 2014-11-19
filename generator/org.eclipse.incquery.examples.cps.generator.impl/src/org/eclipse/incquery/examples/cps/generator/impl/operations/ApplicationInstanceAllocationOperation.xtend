@@ -32,6 +32,9 @@ class ApplicationInstanceAllocationOperation implements IGeneratorOperation<Cybe
 			val hostInstances = getHostInstancesOfHostClass(fragment, hostClass);
 			val sizeOfHosts = hostInstances.size;
 			for(i : 0 ..< allocCount){
+				if(sizeOfHosts == 0){
+					info("!!! Error: 0 size of hosts: " + hostClass.name);
+				}
 				val host = hostInstances.get(i % sizeOfHosts);
 				val app = applicationInstances.get(i);
 				info('''Allocate «app.id» to «host.id»''')

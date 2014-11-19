@@ -1,6 +1,8 @@
 package org.eclipse.incquery.examples.cps.generator.tests
 
+import com.google.common.base.Stopwatch
 import java.io.OutputStreamWriter
+import java.util.concurrent.TimeUnit
 import org.apache.log4j.ConsoleAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
@@ -14,6 +16,11 @@ import org.eclipse.incquery.examples.cps.generator.impl.dtos.GeneratorPlan
 import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.impl.utils.PersistenceUtil
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.AllocationCPSConstraints
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.DemoCPSConstraints
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.HostClassesCPSConstraints
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.LargeCPSConstraints
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.OnlyHostTypesCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.SimpleCPSConstraints
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil
@@ -21,12 +28,6 @@ import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.OnlyHostTypesCPSConstraints
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.DemoCPSConstraints
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.AllocationCPSConstraints
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.HostClassesCPSConstraints
-import com.google.common.base.Stopwatch
-import java.util.concurrent.TimeUnit
 
 class GeneratorTest {
 	
@@ -60,6 +61,11 @@ class GeneratorTest {
 	@Test
 	def testHostClasses(){
 		runGeneratorOn(new HostClassesCPSConstraints(), 111111);
+	}
+	
+	@Test
+	def testLargeModel(){
+		runGeneratorOn(new LargeCPSConstraints(), 111111);
 	}
 	
 	def runGeneratorOn(ICPSConstraints constraints, long seed) {
@@ -98,7 +104,9 @@ class GeneratorTest {
 		
 		// Persist model
 		var Stopwatch persistTime = Stopwatch.createStarted;
-		PersistenceUtil.saveCPSModelToFile(out.modelRoot, "C:/output/model_"+System.nanoTime+".cyberphysicalsystem");
+		val filePath = "C:/output/model_"+System.nanoTime+".cyberphysicalsystem";
+		info("Generated Model is saved to \"" + filePath+"\"");
+		PersistenceUtil.saveCPSModelToFile(out.modelRoot, filePath);
 		persistTime.stop;
 		info("Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
