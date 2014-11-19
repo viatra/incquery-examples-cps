@@ -18,7 +18,7 @@ class CPSPhaseHostCommunication implements IGenratorPhase<CyberPhysicalSystem, C
 	
 		// TODO optimize!
 		var hostInstances = Lists.newArrayList;
-		for(hostClass : fragment.hostTypes.keys){
+		for(hostClass : fragment.hostTypes.keySet){
 			for(hostType : fragment.hostTypes.get(hostClass)){
 				hostInstances.addAll(hostType.instances);
 			}		
@@ -26,7 +26,7 @@ class CPSPhaseHostCommunication implements IGenratorPhase<CyberPhysicalSystem, C
 
 
 		// Generate communications
-		for(hostClass : fragment.hostTypes.keys){ // HostClasses store the configuration
+		for(hostClass : fragment.hostTypes.keySet){ // HostClasses store the configuration
 			for(hostType : fragment.hostTypes.get(hostClass)){ // Every HostInstance
 				for(hostInstance : hostType.instances){
 					// Initialize list of forbidden targets

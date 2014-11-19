@@ -13,7 +13,7 @@ class CPSPhaseInstanceGeneration implements IGenratorPhase<CyberPhysicalSystem, 
 		val operations = Lists.newArrayList();
 		
 		// ApplicationInstances
-		for(appClass : fragment.applicationTypes.keys){
+		for(appClass : fragment.applicationTypes.keySet){
 			val appTypes = fragment.applicationTypes.get(appClass);
 			if(appTypes != null){
 				for(appType : appTypes){
@@ -25,7 +25,7 @@ class CPSPhaseInstanceGeneration implements IGenratorPhase<CyberPhysicalSystem, 
 		
 		// Generate Host Instances
 		// HostClasses
-		for(hostClass : fragment.hostTypes.keys){
+		for(hostClass : fragment.hostTypes.keySet){
 			val types = fragment.hostTypes.get(hostClass);
 			// HostTypes
 			if(types != null){

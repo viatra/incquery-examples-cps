@@ -24,14 +24,14 @@ class CPSPhaseApplicationAllocation implements IGenratorPhase<CyberPhysicalSyste
 		val operations = Lists.newArrayList();
 		
 		// Add operations for Allocate applicationInstances to HostInstances
-		for(appClass : fragment.applicationTypes.keys){
+		for(appClass : fragment.applicationTypes.keySet){
 			val apps = collectApplicationInstancesForAllocationByAppClass(appClass, fragment);
 			if(!apps.empty){
 				var sumRatio = calculateSumRatio(appClass);
 				if(sumRatio != 0){
 					val allocationRatios = new HashMap<HostClass, Double>();
 					for(hostClass : appClass.allocationRatios.keySet){
-						var numberOfAllocatedApps = (appClass.allocationRatios.get(hostClass) as double) / (sumRatio as double) * sumRatio;				
+						var numberOfAllocatedApps = ((appClass.allocationRatios.get(hostClass) as double) / (sumRatio as double)) * apps.size;				
 						allocationRatios.put(hostClass, numberOfAllocatedApps);
 					}
 					val normRatios = normalizeRatios(allocationRatios, sumRatio, apps.size);

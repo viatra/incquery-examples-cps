@@ -22,6 +22,9 @@ import org.junit.Test
 
 import static org.junit.Assert.*
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.OnlyHostTypesCPSConstraints
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.DemoCPSConstraints
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.AllocationCPSConstraints
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.HostClassesCPSConstraints
 
 class GeneratorTest {
 	
@@ -40,6 +43,21 @@ class GeneratorTest {
 	@Test
 	def testOnlyHostTypes(){
 		runGeneratorOn(new OnlyHostTypesCPSConstraints(), 111111);
+	}
+	
+	@Test
+	def testDemo(){
+		runGeneratorOn(new DemoCPSConstraints(), 111111);
+	}
+	
+	@Test
+	def testAllocation(){
+		runGeneratorOn(new AllocationCPSConstraints(), 111111);
+	}
+	
+	@Test
+	def testHostClasses(){
+		runGeneratorOn(new HostClassesCPSConstraints(), 111111);
 	}
 	
 	def runGeneratorOn(ICPSConstraints constraints, long seed) {
