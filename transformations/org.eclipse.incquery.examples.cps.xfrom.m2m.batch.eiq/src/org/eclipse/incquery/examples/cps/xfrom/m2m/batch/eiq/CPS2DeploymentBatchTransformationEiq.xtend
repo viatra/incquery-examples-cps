@@ -1,9 +1,10 @@
 package org.eclipse.incquery.examples.cps.xfrom.m2m.batch.eiq
 
+import com.google.common.base.Stopwatch
 import java.util.List
+import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFactory
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.State
@@ -15,6 +16,7 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentElement
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
+import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 import org.eclipse.incquery.examples.cps.xfrom.m2m.batch.eiq.queries.CpsXformM2M
@@ -27,7 +29,6 @@ class CPS2DeploymentBatchTransformationEiq {
 	extension Logger logger = Logger.getLogger("cps.xform.CPS2DeploymentTransformation")
 	extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
-	CyberPhysicalSystemFactory cpsFactory = CyberPhysicalSystemFactory.eINSTANCE
 	DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
 	TraceabilityFactory tracFactory = TraceabilityFactory.eINSTANCE
 
@@ -52,138 +53,183 @@ class CPS2DeploymentBatchTransformationEiq {
 			Executing transformation on:
 				Cyber-physical system: «mapping.cps.id»''')
 
+		val watch = Stopwatch.createStarted
+
+		debug("Running host transformations.")
 		mapping.cps.hostInstances.forEach[transform]
+		debug('''Running host transformations(«watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 
-		mapping.cps.appInstances.filter[allocatedTo != null && mapping.cps.hostInstances.contains(allocatedTo)].forEach [
-			transform
-		]
+		watch.reset.start
 
-		engine.depTransition.allMatches.map[depTransition].forEach [
-			mapAction
-		]
+		debug("Running action transformations.")
+		engine.depTransition.allMatches.map[depTransition].forEach[mapAction]
+		debug('''Running action transformations(«watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	}
 
 	private def transform(HostInstance cpsHost) {
-		val depHost = createDepHost(cpsHost)
+		trace('''Executing: transform(cpsHost = «cpsHost»)''')
+		val depHost = cpsHost.createDepHost
+
+		debug('''Adding host («depHost.description») to deployment model.''')
 		mapping.deployment.hosts += depHost
 		addTrace(cpsHost, depHost)
+
+		cpsHost.applications.filter[mapping.cps.appInstances.contains(it)].forEach [
+			transform(depHost)
+		]
+		trace('''Execution ended: transform''')
 	}
 
-	private def transform(ApplicationInstance cpsInstance) {
-		val depHost = getDepHost(cpsInstance)
-		val depApp = createDepApplication(cpsInstance)
+	private def transform(ApplicationInstance cpsInstance, DeploymentHost depHost) {
+		trace('''Executing: transform(cpsInstance = «cpsInstance», depHost = «depHost»)''')
+		val depApp = cpsInstance.createDepApplication
+
 		depHost.applications += depApp
 		addTrace(cpsInstance, depApp)
-		cpsInstance.type.behavior.transform(depApp)
+
+		cpsInstance.type.behavior?.transform(depApp)
+		trace('''Execution ended: transform''')
 	}
 
 	private def transform(StateMachine cpsBehavior, DeploymentApplication depApp) {
-		if (cpsBehavior != null) {
-			val depBehavior = createDepBehavior(cpsBehavior)
-			addTraceOneToN(cpsBehavior, #[depBehavior])
-			cpsBehavior.states.forEach [
-				val depState = createDepState
-				depBehavior.states += depState
-				addTraceOneToN(it, #[depState])
-			]
-			cpsBehavior.states.forEach [
-				buildStateRelations(depBehavior, cpsBehavior)
-			]
-			if (cpsBehavior.initial != null)
-				depBehavior.current = getCps2depTrace(engine).getAllMatches(mapping, null, cpsBehavior.initial, null).
-					map[depElement].head as BehaviorState
-			else
-				depBehavior.current = null
-			depApp.behavior = depBehavior
-		}
+		trace('''Executing: transform(cpsBehavior = «cpsBehavior», depApp = «depApp»)''')
+		val depBehavior = cpsBehavior.createDepBehavior
+
+		depApp.behavior = depBehavior
+		addTraceOneToN(cpsBehavior, #[depBehavior])
+
+		cpsBehavior.states.forEach [
+			transform(depBehavior)
+		]
+
+		cpsBehavior.states.forEach [
+			buildStateRelations(depBehavior, cpsBehavior)
+		]
+
+		if (cpsBehavior.initial != null)
+			depBehavior.current = engine.cps2depTrace.getAllMatches(mapping, null, cpsBehavior.initial, null).map[
+				depElement].head as BehaviorState
+		else
+			depBehavior.current = null
+		trace('''Execution ended: transform''')
+	}
+
+	private def transform(State cpsState, DeploymentBehavior depBehavior) {
+		trace('''Executing: transform(cpsState = «cpsState», depBehavior = «depBehavior»)''')
+		val depState = cpsState.createDepState
+
+		depBehavior.states += depState
+		addTraceOneToN(cpsState, #[depState])
+		trace('''Execution ended: transform''')
 	}
 
 	private def buildStateRelations(State cpsState, DeploymentBehavior depBehavior, StateMachine cpsBehavior) {
-		val depState = getCps2depTrace(engine).getAllMatches(mapping, null, cpsState, null).map[depElement].head as BehaviorState
+		trace(
+			'''Executing: buildStateRelations(cpsState = «cpsState», depBehavior = «depBehavior», cpsBehavior = «cpsBehavior»)''')
+		val depState = engine.cps2depTrace.getAllMatches(mapping, null, cpsState, null).map[depElement].head as BehaviorState
 		cpsState.outgoingTransitions.filter[targetState != null && cpsBehavior.states.contains(targetState)].forEach [
 			mapTransition(depState, depBehavior)
 		]
+		trace('''Execution ended: buildStateRelations''')
 	}
 
 	private def mapTransition(Transition transition, BehaviorState depState, DeploymentBehavior depBehavior) {
+		trace(
+			'''Executing: mapTransition(transition = «transition», depState = «depState», depBehavior = «depBehavior»)''')
 		val depTransition = transition.createDepTransition
+
 		depState.outgoing += depTransition
 		depBehavior.transitions += depTransition
 		addTraceOneToN(transition, #[depTransition])
-		depTransition.to = getCps2depTrace(engine).getAllMatches(mapping, null, transition.targetState, null).map[
+
+		depTransition.to = engine.cps2depTrace.getAllMatches(mapping, null, transition.targetState, null).map[
 			depElement].head as BehaviorState
+		trace('''Execution ended: mapTransition''')
 	}
 
 	private def mapAction(BehaviorTransition depTrigger) {
-		val cpsTransition = getCps2depTrace(engine).getAllMatches(mapping, null, null, depTrigger).map[cpsElement].
-			head as Transition
+		trace('''Executing: mapAction(depTrigger = «depTrigger»)''')
+		val cpsTransition = engine.cps2depTrace.getAllMatches(mapping, null, null, depTrigger).map[cpsElement].head as Transition
 		depTrigger.trigger += engine.triggerPair.getAllMatches(cpsTransition, null).map[depTarget]
+		trace('''Execution ended: mapAction''')
+	}
+
+	private def createDepHost(HostInstance cpsHost) {
+		trace('''Executing: createDepHost(cpsHost = «cpsHost»)''')
+		val depHost = depFactory.createDeploymentHost
+
+		depHost.ip = cpsHost.nodeIp
+		trace('''Execution ended: createDepHost''')
+		depHost
+	}
+
+	private def createDepApplication(ApplicationInstance cpsAppInstance) {
+		trace('''Executing: createDepApplication(cpsAppInstance = «cpsAppInstance»)''')
+		val depApp = depFactory.createDeploymentApplication
+
+		depApp.id = cpsAppInstance.id
+		trace('''Execution: createDepApplication''')
+		depApp
+	}
+
+	private def createDepBehavior(StateMachine cpsBehavior) {
+		trace('''Executing: createDepBehavior(cpsBehavior = «cpsBehavior»)''')
+		val depBehavior = depFactory.createDeploymentBehavior
+
+		depBehavior.description = cpsBehavior.id
+		trace('''Execution ended: createDepBehavior''')
+		depBehavior
 	}
 
 	private def createDepState(State cpsState) {
+		trace('''Executing: createDepState(cpsState = «cpsState»)''')
 		val depState = depFactory.createBehaviorState
 
 		depState.description = cpsState.id
+		trace('''Execution ended: createDepState''')
 		depState
 	}
 
 	private def createDepTransition(Transition cpsTransition) {
+		trace('''Executing: createDepTransition(cpsTransition = «cpsTransition»)''')
 		val depTransition = depFactory.createBehaviorTransition
 
 		depTransition.description = cpsTransition.id
+		trace('''Execution ended: createDepTransition''')
 		depTransition
 	}
 
-	def createDepBehavior(StateMachine cpsBehavior) {
-		val depBehavior = depFactory.createDeploymentBehavior
-
-		depBehavior.description = cpsBehavior.id
-		depBehavior
-	}
-
-	def clearModel() {
+	private def clearModel() {
+		trace('''Executing: clearModel()''')
 		mapping.traces.clear
 		mapping.deployment.hosts.clear
+		trace('''Execution ended: clearModel''')
 	}
 
 	private def addTraceOneToN(Identifiable cpsElement, List<? extends DeploymentElement> depElements) {
-		var trace = getCps2depTrace(engine).getAllMatches(mapping, null, cpsElement, null).map[trace].head
+		trace('''Executing: addTraceOneToN(cpsElement = «cpsElement», depElements = «depElements»)''')
+		var trace = engine.cps2depTrace.getAllMatches(mapping, null, cpsElement, null).map[trace].head
 		if (trace == null) {
 			trace = tracFactory.createCPS2DeplyomentTrace
 
 			trace.cpsElements += cpsElement
 		}
-
 		trace.deploymentElements += depElements
+
+		debug('''Adding trace («cpsElement»->«depElements») to traceability model.''')
 		mapping.traces += trace
+		trace('''Execution ended: addTraceOneToN''')
 	}
 
 	private def addTrace(Identifiable cpsElement, DeploymentElement depElement) {
+		trace('''Executing: addTrace(cpsElement = «cpsElement», depElement = «depElement»)''')
 		val trace = tracFactory.createCPS2DeplyomentTrace
 
 		trace.cpsElements += cpsElement
 		trace.deploymentElements += depElement
 
+		debug('''Adding trace («cpsElement»->«depElement») to traceability model.''')
 		mapping.traces += trace
-	}
-
-	private def getDepHost(ApplicationInstance cpsAppInstance) {
-		val matcher = getMappedHostInstance(engine)
-		val match = matcher.getAllMatches(cpsAppInstance.allocatedTo, null)
-		match.head.depHost
-	}
-
-	private def createDepHost(HostInstance cpsHost) {
-		val depHost = depFactory.createDeploymentHost
-
-		depHost.ip = cpsHost.nodeIp
-		depHost
-	}
-
-	private def createDepApplication(ApplicationInstance cpsAppInstance) {
-		val depApp = depFactory.createDeploymentApplication
-
-		depApp.id = cpsAppInstance.id
-		depApp
+		trace('''Execution ended: addTrace''')
 	}
 }

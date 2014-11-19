@@ -15,12 +15,6 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 	CPS2DeplyomentTrace.deploymentElements(trace, depElement);
 }
 
-pattern mappedHostInstance(hostInstance, depHost) {
-	find hostInstances(_, hostInstance);
-	find cps2depTrace(_, _, hostInstance, depHost);
-	Deployment.hosts(_, depHost);
-}
-
 pattern cpsBehaviorTrace(cpsBeh, trace) {
 	find cps2depTrace(_, trace, cpsBeh, _);
 	StateMachine(cpsBeh);
