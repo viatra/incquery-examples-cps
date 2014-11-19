@@ -3,6 +3,7 @@ package org.eclipse.incquery.examples.cps.xfrom.m2m.batch.eiq.queries
 import "http://org.eclipse.incquery/model/cps"
 import "http://org.eclipse.incquery/model/deployment"
 import "http://org.eclipse.incquery/model/cps-traceability"
+import java org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil
 
 pattern hostInstances(hostType, hostInstance) {
 	HostType.instances(hostType, hostInstance);
@@ -25,7 +26,80 @@ pattern cpsBehaviorTrace(cpsBeh, trace) {
 	StateMachine(cpsBeh);
 }
 
+pattern depTransition(depTransition) {
+	BehaviorTransition(depTransition);
+}
+
 pattern stateMachineTransitions(cpsBeh, trans) {
 	StateMachine.states(cpsBeh, state);
 	State.outgoingTransitions(state, trans);
+}
+
+pattern applicationInstance(appType, appInstance, host) {
+	ApplicationType.instances(appType, appInstance);
+	ApplicationInstance.allocatedTo(appInstance, host);
+}
+
+pattern transitionAction(transition, appType, action) {
+	State.outgoingTransitions(state, transition);
+	StateMachine.states(sm, state);
+	ApplicationType.behavior(appType, sm);
+	Transition.action(transition, action);
+}
+
+pattern sendTransition(transition, action) {
+	find transitionAction(transition, _, action);
+	check(SignalUtil.isSend(action));
+}
+
+pattern waitTransition(transition, appType, action) {
+	find transitionAction(transition, appType, action);
+	check(SignalUtil.isWait(action));
+}
+
+pattern cpsApplicationTransition(cpsApp, cpsTransition) {
+	find cps2depTrace(_, _, cpsTransition, depTransition);
+	DeploymentApplication.behavior.transitions(depApp, depTransition);
+	find cps2depTrace(_, _, cpsApp, depApp);	
+}
+
+pattern triggerPair(cpsTrigger, depTarget) {
+	find sendTransition(cpsTrigger, sendAction);
+	find waitTransition(cpsTarget, waitAppType, waitAction);
+	
+	find cps2depTrace(cps2dep, _, cpsTrigger, _);
+	find cps2depTrace(cps2dep, _, cpsTarget, depTarget);
+	
+	BehaviorTransition(depTarget);
+	
+	find cpsApplicationTransition(cpsTriggerApp, cpsTrigger);
+	find cpsApplicationTransition(cpsTargetApp, cpsTarget);
+	
+	find communicatingAppInstances(cpsTriggerApp, cpsTargetApp);
+	
+	ApplicationType.id(waitAppType, id);
+	check(
+		(id == SignalUtil.getAppId(sendAction))
+		&&
+		(SignalUtil.getSignalId(sendAction) == SignalUtil.getSignalId(waitAction))
+	);
+	
+}
+
+pattern communicatingAppInstances(sourceAppInstance, targetAppInstance) {
+	find applicationInstance(_, sourceAppInstance, sourceHostInstance);
+	find applicationInstance(_, targetAppInstance, targetHostInstance);
+	find reachableHosts(sourceHostInstance, targetHostInstance);
+}
+
+pattern hostCommunication(fromHost, toHost) {
+	HostInstance.communicateWith(fromHost, toHost);
+}
+
+pattern reachableHosts(source, target) {
+	find hostCommunication +(source, target);
+} or {
+	HostInstance(source);
+	HostInstance(target);
+	source == target;
 }

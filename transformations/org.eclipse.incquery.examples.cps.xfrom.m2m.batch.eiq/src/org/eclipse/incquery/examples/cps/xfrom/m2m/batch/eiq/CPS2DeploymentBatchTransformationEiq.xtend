@@ -10,6 +10,7 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.State
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.StateMachine
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Transition
 import org.eclipse.incquery.examples.cps.deployment.BehaviorState
+import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentElement
@@ -53,8 +54,13 @@ class CPS2DeploymentBatchTransformationEiq {
 
 		mapping.cps.hostInstances.forEach[transform]
 
-		mapping.cps.appInstances.filter[allocatedTo != null && mapping.cps.hostInstances.contains(allocatedTo)].forEach[
-			transform]
+		mapping.cps.appInstances.filter[allocatedTo != null && mapping.cps.hostInstances.contains(allocatedTo)].forEach [
+			transform
+		]
+
+		engine.depTransition.allMatches.map[depTransition].forEach [
+			mapAction
+		]
 	}
 
 	private def transform(HostInstance cpsHost) {
@@ -81,7 +87,7 @@ class CPS2DeploymentBatchTransformationEiq {
 				addTraceOneToN(it, #[depState])
 			]
 			cpsBehavior.states.forEach [
-				buildStateRelations(depBehavior)
+				buildStateRelations(depBehavior, cpsBehavior)
 			]
 			if (cpsBehavior.initial != null)
 				depBehavior.current = getCps2depTrace(engine).getAllMatches(mapping, null, cpsBehavior.initial, null).
@@ -92,16 +98,26 @@ class CPS2DeploymentBatchTransformationEiq {
 		}
 	}
 
-	private def buildStateRelations(State cpsState, DeploymentBehavior depBehavior) {
+	private def buildStateRelations(State cpsState, DeploymentBehavior depBehavior, StateMachine cpsBehavior) {
 		val depState = getCps2depTrace(engine).getAllMatches(mapping, null, cpsState, null).map[depElement].head as BehaviorState
-		cpsState.outgoingTransitions.forEach [
-			val depTransition = createDepTransition
-			depState.outgoing += depTransition
-			depBehavior.transitions += depTransition
-			addTraceOneToN(it, #[depTransition])
-			depTransition.to = getCps2depTrace(engine).getAllMatches(mapping, null, it.targetState, null).map[
-				depElement].head as BehaviorState
+		cpsState.outgoingTransitions.filter[targetState != null && cpsBehavior.states.contains(targetState)].forEach [
+			mapTransition(depState, depBehavior)
 		]
+	}
+
+	private def mapTransition(Transition transition, BehaviorState depState, DeploymentBehavior depBehavior) {
+		val depTransition = transition.createDepTransition
+		depState.outgoing += depTransition
+		depBehavior.transitions += depTransition
+		addTraceOneToN(transition, #[depTransition])
+		depTransition.to = getCps2depTrace(engine).getAllMatches(mapping, null, transition.targetState, null).map[
+			depElement].head as BehaviorState
+	}
+
+	private def mapAction(BehaviorTransition depTrigger) {
+		val cpsTransition = getCps2depTrace(engine).getAllMatches(mapping, null, null, depTrigger).map[cpsElement].
+			head as Transition
+		depTrigger.trigger += engine.triggerPair.getAllMatches(cpsTransition, null).map[depTarget]
 	}
 
 	private def createDepState(State cpsState) {
