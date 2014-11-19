@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries
+package org.eclipse.incquery.examples.cps.xform.m2m.util
 
 import java.util.regex.Pattern
 
