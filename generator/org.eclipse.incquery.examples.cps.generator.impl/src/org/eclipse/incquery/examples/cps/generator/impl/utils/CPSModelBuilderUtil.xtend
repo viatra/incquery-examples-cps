@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.utils
+package org.eclipse.incquery.examples.cps.generator.impl.utils
 
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI

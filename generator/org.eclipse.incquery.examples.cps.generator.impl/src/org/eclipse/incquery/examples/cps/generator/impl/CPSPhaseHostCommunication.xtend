@@ -28,6 +28,7 @@ class CPSPhaseHostCommunication implements IGenratorPhase<CyberPhysicalSystem, C
 					val numberOfCommLinks = hostClass.numberOfCommunicationLines.randInt(fragment.random); 
 					// Create communication links
 					for(i : 0 ..< numberOfCommLinks){
+						// Randomize target node
 						val targetHostInstance = fragment.hostInstances.values.randElementExcept(forbiddenTargetInstances, fragment.random);
 						if(targetHostInstance != null){
 							forbiddenTargetInstances.add(targetHostInstance);

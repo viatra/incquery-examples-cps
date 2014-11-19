@@ -1,29 +1,26 @@
 package org.eclipse.incquery.examples.cps.generator.impl.operations
 
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
+import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
+import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorOperation
-import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 
-class HostInstanceCommunicatesWithOperation implements IGeneratorOperation<CyberPhysicalSystem, CPSFragment> {
-	val HostInstance sourceHost;
-	val HostInstance targetHost;
-	
+class ApplicationInstanceGenerationOperation implements IGeneratorOperation<CyberPhysicalSystem, CPSFragment> {
+	val AppClass applicationClass;
 	private extension CPSModelBuilderUtil modelBuilder;
 	private extension RandomUtils randUtil
 	
-	new(HostInstance sourceHost, HostInstance targetHost){
-		this.sourceHost = sourceHost;
-		this.targetHost = targetHost;
+	new(AppClass applicationClass){
+		this.applicationClass = applicationClass;
 		modelBuilder = new CPSModelBuilderUtil;
 		randUtil = new RandomUtils;
 	}
 	
 	override execute(CPSFragment fragment) {
-		// Generate Connection between instances
-		sourceHost.prepareCommunication(targetHost);
+		// Generate ApplicationTypes
+		val numberOfAppInstances = applicationClass.numberOfAppInstances.randInt(fragment.random);
 
 		true;
 	}

@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator
+package org.eclipse.incquery.examples.cps.generator.impl.dtos
 
 import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorPlan
 import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase

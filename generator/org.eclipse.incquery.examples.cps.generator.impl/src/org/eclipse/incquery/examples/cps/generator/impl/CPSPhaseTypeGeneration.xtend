@@ -1,12 +1,12 @@
 package org.eclipse.incquery.examples.cps.generator.impl
 
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
+import com.google.common.collect.Lists
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
-import com.google.common.collect.Lists
-import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
+import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.impl.operations.ApplicationTypeGenerationOperation
 import org.eclipse.incquery.examples.cps.generator.impl.operations.HostTypeGenerationOperation
+import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
 
 class CPSPhaseTypeGeneration implements IGenratorPhase<CyberPhysicalSystem, CPSFragment>{
 	
