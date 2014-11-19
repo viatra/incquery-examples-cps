@@ -2,18 +2,18 @@ package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
+import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
 import org.junit.After
 import org.junit.BeforeClass
-import org.junit.runners.Parameterized.Parameters
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.junit.Ignore
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple
+import org.junit.runners.Parameterized.Parameters
 
 @RunWith(Parameterized)
 class CPS2DepTest {

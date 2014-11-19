@@ -1,6 +1,6 @@
 package org.eclipse.incquery.examples.cps.generator.impl
 
-import org.eclipse.incquery.examples.cps.generator.GeneratorPlan
+import org.eclipse.incquery.examples.cps.generator.impl.dtos.GeneratorPlan
 
 class CPSPlanBuilder {
 	

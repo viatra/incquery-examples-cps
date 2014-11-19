@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.utils
+package org.eclipse.incquery.examples.cps.generator.impl.utils
 
 import java.io.IOException
 import java.util.Collections
