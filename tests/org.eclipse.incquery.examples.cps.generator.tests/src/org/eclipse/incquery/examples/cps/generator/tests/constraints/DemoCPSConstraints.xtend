@@ -4,6 +4,8 @@ import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
+import java.util.HashMap
+import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 
 class DemoCPSConstraints implements ICPSConstraints {
 	
@@ -12,6 +14,7 @@ class DemoCPSConstraints implements ICPSConstraints {
 	}
 	
 	override getApplicationClasses() {
+		val firstAppClassAllocations = new HashMap();
 		#[
 			new AppClass(
 				"FirstAppClass",
@@ -19,6 +22,8 @@ class DemoCPSConstraints implements ICPSConstraints {
 				new MinMaxData(1, 10), // AppInstances
 				new MinMaxData(3, 5), // States
 				new MinMaxData(3, 10) // Transitions
+				, new Percentage(80)
+				, firstAppClassAllocations
 			),
 			
 			new AppClass(
@@ -26,7 +31,9 @@ class DemoCPSConstraints implements ICPSConstraints {
 				new MinMaxData(1, 3), // AppTypes       
 				new MinMaxData(1, 10), // AppInstances  
 				new MinMaxData(3, 5), // States         
-				new MinMaxData(3, 10) // Transitions    		
+				new MinMaxData(3, 10) // Transitions
+				, new Percentage(100)
+				, firstAppClassAllocations   		
 			)
 	];
 	}

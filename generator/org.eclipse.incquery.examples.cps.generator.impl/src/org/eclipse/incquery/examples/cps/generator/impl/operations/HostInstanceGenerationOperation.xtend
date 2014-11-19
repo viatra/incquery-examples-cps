@@ -28,7 +28,6 @@ class HostInstanceGenerationOperation implements IGeneratorOperation<CyberPhysic
 		for(i : 0 ..< numberOfHostInstances){
 			// TODO generate valid IP addresses 
 			val instance = hostType.prepareHostInstanceWithIP(hostType.id + ".inst"+i, hostType.id + ".inst"+i);
-			fragment.addHostInstance(hostClass, instance);
 		}
 
 		true;

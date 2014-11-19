@@ -21,6 +21,7 @@ import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.*
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.OnlyHostTypesCPSConstraints
 
 class GeneratorTest {
 	
@@ -33,35 +34,22 @@ class GeneratorTest {
 
 	@Test
 	def testSimple(){
-		runGeneratorOn(new SimpleCPSConstraints());
+		runGeneratorOn(new SimpleCPSConstraints(), 111111);
 	}
 	
-
-
-	def initLoggerForLevel(Level level) {
-		var ConsoleAppender ca = new ConsoleAppender();
-		ca.setWriter(new OutputStreamWriter(System.out));
-		ca.setLayout(new PatternLayout("%c{1}:%L - %m%n"));
-		var Logger rootLogger = Logger.getRootLogger();
-		rootLogger.removeAllAppenders();
-		rootLogger.addAppender(ca);
-		rootLogger.setLevel(level);
-		if(!level.isGreaterOrEqual(Level.DEBUG)){
-			// we only see EMF-IncQuery info, debug and trace messages when tracing
-			IncQueryLoggingUtil.getDefaultLogger().setLevel(level);
-		} else {
-			IncQueryLoggingUtil.getDefaultLogger().setLevel(Level.WARN);
-		}
+	@Test
+	def testOnlyHostTypes(){
+		runGeneratorOn(new OnlyHostTypesCPSConstraints(), 111111);
 	}
-
-	def runGeneratorOn(ICPSConstraints constraints) {
+	
+	def runGeneratorOn(ICPSConstraints constraints, long seed) {
 		val CPSModelBuilderUtil mb = new CPSModelBuilderUtil;
 		val cps2dep = mb.prepareEmptyModel("testModel"+System.nanoTime);
 		
 		assertNotNull(cps2dep);
 		assertNotNull(cps2dep.cps);
 		
-		val CPSGeneratorInput input = new CPSGeneratorInput(111234234, constraints, cps2dep.cps);
+		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, cps2dep.cps);
 		var GeneratorPlan plan = CPSPlanBuilder.build;
 		
 		var ModelGenerator<CyberPhysicalSystem, CPSFragment> generator = new ModelGenerator();
@@ -111,6 +99,21 @@ class GeneratorTest {
 	private def assertInRange(String variableName, int actualValue, int minExpected, int maxExpected){
 		assertTrue(variableName +  " is out of range: "+actualValue+" --> [" +minExpected + ", "+ maxExpected + "]" , minExpected <= actualValue && actualValue <= maxExpected);
 	}
-
-
+	
+	def initLoggerForLevel(Level level) {
+		var ConsoleAppender ca = new ConsoleAppender();
+		ca.setWriter(new OutputStreamWriter(System.out));
+		ca.setLayout(new PatternLayout("%c{1}:%L - %m%n"));
+		var Logger rootLogger = Logger.getRootLogger();
+		rootLogger.removeAllAppenders();
+		rootLogger.addAppender(ca);
+		rootLogger.setLevel(level);
+		if(!level.isGreaterOrEqual(Level.DEBUG)){
+			// we only see EMF-IncQuery info, debug and trace messages when tracing
+			IncQueryLoggingUtil.getDefaultLogger().setLevel(level);
+		} else {
+			IncQueryLoggingUtil.getDefaultLogger().setLevel(Level.WARN);
+		}
+	}
+	
 }

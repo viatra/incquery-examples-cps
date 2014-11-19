@@ -3,19 +3,24 @@ package org.eclipse.incquery.examples.cps.generator.impl
 import com.google.common.collect.Lists
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
+import org.eclipse.incquery.examples.cps.generator.impl.operations.ApplicationInstanceGenerationOperation
 import org.eclipse.incquery.examples.cps.generator.impl.operations.HostInstanceGenerationOperation
 import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 
 class CPSPhaseInstanceGeneration implements IGenratorPhase<CyberPhysicalSystem, CPSFragment>{
-	
-	private extension RandomUtils randUtil = new RandomUtils;
 	
 	override getOperations(CPSFragment fragment) {
 		val operations = Lists.newArrayList();
 		
 		// ApplicationInstances
-		// TODO generate Application Instances
+		for(appClass : fragment.applicationTypes.keys){
+			val appTypes = fragment.applicationTypes.get(appClass);
+			if(appTypes != null){
+				for(appType : appTypes){
+					operations.add(new ApplicationInstanceGenerationOperation(appClass, appType));
+				}			
+			}
+		}
 
 		
 		// Generate Host Instances

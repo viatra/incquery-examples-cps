@@ -15,11 +15,20 @@ class CPSPhaseHostCommunication implements IGenratorPhase<CyberPhysicalSystem, C
 	
 	override getOperations(CPSFragment fragment) {
 		val operations = Lists.newArrayList();
-		
+	
+		// TODO optimize!
+		var hostInstances = Lists.newArrayList;
+		for(hostClass : fragment.hostTypes.keys){
+			for(hostType : fragment.hostTypes.get(hostClass)){
+				hostInstances.addAll(hostType.instances);
+			}		
+		}
+
+
 		// Generate communications
-		if(fragment.hostInstances.values.size > 1){ // Skip if only one host instance exists
-			for(hostClass : fragment.hostInstances.keys){ // HostClasses store the configuration
-				for(hostInstance : fragment.hostInstances.get(hostClass)){ // Every HostInstance 
+		for(hostClass : fragment.hostTypes.keys){ // HostClasses store the configuration
+			for(hostType : fragment.hostTypes.get(hostClass)){ // Every HostInstance
+				for(hostInstance : hostType.instances){
 					// Initialize list of forbidden targets
 					var List<HostInstance> forbiddenTargetInstances = Lists.newArrayList;
 					// Add itself to the forbidden targets
@@ -29,7 +38,7 @@ class CPSPhaseHostCommunication implements IGenratorPhase<CyberPhysicalSystem, C
 					// Create communication links
 					for(i : 0 ..< numberOfCommLinks){
 						// Randomize target node
-						val targetHostInstance = fragment.hostInstances.values.randElementExcept(forbiddenTargetInstances, fragment.random);
+						val targetHostInstance = hostInstances.randElementExcept(forbiddenTargetInstances, fragment.random);
 						if(targetHostInstance != null){
 							forbiddenTargetInstances.add(targetHostInstance);
 							operations.add(new HostInstanceCommunicatesWithOperation(hostInstance, targetHostInstance));

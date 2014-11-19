@@ -114,6 +114,15 @@ class CPSModelBuilderUtil {
 		app.instances += instance
 		instance
 	}
+	
+	def prepareApplicationInstanceWithId(ApplicationType app, String appId) {
+		info('''Adding application instance (ID: «appId») to «app.id»''')
+		val instance = createApplicationInstance => [
+			id = appId
+		]
+		app.instances += instance
+		instance
+	}
 
 	def prepareAppInstance(CPSToDeployment cps2dep, HostInstance hostInstance) {
 		val app = cps2dep.prepareApplicationTypeWithId("simple.cps.app")
@@ -155,6 +164,7 @@ class CPSModelBuilderUtil {
 	}
 	
 	def prepareCommunication(HostInstance srcHost, HostInstance trgHost) {
+		info('''Create connection from «srcHost.id» to «trgHost.id»''')
 		srcHost.communicateWith.add(trgHost);
 	}
 }

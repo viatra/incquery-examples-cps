@@ -10,6 +10,7 @@ class CPSPlanBuilder {
 		plan.addPhase(new CPSPhaseTypeGeneration());
 		plan.addPhase(new CPSPhaseInstanceGeneration());
 		plan.addPhase(new CPSPhaseHostCommunication());
+		plan.addPhase(new CPSPhaseApplicationAllocation());
 		
 		plan;
 	}
