@@ -43,6 +43,12 @@ class CPS2DeploymentBatchTransformationEiq {
 
 		this.mapping = mapping
 		this.engine = engine
+		
+		debug("Preparing queries on engine.")
+		val watch = Stopwatch.createStarted
+		prepare(engine)
+		watch.stop
+		debug('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	}
 
 	def execute() {
