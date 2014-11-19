@@ -25,6 +25,8 @@ import org.eclipse.incquery.examples.cps.generator.tests.constraints.OnlyHostTyp
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.DemoCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.AllocationCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.HostClassesCPSConstraints
+import com.google.common.base.Stopwatch
+import java.util.concurrent.TimeUnit
 
 class GeneratorTest {
 	
@@ -61,6 +63,8 @@ class GeneratorTest {
 	}
 	
 	def runGeneratorOn(ICPSConstraints constraints, long seed) {
+		var Stopwatch fullTime = Stopwatch.createStarted;
+		
 		val CPSModelBuilderUtil mb = new CPSModelBuilderUtil;
 		val cps2dep = mb.prepareEmptyModel("testModel"+System.nanoTime);
 		
@@ -71,14 +75,15 @@ class GeneratorTest {
 		var GeneratorPlan plan = CPSPlanBuilder.build;
 		
 		var ModelGenerator<CyberPhysicalSystem, CPSFragment> generator = new ModelGenerator();
+		
+		var generateTime = Stopwatch.createStarted;
 		var out = generator.generate(plan, input);
+		generateTime.stop;
+		info("Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
 		
 		assertNotNull("The output fragment is null", out);
 		assertNotNull("The output model is null", out.modelRoot);
-		
-		// Persist model
-		PersistenceUtil.saveCPSModelToFile(out.modelRoot, "C:/output/model_"+System.nanoTime+".cyberphysicalsystem");
 		
 		assertInRange("NumberOfSignals", out.numberOfSignals, constraints.numberOfSignals.minValue, constraints.numberOfSignals.maxValue);
 		
@@ -88,6 +93,31 @@ class GeneratorTest {
 		
 		assertInRangeAppTypes(constraints, engine);
 		assertInRangeHostTypes(constraints, engine);
+		
+		showStats(out, engine);
+		
+		// Persist model
+		var Stopwatch persistTime = Stopwatch.createStarted;
+		PersistenceUtil.saveCPSModelToFile(out.modelRoot, "C:/output/model_"+System.nanoTime+".cyberphysicalsystem");
+		persistTime.stop;
+		info("Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		
+		
+		fullTime.stop;
+		info("Execution time: " + fullTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+	}
+	
+	def showStats(CPSFragment fragment, IncQueryEngine engine) {
+		info("");
+		info("ApplicationTypes: " + AppTypesMatcher.on(engine).countMatches);
+		info("ApplicationInstances: " + AppInstancesMatcher.on(engine).countMatches);
+		info("HostTypes: " + HostTypesMatcher.on(engine).countMatches);
+		info("HostInstances: " + HostInstancesMatcher.on(engine).countMatches);
+		info("States: " + StatesMatcher.on(engine).countMatches);
+		info("Transitions: " + TransitionsMatcher.on(engine).countMatches);
+		info("Allocated AppInstances: " + AllocatedAppInstancesMatcher.on(engine).countMatches);
+		info("Connected HostsInstances: " + ConnectedHostsMatcher.on(engine).countMatches);
+		info("");
 	}
 	
 	def assertInRangeAppTypes(ICPSConstraints constraints, IncQueryEngine engine) {

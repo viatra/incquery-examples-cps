@@ -6,6 +6,30 @@ pattern AppTypes(appType : ApplicationType) {
 	ApplicationType(appType);
 }
 
+pattern AppInstances(A : ApplicationInstance) {
+	ApplicationInstance(A);
+}
+
 pattern HostTypes(hostType : HostType) {
 	HostType(hostType);
+}
+
+pattern HostInstances(hostInstance : HostInstance) {
+	HostInstance(hostInstance);
+}
+
+pattern States(s : State) {
+	State(s);
+}
+
+pattern Transitions(t : Transition) {
+	Transition(t);
+}
+
+pattern AllocatedAppInstances(A : ApplicationInstance) {
+	ApplicationInstance.allocatedTo(A, _);
+}
+
+pattern ConnectedHosts(H : HostInstance) {
+	HostInstance.communicateWith(H, _);
 }
