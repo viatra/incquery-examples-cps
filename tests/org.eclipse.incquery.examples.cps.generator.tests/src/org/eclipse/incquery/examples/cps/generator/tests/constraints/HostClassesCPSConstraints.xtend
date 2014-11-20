@@ -1,9 +1,8 @@
 package org.eclipse.incquery.examples.cps.generator.tests.constraints
 
-import com.google.common.collect.ImmutableList
-import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
-import org.eclipse.incquery.examples.cps.generator.impl.dtos.MinMaxData
-import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
+import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
+import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
+import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 
 class HostClassesCPSConstraints implements ICPSConstraints {
 	

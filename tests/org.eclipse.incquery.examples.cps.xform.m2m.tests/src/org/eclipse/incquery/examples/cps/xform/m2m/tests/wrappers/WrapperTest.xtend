@@ -1,7 +1,7 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers
 
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
+import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.CPS2DeploymentTransformation
 import org.junit.Test
 

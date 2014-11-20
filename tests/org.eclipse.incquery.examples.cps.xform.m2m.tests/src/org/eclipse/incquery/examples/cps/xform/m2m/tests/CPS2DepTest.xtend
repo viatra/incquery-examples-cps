@@ -1,7 +1,7 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
+import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.util.PropertiesUtil
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple

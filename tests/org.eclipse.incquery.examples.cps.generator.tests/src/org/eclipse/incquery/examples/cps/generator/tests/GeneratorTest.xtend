@@ -7,9 +7,7 @@ import org.apache.log4j.ConsoleAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
-import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
-import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSGeneratorBuilder
-import org.eclipse.incquery.examples.cps.generator.impl.utils.PersistenceUtil
+import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.AllocationCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.DemoCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.HostClassesCPSConstraints
@@ -17,6 +15,8 @@ import org.eclipse.incquery.examples.cps.generator.tests.constraints.LargeCPSCon
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.OnlyHostTypesCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.SimpleCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.utils.CPSStats
+import org.eclipse.incquery.examples.cps.generator.utils.CPSGeneratorBuilder
+import org.eclipse.incquery.examples.cps.generator.utils.PersistenceUtil
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil
 import org.junit.Before
