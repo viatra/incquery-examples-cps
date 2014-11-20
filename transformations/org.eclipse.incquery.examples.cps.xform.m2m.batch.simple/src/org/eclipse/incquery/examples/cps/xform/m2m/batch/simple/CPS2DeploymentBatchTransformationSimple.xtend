@@ -40,7 +40,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	CPSToDeployment mapping;
 
 	/**
-	 * Creates a new transformation instance. The input CyberPhisicalSystem model is given in the mapping
+	 * Creates a new transformation instance. The input cyber physical system model is given in the mapping
 	 * @param mapping the traceability model root
 	 */
 	new(CPSToDeployment mapping) {
@@ -83,21 +83,34 @@ class CPS2DeploymentBatchTransformationSimple {
 
 		val transitionMappings = mapping.traces.filter[deploymentElements.head instanceof BehaviorTransition]
 		val senderTransitionMappings = transitionMappings.filter[isTraceForSender]
-		senderTransitionMappings.forEach[findReceivers]
+		senderTransitionMappings.forEach[findAndAssignReceivers]
 
 		traceEnd("assignTriggers()")
 	}
 
-	def findReceivers(CPS2DeplyomentTrace senderTransitonTrace) {
-		traceBegin('''findReceivers(«senderTransitonTrace.name»)''')
+	/**
+	 * After finding the traces that contains the corresponding transitions, finds and assigns 
+	 * triggered behavior transition
+	 * @param senderTrace the trace that contains the sender transition
+	 */
+	private def findAndAssignReceivers(CPS2DeplyomentTrace senderTrace) {
+		traceBegin('''findReceivers(«senderTrace.name»)''')
 
 		var receiverTraces = mapping.traces.filter[deploymentElements.head instanceof BehaviorTransition]
-		receiverTraces.forEach[setTriggerIfConnected(senderTransitonTrace)]
+		receiverTraces.forEach[setTriggerIfConnected(senderTrace)]
 
-		traceEnd('''findReceivers(«senderTransitonTrace.name»)''')
+		traceEnd('''findReceivers(«senderTrace.name»)''')
 	}
 
-	def void setTriggerIfConnected(CPS2DeplyomentTrace receiverTrace, CPS2DeplyomentTrace senderTrace) {
+	/**
+	 * Sets the trigger reference for the sender behavior transition if 
+	 * <li> the transition is waiting for the same type of message as the sender sends and
+	 * <li> the receiving transition is in a deployed application that runs on a reachable host
+	 * 
+	 * @param senderTrace the trace that contains the sender transition
+	 * @param receiverTrace the trace that contains the receiver transition
+	 */
+	private def void setTriggerIfConnected(CPS2DeplyomentTrace receiverTrace, CPS2DeplyomentTrace senderTrace) {
 		traceBegin('''setTriggerIfConnected(«receiverTrace.name»,«senderTrace.name»)''')
 
 		if (!isTraceForReceiver(receiverTrace))
@@ -123,9 +136,8 @@ class CPS2DeploymentBatchTransformationSimple {
 				val appTypeId = appInstance.type.id
 				var senderTransition = senderTrace.cpsElements.head as Transition
 				val appId1 = getAppId(senderTransition.action)
-				if (appTypeId == appId1 &&
-					getSignalId((senderTrace.cpsElements.head as Transition).action) ==
-						getSignalId((receiverTrace.cpsElements.head as Transition).action)) {
+				if (appTypeId == appId1 && getSignalId((senderTrace.cpsElements.head as Transition).action) ==
+					getSignalId((receiverTrace.cpsElements.head as Transition).action)) {
 
 					// Only hosts has to be checked now
 					if (isConnectedTo(senderHostInstance, receiverHostInstance)) {
@@ -141,7 +153,11 @@ class CPS2DeploymentBatchTransformationSimple {
 		traceEnd('''setTriggerIfConnected(«receiverTrace.name»,«senderTrace.name»)''')
 	}
 
-	def isTraceForSender(CPS2DeplyomentTrace trace) {
+	/**
+	 * Returns if a trace contains a transition that sends a message
+	 * @param trace the trace that links transitions and behavior transitions
+	 */
+	private def isTraceForSender(CPS2DeplyomentTrace trace) {
 		traceBegin('''isTraceForSender«trace.name»''')
 		var isSender = false;
 		var elements = trace.cpsElements
@@ -152,7 +168,11 @@ class CPS2DeploymentBatchTransformationSimple {
 		return isSender
 	}
 
-	def isTransitionSender(Transition transition) {
+	/**
+	 * Returns if a transition sends a message
+	 * @param transition the transitions whose action is inspected
+	 */
+	private def isTransitionSender(Transition transition) {
 		traceBegin('''isTransitionSender(«transition.name»)''')
 		if (transition.action == null) {
 			return false
@@ -166,7 +186,11 @@ class CPS2DeploymentBatchTransformationSimple {
 		return false
 	}
 
-	def isTraceForReceiver(CPS2DeplyomentTrace trace) {
+	/**
+	 * Returns if a trace contains a transition that waits for a message
+	 * @param trace the trace that links transitions and behavior transitions
+	 */
+	private def isTraceForReceiver(CPS2DeplyomentTrace trace) {
 		traceBegin('''isTraceForReceiver(«trace.name»)''')
 		var isReceiver = false;
 		var elements = trace.cpsElements
@@ -177,7 +201,11 @@ class CPS2DeploymentBatchTransformationSimple {
 		return isReceiver
 	}
 
-	def isTransitionReceiver(Transition transition) {
+	/**
+	 * Returns if a transition waits for a message
+	 * @param transition the transitions whose action is inspected
+	 */
+	private def isTransitionReceiver(Transition transition) {
 		traceBegin('''isTransitionReceiver(«transition.name»)''')
 		if (transition.action == null) {
 			return false
@@ -191,7 +219,13 @@ class CPS2DeploymentBatchTransformationSimple {
 		return false
 	}
 
-	def isConnectedTo(HostInstance src, HostInstance dst) {
+	/**
+	 * Checks whether the two given hosts are connected via the communicatesWith relation. 
+	 * Also checks transitive communication capability. The communicatesWith relation is non-reflexive by default
+	 * @param src the source host
+	 * @param dst the target host
+	 */
+	private def isConnectedTo(HostInstance src, HostInstance dst) {
 		traceBegin('''isConnectedTo(«src.name», «dst.name»)''')
 		val checked = newHashSet(src)
 		val reachableHosts = Lists.newArrayList(src.communicateWith)
@@ -217,7 +251,11 @@ class CPS2DeploymentBatchTransformationSimple {
 		return false;
 	}
 
-	def DeploymentHost transform(HostInstance hostInstance) {
+	/**
+	 * Transforms a host instance to a deployment host. Sets deployment description to host ID. 
+	 * @param hostInstance the host instance to transform
+	 */
+	private def DeploymentHost transform(HostInstance hostInstance) {
 		traceBegin('''transform(«hostInstance.name»)''')
 		var deploymentHost = DeploymentFactory.eINSTANCE.createDeploymentHost
 		deploymentHost.ip = hostInstance.nodeIp
@@ -233,7 +271,11 @@ class CPS2DeploymentBatchTransformationSimple {
 		return deploymentHost
 	}
 
-	def DeploymentApplication transform(ApplicationInstance appInstance) {
+	/**
+	 * Transforms an application instance to a deployment application. Sets deployment application description to application instance ID.
+	 * @param appInstance the application instance to transform
+	 */
+	private def DeploymentApplication transform(ApplicationInstance appInstance) {
 		traceBegin('''transform(«appInstance.name»)''')
 		var deploymentApp = DeploymentFactory.eINSTANCE.createDeploymentApplication()
 		deploymentApp.id = appInstance.id
@@ -248,7 +290,11 @@ class CPS2DeploymentBatchTransformationSimple {
 		return deploymentApp
 	}
 
-	def DeploymentBehavior transform(StateMachine stateMachine) {
+	/**
+	 * Transforms a given state machine to a deployment behavior. Sets deployment behavior description to state machine ID.
+	 * @param stateMachine the state machine to transform
+	 */
+	private def DeploymentBehavior transform(StateMachine stateMachine) {
 		traceBegin('''transform(«stateMachine.name»)''')
 		val behavior = DeploymentFactory.eINSTANCE.createDeploymentBehavior
 		behavior.description = stateMachine.id
@@ -279,7 +325,11 @@ class CPS2DeploymentBatchTransformationSimple {
 		return behavior
 	}
 
-	def BehaviorState transform(State state) {
+	/**
+	 * Transforms a state to behavior state. Sets behavior state to state id.
+	 * @param state the state to transform
+	 */
+	private def BehaviorState transform(State state) {
 		traceBegin('''transform(«state.name»)''')
 		val behaviorState = DeploymentFactory.eINSTANCE.createBehaviorState
 		behaviorState.description = state.id
@@ -290,8 +340,13 @@ class CPS2DeploymentBatchTransformationSimple {
 		behaviorState
 	}
 
-	def BehaviorTransition transform(Transition transition, BehaviorState parentBehaviorState) {
-		traceBegin('''transform(«transition.name», «parentBehaviorState.name»)''')
+	/**
+	 * Transforms a transition to behavior transition. 
+	 * @param transition the transition to transofrm
+	 * @param behaviorState the state that shall be set as the origin of the transformed behavior transition 
+	 */
+	private def BehaviorTransition transform(Transition transition, BehaviorState behaviorState) {
+		traceBegin('''transform(«transition.name», «behaviorState.name»)''')
 
 		val behaviorTransition = DeploymentFactory.eINSTANCE.createBehaviorTransition
 
@@ -299,16 +354,21 @@ class CPS2DeploymentBatchTransformationSimple {
 		val dep = targetStateMapping.deploymentElements
 		val targetBehaviorState = dep.head as BehaviorState
 		behaviorTransition.to = targetBehaviorState
-		parentBehaviorState.outgoing += behaviorTransition
+		behaviorState.outgoing += behaviorTransition
 		behaviorTransition.description = transition.id
 
 		transition.createOrAddTrace(behaviorTransition)
 
-		traceEnd('''transform(«transition.name», «parentBehaviorState.name»)''')
+		traceEnd('''transform(«transition.name», «behaviorState.name»)''')
 		return behaviorTransition
 	}
 
-	def setCurrentState(StateMachine stateMachine, DeploymentBehavior behavior) {
+	/**
+	 * Sets the value of the current state based on the state machine
+	 * @param stateMachine the state machine that describes the behavior
+	 * @param behavior realizes the state machine in the target model
+	 */
+	private def setCurrentState(StateMachine stateMachine, DeploymentBehavior behavior) {
 		traceBegin('''transform(«stateMachine.name», «behavior.name»)''')
 		val initial = stateMachine.states.findFirst[stateMachine.initial == it]
 		if (initial != null) {
@@ -321,7 +381,12 @@ class CPS2DeploymentBatchTransformationSimple {
 		traceEnd('''transform(«stateMachine.name», «behavior.name»)''')
 	}
 
-	def createOrAddTrace(Identifiable identifiable, DeploymentElement deploymentElement) {
+	/**
+	 * Creates or adds trace between the given identifiable and deployment element. It also stores the created trace in the traceability model
+	 * @param identifiable the left hand side of the mapping 
+	 * @param deploymentElement the right hand side of the mapping 
+	 */
+	private def createOrAddTrace(Identifiable identifiable, DeploymentElement deploymentElement) {
 		traceBegin('''createOrAddTrace(«identifiable.name», «deploymentElement.name»)''')
 		val trace = mapping.traces.filter[it.cpsElements.contains(identifiable)]
 		if (trace.length <= 0) {
@@ -336,7 +401,11 @@ class CPS2DeploymentBatchTransformationSimple {
 		traceEnd('''createOrAddTrace(«identifiable.name», «deploymentElement.name»)''')
 	}
 
-	def createTrace(Identifiable identifiable, DeploymentElement deploymentElement) {
+	/** Creates trace between the given identifiable and deployment element. It also stores the created trace in the traceability model
+	 * @param identifiable the left hand side of the mapping 
+	 * @param deploymentElement the right hand side of the mapping 
+	 */
+	private def createTrace(Identifiable identifiable, DeploymentElement deploymentElement) {
 		traceBegin('''createTrace(«identifiable.name», «deploymentElement.name»)''')
 
 		var trace = TraceabilityFactory.eINSTANCE.createCPS2DeplyomentTrace
@@ -347,6 +416,9 @@ class CPS2DeploymentBatchTransformationSimple {
 		traceBegin('''createTrace(«identifiable.name», «deploymentElement.name»)''')
 	}
 
+	/**
+	 * Cleans up the transformation
+	 */
 	def dispose() {
 		traceBegin("dispose()")
 		traceEnd("dispose()")
