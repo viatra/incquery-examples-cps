@@ -29,7 +29,7 @@ class CPSGeneratorBuilder {
 	
 	def static buildAndGenerateModel(long seed,  ICPSConstraints constraints, CyberPhysicalSystem model){
 		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, model);
-		var GeneratorPlan plan = CPSPlanBuilder.build;
+		var GeneratorPlan plan = CPSPlanBuilder.buildDefaultPlan;
 		
 		var ModelGenerator<CyberPhysicalSystem, CPSFragment> generator = new ModelGenerator();
 		

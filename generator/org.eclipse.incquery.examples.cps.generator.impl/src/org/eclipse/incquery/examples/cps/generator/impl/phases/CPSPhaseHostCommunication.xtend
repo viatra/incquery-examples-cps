@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.impl
+package org.eclipse.incquery.examples.cps.generator.impl.phases
 
 import com.google.common.collect.Lists
 import java.util.List

@@ -13,5 +13,7 @@ class AppClass {
 	public MinMaxData<Integer> numberOfTrannsitions;
 	public Percentage percentOfAllocatedInstances;
 	public Map<HostClass, Integer> allocationRatios;
+	public Percentage probabilityOfActionGeneration;
+	public Percentage probabilityOfSendAction;
 	
 }

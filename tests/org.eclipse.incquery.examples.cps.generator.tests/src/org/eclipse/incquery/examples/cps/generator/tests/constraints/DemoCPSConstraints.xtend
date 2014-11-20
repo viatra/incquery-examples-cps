@@ -46,6 +46,8 @@ class DemoCPSConstraints implements ICPSConstraints {
 				new MinMaxData(3, 10) // Transitions
 				, new Percentage(80)
 				, firstAppClassAllocations
+				, new Percentage(100)
+				, new Percentage(50)
 			),
 			
 			new AppClass(
@@ -55,7 +57,9 @@ class DemoCPSConstraints implements ICPSConstraints {
 				new MinMaxData(10, 15), // States         
 				new MinMaxData(15, 15) // Transitions
 				, new Percentage(100)
-				, secondAppClassAllocations   		
+				, secondAppClassAllocations
+				, new Percentage(100)
+				, new Percentage(50)	
 			)
 	];
 	}

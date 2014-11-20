@@ -1,6 +1,5 @@
 package org.eclipse.incquery.examples.cps.generator.tests.constraints
 
-import com.google.common.collect.ImmutableList
 import java.util.HashMap
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
@@ -34,8 +33,10 @@ class AllocationCPSConstraints implements ICPSConstraints {
 				new MinMaxData(2, 2), // AppInstances
 				new MinMaxData(2, 2), // States
 				new MinMaxData(1, 1) // Transitions
-				, new Percentage(100)
-				, firstAppClassAllocations
+				, new Percentage(100) // PercentageOfAllocatedInstances 
+				, firstAppClassAllocations // allocationRatios
+				, new Percentage(100) // probabilityOfActionGeneration
+				, new Percentage(50) //probabilityOfSenAction
 			)
 		];
 	}

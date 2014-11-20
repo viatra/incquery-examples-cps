@@ -4,6 +4,7 @@ import java.util.Collection
 import java.util.Random
 import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.MinMaxData
+import org.eclipse.incquery.examples.cps.generator.impl.dtos.Percentage
 
 class RandomUtils {
 	/**
@@ -29,6 +30,10 @@ class RandomUtils {
 		}
 		
 	    return rand.nextInt((max - min) + 1) + min;
+	}
+	
+	def int randIntZeroToMax(int max, Random rand) throws ModelGeneratorException {
+		return randInt(new MinMaxData<Integer>(0, max), rand);
 	}
 	
 	def int randIntExcept(MinMaxData<Integer> minMaxData, int excepted, Random rand) throws ModelGeneratorException {
@@ -69,6 +74,11 @@ class RandomUtils {
 			randElement = randElement(list, rand);
 		}
 		return randElement;	
+	}
+	
+	def boolean randBooleanWithPercentageOfTrue(Percentage percentageOfTrue, Random rand){
+		val chance = rand.nextFloat;
+		return chance < percentageOfTrue.fraction;
 	}
 
 }

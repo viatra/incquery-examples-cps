@@ -7,15 +7,22 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
 import org.eclipse.incquery.examples.cps.generator.dtos.GeneratorFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.GeneratorInput
+import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
 
 class CPSFragment extends GeneratorFragment<CyberPhysicalSystem>{
-	
 	int numberOfSignals;
 	Multimap<HostClass, HostType> hostTypes = HashMultimap.create;
 	Multimap<AppClass, ApplicationType> applicationTypes = HashMultimap.create;
+	IncQueryEngine engine;
 	
-	new(GeneratorInput<CyberPhysicalSystem> input) {
+	new(GeneratorInput<CyberPhysicalSystem> input) throws ModelGeneratorException {
 		super(input)
+		if(modelRoot != null){
+			engine = IncQueryEngine.on(modelRoot);
+		}else{
+			throw new ModelGeneratorException("Cannot initialize IncQueryEngine on a null model.");
+		}
 	}
 	
 	def getNumberOfSignals(){
@@ -40,6 +47,10 @@ class CPSFragment extends GeneratorFragment<CyberPhysicalSystem>{
 	
 	def addApplicationType(AppClass appClass, ApplicationType appType){
 		applicationTypes.put(appClass, appType);
+	}
+	
+	def getEngine(){
+		return engine;
 	}
 	
 }

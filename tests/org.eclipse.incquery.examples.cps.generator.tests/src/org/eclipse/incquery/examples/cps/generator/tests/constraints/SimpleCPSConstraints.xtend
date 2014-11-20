@@ -35,6 +35,8 @@ class SimpleCPSConstraints implements ICPSConstraints {
 				new MinMaxData(1, 1) // Transitions
 				, new Percentage(100)
 				, firstAppClassAllocations
+				, new Percentage(100)
+				, new Percentage(50)
 			)
 		];
 	}

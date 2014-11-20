@@ -53,6 +53,8 @@ class LargeCPSConstraints implements ICPSConstraints {
 				new MinMaxData(10, 20) // Transitions
 				, new Percentage(80)
 				, firstAppClassAllocations
+				, new Percentage(100)
+				, new Percentage(50)
 			),
 			
 			new AppClass(
@@ -62,7 +64,9 @@ class LargeCPSConstraints implements ICPSConstraints {
 				new MinMaxData(10, 55), // States         
 				new MinMaxData(15, 35) // Transitions
 				, new Percentage(100)
-				, secondAppClassAllocations   		
+				, secondAppClassAllocations
+				, new Percentage(100)
+				, new Percentage(50) 		
 			)
 	];
 	}

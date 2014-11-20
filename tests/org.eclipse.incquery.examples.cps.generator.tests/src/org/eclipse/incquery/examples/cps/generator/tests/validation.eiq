@@ -1,6 +1,8 @@
 package org.eclipse.incquery.examples.cps.generator.tests
 
 import "http://org.eclipse.incquery/model/cps"
+import org.eclipse.incquery.examples.cps.generator.impl.queries.Transitions
+
 
 pattern AppTypes(appType : ApplicationType) {
 	ApplicationType(appType);
@@ -23,7 +25,7 @@ pattern States(s : State) {
 }
 
 pattern Transitions(t : Transition) {
-	Transition(t);
+	find org.eclipse.incquery.examples.cps.generator.impl.queries.Transitions(t, _);
 }
 
 pattern AllocatedAppInstances(A : ApplicationInstance) {

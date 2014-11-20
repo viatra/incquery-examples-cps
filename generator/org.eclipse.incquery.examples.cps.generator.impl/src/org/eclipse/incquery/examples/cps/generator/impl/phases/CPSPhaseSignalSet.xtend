@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.impl
+package org.eclipse.incquery.examples.cps.generator.impl.phases
 
 import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem

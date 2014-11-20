@@ -1,0 +1,7 @@
+package org.eclipse.incquery.examples.cps.generator.impl.queries
+
+import "http://org.eclipse.incquery/model/cps"
+
+pattern Transitions(t : Transition, SM : StateMachine) {
+	StateMachine.states.outgoingTransitions(SM, t);
+}
