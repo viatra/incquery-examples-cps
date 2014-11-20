@@ -9,27 +9,27 @@ import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace
 
 class NamingUtil {
 
-	static def name(HostInstance cpsHost) {
+	static dispatch def name(HostInstance cpsHost) {
 		cpsHost.nodeIp
 	}
 
-	static def name(Identifiable cpsIdentifiable) {
+	static dispatch def name(Identifiable cpsIdentifiable) {
 		cpsIdentifiable.id
 	}
 
-	static def name(DeploymentHost depHost) {
+	static dispatch def name(DeploymentHost depHost) {
 		depHost.ip
 	}
 
-	static def name(DeploymentApplication depApplication) {
+	static dispatch def name(DeploymentApplication depApplication) {
 		depApplication.id
 	}
 
-	static def name(DeploymentElement depElement) {
+	static dispatch def name(DeploymentElement depElement) {
 		depElement.description
 	}
 
-	static def name(CPS2DeplyomentTrace trace) {
+	static dispatch def String name(CPS2DeplyomentTrace trace) {
 		'''[«FOR ce : trace.cpsElements SEPARATOR ", "»«ce.name»«ENDFOR»]->[«FOR de : trace.deploymentElements SEPARATOR ", "»«de.
 			name»«ENDFOR»]'''
 	}
