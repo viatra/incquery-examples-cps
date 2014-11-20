@@ -57,6 +57,7 @@ class PropertiesUtil {
 	}
 	
 	def static getGitCloneLocation(){
-		getPropertyValue(GIT_CLONE_LOCATION_PROP_KEY, "my-git-location")
+		val location = getPropertyValue(GIT_CLONE_LOCATION_PROP_KEY, "my-git-location")
+		System.getProperty("git.clone.location", location)		
 	}
 }
