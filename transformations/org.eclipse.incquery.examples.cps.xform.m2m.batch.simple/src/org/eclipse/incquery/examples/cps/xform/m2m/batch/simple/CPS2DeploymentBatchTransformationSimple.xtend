@@ -1,7 +1,9 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.batch.simple
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.Lists
 import java.util.ArrayList
+import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable
@@ -20,23 +22,38 @@ import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 
 import static com.google.common.base.Preconditions.*
-import static org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil.*
-import com.google.common.collect.Lists
-import java.util.Collections
+import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil.*
+import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingUtil.*
 
 class CPS2DeploymentBatchTransformationSimple {
+
+	extension Logger logger = Logger.getLogger("cps.xform.CPS2DeploymentTransformation")
+
+	def traceBegin(String method){
+		trace('''Executing «method» BEGIN''')		
+	}
+
+	def traceEnd(String method){
+		trace('''Executing «method» END''')		
+	}
 
 	CPSToDeployment mapping;
 
 	new(CPSToDeployment mapping) {
+		traceBegin("constructor")
+		
 		checkNotNull(mapping != null, "Mapping cannot be null!")
 		checkArgument(mapping.cps != null, "CPS not defined in mapping!")
 		checkArgument(mapping.deployment != null, "Deployment not defined in mapping!")
 
 		this.mapping = mapping;
+
+		traceEnd("constructor")
 	}
 
 	def execute() {
+		traceBegin("execute()")
+		
 		mapping.traces.clear
 		mapping.deployment.hosts.clear
 		
@@ -46,27 +63,30 @@ class CPS2DeploymentBatchTransformationSimple {
 		mapping.deployment.hosts += deploymentHosts
 
 		assignTriggers
+		traceEnd("execute()")
 	}
 
 	def assignTriggers() {
+		traceBegin("assignTriggers()")
 
 		val transitionMappings = mapping.traces.filter[deploymentElements.head instanceof BehaviorTransition]
 		val senderTransitionMappings = transitionMappings.filter[isTraceForSender]
 		senderTransitionMappings.forEach[findReceivers]
-
+		
+		traceEnd("assignTriggers()")
 	}
 
 	def findReceivers(CPS2DeplyomentTrace senderTransitonTrace) {
-		var transition = senderTransitonTrace.cpsElements.head as Transition
-		val appId = getAppId(transition.action)
-		var receiverTraces = mapping.traces.filter[deploymentElements.head instanceof BehaviorTransition] //.filter[isTraceForReceiver]
+		traceBegin('''findReceivers(«senderTransitonTrace.name»)''')
 
-		//var correspondingTraces = receiverTraces.filter[getAppId((cpsElements.head as Transition).action) == appId]
-		//correspondingTraces.forEach[setTriggerIfConnected(senderTransitonTrace)]
+		var receiverTraces = mapping.traces.filter[deploymentElements.head instanceof BehaviorTransition]
 		receiverTraces.forEach[setTriggerIfConnected(senderTransitonTrace)]
+		
+		traceEnd('''findReceivers(«senderTransitonTrace.name»)''')
 	}
 
 	def void setTriggerIfConnected(CPS2DeplyomentTrace receiverTrace, CPS2DeplyomentTrace senderTrace) {
+		traceBegin('''setTriggerIfConnected(«receiverTrace.name»,«senderTrace.name»)''')
 
 		if (!isTraceForReceiver(receiverTrace))
 			return;
@@ -101,18 +121,22 @@ class CPS2DeploymentBatchTransformationSimple {
 			}
 		}
 
+		traceEnd('''setTriggerIfConnected(«receiverTrace.name»,«senderTrace.name»)''')
 	}
 
 	def isTraceForSender(CPS2DeplyomentTrace trace) {
+		traceBegin('''isTraceForSender«trace.name»''')
 		var isSender = false;
 		var elements = trace.cpsElements
 		for (t : elements) {
 			isSender = isSender || (t as Transition).isTransitionSender
 		}
+		traceEnd('''isTraceForSender«trace.name»''')
 		return isSender
 	}
 
 	def isTransitionSender(Transition transition) {
+		traceBegin('''isTransitionSender(«transition.name»)''')
 		if (transition.action == null) {
 			return false
 		}
@@ -121,19 +145,23 @@ class CPS2DeploymentBatchTransformationSimple {
 			return true
 		}
 
+		traceEnd('''isTransitionSender(«transition.name»)''')
 		return false
 	}
 
 	def isTraceForReceiver(CPS2DeplyomentTrace trace) {
+		traceBegin('''isTraceForReceiver(«trace.name»)''')
 		var isReceiver = false;
 		var elements = trace.cpsElements
 		for (t : elements) {
 			isReceiver = isReceiver || (t as Transition).isTransitionReceiver
 		}
+		traceEnd('''isTraceForReceiver(«trace.name»)''')
 		return isReceiver
 	}
 
 	def isTransitionReceiver(Transition transition) {
+		traceBegin('''isTransitionReceiver(«transition.name»)''')
 		if (transition.action == null) {
 			return false
 		}
@@ -142,10 +170,12 @@ class CPS2DeploymentBatchTransformationSimple {
 			return true
 		}
 
+		traceEnd('''isTransitionReceiver(«transition.name»)''')
 		return false
 	}
 
 	def isConnectedTo(HostInstance src, HostInstance dst) {
+		traceBegin('''isConnectedTo(«src.name», «dst.name»)''')
 		val checked = newHashSet(src)
 		val reachableHosts = Lists.newArrayList(src.communicateWith)
 
@@ -166,11 +196,12 @@ class CPS2DeploymentBatchTransformationSimple {
 			reachableHosts -= checked
 		}
 
+		traceEnd('''isConnectedTo(«src.name», «dst.name»)''')
 		return false;
-
 	}
 
 	def DeploymentHost transform(HostInstance hostInstance) {
+		traceBegin('''transform(«hostInstance.name»)''')
 		var deploymentHost = DeploymentFactory.eINSTANCE.createDeploymentHost
 		deploymentHost.ip = hostInstance.nodeIp
 
@@ -181,23 +212,27 @@ class CPS2DeploymentBatchTransformationSimple {
 		var deploymentApps = liveApplications.map[transform]
 		deploymentHost.applications += deploymentApps
 
+		traceEnd('''transform(«hostInstance.name»)''')
 		return deploymentHost
 	}
 
 	def DeploymentApplication transform(ApplicationInstance appInstance) {
+		traceBegin('''transform(«appInstance.name»)''')
 		var deploymentApp = DeploymentFactory.eINSTANCE.createDeploymentApplication()
 		deploymentApp.id = appInstance.id
 
 		appInstance.createOrAddTrace(deploymentApp)
 
 		// Transform state machines
-		if (appInstance.stateMachine != null)
-			deploymentApp.behavior = appInstance.stateMachine.transform
+		if (appInstance.type.behavior != null)
+			deploymentApp.behavior = appInstance.type.behavior.transform
 
+		traceEnd('''transform(«appInstance.name»)''')
 		return deploymentApp
 	}
 
 	def DeploymentBehavior transform(StateMachine stateMachine) {
+		traceBegin('''transform(«stateMachine.name»)''')
 		val behavior = DeploymentFactory.eINSTANCE.createDeploymentBehavior
 		behavior.description = stateMachine.id
 
@@ -223,19 +258,23 @@ class CPS2DeploymentBatchTransformationSimple {
 
 		setCurrentState(stateMachine, behavior)
 
+		traceEnd('''transform(«stateMachine.name»)''')
 		return behavior
 	}
 
 	def BehaviorState transform(State state) {
+		traceBegin('''transform(«state.name»)''')
 		val behaviorState = DeploymentFactory.eINSTANCE.createBehaviorState
 		behaviorState.description = state.id
 
 		state.createOrAddTrace(behaviorState)
 
+		traceEnd('''transform(«state.name»)''')
 		behaviorState
 	}
 
 	def BehaviorTransition transform(Transition transition, BehaviorState parentBehaviorState) {
+		traceBegin('''transform(«transition.name», «parentBehaviorState.name»)''')
 
 		val behaviorTransition = DeploymentFactory.eINSTANCE.createBehaviorTransition
 
@@ -248,10 +287,12 @@ class CPS2DeploymentBatchTransformationSimple {
 
 		transition.createOrAddTrace(behaviorTransition)
 
+		traceEnd('''transform(«transition.name», «parentBehaviorState.name»)''')
 		return behaviorTransition
 	}
 
 	def setCurrentState(StateMachine stateMachine, DeploymentBehavior behavior) {
+		traceBegin('''transform(«stateMachine.name», «behavior.name»)''')
 		val initials = stateMachine.states.filter[stateMachine.initial == it]
 		if (initials.length > 0) {
 			val mappingForInitialState = mapping.traces.filter[it.cpsElements.contains(initials.head)].head
@@ -260,32 +301,37 @@ class CPS2DeploymentBatchTransformationSimple {
 
 			behavior.current = initialBehaviorState as BehaviorState
 		}
+		traceEnd('''transform(«stateMachine.name», «behavior.name»)''')
 	}
 
-	def StateMachine getStateMachine(ApplicationInstance appInstance) {
-		return appInstance.type.behavior;
-	}
-
-	def createOrAddTrace(Identifiable i, DeploymentElement e) {
-		val trace = mapping.traces.filter[it.cpsElements.contains(i)]
+	def createOrAddTrace(Identifiable identifiable, DeploymentElement deploymentElement) {
+		traceBegin('''createOrAddTrace(«identifiable.name», «deploymentElement.name»)''')		
+		val trace = mapping.traces.filter[it.cpsElements.contains(identifiable)]
 		if (trace.length <= 0) {
-			i.createTrace(e)
+			identifiable.createTrace(deploymentElement)
 		} else if (trace.length == 1) {
-			trace.head.deploymentElements += e
+			trace.head.deploymentElements += deploymentElement
 		} else {
 			throw new IllegalStateException(
-				'''More than one mapping was created to state machine wit Id '«i.id»'.''')
+				'''More than one mapping was created to state machine wit Id '«identifiable.id»'.''')
 		}
 
+		traceEnd('''createOrAddTrace(«identifiable.name», «deploymentElement.name»)''')		
 	}
 
 	def createTrace(Identifiable identifiable, DeploymentElement deploymentElement) {
+		traceBegin('''createTrace(«identifiable.name», «deploymentElement.name»)''')		
+		
 		var trace = TraceabilityFactory.eINSTANCE.createCPS2DeplyomentTrace
 		trace.cpsElements += identifiable
 		trace.deploymentElements += deploymentElement
 		mapping.traces += trace
+
+		traceBegin('''createTrace(«identifiable.name», «deploymentElement.name»)''')		
 	}
 
 	def dispose() {
+		traceBegin('''dispose''')		
+		traceEnd('''dispose''')		
 	}
 }

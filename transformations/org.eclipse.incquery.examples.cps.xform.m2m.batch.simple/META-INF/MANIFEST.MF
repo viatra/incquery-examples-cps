@@ -14,3 +14,4 @@ Require-Bundle: com.google.guava,
  org.eclipse.incquery.examples.cps.traceability;bundle-version="0.1.0",
  org.eclipse.incquery.examples.cps.xform.m2m.util;bundle-version="0.1.0"
 Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.batch.simple
+Import-Package: org.apache.log4j;version="1.2.15"
