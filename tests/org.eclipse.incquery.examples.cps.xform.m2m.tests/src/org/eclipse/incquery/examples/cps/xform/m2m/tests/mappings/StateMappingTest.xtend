@@ -10,6 +10,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 import static org.junit.Assert.*
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.StateMachine
 
 @RunWith(Parameterized)
 class StateMappingTest extends CPS2DepTest {
@@ -365,6 +366,46 @@ class StateMappingTest extends CPS2DepTest {
 		
 		val traces = cps2dep.traces.filter[cpsElements.contains(state)]
 		assertTrue("Traces not removed", traces.empty)
+		
+		endTest(testId)
+	}	
+	
+	@Test
+	def initialStatesMultipleAppInstance() {
+		val testId = "initialStatesMultipleAppInstance"
+		startTest(testId)
+
+		
+		val cps2dep = prepareEmptyModel(testId)
+		val hostInstance = cps2dep.prepareHostInstance
+
+		val appType = cps2dep.prepareApplicationTypeWithId("simple.cps.app2")
+
+		appType.prepareApplicationInstanceWithId("simple.cps.app.instance1",hostInstance)
+		appType.prepareApplicationInstanceWithId("simple.cps.app.instance2",hostInstance)
+		
+		val sm = prepareStateMachine(appType, "simple.cps.sm")
+		val state = sm.prepareState("simple.cps.sm1.s")
+		sm.initial = state
+			
+		cps2dep.initializeTransformation
+		executeTransformation
+		
+		info("Adding new application instance")
+		appType.prepareApplicationInstanceWithId("simple.cps.app.instance3",hostInstance)
+	
+		executeTransformation
+		
+		val deploymentBehaviorTraces = cps2dep.traces.filter[it.cpsElements.head instanceof StateMachine]
+		val behaviorDescriptions = deploymentBehaviorTraces.head.deploymentElements
+		
+		val current1 = (behaviorDescriptions.get(0) as DeploymentBehavior).current
+		val current2 = (behaviorDescriptions.get(1) as DeploymentBehavior).current
+		val current3 = (behaviorDescriptions.get(2) as DeploymentBehavior).current
+		
+		assertNotEquals(current1,current2)
+		assertNotEquals(current1,current3)
+		assertNotEquals(current2,current3)
 		
 		endTest(testId)
 	}
