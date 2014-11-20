@@ -7,14 +7,9 @@ import org.apache.log4j.ConsoleAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.incquery.examples.cps.generator.ModelGenerator
-import org.eclipse.incquery.examples.cps.generator.impl.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSGeneratorInput
-import org.eclipse.incquery.examples.cps.generator.impl.dtos.GeneratorPlan
 import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
-import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
+import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSGeneratorBuilder
 import org.eclipse.incquery.examples.cps.generator.impl.utils.PersistenceUtil
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.AllocationCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.DemoCPSConstraints
@@ -28,6 +23,7 @@ import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.*
+import org.eclipse.incquery.examples.cps.generator.tests.utils.CPSStats
 
 class GeneratorTest {
 	
@@ -39,68 +35,62 @@ class GeneratorTest {
 	}
 
 	@Test
-	def testSimple(){
+	def void testSimple(){
 		runGeneratorOn(new SimpleCPSConstraints(), 111111);
 	}
 	
 	@Test
-	def testOnlyHostTypes(){
+	def void testOnlyHostTypes(){
 		runGeneratorOn(new OnlyHostTypesCPSConstraints(), 111111);
 	}
 	
 	@Test
-	def testDemo(){
+	def void testDemo(){
 		runGeneratorOn(new DemoCPSConstraints(), 111111);
 	}
 	
 	@Test
-	def testAllocation(){
+	def void testAllocation(){
 		runGeneratorOn(new AllocationCPSConstraints(), 111111);
 	}
 	
 	@Test
-	def testHostClasses(){
+	def void testHostClasses(){
 		runGeneratorOn(new HostClassesCPSConstraints(), 111111);
 	}
 	
 	@Test
-	def testLargeModel(){
+	def void testLargeModel(){
 		runGeneratorOn(new LargeCPSConstraints(), 111111);
 	}
+	
+	
 	
 	def runGeneratorOn(ICPSConstraints constraints, long seed) {
 		var Stopwatch fullTime = Stopwatch.createStarted;
 		
-		val CPSModelBuilderUtil mb = new CPSModelBuilderUtil;
-		val cps2dep = mb.prepareEmptyModel("testModel"+System.nanoTime);
+		val out = CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints);
 		
-		assertNotNull(cps2dep);
-		assertNotNull(cps2dep.cps);
-		
-		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, cps2dep.cps);
-		var GeneratorPlan plan = CPSPlanBuilder.build;
-		
-		var ModelGenerator<CyberPhysicalSystem, CPSFragment> generator = new ModelGenerator();
-		
-		var generateTime = Stopwatch.createStarted;
-		var out = generator.generate(plan, input);
-		generateTime.stop;
-		info("Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		fullTime.stop;
+		info("Execution time: " + fullTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
 		
+		// Assertions
 		assertNotNull("The output fragment is null", out);
 		assertNotNull("The output model is null", out.modelRoot);
-		
+
 		assertInRange("NumberOfSignals", out.numberOfSignals, constraints.numberOfSignals.minValue, constraints.numberOfSignals.maxValue);
 		
 		val IncQueryEngine engine = IncQueryEngine.on(out.modelRoot);
+		Validation.instance.prepare(engine);
 		
 		assertNotNull("IncQueryEngine is null", engine);
 		
+		//Show stats
+		showStats(generateStats(engine));
+		
 		assertInRangeAppTypes(constraints, engine);
 		assertInRangeHostTypes(constraints, engine);
-		
-		showStats(out, engine);
 		
 		// Persist model
 		var Stopwatch persistTime = Stopwatch.createStarted;
@@ -110,22 +100,24 @@ class GeneratorTest {
 		persistTime.stop;
 		info("Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
-		
-		fullTime.stop;
-		info("Execution time: " + fullTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		return out;
 	}
 	
-	def showStats(CPSFragment fragment, IncQueryEngine engine) {
+	def showStats(CPSStats stats) {
+		info("Model Stats: ");
+		info("  ApplicationTypes: " + stats.appTypeCount);
+		info("  ApplicationInstances: " + stats.appInstanceCount);
+		info("  HostTypes: " + stats.hostTypeCount);
+		info("  HostInstances: " + stats.hostInstanceCount);
+		info("  States: " + stats.stateCount);
+		info("  Transitions: " + stats.transitionCount);
+		info("  Allocated AppInstances: " + stats.allocatedAppCount);
+		info("  Connected HostsInstances: " + stats.connectedHostCount);
 		info("");
-		info("ApplicationTypes: " + AppTypesMatcher.on(engine).countMatches);
-		info("ApplicationInstances: " + AppInstancesMatcher.on(engine).countMatches);
-		info("HostTypes: " + HostTypesMatcher.on(engine).countMatches);
-		info("HostInstances: " + HostInstancesMatcher.on(engine).countMatches);
-		info("States: " + StatesMatcher.on(engine).countMatches);
-		info("Transitions: " + TransitionsMatcher.on(engine).countMatches);
-		info("Allocated AppInstances: " + AllocatedAppInstancesMatcher.on(engine).countMatches);
-		info("Connected HostsInstances: " + ConnectedHostsMatcher.on(engine).countMatches);
-		info("");
+	}
+	
+	def generateStats(IncQueryEngine engine){
+		return new CPSStats(engine);
 	}
 	
 	def assertInRangeAppTypes(ICPSConstraints constraints, IncQueryEngine engine) {
