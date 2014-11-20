@@ -14,20 +14,15 @@ class ModelGenerator<ModelType extends EObject, FragmentType extends GeneratorFr
 	
 	def generate(IGeneratorPlan<ModelType, FragmentType> plan, GeneratorInput<ModelType> input){
 		val FragmentType fragment = plan.getInitialFragment(input);
-		val skippedPhases = input.constraints.skippedPhases;
 		
 		plan.phases.forEach[phase, i| 
-			if(!Iterables.contains(skippedPhases, phase)){
-				phase.getOperations(fragment).forEach[operation, j|
-					try{
-						operation.execute(fragment);
-					}catch(ModelGeneratorException e){
-						info(e.message);
-					}
-				]
-			}else{
-				info("Skip " + phase.class.simpleName);
-			}
+			phase.getOperations(fragment).forEach[operation, j|
+				try{
+					operation.execute(fragment);
+				}catch(ModelGeneratorException e){
+					info(e.message);
+				}
+			]
 		]
 		
 		return fragment;

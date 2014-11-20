@@ -5,8 +5,8 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
+import org.eclipse.incquery.examples.cps.generator.impl.utils.RandomUtils
 import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorOperation
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 
 class HostInstanceGenerationOperation implements IGeneratorOperation<CyberPhysicalSystem, CPSFragment> {
 	val HostClass hostClass;

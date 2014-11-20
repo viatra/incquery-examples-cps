@@ -4,12 +4,12 @@ import com.google.common.collect.Lists
 import java.util.List
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.State
-import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
+import org.eclipse.incquery.examples.cps.generator.impl.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
+import org.eclipse.incquery.examples.cps.generator.impl.utils.RandomUtils
 import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorOperation
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 
 class ApplicationTypeGenerationOperation implements IGeneratorOperation<CyberPhysicalSystem, CPSFragment> {
 	val AppClass applicationClass;

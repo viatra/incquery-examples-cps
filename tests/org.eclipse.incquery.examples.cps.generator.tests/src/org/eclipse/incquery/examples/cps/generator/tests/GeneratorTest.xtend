@@ -7,7 +7,6 @@ import org.apache.log4j.ConsoleAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
-import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSGeneratorBuilder
 import org.eclipse.incquery.examples.cps.generator.impl.utils.PersistenceUtil
@@ -17,13 +16,13 @@ import org.eclipse.incquery.examples.cps.generator.tests.constraints.HostClasses
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.LargeCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.OnlyHostTypesCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.SimpleCPSConstraints
+import org.eclipse.incquery.examples.cps.generator.tests.utils.CPSStats
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil
 import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.examples.cps.generator.tests.utils.CPSStats
 
 class GeneratorTest {
 	

@@ -1,8 +1,8 @@
 package org.eclipse.incquery.examples.cps.generator.impl.interfaces
 
-import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
+import org.eclipse.incquery.examples.cps.generator.impl.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorConstraints
 
 interface ICPSConstraints extends IGeneratorConstraints {

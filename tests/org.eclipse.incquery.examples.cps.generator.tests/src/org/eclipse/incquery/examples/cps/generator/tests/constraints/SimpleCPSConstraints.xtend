@@ -1,16 +1,16 @@
 package org.eclipse.incquery.examples.cps.generator.tests.constraints
 
+import com.google.common.collect.ImmutableList
 import java.util.HashMap
-import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
-import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
+import org.eclipse.incquery.examples.cps.generator.impl.dtos.MinMaxData
+import org.eclipse.incquery.examples.cps.generator.impl.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
-import com.google.common.collect.ImmutableList
 
 class SimpleCPSConstraints implements ICPSConstraints {
 	
-	public String name = "Simple";
+	public String name = "Simple"
 	val hostClass = new HostClass(
 						"FirstHostClass",
 						new MinMaxData(1, 1), // HostTypes
@@ -44,8 +44,5 @@ class SimpleCPSConstraints implements ICPSConstraints {
 			hostClass
 		];
 	}
-	
-	override getSkippedPhases() {
-		ImmutableList.of();
-	}
+
 }

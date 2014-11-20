@@ -6,8 +6,8 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.operations.HostInstanceCommunicatesWithOperation
+import org.eclipse.incquery.examples.cps.generator.impl.utils.RandomUtils
 import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 
 class CPSPhaseHostCommunication implements IGenratorPhase<CyberPhysicalSystem, CPSFragment>{
 	
