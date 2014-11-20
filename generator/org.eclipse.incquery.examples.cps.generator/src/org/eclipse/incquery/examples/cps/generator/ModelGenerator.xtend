@@ -6,6 +6,7 @@ import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorPlan
 import org.eclipse.incquery.examples.cps.generator.dtos.GeneratorFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.GeneratorInput
 import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
+import com.google.common.collect.Iterables
 
 class ModelGenerator<ModelType extends EObject, FragmentType extends GeneratorFragment<ModelType>> {
 	
@@ -13,15 +14,20 @@ class ModelGenerator<ModelType extends EObject, FragmentType extends GeneratorFr
 	
 	def generate(IGeneratorPlan<ModelType, FragmentType> plan, GeneratorInput<ModelType> input){
 		val FragmentType fragment = plan.getInitialFragment(input);
+		val skippedPhases = input.constraints.skippedPhases;
 		
 		plan.phases.forEach[phase, i| 
-			phase.getOperations(fragment).forEach[operation, j|
-				try{
-					operation.execute(fragment);
-				}catch(ModelGeneratorException e){
-					info(e.message);
-				}
-			]
+			if(!Iterables.contains(skippedPhases, phase)){
+				phase.getOperations(fragment).forEach[operation, j|
+					try{
+						operation.execute(fragment);
+					}catch(ModelGeneratorException e){
+						info(e.message);
+					}
+				]
+			}else{
+				info("Skip " + phase.class.simpleName);
+			}
 		]
 		
 		return fragment;

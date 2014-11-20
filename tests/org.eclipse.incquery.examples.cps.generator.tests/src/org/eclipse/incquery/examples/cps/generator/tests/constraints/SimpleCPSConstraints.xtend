@@ -6,6 +6,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
+import com.google.common.collect.ImmutableList
 
 class SimpleCPSConstraints implements ICPSConstraints {
 	
@@ -42,5 +43,9 @@ class SimpleCPSConstraints implements ICPSConstraints {
 		#[
 			hostClass
 		];
-	}	
+	}
+	
+	override getSkippedPhases() {
+		ImmutableList.of();
+	}
 }

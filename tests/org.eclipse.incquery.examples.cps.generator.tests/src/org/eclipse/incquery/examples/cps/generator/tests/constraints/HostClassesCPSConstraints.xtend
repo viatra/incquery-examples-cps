@@ -3,6 +3,7 @@ package org.eclipse.incquery.examples.cps.generator.tests.constraints
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
+import com.google.common.collect.ImmutableList
 
 class HostClassesCPSConstraints implements ICPSConstraints {
 	
@@ -29,5 +30,9 @@ class HostClassesCPSConstraints implements ICPSConstraints {
 		#[
 			hostClass
 		];
-	}	
+	}
+	
+	override getSkippedPhases() {
+		ImmutableList.of();
+	}
 }

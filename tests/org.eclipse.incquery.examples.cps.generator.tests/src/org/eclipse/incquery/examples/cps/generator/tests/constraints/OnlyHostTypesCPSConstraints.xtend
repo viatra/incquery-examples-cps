@@ -26,5 +26,10 @@ class OnlyHostTypesCPSConstraints implements ICPSConstraints {
 						new MinMaxData(0, 0) // CommLines
 					)
 		];
-	}	
+	}
+	
+	override getSkippedPhases() {
+		ImmutableList.of();
+	}
+	
 }
