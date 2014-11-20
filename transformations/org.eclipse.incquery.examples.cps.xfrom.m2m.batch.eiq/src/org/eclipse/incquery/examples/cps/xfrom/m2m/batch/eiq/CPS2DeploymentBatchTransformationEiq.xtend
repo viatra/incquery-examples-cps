@@ -24,6 +24,8 @@ import org.eclipse.incquery.runtime.api.IncQueryEngine
 
 import static com.google.common.base.Preconditions.*
 
+import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingUtil.*
+
 class CPS2DeploymentBatchTransformationEiq {
 
 	extension Logger logger = Logger.getLogger("cps.xform.CPS2DeploymentTransformation")
@@ -43,7 +45,7 @@ class CPS2DeploymentBatchTransformationEiq {
 
 		this.mapping = mapping
 		this.engine = engine
-		
+
 		debug("Preparing queries on engine.")
 		val watch = Stopwatch.createStarted
 		prepare(engine)
@@ -73,7 +75,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def transform(HostInstance cpsHost) {
-		trace('''Executing: transform(cpsHost = «cpsHost»)''')
+		trace('''Executing: transform(cpsHost = «cpsHost.name»)''')
 		val depHost = cpsHost.createDepHost
 
 		debug('''Adding host («depHost.description») to deployment model.''')
@@ -87,7 +89,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def transform(ApplicationInstance cpsInstance, DeploymentHost depHost) {
-		trace('''Executing: transform(cpsInstance = «cpsInstance», depHost = «depHost»)''')
+		trace('''Executing: transform(cpsInstance = «cpsInstance.name», depHost = «depHost.name»)''')
 		val depApp = cpsInstance.createDepApplication
 
 		depHost.applications += depApp
@@ -98,7 +100,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def transform(StateMachine cpsBehavior, DeploymentApplication depApp) {
-		trace('''Executing: transform(cpsBehavior = «cpsBehavior», depApp = «depApp»)''')
+		trace('''Executing: transform(cpsBehavior = «cpsBehavior.name», depApp = «depApp.name»)''')
 		val depBehavior = cpsBehavior.createDepBehavior
 
 		depApp.behavior = depBehavior
@@ -121,7 +123,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def transform(State cpsState, DeploymentBehavior depBehavior) {
-		trace('''Executing: transform(cpsState = «cpsState», depBehavior = «depBehavior»)''')
+		trace('''Executing: transform(cpsState = «cpsState.name», depBehavior = «depBehavior.name»)''')
 		val depState = cpsState.createDepState
 
 		depBehavior.states += depState
@@ -131,7 +133,8 @@ class CPS2DeploymentBatchTransformationEiq {
 
 	private def buildStateRelations(State cpsState, DeploymentBehavior depBehavior, StateMachine cpsBehavior) {
 		trace(
-			'''Executing: buildStateRelations(cpsState = «cpsState», depBehavior = «depBehavior», cpsBehavior = «cpsBehavior»)''')
+			'''Executing: buildStateRelations(cpsState = «cpsState.name», depBehavior = «depBehavior.name», cpsBehavior = «cpsBehavior.
+				name»)''')
 		val depState = engine.cps2depTrace.getAllMatches(mapping, null, cpsState, null).map[depElement].head as BehaviorState
 		cpsState.outgoingTransitions.filter[targetState != null && cpsBehavior.states.contains(targetState)].forEach [
 			mapTransition(depState, depBehavior)
@@ -141,7 +144,8 @@ class CPS2DeploymentBatchTransformationEiq {
 
 	private def mapTransition(Transition transition, BehaviorState depState, DeploymentBehavior depBehavior) {
 		trace(
-			'''Executing: mapTransition(transition = «transition», depState = «depState», depBehavior = «depBehavior»)''')
+			'''Executing: mapTransition(transition = «transition.name», depState = «depState.name», depBehavior = «depBehavior.
+				name»)''')
 		val depTransition = transition.createDepTransition
 
 		depState.outgoing += depTransition
@@ -154,14 +158,14 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def mapAction(BehaviorTransition depTrigger) {
-		trace('''Executing: mapAction(depTrigger = «depTrigger»)''')
+		trace('''Executing: mapAction(depTrigger = «depTrigger.name»)''')
 		val cpsTransition = engine.cps2depTrace.getAllMatches(mapping, null, null, depTrigger).map[cpsElement].head as Transition
 		depTrigger.trigger += engine.triggerPair.getAllMatches(cpsTransition, null).map[depTarget]
 		trace('''Execution ended: mapAction''')
 	}
 
 	private def createDepHost(HostInstance cpsHost) {
-		trace('''Executing: createDepHost(cpsHost = «cpsHost»)''')
+		trace('''Executing: createDepHost(cpsHost = «cpsHost.name»)''')
 		val depHost = depFactory.createDeploymentHost
 
 		depHost.ip = cpsHost.nodeIp
@@ -170,7 +174,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def createDepApplication(ApplicationInstance cpsAppInstance) {
-		trace('''Executing: createDepApplication(cpsAppInstance = «cpsAppInstance»)''')
+		trace('''Executing: createDepApplication(cpsAppInstance = «cpsAppInstance.name»)''')
 		val depApp = depFactory.createDeploymentApplication
 
 		depApp.id = cpsAppInstance.id
@@ -179,7 +183,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def createDepBehavior(StateMachine cpsBehavior) {
-		trace('''Executing: createDepBehavior(cpsBehavior = «cpsBehavior»)''')
+		trace('''Executing: createDepBehavior(cpsBehavior = «cpsBehavior.name»)''')
 		val depBehavior = depFactory.createDeploymentBehavior
 
 		depBehavior.description = cpsBehavior.id
@@ -188,7 +192,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def createDepState(State cpsState) {
-		trace('''Executing: createDepState(cpsState = «cpsState»)''')
+		trace('''Executing: createDepState(cpsState = «cpsState.name»)''')
 		val depState = depFactory.createBehaviorState
 
 		depState.description = cpsState.id
@@ -197,7 +201,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def createDepTransition(Transition cpsTransition) {
-		trace('''Executing: createDepTransition(cpsTransition = «cpsTransition»)''')
+		trace('''Executing: createDepTransition(cpsTransition = «cpsTransition.name»)''')
 		val depTransition = depFactory.createBehaviorTransition
 
 		depTransition.description = cpsTransition.id
@@ -213,7 +217,9 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def addTraceOneToN(Identifiable cpsElement, List<? extends DeploymentElement> depElements) {
-		trace('''Executing: addTraceOneToN(cpsElement = «cpsElement», depElements = «depElements»)''')
+		trace(
+			'''Executing: addTraceOneToN(cpsElement = «cpsElement.name», depElements = [«FOR e : depElements SEPARATOR ", "»«e.
+				name»«ENDFOR»])''')
 		var trace = engine.cps2depTrace.getAllMatches(mapping, null, cpsElement, null).map[trace].head
 		if (trace == null) {
 			trace = tracFactory.createCPS2DeplyomentTrace
@@ -222,19 +228,20 @@ class CPS2DeploymentBatchTransformationEiq {
 		}
 		trace.deploymentElements += depElements
 
-		debug('''Adding trace («cpsElement»->«depElements») to traceability model.''')
+		debug(
+			'''Adding trace («cpsElement.name»->[«FOR e : depElements SEPARATOR ", "»«e.name»«ENDFOR»]) to traceability model.''')
 		mapping.traces += trace
 		trace('''Execution ended: addTraceOneToN''')
 	}
 
 	private def addTrace(Identifiable cpsElement, DeploymentElement depElement) {
-		trace('''Executing: addTrace(cpsElement = «cpsElement», depElement = «depElement»)''')
+		trace('''Executing: addTrace(cpsElement = «cpsElement.name», depElement = «depElement.name»)''')
 		val trace = tracFactory.createCPS2DeplyomentTrace
 
 		trace.cpsElements += cpsElement
 		trace.deploymentElements += depElement
 
-		debug('''Adding trace («cpsElement»->«depElement») to traceability model.''')
+		debug('''Adding trace («cpsElement.name»->«depElement.name») to traceability model.''')
 		mapping.traces += trace
 		trace('''Execution ended: addTrace''')
 	}
