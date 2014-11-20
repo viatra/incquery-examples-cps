@@ -1,6 +1,12 @@
 # EMF-IncQuery CPS Demonstrator
 
-A comprehensive example showing off EMF-IncQuery features on a Cyber Physical System modeling domain
+A comprehensive example showing off EMF-IncQuery features on a Cyber Physical System modeling domain.
+Includes:
+  * live validation
+  * query-based viewers
+  * query-driven derived features
+  * model transformations
+  * code generators
 
 ## Getting started
 
