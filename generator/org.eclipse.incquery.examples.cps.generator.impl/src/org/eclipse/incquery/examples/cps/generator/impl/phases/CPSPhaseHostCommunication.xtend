@@ -2,14 +2,13 @@ package org.eclipse.incquery.examples.cps.generator.impl.phases
 
 import com.google.common.collect.Lists
 import java.util.List
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.operations.HostInstanceCommunicatesWithOperation
 import org.eclipse.incquery.examples.cps.generator.impl.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
 
-class CPSPhaseHostCommunication implements IGenratorPhase<CyberPhysicalSystem, CPSFragment>{
+class CPSPhaseHostCommunication implements IPhase<CPSFragment>{
 	
 	private extension RandomUtils randUtil = new RandomUtils;
 	

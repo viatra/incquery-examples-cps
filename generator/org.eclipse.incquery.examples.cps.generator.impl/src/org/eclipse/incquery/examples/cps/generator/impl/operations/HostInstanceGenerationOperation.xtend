@@ -1,14 +1,13 @@
 package org.eclipse.incquery.examples.cps.generator.impl.operations
 
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.impl.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorOperation
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IOperation
 
-class HostInstanceGenerationOperation implements IGeneratorOperation<CyberPhysicalSystem, CPSFragment> {
+class HostInstanceGenerationOperation implements IOperation<CPSFragment> {
 	val HostClass hostClass;
 	val HostType hostType;
 	private extension CPSModelBuilderUtil modelBuilder;
@@ -27,7 +26,7 @@ class HostInstanceGenerationOperation implements IGeneratorOperation<CyberPhysic
 
 		for(i : 0 ..< numberOfHostInstances){
 			// TODO generate valid IP addresses 
-			val instance = hostType.prepareHostInstanceWithIP(hostType.id + ".inst"+i, hostType.id + ".inst"+i);
+			hostType.prepareHostInstanceWithIP(hostType.id + ".inst"+i, hostType.id + ".inst"+i);
 		}
 
 		true;

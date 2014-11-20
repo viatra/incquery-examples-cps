@@ -1,13 +1,12 @@
 package org.eclipse.incquery.examples.cps.generator.impl.phases
 
 import com.google.common.collect.Lists
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.operations.ApplicationInstanceGenerationOperation
 import org.eclipse.incquery.examples.cps.generator.impl.operations.HostInstanceGenerationOperation
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
 
-class CPSPhaseInstanceGeneration implements IGenratorPhase<CyberPhysicalSystem, CPSFragment>{
+class CPSPhaseInstanceGeneration implements IPhase<CPSFragment>{
 	
 	override getOperations(CPSFragment fragment) {
 		val operations = Lists.newArrayList();

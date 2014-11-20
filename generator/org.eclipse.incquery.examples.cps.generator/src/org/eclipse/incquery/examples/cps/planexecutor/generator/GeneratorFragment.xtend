@@ -1,9 +1,10 @@
-package org.eclipse.incquery.examples.cps.generator.dtos
+package org.eclipse.incquery.examples.cps.planexecutor.generator
 
 import org.eclipse.emf.ecore.EObject
 import java.util.Random
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IFragment
 
-class GeneratorFragment<ModelType extends EObject> extends GeneratorConfiguration<ModelType>{
+class GeneratorFragment<ModelType extends EObject> extends GeneratorConfiguration<ModelType> implements IFragment {
 	val GeneratorInput<ModelType> input;
 	
 	val Random rand;

@@ -5,14 +5,13 @@ import java.util.ArrayList
 import java.util.HashMap
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorOperation
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IOperation
 
-class ApplicationInstanceAllocationOperation implements IGeneratorOperation<CyberPhysicalSystem, CPSFragment> {
+class ApplicationInstanceAllocationOperation implements IOperation<CPSFragment> {
 	
 	val ArrayList<ApplicationInstance> applicationInstances;
 	val HashMap<HostClass, Integer> normalizedRatios;

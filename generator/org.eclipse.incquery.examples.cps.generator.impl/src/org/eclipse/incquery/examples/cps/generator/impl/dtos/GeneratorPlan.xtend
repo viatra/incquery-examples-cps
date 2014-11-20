@@ -1,18 +1,17 @@
 package org.eclipse.incquery.examples.cps.generator.impl.dtos
 
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorPlan
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import com.google.common.collect.Lists
 import java.util.List
-import org.eclipse.incquery.examples.cps.generator.dtos.GeneratorInput
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.incquery.examples.cps.planexecutor.generator.GeneratorInput
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPlan
 
-class GeneratorPlan implements IGeneratorPlan<CyberPhysicalSystem, CPSFragment> {
+class GeneratorPlan implements IPlan<CPSFragment, GeneratorInput<CyberPhysicalSystem>> {
 	
-	List<IGenratorPhase<CyberPhysicalSystem, CPSFragment>> phases = Lists.newArrayList;
+	List<IPhase<CPSFragment>> phases = Lists.newArrayList;
 	
-	override addPhase(IGenratorPhase<CyberPhysicalSystem, CPSFragment> phase) {
+	override addPhase(IPhase<CPSFragment> phase) {
 		phases.add(phase);
 	}
 	

@@ -4,12 +4,11 @@ import com.google.common.base.Stopwatch
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.incquery.examples.cps.generator.ModelGenerator
 import org.eclipse.incquery.examples.cps.generator.impl.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSGeneratorInput
-import org.eclipse.incquery.examples.cps.generator.impl.dtos.GeneratorPlan
 import org.eclipse.incquery.examples.cps.generator.impl.interfaces.ICPSConstraints
+import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
+import org.eclipse.incquery.examples.cps.planexecutor.generator.GeneratorInput
 
 class CPSGeneratorBuilder {
 	
@@ -23,15 +22,15 @@ class CPSGeneratorBuilder {
 			return buildAndGenerateModel(seed, constraints, cps2dep.cps);
 		}else{
 			info("!!! Error: Cannot create CPS model");
-			return new CPSFragment(new CPSGeneratorInput(seed, constraints, null));
+			return new CPSFragment(new GeneratorInput(seed, constraints, null));
 		}
 	}
 	
 	def static buildAndGenerateModel(long seed,  ICPSConstraints constraints, CyberPhysicalSystem model){
-		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, model);
-		var GeneratorPlan plan = CPSPlanBuilder.buildDefaultPlan;
+		val GeneratorInput<CyberPhysicalSystem> input = new GeneratorInput(seed, constraints, model);
+		var plan = CPSPlanBuilder.buildDefaultPlan;
 		
-		var ModelGenerator<CyberPhysicalSystem, CPSFragment> generator = new ModelGenerator();
+		var PlanExecutor<CPSFragment, GeneratorInput<CyberPhysicalSystem>> generator = new PlanExecutor();
 		
 		var generateTime = Stopwatch.createStarted;
 		var out = generator.generate(plan, input);

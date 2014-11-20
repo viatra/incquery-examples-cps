@@ -2,16 +2,15 @@ package org.eclipse.incquery.examples.cps.generator.impl.phases
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
+import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.operations.ActionGenerationOperation
 import org.eclipse.incquery.examples.cps.generator.impl.queries.TransitionsMatcher
 import org.eclipse.incquery.examples.cps.generator.impl.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
-import org.apache.log4j.Logger
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
 
-class CPSPhaseActionGeneration implements IGenratorPhase<CyberPhysicalSystem, CPSFragment>{
+class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 	
 	private extension RandomUtils randUtil = new RandomUtils;
 	private extension Logger logger = Logger.getLogger("cps.generator.impl.CPSPhaseActionGeneration");

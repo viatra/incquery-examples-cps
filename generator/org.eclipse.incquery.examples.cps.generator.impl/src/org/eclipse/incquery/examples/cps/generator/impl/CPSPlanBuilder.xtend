@@ -1,13 +1,13 @@
 package org.eclipse.incquery.examples.cps.generator.impl
 
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.GeneratorPlan
+import org.eclipse.incquery.examples.cps.generator.impl.phases.CPSPhaseActionGeneration
 import org.eclipse.incquery.examples.cps.generator.impl.phases.CPSPhaseApplicationAllocation
 import org.eclipse.incquery.examples.cps.generator.impl.phases.CPSPhaseHostCommunication
 import org.eclipse.incquery.examples.cps.generator.impl.phases.CPSPhaseInstanceGeneration
+import org.eclipse.incquery.examples.cps.generator.impl.phases.CPSPhasePrepare
 import org.eclipse.incquery.examples.cps.generator.impl.phases.CPSPhaseSignalSet
 import org.eclipse.incquery.examples.cps.generator.impl.phases.CPSPhaseTypeGeneration
-import org.eclipse.incquery.examples.cps.generator.impl.phases.CPSPhaseActionGeneration
-import org.eclipse.incquery.examples.cps.generator.impl.phases.CPSPhasePrepare
 
 class CPSPlanBuilder {
 	

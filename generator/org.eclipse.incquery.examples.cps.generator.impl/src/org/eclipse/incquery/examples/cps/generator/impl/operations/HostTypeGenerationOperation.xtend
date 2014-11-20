@@ -1,13 +1,12 @@
 package org.eclipse.incquery.examples.cps.generator.impl.operations
 
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.impl.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.impl.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorOperation
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IOperation
 
-class HostTypeGenerationOperation implements IGeneratorOperation<CyberPhysicalSystem, CPSFragment> {
+class HostTypeGenerationOperation implements IOperation<CPSFragment> {
 	val HostClass hostClass;
 	private extension CPSModelBuilderUtil modelBuilder;
 	private extension RandomUtils randUtil

@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.dtos
+package org.eclipse.incquery.examples.cps.planexecutor.generator
 
 import org.eclipse.emf.ecore.EObject
 

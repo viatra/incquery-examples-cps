@@ -1,17 +1,16 @@
-package org.eclipse.incquery.examples.cps.generator
+package org.eclipse.incquery.examples.cps.planexecutor
 
 import org.apache.log4j.Logger
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.incquery.examples.cps.generator.dtos.GeneratorFragment
-import org.eclipse.incquery.examples.cps.generator.dtos.GeneratorInput
-import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGeneratorPlan
+import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IFragment
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IInput
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPlan
 
-class ModelGenerator<ModelType extends EObject, FragmentType extends GeneratorFragment<ModelType>> {
+class PlanExecutor<FragmentType extends IFragment, InputType extends IInput> {
 	
 	protected extension Logger logger = Logger.getLogger("cps.generator.Generator")
 	
-	def generate(IGeneratorPlan<ModelType, FragmentType> plan, GeneratorInput<ModelType> input){
+	def generate(IPlan<FragmentType, InputType> plan, InputType input){
 		val FragmentType fragment = plan.getInitialFragment(input);
 		
 		plan.phases.forEach[phase, i| 

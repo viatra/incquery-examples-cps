@@ -5,7 +5,6 @@ import java.util.HashMap
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.impl.dtos.HostClass
@@ -13,9 +12,9 @@ import org.eclipse.incquery.examples.cps.generator.impl.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.impl.operations.ApplicationInstanceAllocationOperation
 import org.eclipse.incquery.examples.cps.generator.impl.utils.MapUtil
 import org.eclipse.incquery.examples.cps.generator.impl.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.generator.interfaces.IGenratorPhase
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
 
-class CPSPhaseApplicationAllocation implements IGenratorPhase<CyberPhysicalSystem, CPSFragment>{
+class CPSPhaseApplicationAllocation implements IPhase<CPSFragment>{
 	
 	private extension RandomUtils randUtil = new RandomUtils;
 	protected extension Logger logger = Logger.getLogger("cps.generator.impl.CPSPhaseApplicationAllocation")

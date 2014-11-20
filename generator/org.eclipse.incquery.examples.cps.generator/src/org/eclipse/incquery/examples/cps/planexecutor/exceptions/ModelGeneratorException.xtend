@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.exceptions
+package org.eclipse.incquery.examples.cps.planexecutor.exceptions
 
 import java.lang.Exception
 
