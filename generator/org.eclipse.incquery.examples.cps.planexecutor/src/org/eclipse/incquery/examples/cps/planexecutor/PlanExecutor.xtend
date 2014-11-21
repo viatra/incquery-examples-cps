@@ -12,12 +12,12 @@ class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 	def process(IPlan<FragmentType, InputType> plan, InputType input){
 		val FragmentType fragment = input.getInitialFragment;
 		
-		continueProcess(plan, fragment)
+		continueProcessing(plan, fragment)
 		
 		return fragment;
 	}
 	
-	def continueProcess(IPlan<FragmentType, InputType> plan, FragmentType fragment) {
+	def continueProcessing(IPlan<FragmentType, InputType> plan, FragmentType fragment) {
 		plan.phases.forEach[phase, i| 
 			info("<< PHASE " + phase.class.simpleName + " >>");
 			phase.getOperations(fragment).forEach[operation, j|
