@@ -70,4 +70,8 @@ class DemoCPSConstraints implements ICPSConstraints {
 		];
 	}
 	
+	override getName() {
+		return this.class.simpleName;
+	}
+	
 }

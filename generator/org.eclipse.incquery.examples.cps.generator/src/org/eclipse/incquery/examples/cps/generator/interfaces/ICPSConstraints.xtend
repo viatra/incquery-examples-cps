@@ -8,4 +8,5 @@ interface ICPSConstraints extends IConstraints {
 	def MinMaxData<Integer> getNumberOfSignals();
 	def Iterable<AppClass> getApplicationClasses();
 	def Iterable<HostClass> getHostClasses();
+	def String getName();
 }	

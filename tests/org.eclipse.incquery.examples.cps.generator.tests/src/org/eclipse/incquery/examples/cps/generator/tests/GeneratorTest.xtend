@@ -8,15 +8,18 @@ import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
+import org.eclipse.incquery.examples.cps.generator.queries.AppTypesMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.HostTypesMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.AllocationCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.DemoCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.HostClassesCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.LargeCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.OnlyHostTypesCPSConstraints
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.SimpleCPSConstraints
-import org.eclipse.incquery.examples.cps.generator.tests.utils.CPSStats
 import org.eclipse.incquery.examples.cps.generator.utils.CPSGeneratorBuilder
 import org.eclipse.incquery.examples.cps.generator.utils.PersistenceUtil
+import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil
 import org.junit.Before
@@ -86,7 +89,7 @@ class GeneratorTest {
 		assertNotNull("IncQueryEngine is null", engine);
 		
 		//Show stats
-		showStats(generateStats(engine));
+		StatsUtil.logStats(StatsUtil.generateStats(engine), logger);
 		
 		assertInRangeAppTypes(constraints, engine);
 		assertInRangeHostTypes(constraints, engine);
@@ -100,23 +103,6 @@ class GeneratorTest {
 		info("Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
 		return out;
-	}
-	
-	def showStats(CPSStats stats) {
-		info("Model Stats: ");
-		info("  ApplicationTypes: " + stats.appTypeCount);
-		info("  ApplicationInstances: " + stats.appInstanceCount);
-		info("  HostTypes: " + stats.hostTypeCount);
-		info("  HostInstances: " + stats.hostInstanceCount);
-		info("  States: " + stats.stateCount);
-		info("  Transitions: " + stats.transitionCount);
-		info("  Allocated AppInstances: " + stats.allocatedAppCount);
-		info("  Connected HostsInstances: " + stats.connectedHostCount);
-		info("");
-	}
-	
-	def generateStats(IncQueryEngine engine){
-		return new CPSStats(engine);
 	}
 	
 	def assertInRangeAppTypes(ICPSConstraints constraints, IncQueryEngine engine) {

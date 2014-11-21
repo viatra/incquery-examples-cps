@@ -28,5 +28,8 @@ class OnlyHostTypesCPSConstraints implements ICPSConstraints {
 		];
 	}
 	
+	override getName() {
+		return this.class.simpleName;
+	}
 	
 }

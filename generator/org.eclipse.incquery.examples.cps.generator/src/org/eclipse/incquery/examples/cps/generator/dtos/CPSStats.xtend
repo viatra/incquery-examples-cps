@@ -1,13 +1,13 @@
-package org.eclipse.incquery.examples.cps.generator.tests.utils
+package org.eclipse.incquery.examples.cps.generator.dtos
 
-import org.eclipse.incquery.examples.cps.generator.tests.AllocatedAppInstancesMatcher
-import org.eclipse.incquery.examples.cps.generator.tests.AppInstancesMatcher
-import org.eclipse.incquery.examples.cps.generator.tests.AppTypesMatcher
-import org.eclipse.incquery.examples.cps.generator.tests.ConnectedHostsMatcher
-import org.eclipse.incquery.examples.cps.generator.tests.HostInstancesMatcher
-import org.eclipse.incquery.examples.cps.generator.tests.HostTypesMatcher
-import org.eclipse.incquery.examples.cps.generator.tests.StatesMatcher
-import org.eclipse.incquery.examples.cps.generator.tests.TransitionsMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.TransitionMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.AllocatedAppInstancesMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.AppInstancesMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.AppTypesMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.ConnectedHostsMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.HostInstancesMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.HostTypesMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.StatesMatcher
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 
 class CPSStats {
@@ -27,7 +27,7 @@ class CPSStats {
 		this.hostTypeCount = HostTypesMatcher.on(engine).countMatches;
 		this.hostInstanceCount = HostInstancesMatcher.on(engine).countMatches;
 		this.stateCount = StatesMatcher.on(engine).countMatches;
-		this.transitionCount = TransitionsMatcher.on(engine).countMatches;
+		this.transitionCount = TransitionMatcher.on(engine).countMatches;
 		this.allocatedAppCount = AllocatedAppInstancesMatcher.on(engine).countMatches;
 		this.connectedHostCount = ConnectedHostsMatcher.on(engine).countMatches;
 	}

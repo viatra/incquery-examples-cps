@@ -9,8 +9,6 @@ import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 
 class AllocationCPSConstraints implements ICPSConstraints {
 	
-	public String name = "Allocation";
-	
 	val hostClass = new HostClass(
 						"FirstHostClass",
 						new MinMaxData(2, 2), // HostTypes
@@ -45,6 +43,10 @@ class AllocationCPSConstraints implements ICPSConstraints {
 		#[
 			hostClass
 		];
+	}
+	
+	override getName() {
+		return this.class.simpleName;
 	}
 	
 }
