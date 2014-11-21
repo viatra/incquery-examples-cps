@@ -3,14 +3,21 @@ package org.eclipse.incquery.examples.cps.planexecutor
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
 import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPlan
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.Initializer
 
-class PlanExecutor<FragmentType, InputType> {
+class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 	
 	protected extension Logger logger = Logger.getLogger("cps.generator.Generator")
 	
-	def generate(IPlan<FragmentType, InputType> plan, InputType input){
-		val FragmentType fragment = plan.getInitialFragment(input);
+	def process(IPlan<FragmentType, InputType> plan, InputType input){
+		val FragmentType fragment = input.getInitialFragment;
 		
+		continueProcess(plan, fragment)
+		
+		return fragment;
+	}
+	
+	def continueProcess(IPlan<FragmentType, InputType> plan, FragmentType fragment) {
 		plan.phases.forEach[phase, i| 
 			info("<< PHASE " + phase.class.simpleName + " >>");
 			phase.getOperations(fragment).forEach[operation, j|
@@ -24,8 +31,6 @@ class PlanExecutor<FragmentType, InputType> {
 			]
 			info("<<===================== END PHASE ========================>>");
 		]
-		
-		return fragment;
 	}
 	
 }

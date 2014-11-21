@@ -2,9 +2,11 @@ package org.eclipse.incquery.examples.cps.generator.dtos.bases
 
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.incquery.examples.cps.generator.interfaces.IConstraints
+import org.eclipse.incquery.examples.cps.planexecutor.interfaces.Initializer
+import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 
 @Data
-class GeneratorInput<ModelType extends EObject> extends GeneratorConfiguration<ModelType> {
+abstract class GeneratorInput<ModelType extends EObject> extends GeneratorConfiguration<ModelType> implements Initializer<CPSFragment> {
 	long seed;
 	IConstraints constraints;
 	
@@ -13,4 +15,5 @@ class GeneratorInput<ModelType extends EObject> extends GeneratorConfiguration<M
 		this._constraints = constraints;
 		this.modelRoot = modelRoot;
 	}
+	
 }

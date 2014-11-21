@@ -9,6 +9,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
+import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
 
 class CPSGeneratorBuilder {
 	
@@ -22,18 +23,18 @@ class CPSGeneratorBuilder {
 			return buildAndGenerateModel(seed, constraints, cps2dep.cps);
 		}else{
 			info("!!! Error: Cannot create CPS model");
-			return new CPSFragment(new GeneratorInput(seed, constraints, null));
+			return new CPSFragment(new CPSGeneratorInput(seed, constraints, null));
 		}
 	}
 	
 	def static buildAndGenerateModel(long seed,  ICPSConstraints constraints, CyberPhysicalSystem model){
-		val GeneratorInput<CyberPhysicalSystem> input = new GeneratorInput(seed, constraints, model);
+		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, model);
 		var plan = CPSPlanBuilder.buildDefaultPlan;
 		
 		var PlanExecutor<CPSFragment, GeneratorInput<CyberPhysicalSystem>> generator = new PlanExecutor();
 		
 		var generateTime = Stopwatch.createStarted;
-		var out = generator.generate(plan, input);
+		var out = generator.process(plan, input);
 		generateTime.stop;
 		info("Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 	

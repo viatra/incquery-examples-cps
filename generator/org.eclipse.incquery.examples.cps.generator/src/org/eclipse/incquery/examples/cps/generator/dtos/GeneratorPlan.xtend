@@ -19,8 +19,4 @@ class GeneratorPlan implements IPlan<CPSFragment, GeneratorInput<CyberPhysicalSy
 		return phases;
 	}
 	
-	override getInitialFragment(GeneratorInput<CyberPhysicalSystem> input) {
-		return new CPSFragment(input);
-	}
-	
 }
