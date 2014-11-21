@@ -3,6 +3,7 @@ package org.eclipse.incquery.examples.cps.generator.utils
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
 import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 
 class StatsUtil {
 	
@@ -16,10 +17,11 @@ class StatsUtil {
 		logger.info("  Transitions: " + stats.transitionCount);
 		logger.info("  Allocated AppInstances: " + stats.allocatedAppCount);
 		logger.info("  Connected HostsInstances: " + stats.connectedHostCount);
+		logger.info("  EObjects: " + stats.eObjects);
 		logger.info("");
 	}
 	
-	def static generateStats(IncQueryEngine engine){
-		return new CPSStats(engine);
+	def static generateStats(IncQueryEngine engine, CyberPhysicalSystem model){
+		return new CPSStats(engine, model);
 	}
 }

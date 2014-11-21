@@ -9,6 +9,7 @@ import org.eclipse.incquery.examples.cps.generator.queries.HostInstancesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.HostTypesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.StatesMatcher
 import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 
 class CPSStats {
 	
@@ -20,8 +21,9 @@ class CPSStats {
 	public int transitionCount = 0;
 	public int allocatedAppCount = 0;
 	public int connectedHostCount = 0;
+	public int eObjects = 0;
 
-	new(IncQueryEngine engine){
+	new(IncQueryEngine engine, CyberPhysicalSystem model){
 		this.appTypeCount = AppTypesMatcher.on(engine).countMatches;
 		this.appInstanceCount = AppInstancesMatcher.on(engine).countMatches;
 		this.hostTypeCount = HostTypesMatcher.on(engine).countMatches;
@@ -30,5 +32,7 @@ class CPSStats {
 		this.transitionCount = TransitionMatcher.on(engine).countMatches;
 		this.allocatedAppCount = AllocatedAppInstancesMatcher.on(engine).countMatches;
 		this.connectedHostCount = ConnectedHostsMatcher.on(engine).countMatches;
+		this.eObjects = model.eAllContents.size;
+		
 	}
 }
