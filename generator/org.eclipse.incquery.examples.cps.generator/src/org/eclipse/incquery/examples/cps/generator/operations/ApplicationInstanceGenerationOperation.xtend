@@ -5,7 +5,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IOperation
+import org.eclipse.incquery.examples.cps.planexecutor.api.IOperation
 
 class ApplicationInstanceGenerationOperation implements IOperation<CPSFragment> {
 	val AppClass applicationClass;

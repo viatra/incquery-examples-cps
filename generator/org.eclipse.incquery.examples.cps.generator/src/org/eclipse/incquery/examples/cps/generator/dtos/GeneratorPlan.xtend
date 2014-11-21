@@ -4,8 +4,8 @@ import com.google.common.collect.Lists
 import java.util.List
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPlan
+import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
+import org.eclipse.incquery.examples.cps.planexecutor.api.IPlan
 
 class GeneratorPlan implements IPlan<CPSFragment, GeneratorInput<CyberPhysicalSystem>> {
 	

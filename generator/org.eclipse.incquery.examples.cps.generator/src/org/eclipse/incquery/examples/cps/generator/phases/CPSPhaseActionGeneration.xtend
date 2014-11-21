@@ -8,7 +8,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.operations.ActionGenerationOperation
 import org.eclipse.incquery.examples.cps.generator.queries.TransitionsMatcher
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
+import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
 
 class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 	

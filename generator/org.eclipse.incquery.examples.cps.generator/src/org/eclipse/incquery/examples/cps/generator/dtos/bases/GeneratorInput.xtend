@@ -2,7 +2,7 @@ package org.eclipse.incquery.examples.cps.generator.dtos.bases
 
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.incquery.examples.cps.generator.interfaces.IConstraints
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.Initializer
+import org.eclipse.incquery.examples.cps.planexecutor.api.Initializer
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 
 @Data

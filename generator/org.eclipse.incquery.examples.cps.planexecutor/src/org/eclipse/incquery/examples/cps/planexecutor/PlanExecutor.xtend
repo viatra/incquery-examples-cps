@@ -2,8 +2,8 @@ package org.eclipse.incquery.examples.cps.planexecutor
 
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPlan
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.Initializer
+import org.eclipse.incquery.examples.cps.planexecutor.api.IPlan
+import org.eclipse.incquery.examples.cps.planexecutor.api.Initializer
 
 class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 	

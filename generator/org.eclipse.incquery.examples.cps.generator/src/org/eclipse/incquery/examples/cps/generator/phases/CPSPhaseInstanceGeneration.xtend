@@ -4,7 +4,7 @@ import com.google.common.collect.Lists
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.operations.ApplicationInstanceGenerationOperation
 import org.eclipse.incquery.examples.cps.generator.operations.HostInstanceGenerationOperation
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
+import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
 
 class CPSPhaseInstanceGeneration implements IPhase<CPSFragment>{
 	

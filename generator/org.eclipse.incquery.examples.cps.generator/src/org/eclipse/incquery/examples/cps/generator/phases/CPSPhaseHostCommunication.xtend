@@ -6,7 +6,7 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.operations.HostInstanceCommunicatesWithOperation
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
+import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
 
 class CPSPhaseHostCommunication implements IPhase<CPSFragment>{
 	
