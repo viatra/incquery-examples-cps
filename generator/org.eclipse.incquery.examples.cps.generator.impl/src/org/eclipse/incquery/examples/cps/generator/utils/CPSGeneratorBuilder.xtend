@@ -6,9 +6,9 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
-import org.eclipse.incquery.examples.cps.planexecutor.generator.GeneratorInput
 
 class CPSGeneratorBuilder {
 	

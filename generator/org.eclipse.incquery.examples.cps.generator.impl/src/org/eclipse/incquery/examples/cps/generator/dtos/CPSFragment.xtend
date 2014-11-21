@@ -5,9 +5,9 @@ import com.google.common.collect.Multimap
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
+import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorFragment
+import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
 import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
-import org.eclipse.incquery.examples.cps.planexecutor.generator.GeneratorFragment
-import org.eclipse.incquery.examples.cps.planexecutor.generator.GeneratorInput
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 
 class CPSFragment extends GeneratorFragment<CyberPhysicalSystem>{

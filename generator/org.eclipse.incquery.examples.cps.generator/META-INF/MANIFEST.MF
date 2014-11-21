@@ -8,8 +8,7 @@ Require-Bundle: org.eclipse.xtext.xbase.lib,
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
-Export-Package: org.eclipse.incquery.examples.cps.generator.impl.operations,
- org.eclipse.incquery.examples.cps.planexecutor,
+Export-Package: org.eclipse.incquery.examples.cps.planexecutor,
  org.eclipse.incquery.examples.cps.planexecutor.exceptions,
  org.eclipse.incquery.examples.cps.planexecutor.generator,
  org.eclipse.incquery.examples.cps.planexecutor.interfaces

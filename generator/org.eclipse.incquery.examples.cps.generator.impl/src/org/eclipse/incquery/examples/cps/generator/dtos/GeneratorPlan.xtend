@@ -3,7 +3,7 @@ package org.eclipse.incquery.examples.cps.generator.dtos
 import com.google.common.collect.Lists
 import java.util.List
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.incquery.examples.cps.planexecutor.generator.GeneratorInput
+import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
 import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPhase
 import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPlan
 
