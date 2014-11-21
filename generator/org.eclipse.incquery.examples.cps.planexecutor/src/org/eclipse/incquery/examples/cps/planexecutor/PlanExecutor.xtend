@@ -9,7 +9,7 @@ class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 	
 	protected extension Logger logger = Logger.getLogger("cps.generator.Generator")
 	
-	def process(IPlan<FragmentType, InputType> plan, InputType input){
+	def process(IPlan<FragmentType> plan, InputType input){
 		val FragmentType fragment = input.getInitialFragment;
 		
 		continueProcessing(plan, fragment)
@@ -17,7 +17,7 @@ class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 		return fragment;
 	}
 	
-	def continueProcessing(IPlan<FragmentType, InputType> plan, FragmentType fragment) {
+	def continueProcessing(IPlan<FragmentType> plan, FragmentType fragment) {
 		plan.phases.forEach[phase, i| 
 			info("<< PHASE " + phase.class.simpleName + " >>");
 			phase.getOperations(fragment).forEach[operation, j|

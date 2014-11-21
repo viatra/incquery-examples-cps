@@ -7,7 +7,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
 import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
 import org.eclipse.incquery.examples.cps.planexecutor.api.IPlan
 
-class GeneratorPlan implements IPlan<CPSFragment, GeneratorInput<CyberPhysicalSystem>> {
+class GeneratorPlan implements IPlan<CPSFragment> {
 	
 	List<IPhase<CPSFragment>> phases = Lists.newArrayList;
 	
