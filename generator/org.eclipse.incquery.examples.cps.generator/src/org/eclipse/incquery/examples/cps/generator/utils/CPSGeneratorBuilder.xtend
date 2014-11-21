@@ -6,10 +6,9 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
+import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
 
 class CPSGeneratorBuilder {
 	
@@ -31,7 +30,7 @@ class CPSGeneratorBuilder {
 		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, model);
 		var plan = CPSPlanBuilder.buildDefaultPlan;
 		
-		var PlanExecutor<CPSFragment, GeneratorInput<CyberPhysicalSystem>> generator = new PlanExecutor();
+		var PlanExecutor<CPSFragment, CPSGeneratorInput> generator = new PlanExecutor();
 		
 		var generateTime = Stopwatch.createStarted;
 		var out = generator.process(plan, input);
