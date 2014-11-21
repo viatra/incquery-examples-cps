@@ -2,10 +2,9 @@ package org.eclipse.incquery.examples.cps.generator.dtos.bases
 
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.incquery.examples.cps.generator.interfaces.IConstraints
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IInput
 
 @Data
-class GeneratorInput<ModelType extends EObject> extends GeneratorConfiguration<ModelType> implements IInput {
+class GeneratorInput<ModelType extends EObject> extends GeneratorConfiguration<ModelType> {
 	long seed;
 	IConstraints constraints;
 	

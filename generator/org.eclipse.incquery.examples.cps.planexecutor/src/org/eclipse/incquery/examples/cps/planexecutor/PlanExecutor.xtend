@@ -2,11 +2,9 @@ package org.eclipse.incquery.examples.cps.planexecutor
 
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IFragment
-import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IInput
 import org.eclipse.incquery.examples.cps.planexecutor.interfaces.IPlan
 
-class PlanExecutor<FragmentType extends IFragment, InputType extends IInput> {
+class PlanExecutor<FragmentType, InputType> {
 	
 	protected extension Logger logger = Logger.getLogger("cps.generator.Generator")
 	
