@@ -1,14 +1,25 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CPS Demonstrator Model Generator
-Bundle-SymbolicName: org.eclipse.incquery.examples.cps.planexecutor;singleton:=true
+Bundle-Name: CPS Model Generator Implementation
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.generator;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Require-Bundle: org.eclipse.xtext.xbase.lib,
- org.eclipse.xtend.core;bundle-version="2.6.0"
-Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
-Export-Package: org.eclipse.incquery.examples.cps.planexecutor,
- org.eclipse.incquery.examples.cps.planexecutor.exceptions,
- org.eclipse.incquery.examples.cps.planexecutor.generator,
- org.eclipse.incquery.examples.cps.planexecutor.interfaces
+Export-Package: org.eclipse.incquery.examples.cps.generator,
+ org.eclipse.incquery.examples.cps.generator.dtos,
+ org.eclipse.incquery.examples.cps.generator.dtos.bases,
+ org.eclipse.incquery.examples.cps.generator.interfaces,
+ org.eclipse.incquery.examples.cps.generator.operations,
+ org.eclipse.incquery.examples.cps.generator.phases,
+ org.eclipse.incquery.examples.cps.generator.queries,
+ org.eclipse.incquery.examples.cps.generator.queries.util,
+ org.eclipse.incquery.examples.cps.generator.utils
+Require-Bundle: org.eclipse.incquery.examples.cps.planexecutor;bundle-version="0.1.0",
+ org.eclipse.xtend.lib,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.incquery.examples.cps.model;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.traceability;bundle-version="0.1.0",
+ org.eclipse.incquery.runtime;bundle-version="0.8.1"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.apache.log4j
