@@ -10,5 +10,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
 Export-Package: org.eclipse.incquery.examples.cps.planexecutor,
  org.eclipse.incquery.examples.cps.planexecutor.api,
- org.eclipse.incquery.examples.cps.planexecutor.exceptions,
- org.eclipse.incquery.examples.cps.planexecutor.generator
+ org.eclipse.incquery.examples.cps.planexecutor.exceptions
