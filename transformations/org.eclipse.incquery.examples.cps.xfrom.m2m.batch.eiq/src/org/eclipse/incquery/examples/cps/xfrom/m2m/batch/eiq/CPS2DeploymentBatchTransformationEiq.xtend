@@ -28,7 +28,7 @@ import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingU
 
 class CPS2DeploymentBatchTransformationEiq {
 
-	extension Logger logger = Logger.getLogger("cps.xform.CPS2DeploymentTransformation")
+	extension Logger logger = Logger.getLogger("cps.xform.m2m.batch.eiq")
 	extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
 	DeploymentFactory depFactory = DeploymentFactory.eINSTANCE

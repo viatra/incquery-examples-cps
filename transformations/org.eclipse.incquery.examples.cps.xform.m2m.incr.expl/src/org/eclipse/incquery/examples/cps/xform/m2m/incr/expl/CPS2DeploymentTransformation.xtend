@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.*
 
 class CPS2DeploymentTransformation {
 	
-	extension Logger logger = Logger.getLogger("cps.xform.CPS2DeploymentTransformation")
+	extension Logger logger = Logger.getLogger("cps.xform.m2m.expl.incr")
 	extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 	
 	ExecutionSchema schema = null

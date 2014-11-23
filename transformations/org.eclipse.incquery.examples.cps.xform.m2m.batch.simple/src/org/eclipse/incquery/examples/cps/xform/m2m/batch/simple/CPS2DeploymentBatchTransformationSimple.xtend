@@ -27,7 +27,7 @@ import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingU
 
 class CPS2DeploymentBatchTransformationSimple {
 
-	extension Logger logger = Logger.getLogger("cps.xform.CPS2DeploymentTransformation")
+	extension Logger logger = Logger.getLogger("cps.xform.m2m.batch.simple")
 
 	private def traceBegin(String method) {
 		trace('''Executing «method» BEGIN''')
@@ -61,6 +61,12 @@ class CPS2DeploymentBatchTransformationSimple {
 	def void execute() {
 		traceBegin("execute()")
 
+		info(
+			'''
+			Executing transformation on:
+				Cyber-physical system: «mapping.cps.id»''')
+		
+		
 		mapping.traces.clear
 		mapping.deployment.hosts.clear
 
