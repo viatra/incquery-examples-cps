@@ -24,6 +24,9 @@ import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 import static com.google.common.base.Preconditions.*
 import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil.*
 import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingUtil.*
+import org.eclipse.emf.common.util.EList
+import java.util.HashSet
+import com.google.common.collect.Maps
 
 class CPS2DeploymentBatchTransformationSimple {
 
@@ -234,23 +237,52 @@ class CPS2DeploymentBatchTransformationSimple {
 	private def isConnectedTo(HostInstance src, HostInstance dst) {
 		traceBegin('''isConnectedTo(«src.name», «dst.name»)''')
 		val checked = newHashSet(src)
-		val reachableHosts = Lists.newArrayList(src.communicateWith)
+		var depth = 0 as int
+		var nextHostIndex = 0 as int
+		val indices = Lists.newArrayList
+		indices.add(0 as int) // padding
+		indices.add(0 as int) // initial next index
+		val parents = Maps.newHashMap()
+		parents.put(1, src);
 
-		// Add 'src' to the initially available hosts
-		reachableHosts += src
-		while (!reachableHosts.empty) {
+		var currentHost = src
+		while (depth >= 0) {
+			if (currentHost.equals(dst)) {
+				traceEnd('''isConnectedTo(«src.name», «dst.name»)''')
+				return true
+			} else {
+				nextHostIndex = indices.get(depth + 1)
+				if (nextHostIndex >= currentHost.communicateWith.length) {
+					// Current host traversed, go up one level
+					depth--
+				} else {
+					checked += currentHost
 
-			if (reachableHosts.contains(dst)) {
-				return true;
+					// get the next element
+					var nextHost = currentHost.communicateWith.get(nextHostIndex)
+
+					if (checked.contains(nextHost)) {
+						nextHostIndex += 1
+						while (nextHostIndex < currentHost.communicateWith.length && checked.contains(nextHost)) {
+							nextHost = currentHost.communicateWith.get(nextHostIndex)
+							nextHostIndex += 1
+						}				
+						indices.set(depth + 1,nextHostIndex)
+					}
+					if(nextHostIndex < currentHost.communicateWith.length ){
+				
+						if (indices.length <= depth + 1) {
+							indices.add(nextHostIndex);
+						} else {
+							indices.set(depth, nextHostIndex);
+						}
+	
+						parents.put(depth, currentHost)
+						currentHost = nextHost
+					}
+
+				}
 			}
-
-			checked += reachableHosts
-
-			// Add the transitively reachable hosts
-			reachableHosts += reachableHosts.map[it.communicateWith].flatten.filter[!checked.contains(it)]
-
-			// Remove the already checked ones
-			reachableHosts -= checked
 		}
 
 		traceEnd('''isConnectedTo(«src.name», «dst.name»)''')
