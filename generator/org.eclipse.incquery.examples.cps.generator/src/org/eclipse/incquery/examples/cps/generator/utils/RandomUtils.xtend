@@ -5,6 +5,7 @@ import java.util.Random
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
+import java.util.List
 
 class RandomUtils {
 	/**
@@ -48,7 +49,7 @@ class RandomUtils {
 		return randNumber;	
 	}
 	
-	def <ListElement>randElement(Collection<ListElement> list, Random rand) throws ModelGeneratorException {
+	def <ListElement>randElement(List<ListElement> list, Random rand) throws ModelGeneratorException {
 		if(list.empty){
 			throw new ModelGeneratorException("The specified list is empty. (randElement(List list, Random rand))");
 		}
@@ -60,7 +61,7 @@ class RandomUtils {
 	    return list.get(randNumber);
 	}
 	
-	def <ListElement>randElementExcept(Collection<ListElement> list, Collection<ListElement> excepted, Random rand) throws ModelGeneratorException {
+	def <ListElement>randElementExcept(List<ListElement> list, Collection<ListElement> excepted, Random rand) throws ModelGeneratorException {
 		if(excepted.containsAll(list)){
 			return null;
 		}

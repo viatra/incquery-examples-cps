@@ -20,6 +20,7 @@ class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 	
 	override getOperations(CPSFragment fragment) {
 		val operations = Lists.newArrayList();
+		val typeList = fragment.applicationTypes.values.toList
 		
 		for(appClass : fragment.applicationTypes.keySet){
 			var appTypes = fragment.applicationTypes.get(appClass);
@@ -32,7 +33,7 @@ class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 							if(appClass.probabilityOfSendAction.randBooleanWithPercentageOfTrue(fragment.random)){
 								// Generate SendSignal(AppTypeID, SignalID)
 								val signalNumber = fragment.numberOfSignals.randIntZeroToMax(fragment.random);
-								val targetAppType = fragment.applicationTypes.values.randElementExcept(ImmutableList.of(appType), fragment.random);
+								val targetAppType = typeList.randElementExcept(ImmutableList.of(appType), fragment.random);
 
 								if(targetAppType != null){
 									val action = SEND_METHOD_NAME + "(" + targetAppType.id + ", "+ signalNumber + ")";

@@ -7,6 +7,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.operations.HostInstanceCommunicatesWithOperation
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
+import org.eclipse.incquery.examples.cps.generator.queries.HostInstancesMatcher
 
 class CPSPhaseHostCommunication implements IPhase<CPSFragment>{
 	
@@ -15,15 +16,9 @@ class CPSPhaseHostCommunication implements IPhase<CPSFragment>{
 	override getOperations(CPSFragment fragment) {
 		val operations = Lists.newArrayList();
 	
-		// TODO optimize!
-		var hostInstances = Lists.newArrayList;
-		for(hostClass : fragment.hostTypes.keySet){
-			for(hostType : fragment.hostTypes.get(hostClass)){
-				hostInstances.addAll(hostType.instances);
-			}		
-		}
+		val hostInstances = HostInstancesMatcher.on(fragment.engine).allValuesOfhostInstance.toList;
 
-
+		// TODO optimize it!
 		// Generate communications
 		for(hostClass : fragment.hostTypes.keySet){ // HostClasses store the configuration
 			for(hostType : fragment.hostTypes.get(hostClass)){ // Every HostInstance
