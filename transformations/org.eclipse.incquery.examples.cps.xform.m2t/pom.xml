@@ -55,7 +55,7 @@
 							<genmodelUri>../../domains/org.eclipse.incquery.examples.cps.deployment/model/deployment.genmodel</genmodelUri>
 						</metamodel>
 						<metamodel>
-							<packageClass>org.eclipse.incquery.examples.cps.CyberPhysicalSystemPackage</packageClass>
+							<packageClass>org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage</packageClass>
 							<genmodelUri>../../domains/org.eclipse.incquery.examples.cps.model/model/model.genmodel</genmodelUri>
 						</metamodel>
 						<metamodel>

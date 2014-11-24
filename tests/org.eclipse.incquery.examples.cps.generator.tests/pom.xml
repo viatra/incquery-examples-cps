@@ -51,7 +51,7 @@
 					<outputDirectory>src-gen</outputDirectory>
 					<metamodels>
 						<metamodel>
-							<packageClass>org.eclipse.incquery.examples.cps.CyberPhysicalSystemPackage</packageClass>
+							<packageClass>org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage</packageClass>
 							<genmodelUri>../../domains/org.eclipse.incquery.examples.cps.model/model/model.genmodel</genmodelUri>
 						</metamodel>
 					</metamodels>
