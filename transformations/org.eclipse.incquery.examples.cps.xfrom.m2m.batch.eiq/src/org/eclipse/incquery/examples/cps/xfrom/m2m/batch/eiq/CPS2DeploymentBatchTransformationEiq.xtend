@@ -247,7 +247,9 @@ class CPS2DeploymentBatchTransformationEiq {
 		addTraceOneToN(transition, #[depTransition])
 
 		depTransition.to = engine.cps2depTrace.getAllMatches(mapping, null, transition.targetState, null).map[
-			depElement].head as BehaviorState
+			depElement].filter(BehaviorState).findFirst[
+				depBehavior.states.contains(it)
+			]
 		trace('''Execution ended: mapTransition''')
 	}
 
