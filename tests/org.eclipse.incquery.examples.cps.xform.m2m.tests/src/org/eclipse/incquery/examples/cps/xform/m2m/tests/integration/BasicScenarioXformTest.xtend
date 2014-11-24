@@ -40,7 +40,7 @@ class BasicScenarioXformTest extends CPS2DepTest {
 		val testId = "basicScenario10k"
 		startTest(testId)
 		
-		executeScenarioXform(10000)
+		executeScenarioXform(7000)
 	
 		endTest(testId)
 	}
@@ -51,7 +51,7 @@ class BasicScenarioXformTest extends CPS2DepTest {
 		val testId = "basicScenario100k"
 		startTest(testId)
 		
-		executeScenarioXform(100000)
+		executeScenarioXform(40000)
 	
 		endTest(testId)
 	}
@@ -62,7 +62,7 @@ class BasicScenarioXformTest extends CPS2DepTest {
 		val testId = "basicScenario1M"
 		startTest(testId)
 		
-		executeScenarioXform(1000000)
+		executeScenarioXform(190000)
 	
 		endTest(testId)
 	}
