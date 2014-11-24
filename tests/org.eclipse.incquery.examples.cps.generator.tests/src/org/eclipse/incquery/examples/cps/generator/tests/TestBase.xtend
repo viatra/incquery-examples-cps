@@ -63,7 +63,9 @@ abstract class TestBase extends CPSTestBase{
 		assertNotNull("IncQueryEngine is null", engine);
 		
 		//Show stats
+		var Stopwatch statTime = Stopwatch.createStarted;
 		StatsUtil.logStats(StatsUtil.generateStats(engine, out.modelRoot), logger);
+		info("  Stat time: " + statTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
 		assertInRangeAppTypes(constraints, engine);
 		assertInRangeHostTypes(constraints, engine);
@@ -71,8 +73,8 @@ abstract class TestBase extends CPSTestBase{
 		// Persist model
 		var Stopwatch persistTime = Stopwatch.createStarted;
 		val filePath = "C:/output/model_"+System.nanoTime+".cyberphysicalsystem";
-		info("  Generated Model is saved to \"" + filePath+"\"");
 		PersistenceUtil.saveCPSModelToFile(out.modelRoot, filePath);
+		info("  Generated Model is saved to \"" + filePath+"\"");
 		persistTime.stop;
 		info("  Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		

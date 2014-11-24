@@ -18,7 +18,6 @@ class CPSPhaseHostCommunication implements IPhase<CPSFragment>{
 	
 		val hostInstances = HostInstancesMatcher.on(fragment.engine).allValuesOfhostInstance.toList;
 
-		// TODO optimize it!
 		// Generate communications
 		for(hostClass : fragment.hostTypes.keySet){ // HostClasses store the configuration
 			for(hostType : fragment.hostTypes.get(hostClass)){ // Every HostInstance
