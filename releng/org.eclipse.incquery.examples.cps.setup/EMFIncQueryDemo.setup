@@ -73,6 +73,25 @@
       xsi:type="setup.targlets:TargletTask">
     <targlet
         name="Demo Targlet Platform">
+      <annotation
+          source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
+        <detail
+            key="location">
+          <value>${git.clone.cps.location/releng/org.eclipse.incquery.examples.cps.target/cps-demonstrator_oomphgen.target}</value>
+        </detail>
+        <detail
+            key="includeAllPlatforms">
+          <value>false</value>
+        </detail>
+        <detail
+            key="includeSource">
+          <value>false</value>
+        </detail>
+        <detail
+            key="generateVersions">
+          <value>true</value>
+        </detail>
+      </annotation>
       <requirement
           name="org.eclipse.incquery.sdk.feature.source.feature.group"/>
       <requirement
