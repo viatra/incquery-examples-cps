@@ -205,11 +205,11 @@ class CPS2DeploymentBatchTransformationEiq {
 	/**
 	 * Builds the relationships between {@link BehaviorState}s. For each
 	 * {@link Transition} in a {@link State} it sets the corresponding
-	 * {@link BehaviorTransition}s to property to the proper
+	 * {@link BehaviorTransition}'s to property to the proper
 	 * {@link BehaviorTransition}.
 	 * 
 	 * @param cpsState
-	 *            The state witches relation will be built.
+	 *            The state for which the relation will be built.
 	 * @param depBehavior
 	 *            The state from cps model.
 	 * @param cpsBehavior
@@ -227,6 +227,15 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Execution ended: buildStateRelations''')
 	}
 
+	/**
+	 * Creates a {@link BehaviorTransition} representing the {@link Transition}
+	 * provided as a parameter, and adds it to its parent.
+	 * 
+	 * @param transition
+	 *            The transitions to be transformed.
+	 * @param depState The state which will refer to the transition.
+	 * @param depBehavior The deployment state machine to which the new transition will be added to. 
+	 */
 	private def mapTransition(Transition transition, BehaviorState depState, DeploymentBehavior depBehavior) {
 		trace(
 			'''Executing: mapTransition(transition = «transition.name», depState = «depState.name», depBehavior = «depBehavior.
@@ -242,6 +251,13 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Execution ended: mapTransition''')
 	}
 
+	/**
+	 * Sets the <i>trigger<i> value of the {@link BehaviorTransition} depending
+	 * on the actions in the {@link CyberPhysicalSystem} model.
+	 * 
+	 * @param depTrigger
+	 *            The transition for which the trigger will be set.
+	 */
 	private def mapAction(BehaviorTransition depTrigger) {
 		trace('''Executing: mapAction(depTrigger = «depTrigger.name»)''')
 		val cpsTransition = engine.cps2depTrace.getAllMatches(mapping, null, null, depTrigger).map[cpsElement].head as Transition
@@ -249,6 +265,14 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Execution ended: mapAction''')
 	}
 
+	/**
+	 * Creates a {@link DeploymentHost} representing the {@link HostInstance}
+	 * provided in the parameter. Furthermore it sets the host's <i>Ip</i>.
+	 * 
+	 * @param cpsHost
+	 *            The base of the creation.
+	 * @return The created deployment host
+	 */
 	private def createDepHost(HostInstance cpsHost) {
 		trace('''Executing: createDepHost(cpsHost = «cpsHost.name»)''')
 		val depHost = depFactory.createDeploymentHost
@@ -258,6 +282,14 @@ class CPS2DeploymentBatchTransformationEiq {
 		depHost
 	}
 
+	/**
+	 * Creates a {@link DeploymentApplication} representing the {@link ApplicationInstance}
+	 * provided in the parameter. Furthermore it sets the application's <i>id</i>.
+	 * 
+	 * @param cpsHost
+	 *            The base of the creation.
+	 * @return The created deployment host
+	 */
 	private def createDepApplication(ApplicationInstance cpsAppInstance) {
 		trace('''Executing: createDepApplication(cpsAppInstance = «cpsAppInstance.name»)''')
 		val depApp = depFactory.createDeploymentApplication
@@ -267,6 +299,14 @@ class CPS2DeploymentBatchTransformationEiq {
 		depApp
 	}
 
+	/**
+	 * Creates a {@link DeploymentBehavior} representing the {@link StateMachine}
+	 * provided in the parameter. Furthermore it sets the behavior's <i>description</i>.
+	 * 
+	 * @param cpsHost
+	 *            The base of the creation.
+	 * @return The created deployment host
+	 */
 	private def createDepBehavior(StateMachine cpsBehavior) {
 		trace('''Executing: createDepBehavior(cpsBehavior = «cpsBehavior.name»)''')
 		val depBehavior = depFactory.createDeploymentBehavior
@@ -276,6 +316,14 @@ class CPS2DeploymentBatchTransformationEiq {
 		depBehavior
 	}
 
+	/**
+	 * Creates a {@link BehaviorState} representing the {@link State}
+	 * provided in the parameter. Furthermore it sets the state's <i>description</i>
+	 * 
+	 * @param cpsHost
+	 *            The base of the creation.
+	 * @return The created deployment host
+	 */
 	private def createDepState(State cpsState) {
 		trace('''Executing: createDepState(cpsState = «cpsState.name»)''')
 		val depState = depFactory.createBehaviorState
@@ -285,6 +333,14 @@ class CPS2DeploymentBatchTransformationEiq {
 		depState
 	}
 
+	/**
+	 * Creates a {@link BehaviorTransition} representing the {@link Transition}
+	 * provided in the parameter. Furthermore it sets the transition's <i>description</i>
+	 * 
+	 * @param cpsHost
+	 *            The base of the creation.
+	 * @return The created deployment host
+	 */
 	private def createDepTransition(Transition cpsTransition) {
 		trace('''Executing: createDepTransition(cpsTransition = «cpsTransition.name»)''')
 		val depTransition = depFactory.createBehaviorTransition
@@ -294,6 +350,9 @@ class CPS2DeploymentBatchTransformationEiq {
 		depTransition
 	}
 
+	/**
+	 * Clears the initial model, removing every trace and host (thus deployment application etc.) from it.
+	 */
 	private def clearModel() {
 		trace('''Executing: clearModel()''')
 		mapping.traces.clear
@@ -301,6 +360,11 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Execution ended: clearModel''')
 	}
 
+	/**
+ 	 * Creates a 1-N trace between the specified elements and adds it to the traceability model.
+ 	 * @param cpsElement The element in the cps model
+ 	 * @param depElements The elements in the deployment model 
+ 	 */
 	private def addTraceOneToN(Identifiable cpsElement, List<? extends DeploymentElement> depElements) {
 		trace(
 			'''Executing: addTraceOneToN(cpsElement = «cpsElement.name», depElements = [«FOR e : depElements SEPARATOR ", "»«e.
@@ -319,6 +383,11 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Execution ended: addTraceOneToN''')
 	}
 
+	/**
+ 	 * Creates a 1-1 trace between the specified elements and adds it to the traceability model.
+ 	 * @param cpsElement The element in the cps model
+ 	 * @param depElements The element in the deployment model 
+ 	 */
 	private def addTrace(Identifiable cpsElement, DeploymentElement depElement) {
 		trace('''Executing: addTrace(cpsElement = «cpsElement.name», depElement = «depElement.name»)''')
 		val trace = tracFactory.createCPS2DeplyomentTrace
