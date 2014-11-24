@@ -14,12 +14,14 @@ class DemoCPSConstraints implements ICPSConstraints {
 						new MinMaxData(1, 3), // HostTypes
 						new MinMaxData(3, 10), // HostInstances
 						new MinMaxData(1, 3) // CommLines
+						,new HashMap
 					)
 	val hostClass2 = new HostClass(
 					"SecondHostClass",
 					new MinMaxData(1, 1), // HostTypes
 					new MinMaxData(3, 3), // HostInstances
 					new MinMaxData(1, 5) // CommLines		
+					,new HashMap
 				)
 	
 	

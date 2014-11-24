@@ -15,8 +15,8 @@ class SimpleCPSConstraints implements ICPSConstraints {
 						new MinMaxData(1, 1), // HostTypes
 						new MinMaxData(2, 2), // HostInstances
 						new MinMaxData(1, 1) // CommLines
+						,new HashMap // Host Comm Ratio
 					)
-	
 	
 	override getNumberOfSignals() {
 		new MinMaxData(1, 10);

@@ -1,5 +1,7 @@
 package org.eclipse.incquery.examples.cps.generator.dtos
 
+import java.util.Map
+
 @Data
 class HostClass {
 	
@@ -8,5 +10,6 @@ class HostClass {
 	public MinMaxData<Integer> numberOfHostTypes;
 	public MinMaxData<Integer> numberOfHostInstances;
 	public MinMaxData<Integer> numberOfCommunicationLines;
+	public Map<HostClass, Integer> communicationRatios;
 	
 }

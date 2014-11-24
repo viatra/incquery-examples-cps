@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList
 import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
+import java.util.HashMap
 
 class OnlyHostTypesCPSConstraints implements ICPSConstraints {
 	
@@ -24,6 +25,7 @@ class OnlyHostTypesCPSConstraints implements ICPSConstraints {
 						new MinMaxData(2, 2), // HostTypes
 						new MinMaxData(0, 0), // HostInstances
 						new MinMaxData(0, 0) // CommLines
+						,new HashMap
 					)
 		];
 	}

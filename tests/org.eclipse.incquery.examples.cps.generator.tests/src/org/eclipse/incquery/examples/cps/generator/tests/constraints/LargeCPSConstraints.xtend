@@ -14,18 +14,21 @@ class LargeCPSConstraints implements ICPSConstraints {
 						new MinMaxData(10, 50), // HostTypes
 						new MinMaxData(40, 70), // HostInstances
 						new MinMaxData(1, 30) // CommLines
+						,new HashMap
 					)
 	val hostClass2 = new HostClass(
 					"HostClass_2",
 					new MinMaxData(30, 35), // HostTypes
 					new MinMaxData(40, 50), // HostInstances
-					new MinMaxData(1, 30) // CommLines		
+					new MinMaxData(1, 30) // CommLines
+					,new HashMap
 				)
 	val hostClass3 = new HostClass(
 					"HostClass_3",
 					new MinMaxData(10, 30), // HostTypes
 					new MinMaxData(30, 30), // HostInstances
-					new MinMaxData(1, 5) // CommLines		
+					new MinMaxData(1, 5) // CommLines
+					,new HashMap	
 				)
 	
 	

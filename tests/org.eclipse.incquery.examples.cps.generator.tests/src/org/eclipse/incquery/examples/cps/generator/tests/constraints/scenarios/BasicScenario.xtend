@@ -83,7 +83,8 @@ class BasicScenario implements IScenario {
 					"HC"+i, // name
 					new MinMaxData(typCount, typCount),// Type
 					new MinMaxData(instCount, instCount), //Instance
-					new MinMaxData(comCount, comCount) //ComLines
+					new MinMaxData(comCount, comCount), //ComLines
+					new HashMap
 				)
 			);
 		}

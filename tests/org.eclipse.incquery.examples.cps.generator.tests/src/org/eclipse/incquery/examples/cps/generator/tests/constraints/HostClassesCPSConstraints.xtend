@@ -3,6 +3,7 @@ package org.eclipse.incquery.examples.cps.generator.tests.constraints
 import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
+import java.util.HashMap
 
 class HostClassesCPSConstraints implements ICPSConstraints {
 	
@@ -13,6 +14,7 @@ class HostClassesCPSConstraints implements ICPSConstraints {
 						new MinMaxData(2, 2), // HostTypes
 						new MinMaxData(2, 2), // HostInstances
 						new MinMaxData(1, 1) // CommLines
+						,new HashMap
 					)
 	
 	

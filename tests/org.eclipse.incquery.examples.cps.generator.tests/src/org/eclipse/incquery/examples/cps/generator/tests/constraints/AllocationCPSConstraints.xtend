@@ -14,6 +14,7 @@ class AllocationCPSConstraints implements ICPSConstraints {
 						new MinMaxData(2, 2), // HostTypes
 						new MinMaxData(2, 2), // HostInstances
 						new MinMaxData(1, 1) // CommLines
+						,new HashMap
 					)
 	
 	
