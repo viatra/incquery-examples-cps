@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests.util
+package org.eclipse.incquery.examples.cps.tests
 
 import java.io.FileInputStream
 import java.io.IOException
@@ -12,6 +12,7 @@ class PropertiesUtil {
 	static Properties properties = loadPropertiesFile
 	
 	public static val CPS_XFORM_LOGLEVEL_PROP_KEY = "cps.xform.loglevel"
+	public static val CPS_GENERATOR_LOGLEVEL_PROP_KEY = "cps.generator.loglevel"
 	public static val INCQUERY_LOGLEVEL_PROP_KEY = "org.eclipse.incquery.loglevel"
 	public static val GIT_CLONE_LOCATION_PROP_KEY = "git.clone.location"
 	
@@ -24,7 +25,7 @@ class PropertiesUtil {
             fileInputStream = new FileInputStream(configPath);
             properties.load(fileInputStream);
     	} catch (IOException ex) {
-    		logger.debug('''Could not find properties at «»''')
+    		logger.debug('''Could not find properties at «configPath»''')
         } finally {
             if (fileInputStream != null) {
                 try {
@@ -45,6 +46,10 @@ class PropertiesUtil {
 	
 	def static getCPSXformLogLevel(){
 		getLogLevel(CPS_XFORM_LOGLEVEL_PROP_KEY, "INFO")
+	}
+	
+	def static getCPSGeneratorLogLevel(){
+		getLogLevel(CPS_GENERATOR_LOGLEVEL_PROP_KEY, "INFO")
 	}
 	
 	def static getIncQueryLogLevel(){

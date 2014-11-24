@@ -1,12 +1,8 @@
 package org.eclipse.incquery.examples.cps.generator.tests
 
 import com.google.common.base.Stopwatch
-import java.io.OutputStreamWriter
 import java.util.concurrent.TimeUnit
-import org.apache.log4j.ConsoleAppender
-import org.apache.log4j.Level
 import org.apache.log4j.Logger
-import org.apache.log4j.PatternLayout
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.queries.AppTypesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.HostTypesMatcher
@@ -14,19 +10,13 @@ import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.CPSGeneratorBuilder
 import org.eclipse.incquery.examples.cps.generator.utils.PersistenceUtil
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
+import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil
-import org.junit.Before
 
 import static org.junit.Assert.*
 
-abstract class TestBase {
+abstract class TestBase extends CPSTestBase{
 	protected extension Logger logger = Logger.getLogger("cps.generator.Tests")
-	
-	@Before
-	def initLogger(){
-		initLoggerForLevel(Level.INFO, Logger.getLogger("cps.generator"))
-	}
 	
 	def assertInRangeAppTypes(ICPSConstraints constraints, IncQueryEngine engine) {
 		val appTypesMatcher = AppTypesMatcher.on(engine);
@@ -54,24 +44,6 @@ abstract class TestBase {
 	
 	protected def assertInRange(String variableName, int actualValue, int minExpected, int maxExpected){
 		assertTrue(variableName +  " is out of range: "+actualValue+" --> [" +minExpected + ", "+ maxExpected + "]" , minExpected <= actualValue && actualValue <= maxExpected);
-	}
-	
-	def initLoggerForLevel(Level level, Logger logger) {
-		var ConsoleAppender ca = new ConsoleAppender();
-		ca.setWriter(new OutputStreamWriter(System.out));
-		ca.setLayout(new PatternLayout("%c{1}:%L - %m%n"));
-		// TODO remove it
-//		Logger.getRootLogger.removeAllAppenders;
-		logger.setAdditivity(false);
-		logger.removeAllAppenders();
-		logger.addAppender(ca);
-		logger.setLevel(level);
-		if(!level.isGreaterOrEqual(Level.DEBUG)){
-			// we only see EMF-IncQuery info, debug and trace messages when tracing
-			IncQueryLoggingUtil.getDefaultLogger().setLevel(level);
-		} else {
-			IncQueryLoggingUtil.getDefaultLogger().setLevel(Level.WARN);
-		}
 	}
 	
 	def runGeneratorOn(ICPSConstraints constraints, long seed) {

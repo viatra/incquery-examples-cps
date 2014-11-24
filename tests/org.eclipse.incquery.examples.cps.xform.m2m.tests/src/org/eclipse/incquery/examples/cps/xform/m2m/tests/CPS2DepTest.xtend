@@ -2,16 +2,15 @@ package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.util.PropertiesUtil
+import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
 import org.junit.After
-import org.junit.BeforeClass
 import org.junit.runners.Parameterized.Parameters
 
-class CPS2DepTest {
+class CPS2DepTest extends CPSTestBase {
 
 	protected extension Logger logger = Logger.getLogger("cps.xform.CPS2DepTest")
 	protected extension CPSTransformationWrapper xform
@@ -41,12 +40,6 @@ class CPS2DepTest {
     def endTest(String testId){
     	info('''END TEST: type: «wrapperType» ID: «testId»''')
     }
-	
-	@BeforeClass
-	def static setupRootLogger() {
-		Logger.getLogger("cps.xform").level = PropertiesUtil.getCPSXformLogLevel
-		Logger.getLogger("org.eclipse.incquery").level = PropertiesUtil.getIncQueryLogLevel
-	}
 	
 //	@Test
 //	def parameterizedRun(){

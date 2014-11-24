@@ -1,7 +1,6 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests.integration
 
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.util.PropertiesUtil
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.junit.Ignore
 import org.junit.Test
@@ -11,8 +10,6 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized)
 class InstanceModelTest extends CPS2DepTest {
 	
-	val instancesDirPath = "file://" + PropertiesUtil.getGitCloneLocation + "/models/org.eclipse.incquery.examples.cps.instances/"
-		
 	new(CPSTransformationWrapper wrapper, String wrapperType) {
 		super(wrapper, wrapperType)
 	}
