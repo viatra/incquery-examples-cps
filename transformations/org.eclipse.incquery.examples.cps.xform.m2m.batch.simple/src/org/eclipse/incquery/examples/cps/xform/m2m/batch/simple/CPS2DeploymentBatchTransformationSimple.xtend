@@ -74,7 +74,7 @@ class CPS2DeploymentBatchTransformationSimple {
 		mapping.deployment.hosts.clear
 
 		// Transform host instances
-		val hosts = mapping.cps.hostInstances
+		val hosts = mapping.cps.hostTypes.map[instances].flatten
 		val deploymentHosts = ImmutableList.copyOf(hosts.map[transform])
 		mapping.deployment.hosts += deploymentHosts
 
