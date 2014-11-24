@@ -5,6 +5,7 @@ import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -989,6 +990,7 @@ class ActionMappingTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
+	@Ignore
 	@Test
 	def addTransitiveHostCommunication() {
 		val testId = "addTransitiveHostCommunication"
@@ -1073,6 +1075,7 @@ class ActionMappingTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
+	@Ignore
 	@Test
 	def removeTransitiveHostCommunication() {
 		val testId = "removeTransitiveHostCommunication"

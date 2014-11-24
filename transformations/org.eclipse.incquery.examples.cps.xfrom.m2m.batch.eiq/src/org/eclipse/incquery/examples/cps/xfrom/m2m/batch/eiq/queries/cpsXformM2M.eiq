@@ -91,7 +91,7 @@ pattern hostCommunication(fromHost, toHost) {
 }
 
 pattern reachableHosts(source, target) {
-	find hostCommunication +(source, target);
+	find hostCommunication(source, target);
 } or {
 	HostInstance(source);
 	HostInstance(target);

@@ -23,6 +23,7 @@ class BasicScenarioXformTest extends CPS2DepTest {
 		super(wrapper, wrapperType)
 	}
 	
+	@Ignore
 	@Test
 	def basicScenario1k(){
 		val testId = "basicScenario1k"
