@@ -100,6 +100,16 @@
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<argLine>-Xmx1024m -XX:MaxPermSize=256m ${cps.test.vmargs}</argLine>
+		            <failIfNoTests>false</failIfNoTests>
+		            <skipTests>false</skipTests>
+				</configuration>		  
 			</plugin>			
 		</plugins>
 		<pluginManagement>
