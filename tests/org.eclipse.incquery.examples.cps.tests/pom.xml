@@ -9,5 +9,5 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <artifactId>org.eclipse.incquery.examples.cps.tests</artifactId>
-  <packaging>eclipse-test-plugin</packaging>
+  <packaging>eclipse-plugin</packaging>
 </project>
