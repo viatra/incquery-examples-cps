@@ -22,14 +22,14 @@ class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 			info("<< PHASE " + phase.class.simpleName + " >>");
 			phase.getOperations(fragment).forEach[operation, j|
 				try{
-					info("< OPERATION " + operation.class.simpleName + " >");
+					debug("< OPERATION " + operation.class.simpleName + " >");
 					operation.execute(fragment);
-					info("<-------------------- END OPERATION ----------------------->");
+					debug("<-------------------- END OPERATION ----------------------->");
 				}catch(ModelGeneratorException e){
 					info(e.message);
 				}
 			]
-			info("<<===================== END PHASE ========================>>");
+			debug("<<===================== END PHASE ========================>>");
 		]
 	}
 	

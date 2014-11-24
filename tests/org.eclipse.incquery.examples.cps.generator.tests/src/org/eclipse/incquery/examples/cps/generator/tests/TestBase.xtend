@@ -25,7 +25,7 @@ abstract class TestBase {
 	
 	@Before
 	def initLogger(){
-		initLoggerForLevel(Level.DEBUG, Logger.getLogger("cps.generator"))
+		initLoggerForLevel(Level.INFO, Logger.getLogger("cps.generator"))
 	}
 	
 	def assertInRangeAppTypes(ICPSConstraints constraints, IncQueryEngine engine) {
@@ -77,11 +77,7 @@ abstract class TestBase {
 	def runGeneratorOn(ICPSConstraints constraints, long seed) {
 		var Stopwatch fullTime = Stopwatch.createStarted;
 		
-		val out = CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints);
-		
-		fullTime.stop;
-		info("Execution time: " + fullTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		
+		val out = CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints);		
 		
 		// Assertions
 		assertNotNull("The output fragment is null", out);
@@ -103,10 +99,14 @@ abstract class TestBase {
 		// Persist model
 		var Stopwatch persistTime = Stopwatch.createStarted;
 		val filePath = "C:/output/model_"+System.nanoTime+".cyberphysicalsystem";
-		info("Generated Model is saved to \"" + filePath+"\"");
+		info("  Generated Model is saved to \"" + filePath+"\"");
 		PersistenceUtil.saveCPSModelToFile(out.modelRoot, filePath);
 		persistTime.stop;
-		info("Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		info("  Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		
+		fullTime.stop;
+		info("Full Execution time: " + fullTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		
 		
 		return out;
 	}
