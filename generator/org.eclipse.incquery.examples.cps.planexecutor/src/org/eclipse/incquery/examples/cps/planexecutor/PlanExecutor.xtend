@@ -4,6 +4,8 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
 import org.eclipse.incquery.examples.cps.planexecutor.api.IPlan
 import org.eclipse.incquery.examples.cps.planexecutor.api.Initializer
+import com.google.common.base.Stopwatch
+import java.util.concurrent.TimeUnit
 
 class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 	
@@ -19,7 +21,8 @@ class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 	
 	def continueProcessing(IPlan<FragmentType> plan, FragmentType fragment) {
 		plan.phases.forEach[phase, i| 
-			info("<< PHASE " + phase.class.simpleName + " >>");
+			debug("<< Begin Phase: " + phase.class.simpleName + " >>");
+			val phaseSw = Stopwatch.createStarted;
 			phase.getOperations(fragment).forEach[operation, j|
 				try{
 					debug("< OPERATION " + operation.class.simpleName + " >");
@@ -29,7 +32,8 @@ class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 					info(e.message);
 				}
 			]
-			debug("<<===================== END PHASE ========================>>");
+			phaseSw.stop;
+			info("<< Done "+ phase.class.simpleName + " phase in "+ phaseSw.elapsed(TimeUnit.MILLISECONDS) +" ms >>");
 		]
 	}
 	
