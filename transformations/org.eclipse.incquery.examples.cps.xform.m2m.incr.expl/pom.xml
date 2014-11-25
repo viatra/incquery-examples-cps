@@ -80,6 +80,11 @@
 						<artifactId>org.eclipse.incquery.examples.cps.traceability</artifactId>
 						<version>${project.version}</version>
 					</dependency>
+					<dependency>
+						<groupId>org.eclipse.incquery.examples.cps</groupId>
+						<artifactId>org.eclipse.incquery.examples.cps.xform.m2m.util</artifactId>
+						<version>${project.version}</version>
+					</dependency>
 				</dependencies>
 			</plugin>
 		</plugins>
