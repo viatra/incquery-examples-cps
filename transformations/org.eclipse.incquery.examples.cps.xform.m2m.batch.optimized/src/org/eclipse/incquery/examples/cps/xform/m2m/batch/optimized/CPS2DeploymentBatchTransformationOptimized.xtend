@@ -1,10 +1,12 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized
 
+import com.google.common.base.Stopwatch
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
 import java.util.ArrayList
 import java.util.Map
+import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
@@ -39,8 +41,34 @@ class CPS2DeploymentBatchTransformationOptimized {
 	private def traceEnd(String method) {
 		trace('''Executing «method» END''')
 	}
-
+	
+	Stopwatch clearModelPerformance;
+	Stopwatch hostTransformationPerformance;
+	Stopwatch appTransformationPerformance;
+	Stopwatch stateMachineTransformationPerformance;
+	Stopwatch stateTransformationPerformance;
+	Stopwatch transitionTransformationPerformance;
+	Stopwatch triggerTransformationPerformance;
+	Stopwatch transitionMappingCachingPerformance;
+	
+	Stopwatch otherTimer
+	
+	
 	CPSToDeployment mapping;
+
+	private def initPerformanceTimers() {
+		clearModelPerformance = Stopwatch.createUnstarted
+		hostTransformationPerformance = Stopwatch.createUnstarted
+		appTransformationPerformance = Stopwatch.createUnstarted
+		stateMachineTransformationPerformance = Stopwatch.createUnstarted
+		stateTransformationPerformance = Stopwatch.createUnstarted
+		transitionTransformationPerformance = Stopwatch.createUnstarted
+		triggerTransformationPerformance = Stopwatch.createUnstarted
+		transitionMappingCachingPerformance = Stopwatch.createUnstarted
+		
+		otherTimer = Stopwatch.createUnstarted
+	}
+
 
 	/**
 	 * Creates a new transformation instance. The input cyber physical system model is given in the mapping
@@ -48,6 +76,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 */
 	new(CPSToDeployment mapping) {
 		traceBegin("constructor")
+		
 
 		checkNotNull(mapping != null, "Mapping cannot be null!")
 		checkArgument(mapping.cps != null, "CPS not defined in mapping!")
@@ -56,32 +85,54 @@ class CPS2DeploymentBatchTransformationOptimized {
 		this.mapping = mapping;
 
 		traceEnd("constructor")
+			
 	}
-
+	
+	private def reportPerformance() {
+		info(
+			'''
+			>>>Cleared model in: «clearModelPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Host transformation: «hostTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Application Instance transformation: «appTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>State Machine transformation: «stateMachineTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>State transformation: «stateTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Transition transformation: «transitionTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Trigger transformation: «triggerTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Other perf: «otherTimer.elapsed(TimeUnit.MILLISECONDS)» ms''')
+	}
+	
 	/**
 	 * Executes the simple batch transformation. The transformed model is placed in the traceability model set in the constructor 
 	 */
 	def void execute() {
 		traceBegin("execute()")
+		initPerformanceTimers
+
+		otherTimer.start
 
 		info(
 			'''
 			Executing transformation on:
 				Cyber-physical system: «mapping.cps.id»''')
 		
-		
+		clearModelPerformance.start
 		mapping.traces.clear
 		mapping.deployment.hosts.clear
+		clearModelPerformance.stop
 
 		// Transform host instances
 		val hosts = mapping.cps.hostTypes.map[instances].flatten
-		val deploymentHosts = ImmutableList.copyOf(hosts.map[transform])
+		val deploymentHosts = hosts.map[transform]
 		mapping.deployment.hosts += deploymentHosts
 
 		mapping.traces.filter[cpsElements.head instanceof Transition].forEach[createTransitionCache]
 
 		assignTriggers
+		
+		otherTimer.stop
 		traceEnd("execute()")
+		
+		reportPerformance
 	}
 	
 	/**
@@ -91,11 +142,13 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 */
 	private def assignTriggers() {
 		traceBegin("assignTriggers()")
-
+		triggerTransformationPerformance.start
+		
 		val transitionMappings = mapping.traces.filter[deploymentElements.head instanceof BehaviorTransition]
 		val senderTransitionMappings = transitionMappings.filter[isTraceForSender]
 		senderTransitionMappings.forEach[findAndAssignReceivers]
 
+		triggerTransformationPerformance.stop
 		traceEnd("assignTriggers()")
 	}
 
@@ -117,9 +170,11 @@ class CPS2DeploymentBatchTransformationOptimized {
 	private val transitionToActionId = Maps.newHashMap
 	private Map<BehaviorTransition, HostInstance> transitionToHost = Maps.newHashMap
 
-	private def void createTransitionCache(CPS2DeplyomentTrace transitionTrace){
+	private def void createTransitionCache(CPS2DeplyomentTrace transitionTrace) {
+		transitionMappingCachingPerformance.start
 		val transition = transitionTrace.cpsElements.head as Transition
-		if(transition.action == null){
+		if (transition.action == null) {
+			transitionMappingCachingPerformance.stop
 			return
 		}
 		val actionId = getSignalId(transition.action)
@@ -127,16 +182,15 @@ class CPS2DeploymentBatchTransformationOptimized {
 			val behaviorTransition = i as BehaviorTransition
 			val deploymentApp = behaviorTransition.eContainer.eContainer as DeploymentApplication
 			val deploymentHost = deploymentApp.eContainer as DeploymentHost
-			val hostInstance = mapping.traces.findFirst[it.deploymentElements.head == deploymentHost]
-				.cpsElements.head as HostInstance
-			val appInstance = mapping.traces.findFirst[deploymentElements.head == deploymentApp]
-				.cpsElements.head as ApplicationInstance
+			val hostInstance = mapping.traces.findFirst[it.deploymentElements.head == deploymentHost].cpsElements.head as HostInstance
+			val appInstance = mapping.traces.findFirst[deploymentElements.head == deploymentApp].cpsElements.head as ApplicationInstance
 			val appTypeId = appInstance.type.id
-			
-			transitionToAppId.put(behaviorTransition,appTypeId)
-			transitionToActionId.put(behaviorTransition,actionId)
-			transitionToHost.put(behaviorTransition,hostInstance)
+
+			transitionToAppId.put(behaviorTransition, appTypeId)
+			transitionToActionId.put(behaviorTransition, actionId)
+			transitionToHost.put(behaviorTransition, hostInstance)
 		}
+		transitionMappingCachingPerformance.stop
 	}
 
 	/**
@@ -154,31 +208,30 @@ class CPS2DeploymentBatchTransformationOptimized {
 			return;
 
 		val senderReceiverMappings = Maps.newHashMap
-		
-		for(sender : receiverTrace.deploymentElements){
-			senderReceiverMappings.put(sender as BehaviorTransition,receiverTrace.deploymentElements)
+
+		for (sender : receiverTrace.deploymentElements) {
+			senderReceiverMappings.put(sender as BehaviorTransition, receiverTrace.deploymentElements)
 		}
-		
+
 		// a trace here refers to BehaviorTransitions
 		for (i : receiverTrace.deploymentElements) {
 			val receiverBehaviorTransition = i as BehaviorTransition
-			
+
 			val appTypeId = transitionToAppId.get(receiverBehaviorTransition)
 			var senderTransition = senderTrace.cpsElements.head as Transition
 			val targetAppId = getAppId(senderTransition.action)
 			val receiverHostInstance = transitionToHost.get(receiverBehaviorTransition)
-			
+
 			transitionToActionId.get(receiverBehaviorTransition)
 			val receiverSignalId = transitionToActionId.get(receiverBehaviorTransition)
-			
-			
+
 			for (j : senderTrace.deploymentElements) {
 
 				val senderBehaviorTransition = j as BehaviorTransition
 				val senderSignalId = transitionToActionId.get(senderBehaviorTransition)
 				val senderHostInstance = transitionToHost.get(senderBehaviorTransition)
 
-				if (appTypeId == targetAppId && receiverSignalId == senderSignalId ) {
+				if (appTypeId == targetAppId && receiverSignalId == senderSignalId) {
 
 					// Only hosts has to be checked now
 					if (isConnectedTo(senderHostInstance, receiverHostInstance)) {
@@ -267,6 +320,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 * @param dst the target host
 	 */
 	private def isConnectedTo(HostInstance src, HostInstance dst) {
+		otherTimer.start
 		traceBegin('''isConnectedTo(«src.name», «dst.name»)''')
 		val checked = newHashSet(src)
 		var depth = 0 as int
@@ -281,10 +335,12 @@ class CPS2DeploymentBatchTransformationOptimized {
 		while (depth >= 0) {
 			if (currentHost.equals(dst)) {
 				traceEnd('''isConnectedTo(«src.name», «dst.name»)''')
+				otherTimer.stop
 				return true
 			} else {
 				nextHostIndex = indices.get(depth + 1)
 				if (nextHostIndex >= currentHost.communicateWith.length) {
+
 					// Current host traversed, go up one level
 					depth--
 				} else {
@@ -298,17 +354,17 @@ class CPS2DeploymentBatchTransformationOptimized {
 						while (nextHostIndex < currentHost.communicateWith.length && checked.contains(nextHost)) {
 							nextHost = currentHost.communicateWith.get(nextHostIndex)
 							nextHostIndex += 1
-						}				
-						indices.set(depth + 1,nextHostIndex)
+						}
+						indices.set(depth + 1, nextHostIndex)
 					}
-					if(nextHostIndex < currentHost.communicateWith.length ){
-				
+					if (nextHostIndex < currentHost.communicateWith.length) {
+
 						if (indices.length <= depth + 1) {
 							indices.add(nextHostIndex);
 						} else {
 							indices.set(depth, nextHostIndex);
 						}
-	
+
 						parents.put(depth, currentHost)
 						currentHost = nextHost
 					}
@@ -317,6 +373,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 			}
 		}
 
+		otherTimer.stop
 		traceEnd('''isConnectedTo(«src.name», «dst.name»)''')
 		return false;
 	}
@@ -327,16 +384,21 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 */
 	private def DeploymentHost transform(HostInstance hostInstance) {
 		traceBegin('''transform(«hostInstance.name»)''')
+		hostTransformationPerformance.start
 		var deploymentHost = DeploymentFactory.eINSTANCE.createDeploymentHost
 		deploymentHost.ip = hostInstance.nodeIp
 
 		hostInstance.createOrAddTrace(deploymentHost)
+		hostTransformationPerformance.stop
 
 		// Transform application instances
 		val liveApplications = hostInstance.applications.filter[type?.cps == mapping.cps]
 		var deploymentApps = liveApplications.map[transform]
+
+		// Be careful: map evaluation is lazy
 		deploymentHost.applications += deploymentApps
 
+		hostTransformationPerformance.stop
 		traceEnd('''transform(«hostInstance.name»)''')
 		return deploymentHost
 	}
@@ -347,11 +409,13 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 */
 	private def DeploymentApplication transform(ApplicationInstance appInstance) {
 		traceBegin('''transform(«appInstance.name»)''')
+		appTransformationPerformance.start
 		var deploymentApp = DeploymentFactory.eINSTANCE.createDeploymentApplication()
 		deploymentApp.id = appInstance.id
 
 		appInstance.createOrAddTrace(deploymentApp)
 
+		appTransformationPerformance.stop
 		// Transform state machines
 		if (appInstance.type.behavior != null)
 			deploymentApp.behavior = appInstance.type.behavior.transform
@@ -366,10 +430,13 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 */
 	private def DeploymentBehavior transform(StateMachine stateMachine) {
 		traceBegin('''transform(«stateMachine.name»)''')
+		stateMachineTransformationPerformance.start
 		val behavior = DeploymentFactory.eINSTANCE.createDeploymentBehavior
 		behavior.description = stateMachine.id
 
 		stateMachine.createOrAddTrace(behavior)
+
+		stateMachineTransformationPerformance.stop
 
 		// Transform states
 		val behaviorStates = stateMachine.states.map[transform]
@@ -386,11 +453,13 @@ class CPS2DeploymentBatchTransformationOptimized {
 					transform(parentBehaviorState)]
 			)
 		}
+		stateMachineTransformationPerformance.start
 
 		behavior.transitions += behaviorTransitions
 
 		setCurrentState(stateMachine, behavior)
 
+		stateMachineTransformationPerformance.stop
 		traceEnd('''transform(«stateMachine.name»)''')
 		return behavior
 	}
@@ -401,12 +470,14 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 */
 	private def BehaviorState transform(State state) {
 		traceBegin('''transform(«state.name»)''')
+		stateTransformationPerformance.start
 		val behaviorState = DeploymentFactory.eINSTANCE.createBehaviorState
 		behaviorState.description = state.id
 
 		state.createOrAddTrace(behaviorState)
 
 		traceEnd('''transform(«state.name»)''')
+		stateTransformationPerformance.stop
 		behaviorState
 	}
 
@@ -417,7 +488,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 */
 	private def BehaviorTransition transform(Transition transition, BehaviorState behaviorState) {
 		traceBegin('''transform(«transition.name», «behaviorState.name»)''')
-
+		transitionTransformationPerformance.start
 		val behaviorTransition = DeploymentFactory.eINSTANCE.createBehaviorTransition
 
 		val targetStateMapping = mapping.traces.findFirst[it.cpsElements.contains(transition.targetState)]
@@ -429,6 +500,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 
 		transition.createOrAddTrace(behaviorTransition)
 
+		transitionTransformationPerformance.stop
 		traceEnd('''transform(«transition.name», «behaviorState.name»)''')
 		return behaviorTransition
 	}
