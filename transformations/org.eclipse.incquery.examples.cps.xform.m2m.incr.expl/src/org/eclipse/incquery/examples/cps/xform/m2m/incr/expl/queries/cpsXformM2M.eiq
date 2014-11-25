@@ -266,6 +266,12 @@ pattern sendTransition(transition, depTransition, action) {
  	);
 }
 
+pattern sendTransitionAppSignal(transition, depTransition, app, signal) {
+ 	find mappedTransitionsWithAction(transition, depTransition, _, action);
+ 	app == eval(SignalUtil.getAppId(action));
+ 	signal == eval(SignalUtil.getSignalId(action));
+}
+
 pattern waitTransition(transition, depTransition, appType, action) {
  	find mappedTransitionsWithAction(transition, depTransition, appType, action);
  	check(
@@ -273,19 +279,18 @@ pattern waitTransition(transition, depTransition, appType, action) {
  	);
 }
 
+pattern waitTransitionAppSignal(transition, depTransition, appType, signal) {
+ 	find mappedTransitionsWithAction(transition, depTransition, appType, action);
+ 	check(
+ 		SignalUtil.isWait(action)
+ 	);
+ 	signal == eval(SignalUtil.getSignalId(action));
+}
+
 pattern triggerPair(depTrigger, depTarget) {
-	find sendTransition(_, depTrigger, sendAction);
-	find waitTransition(_, depTarget, waitApp, waitAction);
-	
-	find cps2depTrace(cps2dep, _, _, depTrigger);
-	find cps2depTrace(cps2dep, _, _, depTarget);
-	
-	ApplicationType.id(waitApp, id);
-	check(
-		(id == SignalUtil.getAppId(sendAction))
-		&&
-		(SignalUtil.getSignalId(sendAction) == SignalUtil.getSignalId(waitAction))
-	);
+	find sendTransitionAppSignal(_, depTrigger, appId, signal);
+	find waitTransitionAppSignal(_, depTarget, waitApp, signal);
+	ApplicationType.id(waitApp, appId);
 }
 
 pattern trigger(depSendTransition, depWaitTransition) {

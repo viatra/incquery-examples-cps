@@ -22,6 +22,7 @@ class BatchIncQuery extends CPSTransformationWrapper {
 		if (engine != null) {
 			engine.dispose
 		}
+		xform = null
 	}
 
 }

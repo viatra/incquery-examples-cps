@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests.integration
+package org.eclipse.incquery.examples.cps.xform.m2m.tests.scenarios
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists

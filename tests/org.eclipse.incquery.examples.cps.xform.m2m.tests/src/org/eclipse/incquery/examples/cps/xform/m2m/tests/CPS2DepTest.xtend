@@ -3,13 +3,10 @@ package org.eclipse.incquery.examples.cps.xform.m2m.tests
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
 import org.junit.After
 import org.junit.runners.Parameterized.Parameters
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchOptimized
 
 class CPS2DepTest extends CPSTestBase {
 
@@ -22,12 +19,12 @@ class CPS2DepTest extends CPSTestBase {
 	@Parameters(name = "{index}: {1}")
     public static def transformations() {
         #[
-        	#[new BatchSimple(), "BatchSimple"].toArray
-			,
-        	#[new BatchOptimized(), "BatchOptimized"].toArray
-        	,
-			#[new BatchIncQuery(), "BatchIncQuery"].toArray
-        	,
+//        	#[new BatchSimple(), "BatchSimple"].toArray
+//			,
+//        	#[new BatchOptimized(), "BatchOptimized"].toArray
+//        	,
+//			#[new BatchIncQuery(), "BatchIncQuery"].toArray
+//        	,
         	#[new ExplicitTraceability(), "ExplicitTraceability"].toArray
         ]
     }
@@ -53,6 +50,8 @@ class CPS2DepTest extends CPSTestBase {
 
 	@After
 	def cleanup() {
-		cleanupTransformation
+		cleanupTransformation;
+		
+		(0..4).forEach[Runtime.getRuntime().gc()]
 	}
 }

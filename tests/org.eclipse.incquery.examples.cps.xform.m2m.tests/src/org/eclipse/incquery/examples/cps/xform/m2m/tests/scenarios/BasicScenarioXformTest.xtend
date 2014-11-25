@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests.integration
+package org.eclipse.incquery.examples.cps.xform.m2m.tests.scenarios
 
 import com.google.common.base.Stopwatch
 import java.util.Random
@@ -16,9 +16,10 @@ import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.scenarios.SimpleScalingScenario
 
 @RunWith(Parameterized)
-class BasicScenarioXformTest extends CPS2DepTest {
+abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	new(CPSTransformationWrapper wrapper, String wrapperType) {
 		super(wrapper, wrapperType)
@@ -100,12 +101,12 @@ class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 
+	abstract def IScenario getScenario(Random rand)
 	
 	def executeScenarioXform(int size) {
 		val seed = 11111
 		val Random rand = new Random(seed);
-		val SimpleScalingScenario bs = new SimpleScalingScenario(rand);
-		bs.executeScenarioXformForConstraints(size, seed)
+		getScenario(rand).executeScenarioXformForConstraints(size, seed)
 	}
 	
 	def executeScenarioXformForConstraints(IScenario scenario, int size, long seed) {	
