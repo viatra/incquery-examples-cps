@@ -9,7 +9,7 @@ Bundle-Localization: plugin
 Export-Package: org.eclipse.incquery.examples.cps.cyberPhysicalSystem,
  org.eclipse.incquery.examples.cps.cyberPhysicalSystem.impl,
  org.eclipse.incquery.examples.cps.cyberPhysicalSystem.util
-Require-Bundle: org.eclipse.incquery.runtime,
+Require-Bundle: org.eclipse.incquery.runtime;bundle-version="[0.8.0,0.9.0)",
  org.eclipse.incquery.querybasedfeatures.runtime,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
