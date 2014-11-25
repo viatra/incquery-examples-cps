@@ -20,7 +20,7 @@ class ScenarioTest extends TestBase {
 		val seed = 11111
 		val Random rand = new Random(seed);
 		val BasicScenario bs = new BasicScenario(rand);
-		val const = bs.getConstraintsFor(40000);		
+		val const = bs.getConstraintsFor(1000);		
 		runGeneratorOn(const, seed)
 	
 		return;

@@ -12,31 +12,30 @@ class DemoCPSConstraints implements ICPSConstraints {
 	
 	val hostClass1 = new HostClass(
 						"FirstHostClass",
-						new MinMaxData(2, 2), // HostTypes
-						new MinMaxData(2, 2), // HostInstances
+						new MinMaxData(1, 1), // HostTypes
+						new MinMaxData(5, 5), // HostInstances
 						new MinMaxData(2, 2) // CommLines
 						,getHc1Ratios
 					)
 	
 	val hostClass2 = new HostClass(
 					"SecondHostClass",
-					new MinMaxData(2, 2), // HostTypes
-					new MinMaxData(2, 2), // HostInstances
-					new MinMaxData(2, 2) // CommLines		
+					new MinMaxData(1, 1), // HostTypes
+					new MinMaxData(5, 5), // HostInstances
+					new MinMaxData(5, 5) // CommLines		
 					,hc2Ratios
 				)
 	
 	def Map<HostClass, Integer> getHc1Ratios() {
 		val hc1Ratio = new HashMap<HostClass, Integer>
 		hc1Ratio.put(hostClass1, 1);
-		hc1Ratio.put(hostClass2, 2);
+		hc1Ratio.put(hostClass2, 5);
 		return hc1Ratio;
 	}
 	
 	def Map<HostClass, Integer> getHc2Ratios() {
 		val hc1Ratio = new HashMap<HostClass, Integer>
 		hc1Ratio.put(hostClass1, 2);
-		hc1Ratio.put(hostClass2, 5);
 		return hc1Ratio;
 	}
 	
