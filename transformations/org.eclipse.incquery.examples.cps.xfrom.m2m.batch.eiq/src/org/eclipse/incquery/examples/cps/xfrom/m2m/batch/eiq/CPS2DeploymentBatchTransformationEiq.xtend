@@ -25,6 +25,12 @@ import org.eclipse.incquery.runtime.api.IncQueryEngine
 import static com.google.common.base.Preconditions.*
 
 import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingUtil.*
+import com.google.common.collect.Table
+import com.google.common.collect.HashBasedTable
+import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace
+import java.util.Map
+import java.util.HashMap
+import com.google.common.collect.Maps
 
 class CPS2DeploymentBatchTransformationEiq {
 
@@ -36,6 +42,19 @@ class CPS2DeploymentBatchTransformationEiq {
 
 	CPSToDeployment mapping
 	IncQueryEngine engine
+
+	Stopwatch clearModelPerformance;
+	Stopwatch hostTransformationPerformance;
+	Stopwatch appTransformationPerformance;
+	Stopwatch stateMachineTransformationPerformance;
+	Stopwatch stateTransformationPerformance;
+	Stopwatch transitionTransformationPerformance;
+	Stopwatch triggerTransformationPerformance;
+
+	Stopwatch otherTimer
+
+	Table<State, DeploymentBehavior, BehaviorState> stateTable
+	Map<Identifiable, CPS2DeplyomentTrace> traceTable
 
 	/**
 	 * Initializes a new instance of the transformation using the specified
@@ -64,30 +83,59 @@ class CPS2DeploymentBatchTransformationEiq {
 		val watch = Stopwatch.createStarted
 		prepare(engine)
 		watch.stop
-		debug('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	}
 
 	/**
      * Runs the transformation on the model the class was initialized on.
      */
 	def execute() {
+		initPerformanceTimers()
+
+		clearModelPerformance.start
 		clearModel
+		clearModelPerformance.stop
 
 		info(
 			'''
 			Executing transformation on:
 				Cyber-physical system: «mapping.cps.id»''')
 
-		debug("Running host transformations.")
-		val watch = Stopwatch.createStarted
-		mapping.cps.hostInstances.forEach[transform]
-		debug('''Running host transformations («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		stateTable = HashBasedTable.create
+		traceTable = Maps.newHashMap
 
-		watch.reset.start
+		debug("Running host transformations.")
+		mapping.cps.hostInstances.forEach[transform]
 
 		debug("Running action transformations.")
 		engine.depTransition.allMatches.map[depTransition].forEach[mapAction]
-		debug('''Running action transformations («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+
+		reportPerformance
+	}
+
+	private def initPerformanceTimers() {
+		clearModelPerformance = Stopwatch.createUnstarted
+		hostTransformationPerformance = Stopwatch.createUnstarted
+		appTransformationPerformance = Stopwatch.createUnstarted
+		stateMachineTransformationPerformance = Stopwatch.createUnstarted
+		stateTransformationPerformance = Stopwatch.createUnstarted
+		transitionTransformationPerformance = Stopwatch.createUnstarted
+		triggerTransformationPerformance = Stopwatch.createUnstarted
+
+		otherTimer = Stopwatch.createUnstarted
+	}
+
+	private def reportPerformance() {
+		info(
+			'''
+			>>>Cleared model in: «clearModelPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Host transformation: «hostTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Application Instance transformation: «appTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>State Machine transformation: «stateMachineTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>State transformation: «stateTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Transition transformation: «transitionTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Trigger transformation: «triggerTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
+			>>>Other perf: «otherTimer.elapsed(TimeUnit.MILLISECONDS)» ms''')
 	}
 
 	/**
@@ -100,18 +148,19 @@ class CPS2DeploymentBatchTransformationEiq {
 	 */
 	private def transform(HostInstance cpsHost) {
 		trace('''Executing: transform(cpsHost = «cpsHost.name»)''')
+		hostTransformationPerformance.start
 		val depHost = cpsHost.createDepHost
 
 		debug('''Adding host («depHost.description») to deployment model.''')
 		mapping.deployment.hosts += depHost
 		addTrace(cpsHost, depHost)
 
+		hostTransformationPerformance.stop
 		debug("Running application instance transformations.")
-		val watch = Stopwatch.createStarted
 		cpsHost.applications.filter[mapping.cps.appInstances.contains(it)].forEach [
 			transform(depHost)
 		]
-		debug('''Running application instance transformations («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		debug('''Running application instance transformations finished''')
 		trace('''Execution ended: transform''')
 	}
 
@@ -128,11 +177,13 @@ class CPS2DeploymentBatchTransformationEiq {
 	 */
 	private def transform(ApplicationInstance cpsInstance, DeploymentHost depHost) {
 		trace('''Executing: transform(cpsInstance = «cpsInstance.name», depHost = «depHost.name»)''')
+		appTransformationPerformance.start
 		val depApp = cpsInstance.createDepApplication
 
 		depHost.applications += depApp
 		addTrace(cpsInstance, depApp)
 
+		appTransformationPerformance.stop
 		debug("Running state machine transformations.")
 		val watch = Stopwatch.createStarted
 		cpsInstance.type.behavior?.transform(depApp)
@@ -154,33 +205,37 @@ class CPS2DeploymentBatchTransformationEiq {
 	 */
 	private def transform(StateMachine cpsBehavior, DeploymentApplication depApp) {
 		trace('''Executing: transform(cpsBehavior = «cpsBehavior.name», depApp = «depApp.name»)''')
+		stateMachineTransformationPerformance.start
 		val depBehavior = cpsBehavior.createDepBehavior
 
 		depApp.behavior = depBehavior
 		addTraceOneToN(cpsBehavior, #[depBehavior])
 
+		stateMachineTransformationPerformance.stop
 		debug("Running state transformations.")
 		val watch = Stopwatch.createStarted
 		cpsBehavior.states.forEach [
 			transform(depBehavior)
 		]
-		debug('''Running state transformations («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		debug('''Running state transformations finished''')
 
 		debug("Resolving state relationships.")
 		watch.reset.start
 		cpsBehavior.states.forEach [
 			buildStateRelations(depBehavior, cpsBehavior)
 		]
-		debug('''Resolving state relationships («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		debug('''Resolving state relationships finished''')
 
 		debug("Resolving initial state.")
+		stateMachineTransformationPerformance.start
 		watch.reset.start
 		if (cpsBehavior.initial != null)
 			depBehavior.current = engine.cps2depTrace.getAllMatches(mapping, null, cpsBehavior.initial, null).map[
 				depElement].filter(BehaviorState).findFirst[depBehavior.states.contains(it)]
 		else
 			depBehavior.current = null
-		debug('''Resolving initial state («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		stateMachineTransformationPerformance.stop
+		debug('''Resolving initial state finished''')
 		trace('''Execution ended: transform''')
 	}
 
@@ -195,10 +250,15 @@ class CPS2DeploymentBatchTransformationEiq {
 	 */
 	private def transform(State cpsState, DeploymentBehavior depBehavior) {
 		trace('''Executing: transform(cpsState = «cpsState.name», depBehavior = «depBehavior.name»)''')
+		stateTransformationPerformance.start
 		val depState = cpsState.createDepState
 
 		depBehavior.states += depState
 		addTraceOneToN(cpsState, #[depState])
+
+		stateTable.put(cpsState, depBehavior, depState)
+
+		stateTransformationPerformance.stop
 		trace('''Execution ended: transform''')
 	}
 
@@ -219,11 +279,15 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace(
 			'''Executing: buildStateRelations(cpsState = «cpsState.name», depBehavior = «depBehavior.name», cpsBehavior = «cpsBehavior.
 				name»)''')
-		val depState = engine.cps2depTrace.getAllMatches(mapping, null, cpsState, null).map[depElement].filter(
-			BehaviorState).findFirst[depBehavior.states.contains(it)]
+		transitionTransformationPerformance.start
+
+		//		val depState = engine.cps2depTrace.getAllMatches(mapping, null, cpsState, null).map[depElement].filter(
+		//			BehaviorState).findFirst[depBehavior.states.contains(it)]
+		val depState = stateTable.get(cpsState, depBehavior)
 		cpsState.outgoingTransitions.filter[targetState != null && cpsBehavior.states.contains(targetState)].forEach [
 			mapTransition(depState, depBehavior)
 		]
+		transitionTransformationPerformance.stop
 		trace('''Execution ended: buildStateRelations''')
 	}
 
@@ -244,12 +308,13 @@ class CPS2DeploymentBatchTransformationEiq {
 
 		depState.outgoing += depTransition
 		depBehavior.transitions += depTransition
+		otherTimer.start
 		addTraceOneToN(transition, #[depTransition])
-
+		otherTimer.stop
 		depTransition.to = engine.cps2depTrace.getAllMatches(mapping, null, transition.targetState, null).map[
-			depElement].filter(BehaviorState).findFirst[
-				depBehavior.states.contains(it)
-			]
+			depElement].filter(BehaviorState).findFirst [
+			depBehavior.states.contains(it)
+		]
 		trace('''Execution ended: mapTransition''')
 	}
 
@@ -262,8 +327,10 @@ class CPS2DeploymentBatchTransformationEiq {
 	 */
 	private def mapAction(BehaviorTransition depTrigger) {
 		trace('''Executing: mapAction(depTrigger = «depTrigger.name»)''')
+		triggerTransformationPerformance.start
 		val cpsTransition = engine.cps2depTrace.getAllMatches(mapping, null, null, depTrigger).map[cpsElement].head as Transition
 		depTrigger.trigger += engine.triggerPair.getAllMatches(cpsTransition, null).map[depTarget]
+		triggerTransformationPerformance.stop
 		trace('''Execution ended: mapAction''')
 	}
 
@@ -371,9 +438,11 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace(
 			'''Executing: addTraceOneToN(cpsElement = «cpsElement.name», depElements = [«FOR e : depElements SEPARATOR ", "»«e.
 				name»«ENDFOR»])''')
-		var trace = engine.cps2depTrace.getAllMatches(mapping, null, cpsElement, null).map[trace].head
+		//var trace = engine.cps2depTrace.getOneArbitraryMatch(mapping, null, cpsElement, null)?.trace
+		var trace = traceTable.get(cpsElement)
 		if (trace == null) {
 			trace = tracFactory.createCPS2DeplyomentTrace
+			traceTable.put(cpsElement, trace)
 
 			trace.cpsElements += cpsElement
 		}
