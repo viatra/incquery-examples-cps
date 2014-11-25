@@ -6,23 +6,39 @@ import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
+import java.util.Map
 
 class DemoCPSConstraints implements ICPSConstraints {
 	
 	val hostClass1 = new HostClass(
 						"FirstHostClass",
-						new MinMaxData(1, 3), // HostTypes
-						new MinMaxData(3, 10), // HostInstances
-						new MinMaxData(1, 3) // CommLines
-						,new HashMap
+						new MinMaxData(2, 2), // HostTypes
+						new MinMaxData(2, 2), // HostInstances
+						new MinMaxData(2, 2) // CommLines
+						,getHc1Ratios
 					)
+	
 	val hostClass2 = new HostClass(
 					"SecondHostClass",
-					new MinMaxData(1, 1), // HostTypes
-					new MinMaxData(3, 3), // HostInstances
-					new MinMaxData(1, 5) // CommLines		
-					,new HashMap
+					new MinMaxData(2, 2), // HostTypes
+					new MinMaxData(2, 2), // HostInstances
+					new MinMaxData(2, 2) // CommLines		
+					,hc2Ratios
 				)
+	
+	def Map<HostClass, Integer> getHc1Ratios() {
+		val hc1Ratio = new HashMap<HostClass, Integer>
+		hc1Ratio.put(hostClass1, 1);
+		hc1Ratio.put(hostClass2, 2);
+		return hc1Ratio;
+	}
+	
+	def Map<HostClass, Integer> getHc2Ratios() {
+		val hc1Ratio = new HashMap<HostClass, Integer>
+		hc1Ratio.put(hostClass1, 2);
+		hc1Ratio.put(hostClass2, 5);
+		return hc1Ratio;
+	}
 	
 	
 	override getNumberOfSignals() {
@@ -41,11 +57,11 @@ class DemoCPSConstraints implements ICPSConstraints {
 		#[
 			new AppClass(
 				"FirstAppClass",
-				new MinMaxData(5, 5), // AppTypes
-				new MinMaxData(10, 10), // AppInstances
+				new MinMaxData(1, 1), // AppTypes
+				new MinMaxData(1, 1), // AppInstances
 				new MinMaxData(3, 5), // States
-				new MinMaxData(3, 10) // Transitions
-				, new Percentage(80)
+				new MinMaxData(3, 5) // Transitions
+				, new Percentage(100)
 				, firstAppClassAllocations
 				, new Percentage(100)
 				, new Percentage(50)
@@ -53,12 +69,12 @@ class DemoCPSConstraints implements ICPSConstraints {
 			
 			new AppClass(
 				"SecondAppClass",
-				new MinMaxData(10, 10), // AppTypes       
-				new MinMaxData(5, 10), // AppInstances  
-				new MinMaxData(10, 15), // States         
-				new MinMaxData(15, 15) // Transitions
+				new MinMaxData(1, 1), // AppTypes
+				new MinMaxData(1, 1), // AppInstances
+				new MinMaxData(3, 5), // States
+				new MinMaxData(3, 5) // Transitions
 				, new Percentage(100)
-				, secondAppClassAllocations
+				, firstAppClassAllocations
 				, new Percentage(100)
 				, new Percentage(50)	
 			)
