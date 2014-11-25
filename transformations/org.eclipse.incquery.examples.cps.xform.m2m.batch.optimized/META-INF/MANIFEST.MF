@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Optimized
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized
+Bundle-Vendor: IncQueryLabs Ltd.
+Bundle-Version: 0.1.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: com.google.guava,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.model;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.queries;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.traceability;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.xform.m2m.util;bundle-version="0.1.0"
+Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized
+Import-Package: org.apache.log4j;version="1.2.15"
