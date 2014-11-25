@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios
+package org.eclipse.incquery.examples.cps.xform.m2m.tests.integration
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
@@ -11,23 +11,12 @@ import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.BuildableCPSConstraint
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 
-/**
- * |HC| &#8776; |AC|</br>
- * |HT| &#8776; |AT|</br>
- * |T| &#8776; |S|/2</br>
- * |T| = C * 10</br>
- * |I| = T * 10 => F<sub>I</sub> = 10</br>
- * |S| = |AT| * 5 = 50 * C</br>
- * |Sig| = C/2</br>
- * |Hcom| = I / 3</br>
- * AllocRatio 1 for each HostClass
- * 
- */
-class BasicScenario implements IScenario {
+class SimpleScalingScenario implements IScenario {
 	
-	protected extension Logger logger = Logger.getLogger("cps.generator.Tests.BasicScenario")
+	protected extension Logger logger = Logger.getLogger("cps.xform.SimpleScalingScenario")
 	protected extension RandomUtils randUtil = new RandomUtils;
 	
 	Random rand;
@@ -44,16 +33,18 @@ class BasicScenario implements IScenario {
 	}
 	
 	override getConstraintsFor(int countOfElements) {
-		C = Math.round(0.05726 * Math.sqrt(countOfElements)) as int; // xxx
+		C = Math.ceil(Math.sqrt(countOfElements)) as int; // xxx
+		
 		info("--> Element count = " + countOfElements);
 		info("--> C = " + C);
 		
 		this.hostClasses = createHostClassList()
 		
-		val min = Math.round(C/2*(1-Ssig)) as int;
-		val max = Math.round(C/2*(1+Ssig)) as int;
+		val min = Math.ceil((C/2+1)*(5-Ssig)) as int;
+		val max = Math.ceil((C/2+1)*(5+Ssig)) as int;
+		info('''--> Signal min: «min», max: «max»''');
 		val BuildableCPSConstraint cons = new BuildableCPSConstraint(
-			"Basic Scenario",
+			"Simple Scaling Scenario",
 			new MinMaxData<Integer>(min, max), // Sig
 			createAppClassList(),
 			this.hostClasses	
@@ -65,16 +56,16 @@ class BasicScenario implements IScenario {
 	def Iterable<HostClass> createHostClassList() {
 		val hostClasses = Lists.<HostClass>newArrayList;
 		
-		val min = (C*(1-Shc)) as int
-		val max = (C*(1+Shc)) as int
+		val min = Math.ceil((C/5+1)*(2-Shc)) as int
+		val max = Math.ceil((C/5+1)*(2+Shc)) as int
 		val hostClassCount = new MinMaxData<Integer>(min, max).randInt(rand);
 		info("--> HostClass count = " + hostClassCount);
 		
-		val typCount = hostClassCount*5;
+		val typCount = hostClassCount;
 		info("--> HostType count = " + typCount);
-		val instCount = hostClassCount*5;
+		val instCount = (hostClassCount * 10) as int;
 		info("--> HostInstance count = " + instCount);
-		val comCount = instCount / 3;
+		val comCount = Math.ceil(typCount / 3 + 4) as int;
 		info("--> Host comm count = " + comCount);
 		
 		for(i : 0 ..< hostClassCount){
@@ -83,7 +74,7 @@ class BasicScenario implements IScenario {
 					"HC"+i, // name
 					new MinMaxData(typCount, typCount),// Type
 					new MinMaxData(instCount, instCount), //Instance
-					new MinMaxData(comCount, comCount), //ComLines
+					new MinMaxData(0, comCount), //ComLines
 					new HashMap
 				)
 			);
@@ -95,8 +86,8 @@ class BasicScenario implements IScenario {
 	private def Iterable<AppClass> createAppClassList() {
 		val appClasses = Lists.<AppClass>newArrayList;
 		
-		val min = (C*(1-Sac)) as int
-		val max = (C*(1+Sac)) as int
+		val min = (C*(5-Sac)) as int
+		val max = (C*(5+Sac)) as int
 		val appClassCount = new MinMaxData<Integer>(min, max).randInt(rand);
 		info("--> AppClass count = " + appClassCount);
 		var Map<HostClass, Integer> allocRatios = new HashMap();
@@ -110,13 +101,13 @@ class BasicScenario implements IScenario {
 			appClasses.add(
 				new AppClass(
 					"AC" + i,
-					new MinMaxData(appClassCount*5, appClassCount*8), // AppTypes
-					new MinMaxData(appClassCount*5, appClassCount*8), // AppInstances
-					new MinMaxData(5, 5), // States
-					new MinMaxData(7, 7), // Transitions
-					new Percentage(80), // Alloc 
+					new MinMaxData(appClassCount, appClassCount), // AppTypes
+					new MinMaxData(5, 10), // AppInstances
+					new MinMaxData(5, 7), // States
+					new MinMaxData(7, 10), // Transitions
+					new Percentage(30), // Alloc 
 					allocRatios,
-					new Percentage(75), // Action
+					new Percentage(30), // Action
 					new Percentage(30) // Send
 				)
 			);

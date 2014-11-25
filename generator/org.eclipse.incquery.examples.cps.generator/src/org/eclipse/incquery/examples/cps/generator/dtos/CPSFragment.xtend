@@ -8,18 +8,18 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
 import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
 import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
-import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 
 class CPSFragment extends GeneratorFragment<CyberPhysicalSystem>{
 	int numberOfSignals;
 	Multimap<HostClass, HostType> hostTypes = HashMultimap.create;
 	Multimap<AppClass, ApplicationType> applicationTypes = HashMultimap.create;
-	IncQueryEngine engine;
+	AdvancedIncQueryEngine engine;
 	
 	new(GeneratorInput<CyberPhysicalSystem> input) throws ModelGeneratorException {
 		super(input)
 		if(modelRoot != null){
-			engine = IncQueryEngine.on(modelRoot);
+			engine = AdvancedIncQueryEngine.createUnmanagedEngine(modelRoot);
 		}else{
 			throw new ModelGeneratorException("Cannot initialize IncQueryEngine on a null model.");
 		}

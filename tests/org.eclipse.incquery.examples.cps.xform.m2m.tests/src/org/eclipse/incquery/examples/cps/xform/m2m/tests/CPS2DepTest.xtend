@@ -22,8 +22,10 @@ class CPS2DepTest extends CPSTestBase {
     public static def transformations() {
         #[
         	#[new BatchSimple(), "BatchSimple"].toArray
-        	,#[new BatchIncQuery(), "BatchIncQuery"].toArray
-        	,#[new ExplicitTraceability(), "ExplicitTraceability"].toArray
+        	,
+			#[new BatchIncQuery(), "BatchIncQuery"].toArray
+        	,
+        	#[new ExplicitTraceability(), "ExplicitTraceability"].toArray
         ]
     }
     

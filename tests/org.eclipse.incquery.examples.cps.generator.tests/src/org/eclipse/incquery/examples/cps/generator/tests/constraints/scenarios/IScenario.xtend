@@ -20,9 +20,4 @@ import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
  */
 interface IScenario {
 	def ICPSConstraints getConstraintsFor(int countOfElements);
-	
-	def ICPSConstraints getConstraintsFor1000();
-	def ICPSConstraints getConstraintsFor10000();
-	def ICPSConstraints getConstraintsFor100000();
-	def ICPSConstraints getConstraintsFor1000000();
 }
