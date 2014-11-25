@@ -9,6 +9,7 @@ import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformat
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
 import org.junit.After
 import org.junit.runners.Parameterized.Parameters
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchOptimized
 
 class CPS2DepTest extends CPSTestBase {
 
@@ -22,6 +23,8 @@ class CPS2DepTest extends CPSTestBase {
     public static def transformations() {
         #[
         	#[new BatchSimple(), "BatchSimple"].toArray
+			,
+        	#[new BatchOptimized(), "BatchOptimized"].toArray
         	,
 			#[new BatchIncQuery(), "BatchIncQuery"].toArray
         	,
