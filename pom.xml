@@ -42,6 +42,7 @@
 				
 		<!-- Transformations -->
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.simple</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.expl</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.util</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t</module>
