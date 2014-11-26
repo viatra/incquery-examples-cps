@@ -3,6 +3,9 @@ package org.eclipse.incquery.examples.cps.xform.m2m.tests
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchOptimized
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.QueryResultTraceability
@@ -20,14 +23,14 @@ class CPS2DepTest extends CPSTestBase {
 	@Parameters(name = "{index}: {1}")
     public static def transformations() {
         #[
-//        	#[new BatchSimple(), "BatchSimple"].toArray
-//			,
-//        	#[new BatchOptimized(), "BatchOptimized"].toArray
-//        	,
-//			#[new BatchIncQuery(), "BatchIncQuery"].toArray
-//        	,
-//			#[new QueryResultTraceability(), "QueryResultTraceability"].toArray
-//			,
+        	#[new BatchSimple(), "BatchSimple"].toArray
+			,
+        	#[new BatchOptimized(), "BatchOptimized"].toArray
+        	,
+			#[new BatchIncQuery(), "BatchIncQuery"].toArray
+        	,
+			#[new QueryResultTraceability(), "QueryResultTraceability"].toArray
+			,
         	#[new ExplicitTraceability(), "ExplicitTraceability"].toArray
         ]
     }

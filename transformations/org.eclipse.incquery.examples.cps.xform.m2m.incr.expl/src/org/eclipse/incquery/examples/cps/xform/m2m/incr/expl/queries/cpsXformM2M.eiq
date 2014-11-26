@@ -87,8 +87,8 @@ pattern mappedApplicationInstance(appInstance, depApp, host, depHost) {
 	find deploymentHostApplications(_, depApp);
 }
 
-pattern monitoredApplicationInstance(appInstance) {
-	find mappedApplicationInstance(appInstance, _depApp, _host, _depHost);
+pattern monitoredApplicationInstance(appInstance, host) {
+	find mappedApplicationInstance(appInstance, _depApp, host, _depHost);
 }
 
 pattern unmappedApplicationInstance(appType, appInstance, depHost) {
@@ -179,8 +179,8 @@ pattern mappedState(state, depState, stateMachine, depBehavior) {
 	find behaviorState(depBehavior, depState);
 }
 
-pattern monitoredState(state) {
-	find mappedState(state, _depState, _stateMachine, _depBehavior);
+pattern monitoredState(state, stateMachine) {
+	find mappedState(state, _depState, stateMachine, _depBehavior);
 }
 
 pattern unmappedState(state, stateMachine, depBehavior) {
