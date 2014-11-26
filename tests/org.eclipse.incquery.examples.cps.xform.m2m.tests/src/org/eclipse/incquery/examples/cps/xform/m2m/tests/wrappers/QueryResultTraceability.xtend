@@ -1,7 +1,7 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers
 
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
-import org.eclipse.incquery.examples.cps.xfrom.m2m.incr.qrt.CPS2DeploymentTransformationQrt
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.CPS2DeploymentTransformationQrt
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 
 class QueryResultTraceability extends CPSTransformationWrapper {

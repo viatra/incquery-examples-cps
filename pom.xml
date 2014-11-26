@@ -47,7 +47,7 @@
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.util</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xfrom.m2m.batch.eiq</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq</module>
 	
 	
 	</modules>	

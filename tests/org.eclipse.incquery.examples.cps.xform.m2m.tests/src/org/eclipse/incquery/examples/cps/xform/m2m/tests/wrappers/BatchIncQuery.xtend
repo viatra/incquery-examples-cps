@@ -1,7 +1,7 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers
 
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
-import org.eclipse.incquery.examples.cps.xfrom.m2m.batch.eiq.CPS2DeploymentBatchTransformationEiq
+import org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq.CPS2DeploymentBatchTransformationEiq
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 
 class BatchIncQuery extends CPSTransformationWrapper {
