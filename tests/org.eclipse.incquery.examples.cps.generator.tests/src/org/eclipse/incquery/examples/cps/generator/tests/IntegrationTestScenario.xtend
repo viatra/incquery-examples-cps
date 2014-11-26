@@ -5,7 +5,7 @@ import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.B
 import org.junit.Test
 import org.junit.Ignore
 
-class ScenarioTest extends TestBase {
+class IntegrationTestScenario extends TestBase {
 
 	/**
 	 * 1K ==> 866, 333ms

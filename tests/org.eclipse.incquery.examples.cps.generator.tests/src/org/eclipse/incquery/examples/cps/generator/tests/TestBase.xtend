@@ -47,6 +47,9 @@ abstract class TestBase extends CPSTestBase{
 	}
 	
 	def runGeneratorOn(ICPSConstraints constraints, long seed) {
+		return runGeneratorOn(constraints, seed, false);
+	}
+	def runGeneratorOn(ICPSConstraints constraints, long seed, boolean persist) {
 		var Stopwatch fullTime = Stopwatch.createStarted;
 		
 		val out = CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints);		
@@ -71,12 +74,14 @@ abstract class TestBase extends CPSTestBase{
 		assertInRangeHostTypes(constraints, engine);
 		
 		// Persist model
-		var Stopwatch persistTime = Stopwatch.createStarted;
-		val filePath = "C:/output/model_"+System.nanoTime+".cyberphysicalsystem";
-		PersistenceUtil.saveCPSModelToFile(out.modelRoot, filePath);
-		info("  Generated Model is saved to \"" + filePath+"\"");
-		persistTime.stop;
-		info("  Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		if(persist){
+			var Stopwatch persistTime = Stopwatch.createStarted;
+			val filePath = "C:/output/model_"+System.nanoTime+".cyberphysicalsystem";
+			PersistenceUtil.saveCPSModelToFile(out.modelRoot, filePath);
+			info("  Generated Model is saved to \"" + filePath+"\"");
+			persistTime.stop;
+			info("  Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		}
 		
 		fullTime.stop;
 		info("Full Execution time: " + fullTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
