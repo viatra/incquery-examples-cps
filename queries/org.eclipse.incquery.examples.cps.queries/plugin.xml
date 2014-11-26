@@ -11,17 +11,17 @@
   <extension id="extension.derived.org.eclipse.incquery.examples.cps.model.derived.hostInstances" point="org.eclipse.incquery.runtime.base.wellbehaving.derived.features">
     <wellbehaving-derived-feature classifier-name="CyberPhysicalSystem" feature-name="hostInstances" package-nsUri="http://org.eclipse.incquery/model/cps"/>
   </extension>
+  <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSM" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSM" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSM"/>
+  </extension>
+  <extension id="org.eclipse.incquery.examples.cps.deployment.common.Deployment" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.deployment.common.Deployment" id="org.eclipse.incquery.examples.cps.deployment.common.Deployment"/>
+  </extension>
   <extension id="org.eclipse.incquery.examples.cps.model.derived.Derived" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.derived.Derived" id="org.eclipse.incquery.examples.cps.model.derived.Derived"/>
   </extension>
-  <extension id="org.eclipse.incquery.examples.cps.model.validation.Rules" point="org.eclipse.incquery.runtime.queryspecification">
-    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.validation.Rules" id="org.eclipse.incquery.examples.cps.model.validation.Rules"/>
-  </extension>
-  <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerCommon" point="org.eclipse.incquery.runtime.queryspecification">
-    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerCommon" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerCommon"/>
-  </extension>
-  <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerHW" point="org.eclipse.incquery.runtime.queryspecification">
-    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerHW" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerHW"/>
+  <extension id="org.eclipse.incquery.examples.cps.deployment.viewer.DeploymentViewer" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.deployment.viewer.DeploymentViewer" id="org.eclipse.incquery.examples.cps.deployment.viewer.DeploymentViewer"/>
   </extension>
   <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerReq" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerReq" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerReq"/>
@@ -29,16 +29,16 @@
   <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSW" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSW" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSW"/>
   </extension>
+  <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerCommon" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerCommon" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerCommon"/>
+  </extension>
+  <extension id="org.eclipse.incquery.examples.cps.model.validation.Rules" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.validation.Rules" id="org.eclipse.incquery.examples.cps.model.validation.Rules"/>
+  </extension>
   <extension id="org.eclipse.incquery.examples.cps.traceability.TraceabilityQueries" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.traceability.TraceabilityQueries" id="org.eclipse.incquery.examples.cps.traceability.TraceabilityQueries"/>
   </extension>
-  <extension id="org.eclipse.incquery.examples.cps.deployment.common.Deployment" point="org.eclipse.incquery.runtime.queryspecification">
-    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.deployment.common.Deployment" id="org.eclipse.incquery.examples.cps.deployment.common.Deployment"/>
-  </extension>
-  <extension id="org.eclipse.incquery.examples.cps.deployment.viewer.DeploymentViewer" point="org.eclipse.incquery.runtime.queryspecification">
-    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.deployment.viewer.DeploymentViewer" id="org.eclipse.incquery.examples.cps.deployment.viewer.DeploymentViewer"/>
-  </extension>
-  <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSM" point="org.eclipse.incquery.runtime.queryspecification">
-    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSM" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSM"/>
+  <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerHW" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerHW" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerHW"/>
   </extension>
 </plugin>

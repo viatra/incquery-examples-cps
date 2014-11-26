@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.eclipse.incquery.examples.cps.xfrom.m2m.incr.qrt
 Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt;singleton:=true
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.1.0.qualifier
 Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.util,
