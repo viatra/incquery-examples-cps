@@ -5,6 +5,7 @@ import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.QueryResultTraceability
 import org.junit.After
 import org.junit.runners.Parameterized.Parameters
 
@@ -25,6 +26,8 @@ class CPS2DepTest extends CPSTestBase {
 //        	,
 //			#[new BatchIncQuery(), "BatchIncQuery"].toArray
 //        	,
+//			#[new QueryResultTraceability(), "QueryResultTraceability"].toArray
+//			,
         	#[new ExplicitTraceability(), "ExplicitTraceability"].toArray
         ]
     }
