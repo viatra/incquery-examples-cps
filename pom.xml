@@ -62,6 +62,20 @@
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<strictBinIncludes>false</strictBinIncludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
@@ -99,19 +113,36 @@
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<extensions>true</extensions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-					<argLine>-Xmx1024m -XX:MaxPermSize=256m ${cps.test.vmargs}</argLine>
+					<!-- <argLine>-Xmx2048m -XX:MaxPermSize=256m ${tycho.testArgLine} ${cps.test.vmargs}</argLine> -->
+					<excludes>
+		            	<exclude>**/IntegrationTest*.java</exclude>
+						<exclude>**/integration/*.java</exclude>
+						<exclude>**/scenarios/*.java</exclude>
+						<exclude>**/queries/*.java</exclude>
+		            </excludes>
 		            <failIfNoTests>false</failIfNoTests>
 		            <skipTests>false</skipTests>
-				</configuration>		  
+				</configuration>
+				<!-- <executions>
+		         <execution>
+		            <id>unit-test</id>
+		            <goals>
+		              <goal>test</goal>
+		            </goals>
+		            <phase>test</phase>
+		            <configuration>
+		            	<excludes>
+		            		<exclude>**/IntegrationTest*.java</exclude>
+		            	</excludes>
+		            	<includes>
+		            		<include>**/*Test.java</include>
+		            	</includes>
+		            </configuration>
+		          </execution>		          
+		        </executions> -->	
 			</plugin>			
 		</plugins>
 		<pluginManagement>
