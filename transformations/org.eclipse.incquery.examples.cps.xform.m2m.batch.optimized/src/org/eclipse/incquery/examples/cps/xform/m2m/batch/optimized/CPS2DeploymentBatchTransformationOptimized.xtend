@@ -459,13 +459,14 @@ class CPS2DeploymentBatchTransformationOptimized {
 	private def createOrAddTrace(Identifiable identifiable, DeploymentElement deploymentElement) {
 		traceBegin('''createOrAddTrace(«identifiable.name», «deploymentElement.name»)''')
 		val trace = mapping.traces.filter[it.cpsElements.contains(identifiable)]
-		if (trace.length <= 0) {
+		if (trace.empty) {
 			return identifiable.createTrace(deploymentElement)
-		} else if (trace.length == 1) {
-			trace.head.deploymentElements += deploymentElement
 		} else {
-			throw new IllegalStateException(
-				'''More than one mapping was created to state machine wit Id '«identifiable.id»'.''')
+			trace.head.deploymentElements += deploymentElement
+			if(!trace.tail.empty){
+				throw new IllegalStateException(
+					'''More than one mapping was created to state machine wit Id '«identifiable.id»'.''')
+			}
 		}
 
 		traceEnd('''createOrAddTrace(«identifiable.name», «deploymentElement.name»)''')
