@@ -46,6 +46,10 @@ pattern mappedHostInstance(hostInstance, depHost) {
 	Deployment.hosts(_, depHost);
 }
 
+pattern monitoredHostInstance(hostInstance) {
+	find mappedHostInstance(hostInstance, _depHost);
+}
+
 pattern unmappedHostInstance(hostType, hostInstance) {
 	find hostInstances(hostType, hostInstance);
 	neg find cps2depTrace(_, _, hostInstance, _);
@@ -81,6 +85,10 @@ pattern mappedApplicationInstance(appInstance, depApp, host, depHost) {
 	find mappedHostInstance(host, depHost);
 	find cps2depTrace(_, _, appInstance, depApp);
 	find deploymentHostApplications(_, depApp);
+}
+
+pattern monitoredApplicationInstance(appInstance) {
+	find mappedApplicationInstance(appInstance, _depApp, _host, _depHost);
 }
 
 pattern unmappedApplicationInstance(appType, appInstance, depHost) {
@@ -125,6 +133,10 @@ pattern mappedStateMachine(stateMachine, depBehavior, appInstance, depApp) {
 	find deploymentApplicationBehavior(depApp, depBehavior);
 }
 
+pattern monitoredStateMachine(stateMachine) {
+	find mappedStateMachine(stateMachine, _depBehavior, _appInstance, _depApp);
+}
+
 pattern unmappedStateMachine(appInstance, stateMachine, depApp) {
 	find allocatedStateMachines(appInstance, stateMachine);
 	find mappedApplicationInstance(appInstance, depApp, _, _);
@@ -165,6 +177,10 @@ pattern mappedState(state, depState, stateMachine, depBehavior) {
 	find mappedStateMachine(stateMachine, depBehavior, _, _);
 	find cps2depTrace(_, _, state, depState);
 	find behaviorState(depBehavior, depState);
+}
+
+pattern monitoredState(state) {
+	find mappedState(state, _depState, _stateMachine, _depBehavior);
 }
 
 pattern unmappedState(state, stateMachine, depBehavior) {
@@ -223,6 +239,10 @@ pattern mappedTransition(transition, depTransition, depBehavior) {
 	find behaviorTransition(depBehavior, depTransition);
 }
 
+pattern monitoredTransition(transition) {
+	find mappedTransition(transition, _depTransition, _depBehavior);
+}
+
 pattern unmappedTransition(transition, depBehavior) {
 	find allocatedStateMachineTransition(stateMachine, source, transition, target);
 	find mappedState(source, _, stateMachine, depBehavior);
@@ -250,58 +270,36 @@ pattern deletedTransition(depTransition, trace) {
  * ====		                 			   ====
  * ============================================ */
 
-pattern mappedTransitionsWithAction(transition, depTransition, appType, action) {
-	find applicationBehavior(appType, stateMachine);
-	find stateMachineState(stateMachine, source);
-	find stateTransition(source, transition, _);
+pattern sendTransitionAppSignal(transition, app, signal) {
  	Transition.action(transition, action);
- 	
-	find mappedTransition(transition, depTransition, _);
-}
-
-pattern sendTransition(transition, depTransition, action) {
- 	find mappedTransitionsWithAction(transition, depTransition, _, action);
- 	check(
- 		SignalUtil.isSend(action)
- 	);
-}
-
-pattern sendTransitionAppSignal(transition, depTransition, app, signal) {
- 	find mappedTransitionsWithAction(transition, depTransition, _, action);
  	app == eval(SignalUtil.getAppId(action));
  	signal == eval(SignalUtil.getSignalId(action));
 }
 
-pattern waitTransition(transition, depTransition, appType, action) {
- 	find mappedTransitionsWithAction(transition, depTransition, appType, action);
- 	check(
- 		SignalUtil.isWait(action)
- 	);
-}
-
-pattern waitTransitionAppSignal(transition, depTransition, appType, signal) {
- 	find mappedTransitionsWithAction(transition, depTransition, appType, action);
+pattern waitTransitionAppSignal(transition, appType, signal) {
+ 	find applicationBehavior(appType, stateMachine);
+	find stateMachineState(stateMachine, source);
+	find stateTransition(source, transition, _);
+ 	Transition.action(transition, action);
  	check(
  		SignalUtil.isWait(action)
  	);
  	signal == eval(SignalUtil.getSignalId(action));
 }
 
-pattern triggerPair(depTrigger, depTarget) {
-	find sendTransitionAppSignal(_, depTrigger, appId, signal);
-	find waitTransitionAppSignal(_, depTarget, waitApp, signal);
+pattern triggerPair(trigger, target) {
+	find sendTransitionAppSignal(trigger, appId, signal);
+	find waitTransitionAppSignal(target, waitApp, signal);
 	ApplicationType.id(waitApp, appId);
 }
 
 pattern trigger(depSendTransition, depWaitTransition) {
-	find triggerPair(depSendTransition, depWaitTransition);
+	find triggerPair(sendTransition, waitTransition);
+	find cps2depTrace(_, _, sendTransition, depSendTransition);
+	find cps2depTrace(_, _, waitTransition, depWaitTransition);
 	find deploymentApplicationTransition(depSendApp, depSendTransition);
 	find deploymentApplicationTransition(depWaitApp, depWaitTransition);
-	
-	find cps2depTrace(_, _, sourceAppInstance, depSendApp);
-	find cps2depTrace(_, _, targetAppInstance, depWaitApp);
-		
-	find communicatingAppInstances(sourceAppInstance, targetAppInstance);
+	find communicatingDeploymentAppInstances(depSendApp, depWaitApp);
 }
 
 pattern behaviorTransitionTrigger(depSendTransition, depWaitTransition) {
@@ -321,6 +319,12 @@ pattern deletedTrigger(depSendTransition, depWaitTransition){
 pattern deploymentApplicationTransition(depApp, depTransition) {
 	find deploymentApplicationBehavior(depApp, depBehavior);
 	find behaviorTransition(depBehavior, depTransition);
+}
+
+pattern communicatingDeploymentAppInstances(sourceApp, targetApp) {
+	find cps2depTrace(_, _, sourceAppInstance, sourceApp);
+	find cps2depTrace(_, _, targetAppInstance, targetApp);
+	find communicatingAppInstances(sourceAppInstance, targetAppInstance);
 }
 
 pattern communicatingAppInstances(sourceAppInstance, targetAppInstance) {

@@ -2,7 +2,7 @@ package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules
 
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedApplicationInstanceMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MappedApplicationInstanceMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredApplicationInstanceMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedApplicationInstanceMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
@@ -51,7 +51,7 @@ class ApplicationMapping extends AbstractRule<UnmappedApplicationInstanceMatch> 
 	}
 }
 
-class ApplicationUpdate extends AbstractRule<MappedApplicationInstanceMatch> {
+class ApplicationUpdate extends AbstractRule<MonitoredApplicationInstanceMatch> {
 	
 	new(IncQueryEngine engine) {
 		super(engine)
@@ -59,41 +59,43 @@ class ApplicationUpdate extends AbstractRule<MappedApplicationInstanceMatch> {
 	
 	override getSpecification() {
 		Rules.newMatcherRuleSpecification(
-			mappedApplicationInstance,
+			monitoredApplicationInstance,
 			Lifecycles.getDefault(true, true),
 			#{appearedJob, disappearedJob, updatedJob}
 		)
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MappedApplicationInstanceMatch match |
-			val appId = match.depApp.id
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MonitoredApplicationInstanceMatch match |
+			val appId = match.appInstance.id
 			debug('''Starting monitoring mapped application with ID: «appId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MappedApplicationInstanceMatch match |
-			val appId = match.depApp.id
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MonitoredApplicationInstanceMatch match |
+			val appId = match.appInstance.id
 			debug('''Stopped monitoring mapped application with ID: «appId»''')
 		])
 	}
 	
 	private def getUpdatedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MappedApplicationInstanceMatch match |
-			val depApp = match.depApp
-			val depAppId = depApp.id
-			debug('''Updating application with ID: «depAppId»''')
-			val appId = match.appInstance.id
-			if(appId != depAppId){
-				trace('''ID updated from «depAppId» to «appId»''')
-				match.depApp.id = appId
-			}
-			val depHost = match.depHost
-			if(!depHost.applications.contains(depApp)){
-				trace('''Host changed to «depHost.ip»''')
-				depHost.applications += depApp
-			}
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MonitoredApplicationInstanceMatch match |
+			val app = match.appInstance
+			val appId = app.id
+			debug('''Updating application with ID: «appId»''')
+			val depAppMatches = getMappedApplicationInstance(engine).getAllMatches(app, null, null, null)
+			depAppMatches.forEach[
+				val depAppId = depApp.id
+				if(appId != depAppId){
+					trace('''ID updated from «appId» to «depAppId»''')
+					depApp.id = appId
+				}
+				if(!depHost.applications.contains(depApp)){
+					trace('''Host changed to «depHost.ip»''')
+					depHost.applications += depApp
+				}
+			]
 			debug('''Updated application with ID: «appId»''')
 		])
 	}

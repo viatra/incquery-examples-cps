@@ -2,7 +2,7 @@ package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules
 
 import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedTransitionMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MappedTransitionMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredTransitionMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedTransitionMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
@@ -68,7 +68,7 @@ class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 	}
 }
 
-class TransitionUpdate extends AbstractRule<MappedTransitionMatch> {
+class TransitionUpdate extends AbstractRule<MonitoredTransitionMatch> {
 	
 	new(IncQueryEngine engine) {
 		super(engine)
@@ -76,53 +76,57 @@ class TransitionUpdate extends AbstractRule<MappedTransitionMatch> {
 	
 	override getSpecification() {
 		Rules.newMatcherRuleSpecification(
-			mappedTransition,
+			monitoredTransition,
 			Lifecycles.getDefault(true, true),
 			#{appearedJob, disappearedJob, updatedJob}
 		)
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MappedTransitionMatch match |
-			val trId = match.depTransition.description
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MonitoredTransitionMatch match |
+			val trId = match.transition.id
 			debug('''Starting monitoring mapped transition with ID: «trId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MappedTransitionMatch match |
-			val trId = match.depTransition.description
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MonitoredTransitionMatch match |
+			val trId = match.transition.id
 			debug('''Stopped monitoring mapped transition with ID: «trId»''')
 		])
 	}
 	
 	private def getUpdatedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MappedTransitionMatch match |
-			val depTransition = match.depTransition
-			val trId = depTransition.description
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MonitoredTransitionMatch match |
+			val transition = match.transition
+			val trId = transition.id
 			debug('''Updating mapped transition with ID: «trId»''')
-			val newId = match.transition.id
-			if(newId != trId){
-				trace('''ID changed to «newId»''')
-				depTransition.description = newId
-			}
-			
-			val matches = engine.mappedTransitionSourceTarget.getAllMatches(match.transition, null, null, match.depBehavior)
-			if(!matches.empty){
-				val sourceTargetMatch = matches.head
-				val newSource = sourceTargetMatch.depSource
-				if(!newSource.outgoing.contains(depTransition)){
-					trace('''Source state changed to «newSource.description»''')
-					newSource.outgoing += depTransition
+			val depTransitionMatches = getMappedTransition(engine).getAllMatches(transition, null, null)
+			depTransitionMatches.forEach[
+				val oldDesc = depTransition.description
+				if(oldDesc != trId){
+					trace('''ID changed to «oldDesc»''')
+					depTransition.description = trId
 				}
-				val newTarget = sourceTargetMatch.depTarget
-				if(depTransition.to != newTarget){
-					trace('''Target state changed to «newTarget.description»''')
-					depTransition.to = newTarget
+				
+				val matches = engine.mappedTransitionSourceTarget.getAllMatches(transition, null, null, depBehavior)
+				if(!matches.empty){
+					val sourceTargetMatch = matches.head
+					val newSource = sourceTargetMatch.depSource
+					if(!newSource.outgoing.contains(depTransition)){
+						trace('''Source state changed to «newSource.description»''')
+						newSource.outgoing += depTransition
+					}
+					val newTarget = sourceTargetMatch.depTarget
+					if(depTransition.to != newTarget){
+						trace('''Target state changed to «newTarget.description»''')
+						depTransition.to = newTarget
+					}
 				}
-			}
+				
+			]
 			
-			debug('''Updated mapped transition with IDP: «newId»''')
+			debug('''Updated mapped transition with ID: «trId»''')
 		])
 	}
 }

@@ -1,7 +1,7 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules
 
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedDeploymentHostMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MappedHostInstanceMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredHostInstanceMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedHostInstanceMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
@@ -51,7 +51,7 @@ class HostMapping extends AbstractRule<UnmappedHostInstanceMatch> {
 	
 }
 
-class HostUpdate extends AbstractRule<MappedHostInstanceMatch> {
+class HostUpdate extends AbstractRule<MonitoredHostInstanceMatch> {
 	
 	new(IncQueryEngine engine) {
 		super(engine)
@@ -59,36 +59,39 @@ class HostUpdate extends AbstractRule<MappedHostInstanceMatch> {
 	
 	override getSpecification() {
 		Rules.newMatcherRuleSpecification(
-			mappedHostInstance,
+			monitoredHostInstance,
 			Lifecycles.getDefault(true, true),
 			#{appearedJob, disappearedJob, updatedJob}
 		)
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MappedHostInstanceMatch match |
-			val hostIp = match.depHost.ip
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MonitoredHostInstanceMatch match |
+			val hostIp = match.hostInstance.nodeIp
 			debug('''Starting monitoring mapped host with IP: «hostIp»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MappedHostInstanceMatch match |
-			val hostIp = match.depHost.ip
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MonitoredHostInstanceMatch match |
+			val hostIp = match.hostInstance.nodeIp
 			debug('''Stopped monitoring mapped host with IP: «hostIp»''')
 		])
 	}
 	
 	private def getUpdatedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MappedHostInstanceMatch match |
-			val hostIp = match.depHost.ip
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MonitoredHostInstanceMatch match |
+			val hostIp = match.hostInstance.nodeIp
 			debug('''Updating mapped host with IP: «hostIp»''')
-			val nodeIp = match.hostInstance.nodeIp
-			if(nodeIp != hostIp){
-				trace('''IP changed to «nodeIp»''')
-				match.depHost.ip = nodeIp
-			}
-			debug('''Updated mapped host with IP: «nodeIp»''')
+			val depHosts = getMappedHostInstance(engine).getAllValuesOfdepHost(match.hostInstance)
+			depHosts.forEach[
+				val nodeIp = ip
+				if(nodeIp != hostIp){
+					trace('''IP changed to «hostIp»''')
+					ip = hostIp
+				}
+			]
+			debug('''Updated mapped host with IP: «hostIp»''')
 		])
 	}
 }

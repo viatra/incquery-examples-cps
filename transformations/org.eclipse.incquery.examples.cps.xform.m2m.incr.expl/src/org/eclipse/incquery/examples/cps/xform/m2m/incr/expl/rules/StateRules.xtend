@@ -2,7 +2,7 @@ package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules
 
 import org.eclipse.incquery.examples.cps.deployment.BehaviorState
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedStateMatch
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MappedStateMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredStateMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedStateMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
@@ -62,7 +62,7 @@ class StateMapping extends AbstractRule<UnmappedStateMatch> {
 	}
 }
 
-class StateUpdate extends AbstractRule<MappedStateMatch> {
+class StateUpdate extends AbstractRule<MonitoredStateMatch> {
 	
 	new(IncQueryEngine engine) {
 		super(engine)
@@ -70,45 +70,48 @@ class StateUpdate extends AbstractRule<MappedStateMatch> {
 	
 	override getSpecification() {
 		Rules.newMatcherRuleSpecification(
-			mappedState,
+			monitoredState,
 			Lifecycles.getDefault(true, true),
 			#{appearedJob, disappearedJob, updatedJob}
 		)
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MappedStateMatch match |
-			val stateId = match.depState.description
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MonitoredStateMatch match |
+			val stateId = match.state.id
 			debug('''Starting monitoring mapped state with ID: «stateId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MappedStateMatch match |
-			val stateId = match.depState.description
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MonitoredStateMatch match |
+			val stateId = match.state.id
 			debug('''Stopped monitoring mapped state with ID: «stateId»''')
 		])
 	}
 	
 	private def getUpdatedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MappedStateMatch match |
-			val depState = match.depState
-			val stateId = depState.description
+		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MonitoredStateMatch match |
+			val state = match.state
+			val stateId = state.id
 			debug('''Updating mapped state with ID: «stateId»''')
-			val newId = match.state.id
-			if(newId != stateId){
-				trace('''ID changed to «newId»''')
-				depState.description = newId
-			}
-			val initState = match.stateMachine.initial
-			if(match.state == initState){
-				val depBehavior = match.depBehavior
-				val currentState = depBehavior.current 
-				if(currentState != depState){
-					depBehavior.current = depState
+			val depStateMatches = getMappedState(engine).getAllMatches(state, null, null, null)
+			depStateMatches.forEach[
+				val oldDesc = depState.description
+				if(oldDesc != stateId){
+					trace('''ID changed to «stateId»''')
+					depState.description = stateId
 				}
-			}
-			debug('''Updated mapped state with IDP: «newId»''')
+				val initState = stateMachine.initial
+				if(state == initState){
+					val currentState = depBehavior.current 
+					if(currentState != depState){
+						trace('''Current state changed to «stateId»''')
+						depBehavior.current = depState
+					}
+				}
+			]
+			debug('''Updated mapped state with ID: «stateId»''')
 		])
 	}
 }
