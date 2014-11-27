@@ -334,7 +334,7 @@ class CPS2DeploymentBatchTransformationEiq {
 			val triggerApp = engine.cpsApplicationTransition.getAllValuesOfcpsApp(it.cpsTrigger).head as ApplicationInstance
 			val targetApp = engine.cpsApplicationTransition.getAllValuesOfcpsApp(it.cpsTarget).head as ApplicationInstance
 			engine.communicatingAppInstances.countMatches(triggerApp, targetApp) > 0
-		].map[engine.cps2depTrace.getAllValuesOfdepElement(mapping, null, cpsTransition)].flatten.filter(
+		].map[engine.cps2depTrace.getAllValuesOfdepElement(mapping, null, cpsTarget)].flatten.filter(
 			BehaviorTransition)
 		triggerTransformationPerformance.stop
 		trace('''Execution ended: mapAction''')
