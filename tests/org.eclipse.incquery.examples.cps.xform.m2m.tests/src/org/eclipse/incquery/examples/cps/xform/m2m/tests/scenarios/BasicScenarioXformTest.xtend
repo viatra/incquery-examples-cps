@@ -13,10 +13,10 @@ import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.scenarios.SimpleScalingScenario
 
 @RunWith(Parameterized)
 abstract class BasicScenarioXformTest extends CPS2DepTest {
@@ -36,6 +36,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
+//	@Ignore
 	@Test
 	def basicScenario10(){
 		val testId = "basicScenario10"
@@ -49,7 +50,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 //	@Ignore
 	@Test
 	def basicScenario20(){
-		val testId = "basicScenario200"
+		val testId = "basicScenario20"
 		startTest(testId)
 		
 		executeScenarioXform(20)

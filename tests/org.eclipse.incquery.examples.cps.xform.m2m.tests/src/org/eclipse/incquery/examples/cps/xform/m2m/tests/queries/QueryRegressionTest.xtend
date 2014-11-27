@@ -9,19 +9,19 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
+import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
+import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.CpsXformM2M
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.scenarios.SimpleScalingScenario
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.scenarios.LowSynchScenario
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.runtime.api.GenericPatternGroup
 import org.eclipse.incquery.runtime.api.IQueryGroup
 import org.eclipse.incquery.runtime.api.IQuerySpecification
 import org.junit.Test
-import org.eclipse.incquery.examples.cps.generator.queries.Validation
-import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 
 class QueryRegressionTest extends CPSTestBase{
 	
@@ -35,13 +35,13 @@ class QueryRegressionTest extends CPSTestBase{
 	public def prepare() {
 		info("Preparing query performance test")
 		
-		val rs = executeScenarioXformForConstraints(1000)
+		val rs = executeScenarioXformForConstraints(200)
 		incQueryEngine = AdvancedIncQueryEngine.createUnmanagedEngine(rs)
 		queryGroup = GenericPatternGroup.of(
 			CpsXformM2M.instance
 		)
 		queryGroup.prepare(incQueryEngine)
-		debug("Wildcard index created")
+		debug("Base index created")
 		incQueryEngine.wipe()
 		debug("IncQuery engine wiped")
 		logMemoryProperties
@@ -51,7 +51,7 @@ class QueryRegressionTest extends CPSTestBase{
 	def executeScenarioXformForConstraints(int size) {	
 		val seed = 11111
 		val Random rand = new Random(seed)
-		val IScenario scenario = new SimpleScalingScenario(rand)
+		val IScenario scenario = new LowSynchScenario(rand)
 		val constraints = scenario.getConstraintsFor(size)
 		val cps2dep = prepareEmptyModel("testModel"+System.nanoTime)
 		

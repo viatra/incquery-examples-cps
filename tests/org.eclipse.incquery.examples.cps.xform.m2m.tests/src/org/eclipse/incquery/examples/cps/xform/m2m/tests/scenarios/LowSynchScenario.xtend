@@ -13,6 +13,8 @@ import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.BuildableCPSConstraint
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
+import com.google.common.collect.Maps
+import com.google.common.collect.ImmutableMap
 
 class LowSynchScenario implements IScenario {
 	
@@ -68,15 +70,19 @@ class LowSynchScenario implements IScenario {
 		val comCount = Math.ceil(typCount / 3 + 4) as int;
 		info("--> Host comm count = " + comCount);
 		
+		val commRatio = <HostClass, Integer>newHashMap
+
 		for(i : 0 ..< hostClassCount){
+			val sourceHostClass = new HostClass(
+				"HC"+i, // name
+				new MinMaxData(typCount, typCount),// Type
+				new MinMaxData(instCount, instCount), //Instance
+				new MinMaxData(0, comCount), //ComLines
+				Maps.newHashMap(commRatio)
+			)
+			commRatio.put(sourceHostClass, 1)
 			hostClasses.add(
-				new HostClass(
-					"HC"+i, // name
-					new MinMaxData(typCount, typCount),// Type
-					new MinMaxData(instCount, instCount), //Instance
-					new MinMaxData(0, comCount), //ComLines
-					new HashMap
-				)
+				sourceHostClass
 			);
 		}
 		
@@ -90,7 +96,7 @@ class LowSynchScenario implements IScenario {
 		val max = (C*(10+Sac)) as int
 		val appClassCount = new MinMaxData<Integer>(min, max).randInt(rand);
 		info("--> AppClass count = " + appClassCount);
-		var Map<HostClass, Integer> allocRatios = new HashMap();
+		var allocRatios = <HostClass, Integer>newHashMap();
 		
 		// alloc ratios
 		for(hc : this.hostClasses){
