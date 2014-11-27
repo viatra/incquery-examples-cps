@@ -6,8 +6,7 @@ Bundle-Version: 0.1.0.qualifier
 Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.util,
- org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules,
- org.eclipse.incquery.examples.cps.xfrom.m2m.incr
+ org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules
 Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.incquery.runtime,
  org.eclipse.xtext.xbase.lib,
