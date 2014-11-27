@@ -112,7 +112,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	def executeScenarioXformForConstraints(IScenario scenario, int size, long seed) {	
 		val constraints = scenario.getConstraintsFor(size);
-		val cps2dep = prepareEmptyModel("testModel"+System.nanoTime);
+//		val cps2dep = prepareEmptyModel("testModel"+System.nanoTime);
+		val cps2dep = preparePersistedCPSModel(instancesDirPath + "/" + scenario.class.simpleName,"batchSimple_" + size + "_"+System.nanoTime);
 		
 		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, cps2dep.cps);
 		var plan = CPSPlanBuilder.buildDefaultPlan;
@@ -137,22 +138,24 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		generateTime.stop;
 		info("Xform1 time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
-		info("Adding new host instance")		
-		val appType = cps2dep.cps.appTypes.head
-		val hostInstance = cps2dep.cps.hostTypes.head.instances.head
-		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
-
-		generateTime.reset.start
-		executeTransformation
-		generateTime.stop;
-		info("Xform2 time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		cps2dep.eResource.resourceSet.resources.forEach[save(null)]
 		
-		info("Adding second new host instance")		
-		appType.prepareApplicationInstanceWithId("new.app.instance2", hostInstance)
-
-		generateTime.reset.start
-		executeTransformation
-		generateTime.stop;
-		info("Xform3 time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+//		info("Adding new host instance")		
+//		val appType = cps2dep.cps.appTypes.head
+//		val hostInstance = cps2dep.cps.hostTypes.head.instances.head
+//		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
+//
+//		generateTime.reset.start
+//		executeTransformation
+//		generateTime.stop;
+//		info("Xform2 time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+//		
+//		info("Adding second new host instance")		
+//		appType.prepareApplicationInstanceWithId("new.app.instance2", hostInstance)
+//
+//		generateTime.reset.start
+//		executeTransformation
+//		generateTime.stop;
+//		info("Xform3 time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 	}
 }

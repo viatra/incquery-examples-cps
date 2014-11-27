@@ -65,6 +65,28 @@ class CPSModelBuilderUtil {
 		cps2dep
 	}
 	
+	def preparePersistedCPSModel(String dirUri, String modelName) {
+		val rs = new ResourceSetImpl()
+		val cpsRes = rs.createResource(URI.createURI(dirUri + "/" + modelName + ".cyberphysicalsystem"))
+		val depRes = rs.createResource(URI.createURI(dirUri + "/" + modelName + ".deployment"))
+		val trcRes = rs.createResource(URI.createURI(dirUri + "/" + modelName + ".traceability"))
+		
+		val cps = createCyberPhysicalSystem => [
+			id = modelName
+		]
+		cpsRes.contents += cps
+		
+		val dep = createDeployment
+		depRes.contents += dep
+		 
+		val cps2dep = createCPSToDeployment => [
+			it.cps = cps
+			it.deployment = dep
+		]
+		trcRes.contents += cps2dep
+		cps2dep
+	}
+	
 	def prepareHostTypeWithId(CPSToDeployment cps2dep, String hostId) {
 		prepareHostTypeWithId(cps2dep.cps, hostId);
 	}
