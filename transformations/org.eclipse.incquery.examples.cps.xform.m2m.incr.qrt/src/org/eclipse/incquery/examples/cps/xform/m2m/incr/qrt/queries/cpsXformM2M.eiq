@@ -19,7 +19,9 @@ pattern hostInstance(hostInstance) {
 	HostInstance(hostInstance);
 }
 
-pattern applicationInstance(appType, appInstance, host){
+pattern applicationInstance(appType, appInstance, depHost : DeploymentHost){
 	ApplicationType.instances(appType, appInstance);
-	ApplicationInstance.allocatedTo(appInstance, host);
+	ApplicationInstance.allocatedTo(appInstance, cpsHost);
+	
+	find cps2depTrace(_, _, cpsHost, depHost);
 }
