@@ -3,6 +3,7 @@ package org.eclipse.incquery.examples.cps.generator.tests
 import com.google.common.base.Stopwatch
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
+import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.queries.AppTypesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.HostTypesMatcher
@@ -75,12 +76,7 @@ abstract class TestBase extends CPSTestBase{
 		
 		// Persist model
 		if(persist){
-			var Stopwatch persistTime = Stopwatch.createStarted;
-			val filePath = "C:/output/model_"+System.nanoTime+".cyberphysicalsystem";
-			PersistenceUtil.saveCPSModelToFile(out.modelRoot, filePath);
-			info("  Generated Model is saved to \"" + filePath+"\"");
-			persistTime.stop;
-			info("  Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+			persistModel(out);
 		}
 		
 		fullTime.stop;
@@ -88,5 +84,14 @@ abstract class TestBase extends CPSTestBase{
 		
 		
 		return out;
+	}
+	
+	def persistModel(CPSFragment out) {
+		var Stopwatch persistTime = Stopwatch.createStarted;
+		val filePath = "C:/output/model_"+System.nanoTime+".cyberphysicalsystem";
+		PersistenceUtil.saveCPSModelToFile(out.modelRoot, filePath);
+		info("  Generated Model is saved to \"" + filePath+"\"");
+		persistTime.stop;
+		info("  Persisting time: " + persistTime.elapsed(TimeUnit.MILLISECONDS) + " ms")
 	}
 }

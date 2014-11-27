@@ -4,6 +4,7 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.emf.ecore.EObject
 
 class StatsUtil {
 	
@@ -23,5 +24,9 @@ class StatsUtil {
 	
 	def static generateStats(IncQueryEngine engine, CyberPhysicalSystem model){
 		return new CPSStats(engine, model);
+	}
+	
+	def static size(EObject eobject){
+		 eobject?.eAllContents.size
 	}
 }

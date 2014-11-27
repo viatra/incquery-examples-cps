@@ -1,11 +1,10 @@
 package org.eclipse.incquery.examples.cps.planexecutor
 
-import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
-import org.eclipse.incquery.examples.cps.planexecutor.api.IPlan
-import org.eclipse.incquery.examples.cps.planexecutor.api.Initializer
 import com.google.common.base.Stopwatch
 import java.util.concurrent.TimeUnit
+import org.apache.log4j.Logger
+import org.eclipse.incquery.examples.cps.planexecutor.api.IPlan
+import org.eclipse.incquery.examples.cps.planexecutor.api.Initializer
 
 class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 	
@@ -28,7 +27,7 @@ class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 					debug("< OPERATION " + operation.class.simpleName + " >");
 					operation.execute(fragment);
 					debug("<-------------------- END OPERATION ----------------------->");
-				}catch(ModelGeneratorException e){
+				}catch(Exception e){
 					info(e.message);
 				}
 			]

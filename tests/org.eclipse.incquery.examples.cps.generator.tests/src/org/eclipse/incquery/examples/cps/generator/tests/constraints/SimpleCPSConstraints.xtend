@@ -41,6 +41,7 @@ class SimpleCPSConstraints implements ICPSConstraints {
 	}
 	
 	override getHostClasses() {
+		hostClass.communicationRatios.put(hostClass, 1);
 		#[
 			hostClass
 		];

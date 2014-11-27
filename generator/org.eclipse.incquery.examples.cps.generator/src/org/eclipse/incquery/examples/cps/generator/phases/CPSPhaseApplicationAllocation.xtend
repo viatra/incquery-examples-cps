@@ -9,10 +9,14 @@ import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
+import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
 import org.eclipse.incquery.examples.cps.generator.operations.ApplicationInstanceAllocationOperation
 import org.eclipse.incquery.examples.cps.generator.utils.MapUtil
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
+import com.google.common.collect.HashMultimap
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
+import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 
 class CPSPhaseApplicationAllocation implements IPhase<CPSFragment>{
 	
@@ -20,23 +24,61 @@ class CPSPhaseApplicationAllocation implements IPhase<CPSFragment>{
 	protected extension Logger logger = Logger.getLogger("cps.generator.impl.CPSPhaseApplicationAllocation")
 	
 	override getOperations(CPSFragment fragment) {
-		val operations = Lists.newArrayList();
+		val operations = Lists.newArrayList(); 
+		
+		// Calculate HostInstances to HostCallses
+		val hostInstacesToClass = CPSModelBuilderUtil.calculateHostInstancesToHostClassMap(fragment);
+		
 		
 		// Add operations for Allocate applicationInstances to HostInstances
 		for(appClass : fragment.applicationTypes.keySet){
-			val apps = collectApplicationInstancesForAllocationByAppClass(appClass, fragment);
-			if(!apps.empty){
+			val appInstances = collectApplicationInstancesByAppClass(appClass, fragment);
+			if(!appInstances.empty){
 				var sumRatio = calculateSumRatio(appClass);
 				if(sumRatio != 0){
-					val allocationRatios = new HashMap<HostClass, Double>();
-					for(hostClass : appClass.allocationRatios.keySet){
-						var numberOfAllocatedApps = ((appClass.allocationRatios.get(hostClass) as double) / (sumRatio as double)) * apps.size;				
-						allocationRatios.put(hostClass, numberOfAllocatedApps);
+					val allocNumbers = new HashMap<HostClass, Integer> 
+					var sumAllocatedApps = 0;
+					// TODO keySet is not ordered...
+					for(targetHostClass : appClass.allocationRatios.keySet){
+						val hcRatio = appClass.allocationRatios.get(targetHostClass)
+						val div = sumRatio as double / appInstances.size as double
+						val hcAllocNumber = Math.round(hcRatio / div) as int
+						allocNumbers.put(targetHostClass, hcAllocNumber);
+						sumAllocatedApps += hcAllocNumber;
+					}			
+					
+					val sortedAllocNumbersMap = MapUtil.entriesSortedByValues(allocNumbers)
+					
+					// Remainders
+					if(sumAllocatedApps < appInstances.size){
+						val sortedIterator = sortedAllocNumbersMap.iterator
+						while(sortedIterator.hasNext && ((appInstances.size - sumAllocatedApps) != 0)){
+							val act = sortedIterator.next
+							// TODO order is changed during the loop...?
+							allocNumbers.put(act.key, act.value + 1)
+						}
 					}
-					val normRatios = normalizeRatios(allocationRatios, sumRatio, apps.size);
-					operations.add(new ApplicationInstanceAllocationOperation(apps, normRatios));
+					
+					val allocationMap = HashMultimap.<HostInstance, ApplicationInstance>create
+					
+					// Create allocation map
+					val forbiddenApps = Lists.<ApplicationInstance>newArrayList
+					for(targetHc : allocNumbers.keySet){
+						for(i : 0 ..< allocNumbers.get(targetHc)) {
+							val app = appInstances.randElementExcept(forbiddenApps, fragment.random);
+							forbiddenApps.add(app)
+							val hostInstance = hostInstacesToClass.get(targetHc).toList.randElement(fragment.random)
+							
+							info(app.id + " --> " + hostInstance.id)
+							
+							allocationMap.put(hostInstance, app);
+						}
+					}
+					
+					operations.add(new ApplicationInstanceAllocationOperation(allocationMap));
 				}else{
-					debug("#Warning#: Ratio is empty");
+					debug("!!! Error: Sum ratio is zero");
+					throw new ModelGeneratorException("Sum ratio is zero");
 				}
 			}else{
 				debug("#Warning#: ApplicationInstancesForAllocation is empty");
@@ -90,7 +132,7 @@ class CPSPhaseApplicationAllocation implements IPhase<CPSFragment>{
 		return sumRatio;
 	}
 	
-	def collectApplicationInstancesForAllocationByAppClass(AppClass appClass, CPSFragment fragment) {
+	def collectApplicationInstancesByAppClass(AppClass appClass, CPSFragment fragment) {
 		val appTypes = fragment.applicationTypes.get(appClass);
 		val appsForAllocateByAppClass = Lists.newArrayList;
 		for(appType : appTypes){

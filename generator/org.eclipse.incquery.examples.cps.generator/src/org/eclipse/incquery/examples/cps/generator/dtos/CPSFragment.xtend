@@ -7,7 +7,7 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
 import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
-import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
+import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 
 class CPSFragment extends GeneratorFragment<CyberPhysicalSystem>{

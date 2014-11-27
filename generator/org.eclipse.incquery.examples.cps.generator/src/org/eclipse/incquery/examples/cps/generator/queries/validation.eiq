@@ -28,8 +28,8 @@ pattern Transition(t : Transition) {
 	find Transitions(t, _);
 }
 
-pattern AllocatedAppInstances(A : ApplicationInstance) {
-	ApplicationInstance.allocatedTo(A, _);
+pattern AllocatedAppInstances(A : ApplicationInstance, HI : HostInstance) {
+	ApplicationInstance.allocatedTo(A, HI);
 }
 
 pattern ConnectedHosts(H : HostInstance) {

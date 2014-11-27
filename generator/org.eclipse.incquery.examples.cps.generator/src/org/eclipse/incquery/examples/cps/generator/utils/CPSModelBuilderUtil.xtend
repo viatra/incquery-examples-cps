@@ -13,6 +13,9 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import com.google.common.collect.HashMultimap
+import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
+import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 
 class CPSModelBuilderUtil {
 	
@@ -166,5 +169,17 @@ class CPSModelBuilderUtil {
 	def prepareCommunication(HostInstance srcHost, HostInstance trgHost) {
 		debug('''Create connection from «srcHost.id» to «trgHost.id»''')
 		srcHost.communicateWith.add(trgHost);
+	}
+	
+	def static calculateHostInstancesToHostClassMap(CPSFragment fragment){
+		val hostClassToInstanceMap = HashMultimap.<HostClass, HostInstance>create;
+		fragment.hostTypes.keySet.forEach[hc |
+			val instances = fragment.hostTypes.get(hc).map[ht | 
+				ht.instances
+			].flatten
+			
+			hostClassToInstanceMap.putAll(hc, instances)
+		]
+		return hostClassToInstanceMap;
 	}
 }

@@ -1,6 +1,6 @@
 package org.eclipse.incquery.examples.cps.generator.dtos
 
-import org.eclipse.incquery.examples.cps.planexecutor.exceptions.ModelGeneratorException
+import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
 
 class Percentage {
 	

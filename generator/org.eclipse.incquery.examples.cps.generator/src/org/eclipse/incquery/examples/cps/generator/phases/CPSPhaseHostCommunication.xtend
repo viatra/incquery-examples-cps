@@ -9,6 +9,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.operations.HostInstanceCommunicatesWithOperation
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
+import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 
 class CPSPhaseHostCommunication implements IPhase<CPSFragment>{
 	
@@ -20,14 +21,7 @@ class CPSPhaseHostCommunication implements IPhase<CPSFragment>{
 		//val hostInstances = HostInstancesMatcher.on(fragment.engine).allValuesOfhostInstance.toList;
 
 		// Calculate hostclass to host instance map
-		val hostClassToInstanceMap = HashMultimap.<HostClass, HostInstance>create;
-		fragment.hostTypes.keySet.forEach[hc |
-			val instances = fragment.hostTypes.get(hc).map[ht | 
-				ht.instances
-			].flatten
-			
-			hostClassToInstanceMap.putAll(hc, instances)
-		]
+		val hostClassToInstanceMap = CPSModelBuilderUtil.calculateHostInstancesToHostClassMap(fragment);
 
 
 		// Generate communications
