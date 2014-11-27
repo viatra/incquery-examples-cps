@@ -106,7 +106,7 @@ class CPS2DeploymentBatchTransformationEiq {
 		traceTable = Maps.newHashMap
 
 		debug("Running host transformations.")
-		mapping.cps.hostInstances.forEach[transform]
+		mapping.cps.hostTypes.map[instances].flatten.forEach[transform]
 
 		debug("Running action transformations.")
 		engine.depTransition.allMatches.map[depTransition].forEach[mapAction]
@@ -158,7 +158,7 @@ class CPS2DeploymentBatchTransformationEiq {
 
 		hostTransformationPerformance.stop
 		debug("Running application instance transformations.")
-		cpsHost.applications.filter[mapping.cps.appInstances.contains(it)].forEach [
+		cpsHost.applications.filter[type?.cps == mapping.cps].forEach [
 			transform(depHost)
 		]
 		debug('''Running application instance transformations finished''')

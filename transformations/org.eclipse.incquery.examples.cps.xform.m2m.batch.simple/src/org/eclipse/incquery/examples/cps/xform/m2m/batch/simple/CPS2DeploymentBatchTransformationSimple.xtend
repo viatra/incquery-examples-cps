@@ -255,7 +255,7 @@ class CPS2DeploymentBatchTransformationSimple {
 		hostInstance.createOrAddTrace(deploymentHost)
 
 		// Transform application instances
-		val liveApplications = hostInstance.applications.filter[mapping.cps.appInstances.contains(it)]
+		val liveApplications = hostInstance.applications.filter[type?.cps == mapping.cps]
 		var deploymentApps = liveApplications.map[transform]
 		deploymentHost.applications += deploymentApps
 

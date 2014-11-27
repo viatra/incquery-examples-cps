@@ -74,7 +74,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		mapping.deployment.hosts.clear
 
 		// Transform host instances
-		val hosts = mapping.cps.hostInstances
+		val hosts = mapping.cps.hostTypes.map[instances].flatten
 		val deploymentHosts = ImmutableList.copyOf(hosts.map[transform])
 		mapping.deployment.hosts += deploymentHosts
 
@@ -83,7 +83,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		assignTriggers
 		traceEnd("execute()")
 	}
-
+	
 	/**
 	 * Sets the <code>triggers</code> reference of the behavior transitions according to the transitions action.
 	 * <br>
@@ -333,7 +333,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		hostInstance.createOrAddTrace(deploymentHost)
 
 		// Transform application instances
-		val liveApplications = hostInstance.applications.filter[mapping.cps.appInstances.contains(it)]
+		val liveApplications = hostInstance.applications.filter[type?.cps == mapping.cps]
 		var deploymentApps = liveApplications.map[transform]
 		deploymentHost.applications += deploymentApps
 
