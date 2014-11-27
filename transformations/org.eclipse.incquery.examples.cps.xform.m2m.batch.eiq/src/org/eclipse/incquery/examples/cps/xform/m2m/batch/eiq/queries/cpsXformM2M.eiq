@@ -41,43 +41,33 @@ pattern transitionAction(transition, appType, action) {
 	Transition.action(transition, action);
 }
 
-pattern sendTransition(transition, action) {
-	find transitionAction(transition, _, action);
-	check(SignalUtil.isSend(action));
-}
-
-pattern waitTransition(transition, appType, action) {
-	find transitionAction(transition, appType, action);
-	check(SignalUtil.isWait(action));
-}
-
 pattern cpsApplicationTransition(cpsApp, cpsTransition) {
 	find cps2depTrace(_, _, cpsTransition, depTransition);
 	DeploymentApplication.behavior.transitions(depApp, depTransition);
-	find cps2depTrace(_, _, cpsApp, depApp);	
+	find cps2depTrace(_, _, cpsApp, depApp);
 }
 
-pattern triggerPair(cpsTrigger, depTarget) {
-	find sendTransition(cpsTrigger, sendAction);
-	find waitTransition(cpsTarget, waitAppType, waitAction);
-	
-	find cps2depTrace(cps2dep, _, cpsTrigger, _);
-	find cps2depTrace(cps2dep, _, cpsTarget, depTarget);
-	
-	BehaviorTransition(depTarget);
-	
-	find cpsApplicationTransition(cpsTriggerApp, cpsTrigger);
-	find cpsApplicationTransition(cpsTargetApp, cpsTarget);
-	
-	find communicatingAppInstances(cpsTriggerApp, cpsTargetApp);
-	
-	ApplicationType.id(waitAppType, id);
-	check(
-		(id == SignalUtil.getAppId(sendAction))
-		&&
-		(SignalUtil.getSignalId(sendAction) == SignalUtil.getSignalId(waitAction))
-	);
-	
+pattern sendTransitionAppSignal(transition, app, signal) {
+ 	Transition.action(transition, action);
+ 	app == eval(SignalUtil.getAppId(action));
+ 	signal == eval(SignalUtil.getSignalId(action));
+}
+
+pattern waitTransitionAppSignal(transition, appType, signal) {
+ 	ApplicationType.behavior(appType, stateMachine);
+	StateMachine.states(stateMachine, source);
+	State.outgoingTransitions(source, transition);
+ 	Transition.action(transition, action);
+ 	check(
+ 		SignalUtil.isWait(action)
+ 	);
+ 	signal == eval(SignalUtil.getSignalId(action));
+}
+
+pattern triggerPair(cpsTrigger, cpsTarget) {
+	find sendTransitionAppSignal(cpsTrigger, appId, signal);
+	find waitTransitionAppSignal(cpsTarget, waitApp, signal);
+	ApplicationType.id(waitApp, appId);
 }
 
 pattern communicatingAppInstances(sourceAppInstance, targetAppInstance) {

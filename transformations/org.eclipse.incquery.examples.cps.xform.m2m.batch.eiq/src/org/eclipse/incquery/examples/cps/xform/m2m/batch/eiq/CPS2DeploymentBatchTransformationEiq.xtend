@@ -330,7 +330,12 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Executing: mapAction(depTrigger = «depTrigger.name»)''')
 		triggerTransformationPerformance.start
 		val cpsTransition = engine.cps2depTrace.getAllMatches(mapping, null, null, depTrigger).map[cpsElement].head as Transition
-		depTrigger.trigger += engine.triggerPair.getAllMatches(cpsTransition, null).map[depTarget]
+		depTrigger.trigger += engine.triggerPair.getAllMatches(cpsTransition, null).filter [
+			val triggerApp = engine.cpsApplicationTransition.getAllValuesOfcpsApp(it.cpsTrigger).head as ApplicationInstance
+			val targetApp = engine.cpsApplicationTransition.getAllValuesOfcpsApp(it.cpsTarget).head as ApplicationInstance
+			engine.communicatingAppInstances.countMatches(triggerApp, targetApp) > 0
+		].map[engine.cps2depTrace.getAllValuesOfdepElement(mapping, null, cpsTransition)].flatten.filter(
+			BehaviorTransition)
 		triggerTransformationPerformance.stop
 		trace('''Execution ended: mapAction''')
 	}
@@ -439,6 +444,7 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace(
 			'''Executing: addTraceOneToN(cpsElement = «cpsElement.name», depElements = [«FOR e : depElements SEPARATOR ", "»«e.
 				name»«ENDFOR»])''')
+
 		//var trace = engine.cps2depTrace.getOneArbitraryMatch(mapping, null, cpsElement, null)?.trace
 		var trace = traceTable.get(cpsElement)
 		if (trace == null) {
