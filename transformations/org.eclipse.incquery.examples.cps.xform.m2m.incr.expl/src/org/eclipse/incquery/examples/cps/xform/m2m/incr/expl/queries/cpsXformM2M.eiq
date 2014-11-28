@@ -206,9 +206,8 @@ pattern deletedState(depState, trace) {
  * ============================================ */
 
 pattern allocatedStateMachineTransition(stateMachine, source, transition, target) {
-	find allocatedStateMachines(_, stateMachine);
-	find stateMachineState(stateMachine, source);
-	find stateMachineState(stateMachine, target);
+	find allocatedStateMachineState(stateMachine, source);
+	find allocatedStateMachineState(stateMachine, target);
 	find stateTransition(source, transition, target);
 }
 
@@ -293,10 +292,14 @@ pattern triggerPair(trigger, target) {
 	ApplicationType.id(waitApp, appId);
 }
 
-pattern trigger(depSendTransition, depWaitTransition) {
+pattern deploymentTrigger(depSendTransition, depWaitTransition) {
 	find triggerPair(sendTransition, waitTransition);
 	find cps2depTrace(_, _, sendTransition, depSendTransition);
 	find cps2depTrace(_, _, waitTransition, depWaitTransition);
+}	
+
+pattern trigger(depSendTransition, depWaitTransition) {
+	find deploymentTrigger(depSendTransition, depWaitTransition);
 	find deploymentApplicationTransition(depSendApp, depSendTransition);
 	find deploymentApplicationTransition(depWaitApp, depWaitTransition);
 	find communicatingDeploymentAppInstances(depSendApp, depWaitApp);
