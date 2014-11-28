@@ -16,7 +16,7 @@ class SignalCalculationOperation implements IOperation<CPSFragment> {
 	override execute(CPSFragment fragment) {
 		var constraints = fragment.input.constraints as ICPSConstraints;
 		var numberOfSignals = constraints.numberOfSignals.randInt(fragment.random);
-		fragment.setNumberOfSignals(numberOfSignals);	
+		fragment.setNumberOfSignals(numberOfSignals);
 		return true;
 	}
 	

@@ -5,3 +5,11 @@ import "http://org.eclipse.incquery/model/cps"
 pattern Transitions(t : Transition, SM : StateMachine) {
 	StateMachine.states.outgoingTransitions(SM, t);
 }
+
+pattern ReachableAppTypes(From : ApplicationType, To : ApplicationType) {
+	ApplicationType.instances.allocatedTo.communicateWith.applications.type(From, To);
+}
+
+pattern AppTypesOfTransition(T : Transition, P : ApplicationType) {
+	ApplicationType.behavior.states.outgoingTransitions(P, T);
+}

@@ -22,9 +22,13 @@ class RandomUtils {
 		if(minMaxData == null){
 			throw new ModelGeneratorException("MinMaxData is null. (randInt(long seed, int min, int max))");
 		}
-		
+			
 		val min = minMaxData.minValue;
 		val max = minMaxData.maxValue;
+		
+		if(min == max){
+			return min;
+		} 
 		
 		if(min > max){
 			throw new ModelGeneratorException("Max must be greater then min. (randInt(MinMaxData<Integer> minMaxData = ["+minMaxData.minValue+", "+minMaxData.maxValue+"] , Random rand))");
@@ -33,8 +37,8 @@ class RandomUtils {
 	    return rand.nextInt((max - min) + 1) + min;
 	}
 	
-	def int randIntZeroToMax(int max, Random rand) throws ModelGeneratorException {
-		return randInt(new MinMaxData<Integer>(0, max), rand);
+	def int randIntOneToMax(int max, Random rand) throws ModelGeneratorException {
+		return randInt(new MinMaxData<Integer>(1, max), rand);
 	}
 	
 	def int randIntExcept(MinMaxData<Integer> minMaxData, int excepted, Random rand) throws ModelGeneratorException {

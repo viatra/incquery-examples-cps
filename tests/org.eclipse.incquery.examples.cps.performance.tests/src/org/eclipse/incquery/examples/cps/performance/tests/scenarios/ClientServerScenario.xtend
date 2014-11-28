@@ -13,9 +13,9 @@ import org.eclipse.incquery.examples.cps.generator.tests.constraints.BuildableCP
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 
-class PublishSubscribeScenario implements IScenario {
+class ClientServerScenario implements IScenario {
 	
-	protected extension Logger logger = Logger.getLogger("cps.generator.PublishSubscribeScenario")
+	protected extension Logger logger = Logger.getLogger("cps.generator.ClientServerScenario")
 	protected extension RandomUtils randUtil = new RandomUtils;
 	
 	Random rand;
@@ -35,7 +35,7 @@ class PublishSubscribeScenario implements IScenario {
 		this.hostClasses = createHostClassList(scale)
 
 		val BuildableCPSConstraint cons = new BuildableCPSConstraint(
-			"Publish-Subscribe Scenario",
+			"Client-Server Scenario",
 			new MinMaxData<Integer>(1, 1), // Signals
 			createAppClassList(scale),
 			this.hostClasses	
@@ -71,6 +71,15 @@ class PublishSubscribeScenario implements IScenario {
 		val serverCommRatio = <HostClass, Integer>newHashMap
 		val clientCommRatio = <HostClass, Integer>newHashMap
 		
+		
+		this.serverHostClass = new HostClass(
+			"server", // name
+			new MinMaxData<Integer>(serverHostTypeCount, serverHostTypeCount), // Type
+			new MinMaxData<Integer>(serverHostInstanceCount, serverHostInstanceCount), //Instance
+			new MinMaxData<Integer>(0, 0), //ComLines
+			serverCommRatio
+		)
+		
 		// Client
 		var clientTypeMin = clientHostTypeCount
 		if(clientTypeMin < 1){
@@ -80,24 +89,16 @@ class PublishSubscribeScenario implements IScenario {
 		if(clientInstMin < 1){
 			clientInstMin = 1
 		}
+		clientCommRatio.put(serverHostClass, 1)
 		this.clientHostClass = new HostClass(
 			"client", // name
 			new MinMaxData<Integer>(clientTypeMin, clientTypeMin), // Type
 			new MinMaxData<Integer>(clientInstMin, clientInstMin), //Instance
-			new MinMaxData<Integer>(0, 0), //ComLines
-			Maps.newHashMap(clientCommRatio)
+			new MinMaxData<Integer>(comCount, comCount), //ComLines
+			clientCommRatio
 		)
 		
 		// Server
-		serverCommRatio.put(clientHostClass, 1)
-		
-		this.serverHostClass = new HostClass(
-			"server", // name
-			new MinMaxData<Integer>(serverHostTypeCount, serverHostTypeCount), // Type
-			new MinMaxData<Integer>(serverHostInstanceCount, serverHostInstanceCount), //Instance
-			new MinMaxData<Integer>(comCount, comCount), //ComLines
-			Maps.newHashMap(serverCommRatio)
-		)
 		
 		hostClasses.add(serverHostClass)
 		hostClasses.add(clientHostClass)
@@ -111,18 +112,14 @@ class PublishSubscribeScenario implements IScenario {
 		val appClassCount = new MinMaxData<Integer>(2, 2).randInt(rand);
 		info("--> AppClass count = " + appClassCount);
 		
-//		val appTypeCount = new MinMaxData<Integer>(C/3 + appClassCount, C/3 + appClassCount).randInt(rand);
-//		info("--> AppType count = " + appTypeCount);
 		val serverAppTypeCount = 1
 		info("-->    Server AppType = " + serverAppTypeCount);
-		val clientAppTypeCount = 10 * scale // appTypeCount - serverAppTypeCount
+		val clientAppTypeCount = 10 * scale 
 		info("-->    Client AppType = " + clientAppTypeCount);
-		
-//		val appInstanceCount = new MinMaxData<Integer>(appClassCount, C + appClassCount).randInt(rand);
-//		info("--> AppInstanceCount = " + appInstanceCount);
+
 		val serverAppInstanceCount = 1
 		info("-->    Server AppInstance = " + serverAppInstanceCount);
-		val clientAppInstanceCount = 1 // Math.ceil((appInstanceCount - serverAppInstanceCount) / clientAppTypeCount) as int
+		val clientAppInstanceCount = 1
 		info("-->    Client AppInstance = " + clientAppInstanceCount);
 		
 		
@@ -139,8 +136,8 @@ class PublishSubscribeScenario implements IScenario {
 			new MinMaxData<Integer>(40, 40), // Transitions
 			new Percentage(100), // AllocInst
 			serverAllocRatios,
-			new Percentage(80), // Action %
-			new Percentage(100) // Send %
+			new Percentage(30), // Action %
+			new Percentage(0) // Send %
 		)
 		appClasses += serverAppClass
 		
@@ -159,7 +156,7 @@ class PublishSubscribeScenario implements IScenario {
 			new Percentage(100), // AllocInst
 			clientAllocRatios,
 			new Percentage(30), // Action %
-			new Percentage(0) // Send %
+			new Percentage(100) // Send %
 		)
 		appClasses += clientAppClass
 		

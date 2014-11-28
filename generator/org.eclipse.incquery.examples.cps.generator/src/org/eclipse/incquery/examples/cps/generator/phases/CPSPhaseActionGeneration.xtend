@@ -9,6 +9,8 @@ import org.eclipse.incquery.examples.cps.generator.operations.ActionGenerationOp
 import org.eclipse.incquery.examples.cps.generator.queries.TransitionsMatcher
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
+import org.eclipse.incquery.examples.cps.generator.queries.ReachableAppTypesMatcher
 
 class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 	
@@ -20,7 +22,6 @@ class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 	
 	override getOperations(CPSFragment fragment) {
 		val operations = Lists.newArrayList();
-		val typeList = fragment.applicationTypes.values.toList
 		
 		for(appClass : fragment.applicationTypes.keySet){
 			var appTypes = fragment.applicationTypes.get(appClass);
@@ -32,21 +33,23 @@ class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 							// Generate action
 							if(appClass.probabilityOfSendAction.randBooleanWithPercentageOfTrue(fragment.random)){
 								// Generate SendSignal(AppTypeID, SignalID)
-								val signalNumber = fragment.numberOfSignals.randIntZeroToMax(fragment.random);
-								val targetAppType = typeList.randElementExcept(ImmutableList.of(appType), fragment.random);
+								val signalNumber = fragment.numberOfSignals.randIntOneToMax(fragment.random);
+								val possibleTypeList = getPossibleAppTypesOf(appType, fragment).toList
+								
+								val targetAppType = possibleTypeList.randElementExcept(ImmutableList.of(appType), fragment.random);
 
 								if(targetAppType != null){
 									val action = SEND_METHOD_NAME + "(" + targetAppType.id + ", "+ signalNumber + ")";
-									debug(action)
+									info(action)
 									operations.add(new ActionGenerationOperation(action, transition));
 								}else{
 									debug("#Warning: Cannot find target application type for Action of " + appType.id);
 								}
 							}else{
 								// Generate WaitSignal(SignalID)
-								val signalNumber = fragment.numberOfSignals.randIntZeroToMax(fragment.random);
+								val signalNumber = fragment.numberOfSignals.randIntOneToMax(fragment.random);
 								val action = WAIT_METHOD_NAME + "(" + signalNumber + ")";
-								debug(action)
+								info(action)
 								operations.add(new ActionGenerationOperation(action, transition));
 							}
 						}
@@ -60,6 +63,10 @@ class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 	
 	def getTransitionsOf(ApplicationType type, CPSFragment fragment) {
 		TransitionsMatcher.on(fragment.engine).getAllValuesOft(type.behavior);
+	}
+	
+	def getPossibleAppTypesOf(ApplicationType type, CPSFragment fragment) {
+		ReachableAppTypesMatcher.on(fragment.engine).getAllValuesOfTo(type);
 	}
 	
 }
