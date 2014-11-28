@@ -1,11 +1,10 @@
 package org.eclipse.incquery.examples.cps.tests
 
 import java.io.IOException
+import java.io.InputStream
 import java.util.Properties
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
-import java.io.InputStream
-import java.util.StringTokenizer
 
 class PropertiesUtil {
 	
@@ -66,7 +65,7 @@ class PropertiesUtil {
 	
 	def static getDisabledM2MTransformations() {
 		val disabledXform = getPropertyValue(DISABLED_M2M_XFORM_PROP_KEY, "none")
-		disabledXform.split(",").toList
+		disabledXform.split(",").map[trim]
 	}
 	
 	def static getLogLevel(String key, String defaultLevel) {
