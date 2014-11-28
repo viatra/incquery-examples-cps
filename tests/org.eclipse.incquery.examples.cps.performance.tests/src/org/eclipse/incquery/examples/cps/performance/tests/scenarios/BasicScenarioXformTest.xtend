@@ -11,6 +11,7 @@ import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.I
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
+import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
@@ -137,6 +138,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 		endTest(testId)
 	}
+	
 //	@Ignore
 	@Test(timeout=600000)
 	def scale1500(){
@@ -155,6 +157,39 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		startTest(testId)
 		
 		executeScenarioXform(2000)
+	
+		endTest(testId)
+	}
+	
+//	@Ignore
+	@Test(timeout=600000)
+	def scale2250(){
+		val testId = "scale2250"
+		startTest(testId)
+		
+		executeScenarioXform(2250)
+	
+		endTest(testId)
+	}
+	
+//	@Ignore
+	@Test(timeout=600000)
+	def scale2500(){
+		val testId = "scale2500"
+		startTest(testId)
+		
+		executeScenarioXform(2500)
+	
+		endTest(testId)
+	}
+	
+//	@Ignore
+	@Test(timeout=600000)
+	def scale3000(){
+		val testId = "scale3000"
+		startTest(testId)
+		
+		executeScenarioXform(3000)
 	
 		endTest(testId)
 	}
@@ -211,8 +246,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		
 		info("Adding new host instance")
 		var modifTime1 = Stopwatch.createStarted;
-		val appType = cps2dep.cps.appTypes.head
-		val hostInstance = cps2dep.cps.hostTypes.head.instances.head
+		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
+		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
 		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
 		modifTime1.stop
 
@@ -253,12 +288,9 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		info("****************************************************************************")
 
          //////////////////////
-		// Train Benchmark
+		// MONDO-SAM
 		
 		val BenchmarkResult result = new BenchmarkResult(xform.class.simpleName, "Addingnew", new Random(seed))
-		
-		result.setArtifactSize(cpsStats.eObjects)
-		
 		result.setReadTime(generateTime.elapsed(TimeUnit.MILLISECONDS))
 		
 		result.addCheckTime(transformTime.elapsed(TimeUnit.MILLISECONDS))
@@ -274,6 +306,5 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		result.addMemoryBytes(endMemory)
 		
 		info(result.toString)
-	
 	}
 }
