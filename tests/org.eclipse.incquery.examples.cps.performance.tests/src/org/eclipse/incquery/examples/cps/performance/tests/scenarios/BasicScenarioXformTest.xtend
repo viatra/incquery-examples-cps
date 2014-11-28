@@ -18,6 +18,8 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.eclipse.incquery.examples.cps.performance.tests.benchmark.BenchmarkResult
+import org.eclipse.incquery.examples.cps.performance.tests.queries.QueryRegressionTest
 
 @RunWith(Parameterized)
 abstract class BasicScenarioXformTest extends CPS2DepTest {
@@ -111,7 +113,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		getScenario(rand).executeScenarioXformForConstraints(size, seed)
 	}
 	
-	def executeScenarioXformForConstraints(IScenario scenario, int size, long seed) {	
+	def executeScenarioXformForConstraints(IScenario scenario, int size, long seed) {
+		
 		val constraints = scenario.getConstraintsFor(size);
 		val cps2dep = preparePersistedCPSModel(instancesDirPath + "/" + scenario.class.simpleName,"batchSimple_" + size + "_"+System.nanoTime);
 		
@@ -120,6 +123,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		
 		var PlanExecutor<CPSFragment, CPSGeneratorInput> generator = new PlanExecutor();
 		
+		// Generating
 		var generateTime = Stopwatch.createStarted;
 		var fragment = generator.process(plan, input);
 		generateTime.stop;
@@ -132,7 +136,9 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		cpsStats.log
 		
 		engine.dispose
-		
+
+
+		// Transformation
 		var transformTime = Stopwatch.createStarted;
 		var transformInitTime = Stopwatch.createStarted;
 		initializeTransformation(cps2dep)
@@ -141,11 +147,37 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		transformTime.stop;
 		info("Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
+		
+		val long endMemory = QueryRegressionTest.logMemoryProperties
+		
+		
 		if(PropertiesUtil.persistResults){
 			cps2dep.eResource.resourceSet.resources.forEach[save(null)]
 		}
 		
+		info("Adding new host instance")
+		var modifTime1 = Stopwatch.createStarted;
+		val appType = cps2dep.cps.appTypes.head
+		val hostInstance = cps2dep.cps.hostTypes.head.instances.head
+		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
+		modifTime1.stop
+
+		var secondXform = Stopwatch.createStarted;
+		executeTransformation
+		secondXform.stop;
+		info("Xform2 time: " + secondXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
+		info("Adding second new host instance")	
+		var modifTime2 = Stopwatch.createStarted;	
+		appType.prepareApplicationInstanceWithId("new.app.instance2", hostInstance)
+		modifTime2.stop
+
+		var thirdXform = Stopwatch.createStarted;
+		executeTransformation
+		thirdXform.stop;
+		info("Xform3 time: " + thirdXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
+
+
 		// STATS
 		info("  ************************************************************************")
 		info(" **                    S  T  A  T  I  S  T  I  C  S                      **")
@@ -162,26 +194,32 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		info("    Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("    Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("       Xform1 init time: " + transformInitTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		info("    Xform2 time: " + secondXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		info("    Xform3 time: " + thirdXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("****************************************************************************")
+
+         //////////////////////
+		// Train Benchmark
 		
+		val BenchmarkResult result = new BenchmarkResult(xform.class.simpleName, "Adding new host instance. Xfrom. Adding second new host instance. Xform", new Random(seed))
 		
+		result.setArtifactSize(cpsStats.eObjects)
 		
-//		info("Adding new host instance")		
-//		val appType = cps2dep.cps.appTypes.head
-//		val hostInstance = cps2dep.cps.hostTypes.head.instances.head
-//		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
-//
-//		generateTime.reset.start
-//		executeTransformation
-//		generateTime.stop;
-//		info("Xform2 time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-//		
-//		info("Adding second new host instance")		
-//		appType.prepareApplicationInstanceWithId("new.app.instance2", hostInstance)
-//
-//		generateTime.reset.start
-//		executeTransformation
-//		generateTime.stop;
-//		info("Xform3 time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		result.setReadTime(generateTime.elapsed(TimeUnit.MILLISECONDS))
+		
+		result.addCheckTime(transformTime.elapsed(TimeUnit.MILLISECONDS))
+		result.addCheckTime(secondXform.elapsed(TimeUnit.MILLISECONDS))
+		result.addCheckTime(thirdXform.elapsed(TimeUnit.MILLISECONDS))
+		
+		result.addModificationTime(modifTime1.elapsed(TimeUnit.MILLISECONDS))
+		result.addModificationTime(modifTime2.elapsed(TimeUnit.MILLISECONDS))
+		
+		result.addEditTime(modifTime1.elapsed(TimeUnit.MILLISECONDS))
+		result.addEditTime(modifTime2.elapsed(TimeUnit.MILLISECONDS))
+		
+		result.addMemoryBytes(endMemory)
+		
+		info(result.toString)
+	
 	}
 }

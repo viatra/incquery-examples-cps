@@ -25,7 +25,7 @@ import org.junit.Test
 
 class QueryRegressionTest extends CPSTestBase{
 	
-	protected extension Logger logger = Logger.getLogger("cps.xform.QueryTest")
+	protected static extension Logger logger = Logger.getLogger("cps.xform.QueryTest")
     protected extension CPSModelBuilderUtil modelBuilder = new CPSModelBuilderUtil
 	
 	AdvancedIncQueryEngine incQueryEngine
@@ -125,7 +125,7 @@ class QueryRegressionTest extends CPSTestBase{
 	 * @param logger
 	 * @return The amount of used heap memory in kBytes
 	 */
-	def logMemoryProperties() {
+	def static logMemoryProperties() {
 		(0..4).forEach[Runtime.getRuntime().gc()]
 		
 		try {
