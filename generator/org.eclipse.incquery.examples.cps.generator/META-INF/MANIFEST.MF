@@ -14,7 +14,7 @@ Export-Package: org.eclipse.incquery.examples.cps.generator,
  org.eclipse.incquery.examples.cps.generator.queries,
  org.eclipse.incquery.examples.cps.generator.queries.util,
  org.eclipse.incquery.examples.cps.generator.utils
-Require-Bundle: org.eclipse.incquery.examples.cps.planexecutor;bundle-version="0.1.0",
+Require-Bundle: org.eclipse.incquery.examples.cps.planexecutor;bundle-version="0.1.0";visibility:=reexport,
  org.eclipse.xtend.lib,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,

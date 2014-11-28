@@ -10,8 +10,8 @@ Export-Package: org.eclipse.incquery.examples.cps.generator.tests,
 Require-Bundle: org.eclipse.xtend.lib,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
- org.eclipse.incquery.examples.cps.generator;bundle-version="0.1.0",
- org.eclipse.incquery.examples.cps.planexecutor;bundle-version="0.1.0",
- org.eclipse.incquery.examples.cps.tests;bundle-version="0.1.0"
+ org.eclipse.incquery.examples.cps.generator;bundle-version="0.1.0";visibility:=reexport,
+ org.eclipse.incquery.examples.cps.planexecutor;bundle-version="0.1.0";visibility:=reexport,
+ org.eclipse.incquery.examples.cps.tests;bundle-version="0.1.0";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j

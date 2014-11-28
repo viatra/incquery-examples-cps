@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests.queries
+package org.eclipse.incquery.examples.cps.performance.tests.queries
 
 import com.google.common.base.Stopwatch
 import java.util.Random

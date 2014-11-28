@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests.scenarios
+package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
@@ -13,10 +13,12 @@ import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.BuildableCPSConstraint
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
+import com.google.common.collect.Maps
+import com.google.common.collect.ImmutableMap
 
-class SimpleScalingScenario implements IScenario {
+class LowSynchScenario implements IScenario {
 	
-	protected extension Logger logger = Logger.getLogger("cps.xform.SimpleScalingScenario")
+	protected extension Logger logger = Logger.getLogger("cps.xform.LowSynchScenario")
 	protected extension RandomUtils randUtil = new RandomUtils;
 	
 	Random rand;
@@ -68,15 +70,19 @@ class SimpleScalingScenario implements IScenario {
 		val comCount = Math.ceil(typCount / 3 + 4) as int;
 		info("--> Host comm count = " + comCount);
 		
+		val commRatio = <HostClass, Integer>newHashMap
+
 		for(i : 0 ..< hostClassCount){
+			val sourceHostClass = new HostClass(
+				"HC"+i, // name
+				new MinMaxData(typCount, typCount),// Type
+				new MinMaxData(instCount, instCount), //Instance
+				new MinMaxData(0, comCount), //ComLines
+				Maps.newHashMap(commRatio)
+			)
+			commRatio.put(sourceHostClass, 1)
 			hostClasses.add(
-				new HostClass(
-					"HC"+i, // name
-					new MinMaxData(typCount, typCount),// Type
-					new MinMaxData(instCount, instCount), //Instance
-					new MinMaxData(0, comCount), //ComLines
-					new HashMap
-				)
+				sourceHostClass
 			);
 		}
 		
@@ -86,11 +92,11 @@ class SimpleScalingScenario implements IScenario {
 	private def Iterable<AppClass> createAppClassList() {
 		val appClasses = Lists.<AppClass>newArrayList;
 		
-		val min = (C*(5-Sac)) as int
-		val max = (C*(5+Sac)) as int
+		val min = (C*(10-Sac)) as int
+		val max = (C*(10+Sac)) as int
 		val appClassCount = new MinMaxData<Integer>(min, max).randInt(rand);
 		info("--> AppClass count = " + appClassCount);
-		var Map<HostClass, Integer> allocRatios = new HashMap();
+		var allocRatios = <HostClass, Integer>newHashMap();
 		
 		// alloc ratios
 		for(hc : this.hostClasses){
@@ -102,13 +108,13 @@ class SimpleScalingScenario implements IScenario {
 				new AppClass(
 					"AC" + i,
 					new MinMaxData(appClassCount, appClassCount), // AppTypes
-					new MinMaxData(5, 10), // AppInstances
-					new MinMaxData(5, 7), // States
-					new MinMaxData(7, 10), // Transitions
+					new MinMaxData(1, 3), // AppInstances
+					new MinMaxData(5, 9), // States
+					new MinMaxData(10, 15), // Transitions
 					new Percentage(30), // Alloc 
 					allocRatios,
-					new Percentage(30), // Action
-					new Percentage(30) // Send
+					new Percentage(10), // Action
+					new Percentage(50) // Send
 				)
 			);
 		}

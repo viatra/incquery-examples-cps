@@ -1,16 +1,16 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests.scenarios
+package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
 import java.util.Random
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 
-class SimpleScalingTest extends BasicScenarioXformTest {
+class LowSynchTest extends BasicScenarioXformTest {
 	
 	new(CPSTransformationWrapper wrapper, String wrapperType) {
 		super(wrapper, wrapperType)
 	}
 	
 	override getScenario(Random rand) {
-		new SimpleScalingScenario(rand)
+		new LowSynchScenario(rand)
 	}
 	
 }

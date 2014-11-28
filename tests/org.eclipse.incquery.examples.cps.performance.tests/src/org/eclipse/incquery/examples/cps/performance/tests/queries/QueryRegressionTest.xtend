@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2m.tests.queries
+package org.eclipse.incquery.examples.cps.performance.tests.queries
 
 import com.google.common.base.Stopwatch
 import com.google.common.collect.Maps
@@ -13,10 +13,10 @@ import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
+import org.eclipse.incquery.examples.cps.performance.tests.scenarios.LowSynchScenario
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.CpsXformM2M
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.scenarios.LowSynchScenario
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.runtime.api.GenericPatternGroup
 import org.eclipse.incquery.runtime.api.IQueryGroup
