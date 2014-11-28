@@ -1,35 +1,36 @@
 package org.eclipse.incquery.examples.cps.tests
 
-import java.io.FileInputStream
 import java.io.IOException
 import java.util.Properties
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
+import java.io.InputStream
 
 class PropertiesUtil {
 	
 	protected static Logger logger = Logger.getLogger("cps.xform.PropertyUtil")
 	static Properties properties = loadPropertiesFile
 	
+	public static val GIT_CLONE_LOCATION_PROP_KEY = "git.clone.location"
 	public static val CPS_XFORM_LOGLEVEL_PROP_KEY = "cps.xform.loglevel"
 	public static val CPS_GENERATOR_LOGLEVEL_PROP_KEY = "cps.generator.loglevel"
 	public static val INCQUERY_LOGLEVEL_PROP_KEY = "org.eclipse.incquery.loglevel"
-	public static val GIT_CLONE_LOCATION_PROP_KEY = "git.clone.location"
+	public static val PERSIST_RESULTS_PROP_KEY = "cps.persist.results"
 	
 	private def static loadPropertiesFile() {
 		val configPath = "cps2dep.properties"
 		val properties = new Properties()
-        var FileInputStream fileInputStream = null
+        var InputStream inputStream = null
     	try {
     		//load a properties file
-            fileInputStream = new FileInputStream(configPath);
-            properties.load(fileInputStream);
+            inputStream = PropertiesUtil.classLoader.getResourceAsStream("cps2dep.properties")
+            properties.load(inputStream);
     	} catch (IOException ex) {
     		logger.debug('''Could not find properties at «configPath»''')
         } finally {
-            if (fileInputStream != null) {
+            if (inputStream != null) {
                 try {
-                    fileInputStream.close()
+                    inputStream.close()
                 } catch (IOException e) {
                     logger.fatal("Should never happen!",e)
                 }
@@ -56,6 +57,11 @@ class PropertiesUtil {
 		getLogLevel(INCQUERY_LOGLEVEL_PROP_KEY, "WARN")
 	}
 	
+	def static isPersistResults() {
+		val persist = getPropertyValue(PERSIST_RESULTS_PROP_KEY, "false")
+		Boolean.valueOf(persist)
+	}
+	
 	def static getLogLevel(String key, String defaultLevel) {
 		val level = getPropertyValue(key, defaultLevel)
 		Level.toLevel(level, Level.WARN)
@@ -63,6 +69,6 @@ class PropertiesUtil {
 	
 	def static getGitCloneLocation(){
 		val location = getPropertyValue(GIT_CLONE_LOCATION_PROP_KEY, "my-git-location")
-		System.getProperty("git.clone.location", location)		
+		System.getProperty(GIT_CLONE_LOCATION_PROP_KEY, location)		
 	}
 }

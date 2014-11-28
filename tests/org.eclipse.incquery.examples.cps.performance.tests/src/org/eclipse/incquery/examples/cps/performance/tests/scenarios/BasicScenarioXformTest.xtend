@@ -17,6 +17,8 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import javax.print.attribute.standard.PrinterURI
+import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
 
 @RunWith(Parameterized)
 abstract class BasicScenarioXformTest extends CPS2DepTest {
@@ -27,8 +29,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 //	@Ignore
 	@Test
-	def basicScenario1(){
-		val testId = "basicScenario1"
+	def scale1(){
+		val testId = "scale1"
 		startTest(testId)
 		
 		executeScenarioXform(1)
@@ -38,8 +40,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 //	@Ignore
 	@Test
-	def basicScenario10(){
-		val testId = "basicScenario10"
+	def scale10(){
+		val testId = "scale10"
 		startTest(testId)
 		
 		executeScenarioXform(10)
@@ -49,8 +51,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		
 //	@Ignore
 	@Test
-	def basicScenario20(){
-		val testId = "basicScenario20"
+	def scale20(){
+		val testId = "scale20"
 		startTest(testId)
 		
 		executeScenarioXform(20)
@@ -60,8 +62,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 //	@Ignore
 	@Test
-	def basicScenario50(){
-		val testId = "basicScenario50"
+	def scale50(){
+		val testId = "scale50"
 		startTest(testId)
 		
 		executeScenarioXform(50)
@@ -71,8 +73,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 //	@Ignore
 	@Test
-	def basicScenario100(){
-		val testId = "basicScenario100"
+	def scale100(){
+		val testId = "scale100"
 		startTest(testId)
 		
 		executeScenarioXform(100)
@@ -82,8 +84,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 //	@Ignore
 	@Test
-	def basicScenario200(){
-		val testId = "basicScenario200"
+	def scale200(){
+		val testId = "scale200"
 		startTest(testId)
 		
 		executeScenarioXform(200)
@@ -93,8 +95,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 //	@Ignore
 	@Test
-	def basicScenario500(){
-		val testId = "basicScenario500"
+	def scale500(){
+		val testId = "scale500"
 		startTest(testId)
 		
 		executeScenarioXform(500)
@@ -138,7 +140,9 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		generateTime.stop;
 		info("Xform1 time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
-		cps2dep.eResource.resourceSet.resources.forEach[save(null)]
+		if(PropertiesUtil.persistResults){
+			cps2dep.eResource.resourceSet.resources.forEach[save(null)]
+		}
 		
 //		info("Adding new host instance")		
 //		val appType = cps2dep.cps.appTypes.head
