@@ -39,7 +39,7 @@ class CPS2DeploymentTransformation {
 		debug("Preparing queries on engine.")
 		val watch = Stopwatch.createStarted
 		prepare(engine)
-		debug('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	
 		debug("Preparing transformation rules.")
 		watch.reset.start
@@ -60,12 +60,12 @@ class CPS2DeploymentTransformation {
 			schema.addRule(it)
 		]
 		
-		debug('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 		
 		debug("Initial execution of transformation rules.")
 		watch.reset.start
 		schema.startUnscheduledExecution
-		debug('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		info('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	}
 	
 	def dispose() {
