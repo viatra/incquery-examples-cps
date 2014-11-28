@@ -83,7 +83,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale200(){
 		val testId = "scale200"
@@ -94,13 +94,67 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale500(){
 		val testId = "scale500"
 		startTest(testId)
 		
 		executeScenarioXform(500)
+	
+		endTest(testId)
+	}
+	
+//	@Ignore
+	@Test(timeout=600000)
+	def scale750(){
+		val testId = "scale750"
+		startTest(testId)
+		
+		executeScenarioXform(750)
+	
+		endTest(testId)
+	}
+	
+//	@Ignore
+	@Test(timeout=600000)
+	def scale1000(){
+		val testId = "scale1000"
+		startTest(testId)
+		
+		executeScenarioXform(1000)
+	
+		endTest(testId)
+	}
+	
+//	@Ignore
+	@Test(timeout=600000)
+	def scale1200(){
+		val testId = "scale1200"
+		startTest(testId)
+		
+		executeScenarioXform(1200)
+	
+		endTest(testId)
+	}
+//	@Ignore
+	@Test(timeout=600000)
+	def scale1500(){
+		val testId = "scale1500"
+		startTest(testId)
+		
+		executeScenarioXform(1500)
+	
+		endTest(testId)
+	}
+	
+//	@Ignore
+	@Test(timeout=600000)
+	def scale2000(){
+		val testId = "scale2000"
+		startTest(testId)
+		
+		executeScenarioXform(2000)
 	
 		endTest(testId)
 	}
@@ -116,7 +170,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	def executeScenarioXformForConstraints(IScenario scenario, int size, long seed) {
 		
 		val constraints = scenario.getConstraintsFor(size);
-		val cps2dep = preparePersistedCPSModel(instancesDirPath + "/" + scenario.class.simpleName,"batchSimple_" + size + "_"+System.nanoTime);
+		val cps2dep = preparePersistedCPSModel(instancesDirPath + "/" + scenario.class.simpleName, xform.class.simpleName + size + "_"+System.nanoTime);
 		
 		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, cps2dep.cps);
 		var plan = CPSPlanBuilder.buildDefaultPlan;
