@@ -147,8 +147,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		
 		
 		// STATS
-		info("****************************************************************************")
-		info("**                    S  T  A  T  I  S  T  I  C  S                        **")
+		info("  ************************************************************************")
+		info(" **                    S  T  A  T  I  S  T  I  C  S                      **")
 		info("****************************************************************************")
 		info(" BASIC INFORMATIONS:")
 		info("    Scenario = " + scenario.class.simpleName)		
@@ -162,6 +162,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		info("    Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("    Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("       Xform1 init time: " + transformInitTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		info("****************************************************************************")
 		
 		
 		
