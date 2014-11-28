@@ -2,8 +2,7 @@ package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
-import java.util.HashMap
-import java.util.Map
+import com.google.common.collect.Maps
 import java.util.Random
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
@@ -13,8 +12,6 @@ import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.BuildableCPSConstraint
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import com.google.common.collect.Maps
-import com.google.common.collect.ImmutableMap
 
 class LowSynchScenario implements IScenario {
 	
