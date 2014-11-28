@@ -13,7 +13,7 @@ import org.eclipse.incquery.examples.cps.generator.tests.constraints.BuildableCP
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 
-class ClientServerScenario implements IScenario {
+class PublishSubscribeScenario implements IScenario {
 	
 	protected extension Logger logger = Logger.getLogger("cps.xform.LowSynchScenario")
 	protected extension RandomUtils randUtil = new RandomUtils;
