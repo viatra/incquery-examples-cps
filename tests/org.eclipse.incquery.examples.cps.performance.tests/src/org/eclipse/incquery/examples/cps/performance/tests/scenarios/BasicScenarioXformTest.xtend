@@ -27,7 +27,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	}
 	
 //	@Ignore
-	@Test
+	@Test(timeout=10000)
 	def scale1(){
 		val testId = "scale1"
 		startTest(testId)
@@ -38,7 +38,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	}
 	
 //	@Ignore
-	@Test
+	@Test(timeout=100000)
 	def scale10(){
 		val testId = "scale10"
 		startTest(testId)
@@ -49,7 +49,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	}
 		
 //	@Ignore
-	@Test
+	@Test(timeout=300000)
 	def scale20(){
 		val testId = "scale20"
 		startTest(testId)
@@ -59,8 +59,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
-	@Test
+//	@Ignore
+	@Test(timeout=600000)
 	def scale50(){
 		val testId = "scale50"
 		startTest(testId)
@@ -71,7 +71,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	}
 	
 	@Ignore
-	@Test
+	@Test(timeout=600000)
 	def scale100(){
 		val testId = "scale100"
 		startTest(testId)
@@ -82,7 +82,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	}
 	
 	@Ignore
-	@Test
+	@Test(timeout=600000)
 	def scale200(){
 		val testId = "scale200"
 		startTest(testId)
@@ -93,7 +93,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	}
 	
 	@Ignore
-	@Test
+	@Test(timeout=600000)
 	def scale500(){
 		val testId = "scale500"
 		startTest(testId)
