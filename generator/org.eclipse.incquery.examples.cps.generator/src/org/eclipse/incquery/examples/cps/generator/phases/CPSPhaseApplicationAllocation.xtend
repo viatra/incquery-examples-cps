@@ -70,7 +70,7 @@ class CPSPhaseApplicationAllocation implements IPhase<CPSFragment>{
 							forbiddenApps.add(app)
 							val hostInstance = hostInstacesToClass.get(targetHc).toList.randElement(fragment.random)
 							
-							info(app.id + " --> " + hostInstance.id)
+							debug(app.id + " --> " + hostInstance.id)
 							
 							allocationMap.put(hostInstance, app);
 						}
