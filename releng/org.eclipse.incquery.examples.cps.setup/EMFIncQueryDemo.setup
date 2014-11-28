@@ -235,6 +235,11 @@
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
+      value="4G"
+      vm="true"/>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Xms"
       value="1G"
       vm="true"/>
   <setupTask
