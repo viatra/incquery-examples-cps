@@ -1,8 +1,10 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
+import com.google.common.collect.ImmutableList
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
+import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchOptimized
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple
@@ -22,17 +24,26 @@ class CPS2DepTest extends CPSTestBase {
 	
 	@Parameters(name = "{index}: {1}")
     public static def transformations() {
-        #[
-        	#[new BatchSimple(), "BatchSimple"].toArray
-			,
-        	#[new BatchOptimized(), "BatchOptimized"].toArray
-        	,
-			#[new BatchIncQuery(), "BatchIncQuery"].toArray
-        	,
-			#[new QueryResultTraceability(), "QueryResultTraceability"].toArray
-			,
-        	#[new ExplicitTraceability(), "ExplicitTraceability"].toArray
-        ]
+        
+        /*
+         * Do not alter this list other than adding new alternatives
+         * or permanently removing them.
+         * 
+         * Use properties file to disable alternatives!
+         */
+        val alternatives = ImmutableList.builder
+	        .add(new BatchSimple())
+			.add(new BatchOptimized())
+        	.add(new BatchIncQuery())
+        	.add(new QueryResultTraceability())
+			.add(new ExplicitTraceability())
+			.build
+		
+		val disabled = PropertiesUtil.getDisabledM2MTransformations
+		alternatives.filter[!disabled.contains(it.class.simpleName)].map[
+			val simpleName = it.class.simpleName
+			#[it, simpleName].toArray
+		]
     }
     
     new(CPSTransformationWrapper wrapper, String wrapperType){
@@ -49,11 +60,6 @@ class CPS2DepTest extends CPSTestBase {
     	info('''END TEST: type: «wrapperType» ID: «testId»''')
     }
 	
-//	@Test
-//	def parameterizedRun(){
-//		assertNotNull("Transformation wrapper is null", xform)
-//	}
-
 	@After
 	def cleanup() {
 		cleanupTransformation;

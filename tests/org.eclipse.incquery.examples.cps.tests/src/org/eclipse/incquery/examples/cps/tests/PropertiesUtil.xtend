@@ -5,6 +5,7 @@ import java.util.Properties
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import java.io.InputStream
+import java.util.StringTokenizer
 
 class PropertiesUtil {
 	
@@ -16,6 +17,7 @@ class PropertiesUtil {
 	public static val CPS_GENERATOR_LOGLEVEL_PROP_KEY = "cps.generator.loglevel"
 	public static val INCQUERY_LOGLEVEL_PROP_KEY = "org.eclipse.incquery.loglevel"
 	public static val PERSIST_RESULTS_PROP_KEY = "cps.persist.results"
+	public static val DISABLED_M2M_XFORM_PROP_KEY = "cps.xform.m2m.disabled.alternatives"
 	
 	private def static loadPropertiesFile() {
 		val configPath = "cps2dep.properties"
@@ -60,6 +62,11 @@ class PropertiesUtil {
 	def static isPersistResults() {
 		val persist = getPropertyValue(PERSIST_RESULTS_PROP_KEY, "false")
 		Boolean.valueOf(persist)
+	}
+	
+	def static getDisabledM2MTransformations() {
+		val disabledXform = getPropertyValue(DISABLED_M2M_XFORM_PROP_KEY, "none")
+		disabledXform.split(",").toList
 	}
 	
 	def static getLogLevel(String key, String defaultLevel) {
