@@ -201,7 +201,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
          //////////////////////
 		// Train Benchmark
 		
-		val BenchmarkResult result = new BenchmarkResult(xform.class.simpleName, "Adding new host instance. Xfrom. Adding second new host instance. Xform", new Random(seed))
+		val BenchmarkResult result = new BenchmarkResult(xform.class.simpleName, "Addingnew", new Random(seed))
 		
 		result.setArtifactSize(cpsStats.eObjects)
 		
