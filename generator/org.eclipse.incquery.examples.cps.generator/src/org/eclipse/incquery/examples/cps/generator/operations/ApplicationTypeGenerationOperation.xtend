@@ -50,10 +50,7 @@ class ApplicationTypeGenerationOperation implements IOperation<CPSFragment> {
 				
 				states.get(startNode).prepareTransition(states.get(startNode).id + ".t"+t, states.get(endNode));
 			}
-			
 		}
-
-		
 
 		true;
 	}
