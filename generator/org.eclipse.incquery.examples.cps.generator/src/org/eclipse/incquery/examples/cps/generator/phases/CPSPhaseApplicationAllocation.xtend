@@ -42,7 +42,7 @@ class CPSPhaseApplicationAllocation implements IPhase<CPSFragment>{
 					for(targetHostClass : appClass.allocationRatios.keySet){
 						val hcRatio = appClass.allocationRatios.get(targetHostClass)
 						val div = sumRatio as double / appInstances.size as double
-						val hcAllocNumber = Math.round(hcRatio / div) as int
+						val hcAllocNumber = Math.floor(hcRatio / div) as int
 						allocNumbers.put(targetHostClass, hcAllocNumber);
 						sumAllocatedApps += hcAllocNumber;
 					}			
@@ -56,6 +56,7 @@ class CPSPhaseApplicationAllocation implements IPhase<CPSFragment>{
 							val act = sortedIterator.next
 							// TODO order is changed during the loop...?
 							allocNumbers.put(act.key, act.value + 1)
+							sumAllocatedApps += 1
 						}
 					}
 					
