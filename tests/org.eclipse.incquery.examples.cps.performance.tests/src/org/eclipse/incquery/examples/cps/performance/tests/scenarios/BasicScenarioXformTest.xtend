@@ -70,7 +70,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale100(){
 		val testId = "scale100"
@@ -128,19 +128,42 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		val engine = AdvancedIncQueryEngine.from(fragment.engine);
 		Validation.instance.prepare(engine);
 		
-		StatsUtil.logStats(StatsUtil.generateStats(engine, fragment.modelRoot), logger);
+		val cpsStats = StatsUtil.generateStatsForCPS(engine, fragment.modelRoot)
+		cpsStats.log
 		
 		engine.dispose
 		
-		generateTime.reset.start
+		var transformTime = Stopwatch.createStarted;
+		var transformInitTime = Stopwatch.createStarted;
 		initializeTransformation(cps2dep)
+		transformInitTime.stop
 		executeTransformation
-		generateTime.stop;
-		info("Xform1 time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		transformTime.stop;
+		info("Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
 		if(PropertiesUtil.persistResults){
 			cps2dep.eResource.resourceSet.resources.forEach[save(null)]
 		}
+		
+		
+		// STATS
+		info("****************************************************************************")
+		info("**                    S  T  A  T  I  S  T  I  C  S                        **")
+		info("****************************************************************************")
+		info(" BASIC INFORMATIONS:")
+		info("    Scenario = " + scenario.class.simpleName)		
+		info("    Size = " + size)		
+		info("    Seed = " + seed)		
+		info(" MODLE STATS:")
+		StatsUtil.generateStatsForDeployment(engine, cps2dep.deployment).log
+		StatsUtil.generateStatsForTraceability(engine, cps2dep).log
+		cpsStats.log
+		info(" EXECUTION TIMES: ")
+		info("    Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		info("    Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		info("       Xform1 init time: " + transformInitTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		
+		
 		
 //		info("Adding new host instance")		
 //		val appType = cps2dep.cps.appTypes.head

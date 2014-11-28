@@ -15,8 +15,8 @@ class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 	private extension RandomUtils randUtil = new RandomUtils;
 	private extension Logger logger = Logger.getLogger("cps.generator.impl.CPSPhaseActionGeneration");
 	
-	private val WAIT_METHOD_NAME = "waitForSignal";
-	private val SEND_METHOD_NAME = "sendSignal";
+	public static String WAIT_METHOD_NAME = "waitForSignal";
+	public static String SEND_METHOD_NAME = "sendSignal";
 	
 	override getOperations(CPSFragment fragment) {
 		val operations = Lists.newArrayList();
@@ -37,6 +37,7 @@ class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 
 								if(targetAppType != null){
 									val action = SEND_METHOD_NAME + "(" + targetAppType.id + ", "+ signalNumber + ")";
+									debug(action)
 									operations.add(new ActionGenerationOperation(action, transition));
 								}else{
 									debug("#Warning: Cannot find target application type for Action of " + appType.id);
@@ -45,6 +46,7 @@ class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 								// Generate WaitSignal(SignalID)
 								val signalNumber = fragment.numberOfSignals.randIntZeroToMax(fragment.random);
 								val action = WAIT_METHOD_NAME + "(" + signalNumber + ")";
+								debug(action)
 								operations.add(new ActionGenerationOperation(action, transition));
 							}
 						}

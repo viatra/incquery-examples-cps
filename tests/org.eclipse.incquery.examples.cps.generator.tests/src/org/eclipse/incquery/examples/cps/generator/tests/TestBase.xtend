@@ -68,7 +68,7 @@ abstract class TestBase extends CPSTestBase{
 		
 		//Show stats
 		var Stopwatch statTime = Stopwatch.createStarted;
-		StatsUtil.logStats(StatsUtil.generateStats(engine, out.modelRoot), logger);
+		StatsUtil.generateStatsForCPS(engine, out.modelRoot).log
 		info("  Stat time: " + statTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		
 		assertInRangeAppTypes(constraints, engine);

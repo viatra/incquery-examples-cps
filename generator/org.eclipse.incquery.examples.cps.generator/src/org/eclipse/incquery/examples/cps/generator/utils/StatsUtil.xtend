@@ -1,32 +1,26 @@
 package org.eclipse.incquery.examples.cps.generator.utils
 
-import org.apache.log4j.Logger
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
-import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage
+import org.eclipse.incquery.examples.cps.deployment.Deployment
+import org.eclipse.incquery.examples.cps.generator.dtos.DeploymentStats
+import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
+import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
 
 class StatsUtil {
 	
-	def static logStats(CPSStats stats, Logger logger) {
-		logger.info("Model Stats: ");
-		logger.info("  ApplicationTypes: " + stats.appTypeCount);
-		logger.info("  ApplicationInstances: " + stats.appInstanceCount);
-		logger.info("  HostTypes: " + stats.hostTypeCount);
-		logger.info("  HostInstances: " + stats.hostInstanceCount);
-		logger.info("  States: " + stats.stateCount);
-		logger.info("  Transitions: " + stats.transitionCount);
-		logger.info("  Allocated AppInstances: " + stats.allocatedAppCount);
-		logger.info("  Connected HostsInstances: " + stats.connectedHostCount);
-		logger.info("  EObjects: " + stats.eObjects);
-		logger.info("");
+	def static generateStatsForCPS(IncQueryEngine engine, CyberPhysicalSystem model){
+		return new CPSStats(engine, model);
 	}
 	
-	def static generateStats(IncQueryEngine engine, CyberPhysicalSystem model){
-		return new CPSStats(engine, model);
+	def static generateStatsForDeployment(IncQueryEngine engine, Deployment model){
+		return new DeploymentStats(engine, model);
+	}
+	
+	def static generateStatsForTraceability(IncQueryEngine engine, CPSToDeployment model){
+		return new TraceabilityStats(engine, model);
 	}
 	
 	def static size(EObject eobject){

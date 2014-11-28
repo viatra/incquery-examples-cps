@@ -168,7 +168,7 @@ class GeneratorTest extends TestBase {
 		val out = runGeneratorOn(constraints, SEED);
 		
 		val engine = IncQueryEngine.on(out.modelRoot)
-		val stats = StatsUtil.generateStats(engine, out.modelRoot)
+		val stats = StatsUtil.generateStatsForCPS(engine, out.modelRoot)
 		
 //		persistModel(out);
 		

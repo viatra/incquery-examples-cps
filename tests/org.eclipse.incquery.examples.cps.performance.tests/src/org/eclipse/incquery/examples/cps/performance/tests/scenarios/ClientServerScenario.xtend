@@ -36,7 +36,7 @@ class ClientServerScenario implements IScenario {
 
 		val BuildableCPSConstraint cons = new BuildableCPSConstraint(
 			"Client-Server Scenario",
-			new MinMaxData<Integer>(5, 5), // Signals
+			new MinMaxData<Integer>(1, 1), // Signals
 			createAppClassList(scale),
 			this.hostClasses	
 		);
@@ -65,7 +65,7 @@ class ClientServerScenario implements IScenario {
 		val clientHostInstanceCount = 10 * Math.sqrt(scale) as int // (instCount-serverHostInstanceCount) / clientHostTypeCount
 		info("-->    Client HostInstance count = " + clientHostInstanceCount);
 		
-		val int comCount = 10 //instCount
+		val int comCount = clientHostInstanceCount //instCount
 		info("--> Server Host comm count = " + comCount);
 		
 		val serverCommRatio = <HostClass, Integer>newHashMap
@@ -139,7 +139,7 @@ class ClientServerScenario implements IScenario {
 			new MinMaxData<Integer>(40, 40), // Transitions
 			new Percentage(100), // AllocInst
 			serverAllocRatios,
-			new Percentage(10), // Action %
+			new Percentage(80), // Action %
 			new Percentage(100) // Send %
 		)
 		appClasses += serverAppClass

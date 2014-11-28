@@ -68,7 +68,7 @@ class QueryRegressionTest extends CPSTestBase{
 		val engine = AdvancedIncQueryEngine.from(fragment.engine);
 		Validation.instance.prepare(engine);
 		
-		StatsUtil.logStats(StatsUtil.generateStats(engine, fragment.modelRoot), logger);
+		StatsUtil.generateStatsForCPS(engine, fragment.modelRoot).log
 		
 		engine.dispose
 		
