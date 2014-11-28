@@ -20,6 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
+import org.eclipse.incquery.examples.cps.performance.tests.scenarios.SimpleScalingScenario
 
 @RunWith(Parameterized)
 class QueryTest extends CPSTestBase{
@@ -77,7 +78,7 @@ class QueryTest extends CPSTestBase{
     def executeScenarioXform(int size) {
 		val seed = 11111
 		val Random rand = new Random(seed)
-		val BasicScenario bs = new BasicScenario(rand)
+		val IScenario bs = new SimpleScalingScenario(rand)
 		bs.executeScenarioXformForConstraints(size, seed)
 	}
 	

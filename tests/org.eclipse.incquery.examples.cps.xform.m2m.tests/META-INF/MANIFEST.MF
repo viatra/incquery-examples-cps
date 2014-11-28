@@ -11,9 +11,9 @@ Require-Bundle: com.google.guava,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.expl,
  org.eclipse.incquery.examples.cps.xform.m2m.batch.simple;bundle-version="0.1.0",
  org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq;bundle-version="0.1.0",
- org.eclipse.incquery.examples.cps.generator.tests;bundle-version="0.1.0";visibility:=reexport,
  org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized;bundle-version="0.1.0",
- org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt;bundle-version="0.0.1"
+ org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt;bundle-version="0.0.1",
+ org.eclipse.incquery.examples.cps.tests;bundle-version="0.1.0";visibility:=reexport
 Import-Package: org.apache.log4j;version="1.2.15"
 Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.tests,
  org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers
