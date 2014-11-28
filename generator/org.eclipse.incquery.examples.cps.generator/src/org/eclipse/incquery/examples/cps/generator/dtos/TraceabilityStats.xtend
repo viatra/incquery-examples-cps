@@ -6,6 +6,7 @@ import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
+import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 
 class TraceabilityStats {
 	
@@ -15,6 +16,7 @@ class TraceabilityStats {
 	public int traceabilityCPSDepTraceCPSElements = 0;
 	public int traceabilityDeploymentElements = 0;
 	public int eObjects = 0;
+	public int eReferences = 0;
 	
 	def log() {
 		logger.info("====================================================================")
@@ -23,6 +25,7 @@ class TraceabilityStats {
 		logger.info("=   CPSElements: " + traceabilityCPSDepTraceCPSElements);
 		logger.info("=   DeploymentElements: " + traceabilityDeploymentElements);
 		logger.info("=   EObjects: " + eObjects);
+		logger.info("=   EReferences: " + eReferences);
 		logger.info("====================================================================")
 	}
 	
@@ -49,5 +52,6 @@ class TraceabilityStats {
 		sp3.resetSum
 		
 		this.eObjects = model.eAllContents.size
+		this.eReferences = StatsUtil.countEdges(model)
 	}
 }

@@ -1,7 +1,12 @@
 package org.eclipse.incquery.examples.cps.generator.dtos
 
 import org.apache.log4j.Logger
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Transition
+import org.eclipse.incquery.examples.cps.generator.phases.CPSPhaseActionGeneration
 import org.eclipse.incquery.examples.cps.generator.queries.AllocatedAppInstancesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.AppInstancesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.AppTypesMatcher
@@ -10,16 +15,11 @@ import org.eclipse.incquery.examples.cps.generator.queries.HostInstancesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.HostTypesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.StatesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.TransitionMatcher
+import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.generator.utils.SumProcessor
-import org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage
 import org.eclipse.incquery.runtime.base.api.IEStructuralFeatureProcessor
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Transition
-import org.eclipse.incquery.examples.cps.generator.phases.CPSPhaseActionGeneration
+import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
 
 class CPSStats {
 	
@@ -36,6 +36,7 @@ class CPSStats {
 	public int sendActions = 0;
 	public int waitActions = 0;
 	public int eObjects = 0;
+	public int eReferences = 0;
 
 	new(IncQueryEngine engine, CyberPhysicalSystem model){
 		this.appTypeCount = AppTypesMatcher.on(engine).countMatches;
@@ -47,6 +48,7 @@ class CPSStats {
 		this.allocatedAppCount = AllocatedAppInstancesMatcher.on(engine).countMatches;
 		this.connectedHostCount = ConnectedHostsMatcher.on(engine).countMatches;
 		this.eObjects = model.eAllContents.size;
+		this.eReferences = StatsUtil.countEdges(model)
 		
 		val baseIndex = IncQueryBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
 		
@@ -65,6 +67,7 @@ class CPSStats {
 			}
 		})	
 		sp2.resetSum
+		
 	}
 	
 	def log() {
@@ -81,6 +84,7 @@ class CPSStats {
 		logger.info("=   Allocated AppInstances: " + allocatedAppCount);
 		logger.info("=   Connected HostsInstances: " + connectedHostCount);
 		logger.info("=   EObjects: " + eObjects);
+		logger.info("=   EReferences: " + eReferences);
 		logger.info("====================================================================")
 	}
 	

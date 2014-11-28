@@ -1,12 +1,12 @@
 package org.eclipse.incquery.examples.cps.generator.dtos
 
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.incquery.examples.cps.deployment.Deployment
 import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage
+import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.generator.utils.SumProcessor
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
-import org.eclipse.incquery.examples.cps.deployment.Deployment
 
 class DeploymentStats {
 	
@@ -21,6 +21,7 @@ class DeploymentStats {
 	public int deploymentTrigger = 0;
 	public int deploymentOutgoing = 0;
 	public int eObjects = 0;
+	public int eReferences = 0;
 	
 	def log() {
 		logger.info("====================================================================")
@@ -34,6 +35,7 @@ class DeploymentStats {
 		logger.info("=   Triggers: " + deploymentTrigger);
 		logger.info("=   Outgoing: " + deploymentOutgoing);
 		logger.info("=   EObjects: " + eObjects);
+		logger.info("=   EReferences: " + eReferences);
 		logger.info("====================================================================")
 	}
 	
@@ -77,5 +79,6 @@ class DeploymentStats {
 		this.deploymentOutgoing = sp7.sum
 		
 		this.eObjects = model.eAllContents.size
+		this.eReferences = StatsUtil.countEdges(model)
 	}
 }
