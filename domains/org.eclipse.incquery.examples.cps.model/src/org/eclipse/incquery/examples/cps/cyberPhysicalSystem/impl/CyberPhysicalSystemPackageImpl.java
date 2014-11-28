@@ -253,24 +253,6 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCyberPhysicalSystem_HostInstances() {
-		return (EReference)cyberPhysicalSystemEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getCyberPhysicalSystem_AppInstances() {
-		return (EReference)cyberPhysicalSystemEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getApplicationType() {
 		return applicationTypeEClass;
 	}
@@ -770,8 +752,6 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 		createEReference(cyberPhysicalSystemEClass, CYBER_PHYSICAL_SYSTEM__APP_TYPES);
 		createEReference(cyberPhysicalSystemEClass, CYBER_PHYSICAL_SYSTEM__REQUESTS);
 		createEReference(cyberPhysicalSystemEClass, CYBER_PHYSICAL_SYSTEM__HOST_TYPES);
-		createEReference(cyberPhysicalSystemEClass, CYBER_PHYSICAL_SYSTEM__HOST_INSTANCES);
-		createEReference(cyberPhysicalSystemEClass, CYBER_PHYSICAL_SYSTEM__APP_INSTANCES);
 
 		applicationTypeEClass = createEClass(APPLICATION_TYPE);
 		createEAttribute(applicationTypeEClass, APPLICATION_TYPE__EXE_FILE_LOCATION);
@@ -884,8 +864,6 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 		initEReference(getCyberPhysicalSystem_AppTypes(), this.getApplicationType(), this.getApplicationType_Cps(), "appTypes", null, 0, -1, CyberPhysicalSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCyberPhysicalSystem_Requests(), this.getRequest(), null, "requests", null, 0, -1, CyberPhysicalSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCyberPhysicalSystem_HostTypes(), this.getHostType(), this.getHostType_Cps(), "hostTypes", null, 0, -1, CyberPhysicalSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCyberPhysicalSystem_HostInstances(), this.getHostInstance(), null, "hostInstances", null, 0, -1, CyberPhysicalSystem.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getCyberPhysicalSystem_AppInstances(), this.getApplicationInstance(), null, "appInstances", null, 0, -1, CyberPhysicalSystem.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(applicationTypeEClass, ApplicationType.class, "ApplicationType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getApplicationType_ExeFileLocation(), ecorePackage.getEString(), "exeFileLocation", null, 0, 1, ApplicationType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -959,8 +937,6 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 		// Create annotations
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
-		// org.eclipse.incquery.querybasedfeature
-		createOrgAnnotations();
 	}
 
 	/**
@@ -976,28 +952,6 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 		   source, 
 		   new String[] {
 			 "settingDelegates", "org.eclipse.incquery.querybasedfeature"
-		   });
-	}
-
-	/**
-	 * Initializes the annotations for <b>org.eclipse.incquery.querybasedfeature</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void createOrgAnnotations() {
-		String source = "org.eclipse.incquery.querybasedfeature";	
-		addAnnotation
-		  (getCyberPhysicalSystem_HostInstances(), 
-		   source, 
-		   new String[] {
-			 "patternFQN", "org.eclipse.incquery.examples.cps.model.derived.hostInstances"
-		   });	
-		addAnnotation
-		  (getCyberPhysicalSystem_AppInstances(), 
-		   source, 
-		   new String[] {
-			 "patternFQN", "org.eclipse.incquery.examples.cps.model.derived.getAppInstances"
 		   });
 	}
 

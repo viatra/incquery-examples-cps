@@ -19,8 +19,6 @@
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//CyberPhysicalSystem/appTypes"/>
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//CyberPhysicalSystem/requests"/>
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//CyberPhysicalSystem/hostTypes"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//CyberPhysicalSystem/hostInstances"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//CyberPhysicalSystem/appInstances"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//ApplicationType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//ApplicationType/exeFileLocation"/>

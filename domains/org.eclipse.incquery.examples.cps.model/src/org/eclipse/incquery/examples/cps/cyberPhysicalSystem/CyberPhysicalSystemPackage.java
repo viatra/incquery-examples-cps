@@ -151,31 +151,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int CYBER_PHYSICAL_SYSTEM__HOST_TYPES = IDENTIFIABLE_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Host Instances</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CYBER_PHYSICAL_SYSTEM__HOST_INSTANCES = IDENTIFIABLE_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>App Instances</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CYBER_PHYSICAL_SYSTEM__APP_INSTANCES = IDENTIFIABLE_FEATURE_COUNT + 5;
-
-	/**
 	 * The number of structural features of the '<em>Cyber Physical System</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CYBER_PHYSICAL_SYSTEM_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 6;
+	int CYBER_PHYSICAL_SYSTEM_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Cyber Physical System</em>' class.
@@ -985,28 +967,6 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	EReference getCyberPhysicalSystem_HostTypes();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem#getHostInstances <em>Host Instances</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Host Instances</em>'.
-	 * @see org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem#getHostInstances()
-	 * @see #getCyberPhysicalSystem()
-	 * @generated
-	 */
-	EReference getCyberPhysicalSystem_HostInstances();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem#getAppInstances <em>App Instances</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>App Instances</em>'.
-	 * @see org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem#getAppInstances()
-	 * @see #getCyberPhysicalSystem()
-	 * @generated
-	 */
-	EReference getCyberPhysicalSystem_AppInstances();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType <em>Application Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1649,22 +1609,6 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CYBER_PHYSICAL_SYSTEM__HOST_TYPES = eINSTANCE.getCyberPhysicalSystem_HostTypes();
-
-		/**
-		 * The meta object literal for the '<em><b>Host Instances</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CYBER_PHYSICAL_SYSTEM__HOST_INSTANCES = eINSTANCE.getCyberPhysicalSystem_HostInstances();
-
-		/**
-		 * The meta object literal for the '<em><b>App Instances</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CYBER_PHYSICAL_SYSTEM__APP_INSTANCES = eINSTANCE.getCyberPhysicalSystem_AppInstances();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.impl.ApplicationTypeImpl <em>Application Type</em>}' class.

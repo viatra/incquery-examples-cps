@@ -3,28 +3,19 @@
 package org.eclipse.incquery.examples.cps.cyberPhysicalSystem.impl;
 
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance;
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType;
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem;
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage;
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance;
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType;
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Request;
 
@@ -40,8 +31,6 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Request;
  *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getAppTypes <em>App Types</em>}</li>
  *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getRequests <em>Requests</em>}</li>
  *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getHostTypes <em>Host Types</em>}</li>
- *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getHostInstances <em>Host Instances</em>}</li>
- *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getAppInstances <em>App Instances</em>}</li>
  * </ul>
  * </p>
  *
@@ -117,26 +106,6 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 	 * @ordered
 	 */
 	protected EList<HostType> hostTypes;
-
-	/**
-	 * The cached setting delegate for the '{@link #getHostInstances() <em>Host Instances</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getHostInstances()
-	 * @generated
-	 * @ordered
-	 */
-	protected EStructuralFeature.Internal.SettingDelegate HOST_INSTANCES__ESETTING_DELEGATE = ((EStructuralFeature.Internal)CyberPhysicalSystemPackage.Literals.CYBER_PHYSICAL_SYSTEM__HOST_INSTANCES).getSettingDelegate();
-
-	/**
-	 * The cached setting delegate for the '{@link #getAppInstances() <em>App Instances</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAppInstances()
-	 * @generated
-	 * @ordered
-	 */
-	protected EStructuralFeature.Internal.SettingDelegate APP_INSTANCES__ESETTING_DELEGATE = ((EStructuralFeature.Internal)CyberPhysicalSystemPackage.Literals.CYBER_PHYSICAL_SYSTEM__APP_INSTANCES).getSettingDelegate();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -241,26 +210,6 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public EList<HostInstance> getHostInstances() {
-		return (EList<HostInstance>)HOST_INSTANCES__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	public EList<ApplicationInstance> getAppInstances() {
-		return (EList<ApplicationInstance>)APP_INSTANCES__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -308,10 +257,6 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 				return getRequests();
 			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__HOST_TYPES:
 				return getHostTypes();
-			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__HOST_INSTANCES:
-				return getHostInstances();
-			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__APP_INSTANCES:
-				return getAppInstances();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -392,10 +337,6 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 				return requests != null && !requests.isEmpty();
 			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__HOST_TYPES:
 				return hostTypes != null && !hostTypes.isEmpty();
-			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__HOST_INSTANCES:
-				return HOST_INSTANCES__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
-			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__APP_INSTANCES:
-				return APP_INSTANCES__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
 		}
 		return super.eIsSet(featureID);
 	}

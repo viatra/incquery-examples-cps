@@ -16,20 +16,6 @@
         eType="#//Request" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hostTypes" upperBound="-1"
         eType="#//HostType" containment="true" eOpposite="#//HostType/cps"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="hostInstances" upperBound="-1"
-        eType="#//HostInstance" changeable="false" volatile="true" transient="true"
-        derived="true">
-      <eAnnotations source="org.eclipse.incquery.querybasedfeature">
-        <details key="patternFQN" value="org.eclipse.incquery.examples.cps.model.derived.hostInstances"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="appInstances" upperBound="-1"
-        eType="#//ApplicationInstance" changeable="false" volatile="true" transient="true"
-        derived="true">
-      <eAnnotations source="org.eclipse.incquery.querybasedfeature">
-        <details key="patternFQN" value="org.eclipse.incquery.examples.cps.model.derived.getAppInstances"/>
-      </eAnnotations>
-    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ApplicationType" eSuperTypes="#//Identifiable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exeFileLocation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

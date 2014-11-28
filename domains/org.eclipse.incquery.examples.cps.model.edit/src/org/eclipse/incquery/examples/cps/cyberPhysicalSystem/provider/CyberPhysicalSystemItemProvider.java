@@ -68,8 +68,6 @@ public class CyberPhysicalSystemItemProvider
 			addAppTypesPropertyDescriptor(object);
 			addRequestsPropertyDescriptor(object);
 			addHostTypesPropertyDescriptor(object);
-			addHostInstancesPropertyDescriptor(object);
-			addAppInstancesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -176,50 +174,6 @@ public class CyberPhysicalSystemItemProvider
 				 getString("_UI_CyberPhysicalSystem_hostTypes_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_CyberPhysicalSystem_hostTypes_feature", "_UI_CyberPhysicalSystem_type"),
 				 CyberPhysicalSystemPackage.Literals.CYBER_PHYSICAL_SYSTEM__HOST_TYPES,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Host Instances feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addHostInstancesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_CyberPhysicalSystem_hostInstances_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CyberPhysicalSystem_hostInstances_feature", "_UI_CyberPhysicalSystem_type"),
-				 CyberPhysicalSystemPackage.Literals.CYBER_PHYSICAL_SYSTEM__HOST_INSTANCES,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the App Instances feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addAppInstancesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_CyberPhysicalSystem_appInstances_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CyberPhysicalSystem_appInstances_feature", "_UI_CyberPhysicalSystem_type"),
-				 CyberPhysicalSystemPackage.Literals.CYBER_PHYSICAL_SYSTEM__APP_INSTANCES,
 				 true,
 				 false,
 				 true,

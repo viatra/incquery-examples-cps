@@ -16,8 +16,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem#getAppTypes <em>App Types</em>}</li>
  *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem#getRequests <em>Requests</em>}</li>
  *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem#getHostTypes <em>Host Types</em>}</li>
- *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem#getHostInstances <em>Host Instances</em>}</li>
- *   <li>{@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem#getAppInstances <em>App Instances</em>}</li>
  * </ul>
  * </p>
  *
@@ -103,39 +101,5 @@ public interface CyberPhysicalSystem extends Identifiable {
 	 * @generated
 	 */
 	EList<HostType> getHostTypes();
-
-	/**
-	 * Returns the value of the '<em><b>Host Instances</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Host Instances</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Host Instances</em>' reference list.
-	 * @see org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage#getCyberPhysicalSystem_HostInstances()
-	 * @model transient="true" changeable="false" volatile="true" derived="true"
-	 *        annotation="org.eclipse.incquery.querybasedfeature patternFQN='org.eclipse.incquery.examples.cps.model.derived.hostInstances'"
-	 * @generated
-	 */
-	EList<HostInstance> getHostInstances();
-
-	/**
-	 * Returns the value of the '<em><b>App Instances</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>App Instances</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>App Instances</em>' reference list.
-	 * @see org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage#getCyberPhysicalSystem_AppInstances()
-	 * @model transient="true" changeable="false" volatile="true" derived="true"
-	 *        annotation="org.eclipse.incquery.querybasedfeature patternFQN='org.eclipse.incquery.examples.cps.model.derived.getAppInstances'"
-	 * @generated
-	 */
-	EList<ApplicationInstance> getAppInstances();
 
 } // CyberPhysicalSystem
