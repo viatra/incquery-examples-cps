@@ -32,6 +32,6 @@ pattern AllocatedAppInstances(A : ApplicationInstance, HI : HostInstance) {
 	ApplicationInstance.allocatedTo(A, HI);
 }
 
-pattern ConnectedHosts(H : HostInstance) {
-	HostInstance.communicateWith(H, _);
+pattern ConnectedHosts(H : HostInstance, Trg : HostInstance) {
+	HostInstance.communicateWith(H, Trg);
 }

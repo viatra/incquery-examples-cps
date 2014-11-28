@@ -5,6 +5,9 @@ import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
+import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage
 
 class StatsUtil {
 	
