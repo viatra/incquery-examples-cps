@@ -55,7 +55,8 @@ class CPS2DeploymentBatchTransformationOptimized {
 	
 	
 	CPSToDeployment mapping;
-	HashMultimap mappingCache;
+	HashMultimap<Identifiable, DeploymentElement> mappingCache;
+	Map<DeploymentElement, Identifiable> reverseMappingCache;
 
 	private def initPerformanceTimers() {
 		clearModelPerformance = Stopwatch.createUnstarted
@@ -86,6 +87,8 @@ class CPS2DeploymentBatchTransformationOptimized {
 
 		this.mapping = mapping;
 
+		mappingCache = HashMultimap.create;
+		reverseMappingCache = Maps.newHashMap;
 		traceEnd("constructor")
 			
 	}
@@ -117,9 +120,12 @@ class CPS2DeploymentBatchTransformationOptimized {
 			Executing transformation on:
 				Cyber-physical system: «mapping.cps.id»''')
 		
+		// Clear the caches and traces, restart everything from scratch
 		clearModelPerformance.start
 		mapping.traces.clear
 		mapping.deployment.hosts.clear
+		mappingCache.clear
+		reverseMappingCache.clear
 		clearModelPerformance.stop
 
 		// Transform host instances
@@ -184,8 +190,8 @@ class CPS2DeploymentBatchTransformationOptimized {
 			val behaviorTransition = i as BehaviorTransition
 			val deploymentApp = behaviorTransition.eContainer.eContainer as DeploymentApplication
 			val deploymentHost = deploymentApp.eContainer as DeploymentHost
-			val hostInstance = mappingCache.get(deploymentHost).head as HostInstance
-			val appInstance = mappingCache.get(deploymentApp).head as ApplicationInstance
+			val hostInstance = reverseMappingCache.get(deploymentHost) as HostInstance
+			val appInstance = reverseMappingCache.get(deploymentApp) as ApplicationInstance
 			val appTypeId = appInstance.type.id
 
 			transitionToAppId.put(behaviorTransition, appTypeId)
@@ -322,7 +328,6 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 * @param dst the target host
 	 */
 	private def isConnectedTo(HostInstance src, HostInstance dst) {
-		otherTimer.start
 		traceBegin('''isConnectedTo(«src.name», «dst.name»)''')
 		val checked = newHashSet(src)
 		var depth = 0 as int
@@ -337,7 +342,6 @@ class CPS2DeploymentBatchTransformationOptimized {
 		while (depth >= 0) {
 			if (currentHost.equals(dst)) {
 				traceEnd('''isConnectedTo(«src.name», «dst.name»)''')
-				otherTimer.stop
 				return true
 			} else {
 				nextHostIndex = indices.get(depth + 1)
@@ -375,7 +379,6 @@ class CPS2DeploymentBatchTransformationOptimized {
 			}
 		}
 
-		otherTimer.stop
 		traceEnd('''isConnectedTo(«src.name», «dst.name»)''')
 		return false;
 	}
@@ -400,7 +403,6 @@ class CPS2DeploymentBatchTransformationOptimized {
 		// Be careful: map evaluation is lazy
 		deploymentHost.applications += deploymentApps
 
-		hostTransformationPerformance.stop
 		traceEnd('''transform(«hostInstance.name»)''')
 		return deploymentHost
 	}
@@ -447,11 +449,13 @@ class CPS2DeploymentBatchTransformationOptimized {
 		// Transform transitions
 		var behaviorTransitions = new ArrayList<BehaviorTransition>
 		for (state : stateMachine.states) {
+//			val parentBehaviorState = mappingCache.get(state).findFirst[behaviorStates.contains(it)] as BehaviorState
 			val parentBehaviorState = mappingCache.get(state).head as BehaviorState
 			behaviorTransitions.addAll(
-				state.outgoingTransitions.filter[targetState != null].filter[transition|
-					mappingCache.get(transition.targetState) != null].map[
-					transform(parentBehaviorState)]
+				state.outgoingTransitions
+					.filter[targetState != null]
+					.filter[transition|mappingCache.get(transition.targetState) != null && /* Need to check, if it is in the model */ transition.targetState.eContainer != null]
+					.map[transform(parentBehaviorState)]
 			)
 		}
 		stateMachineTransformationPerformance.start
@@ -512,7 +516,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 */
 	private def setCurrentState(StateMachine stateMachine, DeploymentBehavior behavior) {
 		traceBegin('''transform(«stateMachine.name», «behavior.name»)''')
-		val initial = stateMachine.states.findFirst[stateMachine.initial == it]
+		val initial = stateMachine.initial
 		if (initial != null) {
 
 			val initialBehaviorState = mappingCache.get(initial).findFirst[behavior.states.contains(it)]
@@ -534,6 +538,8 @@ class CPS2DeploymentBatchTransformationOptimized {
 			return identifiable.createTrace(deploymentElement)
 		} else {
 			trace.head.deploymentElements += deploymentElement
+			mappingCache.put(identifiable,deploymentElement)
+			reverseMappingCache.put(deploymentElement,identifiable)
 			if(!trace.tail.empty){
 				throw new IllegalStateException(
 					'''More than one mapping was created to state machine wit Id '«identifiable.id»'.''')
@@ -557,6 +563,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		mapping.traces += trace
 		
 		mappingCache.put(identifiable,deploymentElement);
+		reverseMappingCache.put(deploymentElement,identifiable);
 
 		traceBegin('''createTrace(«identifiable.name», «deploymentElement.name»)''')
 		return trace

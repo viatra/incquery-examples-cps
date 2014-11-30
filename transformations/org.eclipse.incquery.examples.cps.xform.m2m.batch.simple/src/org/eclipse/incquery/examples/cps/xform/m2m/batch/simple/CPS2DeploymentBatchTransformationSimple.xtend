@@ -304,7 +304,7 @@ class CPS2DeploymentBatchTransformationSimple {
 			val parentBehaviorState = stateMapping.deploymentElements.head as BehaviorState
 			behaviorTransitions.addAll(
 				state.outgoingTransitions.filter[targetState != null].filter[transition|
-					mapping.traces.findFirst[it.cpsElements.contains(transition.targetState)] != null].map[
+					mapping.traces.findFirst[it.cpsElements.contains(transition.targetState)] != null && /* Need to check, if it is in the model */ transition.targetState != null].map[
 					transform(parentBehaviorState)]
 			)
 		}
