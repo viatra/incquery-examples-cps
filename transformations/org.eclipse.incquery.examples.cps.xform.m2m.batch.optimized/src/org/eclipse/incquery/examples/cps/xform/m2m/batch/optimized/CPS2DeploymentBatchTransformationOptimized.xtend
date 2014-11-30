@@ -1,7 +1,6 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized
 
 import com.google.common.base.Stopwatch
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
 import java.util.ArrayList
@@ -29,6 +28,7 @@ import static com.google.common.base.Preconditions.*
 import static org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil.*
 
 import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingUtil.*
+import com.google.common.collect.HashMultimap
 
 class CPS2DeploymentBatchTransformationOptimized {
 
@@ -55,6 +55,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 	
 	
 	CPSToDeployment mapping;
+	HashMultimap mappingCache;
 
 	private def initPerformanceTimers() {
 		clearModelPerformance = Stopwatch.createUnstarted
@@ -68,6 +69,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		
 		otherTimer = Stopwatch.createUnstarted
 	}
+
 
 
 	/**
@@ -182,8 +184,8 @@ class CPS2DeploymentBatchTransformationOptimized {
 			val behaviorTransition = i as BehaviorTransition
 			val deploymentApp = behaviorTransition.eContainer.eContainer as DeploymentApplication
 			val deploymentHost = deploymentApp.eContainer as DeploymentHost
-			val hostInstance = mapping.traces.findFirst[it.deploymentElements.head == deploymentHost].cpsElements.head as HostInstance
-			val appInstance = mapping.traces.findFirst[deploymentElements.head == deploymentApp].cpsElements.head as ApplicationInstance
+			val hostInstance = mappingCache.get(deploymentHost).head as HostInstance
+			val appInstance = mappingCache.get(deploymentApp).head as ApplicationInstance
 			val appTypeId = appInstance.type.id
 
 			transitionToAppId.put(behaviorTransition, appTypeId)
@@ -445,11 +447,10 @@ class CPS2DeploymentBatchTransformationOptimized {
 		// Transform transitions
 		var behaviorTransitions = new ArrayList<BehaviorTransition>
 		for (state : stateMachine.states) {
-			val stateMapping = mapping.traces.findFirst[it.cpsElements.contains(state)]
-			val parentBehaviorState = stateMapping.deploymentElements.head as BehaviorState
+			val parentBehaviorState = mappingCache.get(state).head as BehaviorState
 			behaviorTransitions.addAll(
 				state.outgoingTransitions.filter[targetState != null].filter[transition|
-					mapping.traces.findFirst[it.cpsElements.contains(transition.targetState)] != null].map[
+					mappingCache.get(transition.targetState) != null].map[
 					transform(parentBehaviorState)]
 			)
 		}
@@ -491,8 +492,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		transitionTransformationPerformance.start
 		val behaviorTransition = DeploymentFactory.eINSTANCE.createBehaviorTransition
 
-		val targetStateMapping = mapping.traces.findFirst[it.cpsElements.contains(transition.targetState)]
-		val dep = targetStateMapping.deploymentElements
+		val dep = mappingCache.get(transition.targetState)
 		val targetBehaviorState = dep.head as BehaviorState
 		behaviorTransition.to = targetBehaviorState
 		behaviorState.outgoing += behaviorTransition
@@ -514,9 +514,8 @@ class CPS2DeploymentBatchTransformationOptimized {
 		traceBegin('''transform(«stateMachine.name», «behavior.name»)''')
 		val initial = stateMachine.states.findFirst[stateMachine.initial == it]
 		if (initial != null) {
-			val mappingForInitialState = mapping.traces.findFirst[it.cpsElements.contains(initial)]
 
-			val initialBehaviorState = mappingForInitialState.deploymentElements.findFirst[behavior.states.contains(it)]
+			val initialBehaviorState = mappingCache.get(initial).findFirst[behavior.states.contains(it)]
 
 			behavior.current = initialBehaviorState as BehaviorState
 		}
@@ -556,6 +555,8 @@ class CPS2DeploymentBatchTransformationOptimized {
 		trace.cpsElements += identifiable
 		trace.deploymentElements += deploymentElement
 		mapping.traces += trace
+		
+		mappingCache.put(identifiable,deploymentElement);
 
 		traceBegin('''createTrace(«identifiable.name», «deploymentElement.name»)''')
 		return trace
