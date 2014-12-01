@@ -16,6 +16,9 @@ class CPSTestBase {
 		Logger.getLogger("cps.xform").level = PropertiesUtil.getCPSXformLogLevel
 		Logger.getLogger("cps.generator").initLoggerForLevel(PropertiesUtil.getCPSGeneratorLogLevel)
 		Logger.getLogger("org.eclipse.incquery").level = PropertiesUtil.getIncQueryLogLevel
+		
+		Logger.getLogger("cps.trainbenchmark.log").initLoggerForLevel(PropertiesUtil.getCPSGeneratorLogLevel)
+		Logger.getLogger("cps.modelstats.log").initLoggerForLevel(PropertiesUtil.getCPSGeneratorLogLevel)
 	}
 	
 	def static initLoggerForLevel(Logger logger, Level level) {

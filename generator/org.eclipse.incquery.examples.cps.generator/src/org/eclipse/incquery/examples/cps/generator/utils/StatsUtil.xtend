@@ -1,16 +1,15 @@
 package org.eclipse.incquery.examples.cps.generator.utils
 
+import java.util.Collection
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
-import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.examples.cps.deployment.Deployment
+import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
 import org.eclipse.incquery.examples.cps.generator.dtos.DeploymentStats
-import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
+import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
+import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.exception.IncQueryException
-import java.util.Collection
-import org.eclipse.emf.ecore.EStructuralFeature
 
 class StatsUtil {
 	

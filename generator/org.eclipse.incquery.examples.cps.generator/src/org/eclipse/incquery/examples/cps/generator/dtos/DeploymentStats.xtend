@@ -8,7 +8,7 @@ import org.eclipse.incquery.examples.cps.generator.utils.SumProcessor
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
 
-class DeploymentStats {
+class DeploymentStats extends ModelStats {
 	
 	private Logger logger = Logger.getLogger("cps.generator.StatsUtil.DeploymentStats")
 	
@@ -20,9 +20,7 @@ class DeploymentStats {
 	public int deploymentCurrent = 0;
 	public int deploymentTrigger = 0;
 	public int deploymentOutgoing = 0;
-	public int eObjects = 0;
-	public int eReferences = 0;
-	
+
 	def log() {
 		logger.info("====================================================================")
 		logger.info("= Deployment Stats: ");

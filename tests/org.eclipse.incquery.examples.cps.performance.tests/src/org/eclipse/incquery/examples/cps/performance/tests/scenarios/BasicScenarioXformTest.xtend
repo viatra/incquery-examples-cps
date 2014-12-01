@@ -21,11 +21,17 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
+import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
+import org.eclipse.incquery.examples.cps.generator.dtos.DeploymentStats
+import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
+import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
 
 @RunWith(Parameterized)
 abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
-	protected extension Logger traintLogger = Logger.getLogger("cps.trainbenchmark.log")
+	protected Logger trainLogger = Logger.getLogger("cps.trainbenchmark.log")
+	protected Logger modelStatsLogger = Logger.getLogger("cps.modelstats.log")
 	
 	new(CPSTransformationWrapper wrapper, String wrapperType) {
 		super(wrapper, wrapperType)
@@ -256,16 +262,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		}
 		
 		// Modification
-		info("Adding new host instance")
-		var modifyTime1 = Stopwatch.createStarted;
-		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
-		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
-		var editTime1 = Stopwatch.createStarted;
-		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
-		editTime1.stop
-		modifyTime1.stop
-		result.addModificationTime(modifyTime1.elapsed(TimeUnit.MILLISECONDS))
-		result.addEditTime(editTime1.elapsed(TimeUnit.MILLISECONDS))
+		firstModification(cps2dep, result)
 		
 		// Re-transformation
 		var secondXform = Stopwatch.createStarted;
@@ -275,14 +272,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		result.addCheckTime(secondXform.elapsed(TimeUnit.MILLISECONDS))
 		
 		
-		info("Adding second new host instance")	
-		var modifyTime2 = Stopwatch.createStarted;	
-		var editTime2 = Stopwatch.createStarted;
-		appType.prepareApplicationInstanceWithId("new.app.instance2", hostInstance)
-		editTime2.stop
-		modifyTime2.stop
-		result.addModificationTime(modifyTime2.elapsed(TimeUnit.MILLISECONDS))
-		result.addEditTime(editTime2.elapsed(TimeUnit.MILLISECONDS))
+		secondModification(cps2dep, result)
 
 		var thirdXform = Stopwatch.createStarted;
 		executeTransformation
@@ -300,8 +290,10 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		info("    Seed = " + seed)		
 		info(" MODEL STATS:")
 		cpsStats.log
-		StatsUtil.generateStatsForDeployment(engine, cps2dep.deployment).log
-		StatsUtil.generateStatsForTraceability(engine, cps2dep).log
+		val depStats = StatsUtil.generateStatsForDeployment(engine, cps2dep.deployment)
+		depStats.log
+		val traceStats = StatsUtil.generateStatsForTraceability(engine, cps2dep)
+		traceStats.log
 		info(" EXECUTION TIMES: ")
 		info("    Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("    Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
@@ -310,7 +302,51 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		info("    Xform3 time: " + thirdXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("****************************************************************************")
 		
-		traintLogger.info(result.toString)
+		// Log the benchmarkResult to separated logger
+		trainLogger.info(result.toString)
+		
+		// Log the model stats to separated logger
+		logModelStats(cpsStats, depStats, traceStats)
+	}
+	
+	def void logModelStats(CPSStats cpsStats, DeploymentStats depStats, TraceabilityStats traceStats){
+		// Header
+		modelStatsLogger.info("ModelName" + ModelStats.DELIMITER + "EObjects" + ModelStats.DELIMITER + "EReferences")
+		
+		// Body
+		cpsStats.logCSV(modelStatsLogger, "CPS")
+		depStats.logCSV(modelStatsLogger, "Deployment")
+		traceStats.logCSV(modelStatsLogger, "Traceability")
+		val sumEObjects = cpsStats.eObjects + depStats.eObjects + traceStats.eObjects
+		val sumEReferences = cpsStats.eReferences + depStats.eReferences + traceStats.eReferences
+		modelStatsLogger.info("Sum" + ModelStats.DELIMITER + sumEObjects + ModelStats.DELIMITER + sumEReferences)
+	}
+
+	def void firstModification(CPSToDeployment cps2dep, BenchmarkResult result){
+		info("Adding new host instance")
+		var modifyTime1 = Stopwatch.createStarted;
+		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
+		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
+		var editTime1 = Stopwatch.createStarted;
+		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
+		editTime1.stop
+		modifyTime1.stop
+		result.addModificationTime(modifyTime1.elapsed(TimeUnit.MILLISECONDS))
+		result.addEditTime(editTime1.elapsed(TimeUnit.MILLISECONDS))
+	}
+	
+	
+	def void secondModification(CPSToDeployment cps2dep, BenchmarkResult result){
+		info("Adding second new host instance")	
+		var modifyTime2 = Stopwatch.createStarted;	
+		var editTime2 = Stopwatch.createStarted;
+		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
+		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
+		appType.prepareApplicationInstanceWithId("new.app.instance2", hostInstance)
+		editTime2.stop
+		modifyTime2.stop
+		result.addModificationTime(modifyTime2.elapsed(TimeUnit.MILLISECONDS))
+		result.addEditTime(editTime2.elapsed(TimeUnit.MILLISECONDS))
 	}
 	
 	abstract def String getModificationLabel()

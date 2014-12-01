@@ -8,15 +8,13 @@ import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 
-class TraceabilityStats {
+class TraceabilityStats extends ModelStats {
 	
 	private Logger logger = Logger.getLogger("cps.generator.StatsUtil.TraceabilityStats")
 	
 	public int traceabilityCPSDepTrace = 0;
 	public int traceabilityCPSDepTraceCPSElements = 0;
 	public int traceabilityDeploymentElements = 0;
-	public int eObjects = 0;
-	public int eReferences = 0;
 	
 	def log() {
 		logger.info("====================================================================")

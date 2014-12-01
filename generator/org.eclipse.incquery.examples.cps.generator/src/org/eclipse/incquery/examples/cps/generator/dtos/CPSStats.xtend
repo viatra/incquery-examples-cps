@@ -21,7 +21,7 @@ import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.base.api.IEStructuralFeatureProcessor
 import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
 
-class CPSStats {
+class CPSStats extends ModelStats {
 	
 	private Logger logger = Logger.getLogger("cps.generator.StatsUtil.CPSStats")
 	
@@ -35,8 +35,6 @@ class CPSStats {
 	public int connectedHostCount = 0;
 	public int sendActions = 0;
 	public int waitActions = 0;
-	public int eObjects = 0;
-	public int eReferences = 0;
 
 	new(IncQueryEngine engine, CyberPhysicalSystem model){
 		this.appTypeCount = AppTypesMatcher.on(engine).countMatches;
