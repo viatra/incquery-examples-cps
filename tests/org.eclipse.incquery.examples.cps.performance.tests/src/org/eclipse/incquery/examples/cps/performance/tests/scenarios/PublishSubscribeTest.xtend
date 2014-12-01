@@ -36,15 +36,15 @@ class PublishSubscribeTest extends BasicScenarioXformTest {
 	
 	
 	override secondModification(CPSToDeployment cps2dep, BenchmarkResult result){
-		info("Adding second new host instance")	
-		var modifyTime2 = Stopwatch.createStarted;	
-		var editTime2 = Stopwatch.createStarted;
-		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
-		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
-		appType.prepareApplicationInstanceWithId("new.app.instance2", hostInstance)
-		editTime2.stop
-		modifyTime2.stop
-		result.addModificationTime(modifyTime2.elapsed(TimeUnit.MILLISECONDS))
-		result.addEditTime(editTime2.elapsed(TimeUnit.MILLISECONDS))
+//		info("Adding second new host instance")	
+//		var modifyTime2 = Stopwatch.createStarted;	
+//		var editTime2 = Stopwatch.createStarted;
+//		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
+//		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
+//		appType.prepareApplicationInstanceWithId("new.app.instance2", hostInstance)
+//		editTime2.stop
+//		modifyTime2.stop
+//		result.addModificationTime(modifyTime2.elapsed(TimeUnit.MILLISECONDS))
+//		result.addEditTime(editTime2.elapsed(TimeUnit.MILLISECONDS))
 	}
 }

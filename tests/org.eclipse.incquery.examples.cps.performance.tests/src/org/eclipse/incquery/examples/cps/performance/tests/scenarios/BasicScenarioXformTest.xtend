@@ -67,7 +67,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 		
-//	@Ignore
+	@Ignore
 	@Test(timeout=300000)
 	def scale00016(){
 		val testId = "scale16"
@@ -78,7 +78,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test(timeout=600000)
 	def scale00032(){
 		val testId = "scale32"
@@ -278,19 +278,19 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		}
 		
 		// Modification
+		var secondXformTime = Stopwatch.createStarted;
 		firstModification(cps2dep, result)
 		
 		// Re-transformation
-		var secondXformTime = Stopwatch.createStarted;
 		executeTransformation
 		secondXformTime.stop;
 		info("Xform2 time: " + secondXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		result.addCheckTime(secondXformTime.elapsed(TimeUnit.MILLISECONDS))
 		
 		
+		var thirdXformTime = Stopwatch.createStarted;
 		secondModification(cps2dep, result)
 
-		var thirdXformTime = Stopwatch.createStarted;
 		executeTransformation
 		thirdXformTime.stop;
 		info("Xform3 time: " + thirdXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
