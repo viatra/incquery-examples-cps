@@ -39,11 +39,14 @@ class GeneratorPerformance extends CPSTestBase{
 			
 		val scales = ImmutableList.builder
 	        .add(1)
-			.add(10)
-        	.add(20)
-        	.add(50)
-        	.add(100)
-        	.add(200)
+			.add(8)
+			.add(16)
+        	.add(32)
+        	.add(64)
+        	.add(128)
+        	.add(256)
+        	.add(512)
+        	.add(1024)
 			.build
 		
 		
