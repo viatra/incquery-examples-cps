@@ -19,6 +19,7 @@ class CPSTestBase {
 		
 		Logger.getLogger("cps.trainbenchmark.log").initLoggerForLevel(PropertiesUtil.getCPSGeneratorLogLevel)
 		Logger.getLogger("cps.modelstats.log").initLoggerForLevel(PropertiesUtil.getCPSGeneratorLogLevel)
+		Logger.getLogger("cps.performance.generator.Tests").initLoggerForLevel(Level.INFO)
 	}
 	
 	def static initLoggerForLevel(Logger logger, Level level) {
