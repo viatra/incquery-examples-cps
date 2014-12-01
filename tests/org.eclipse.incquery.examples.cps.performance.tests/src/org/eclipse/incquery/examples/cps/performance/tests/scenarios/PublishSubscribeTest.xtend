@@ -13,4 +13,8 @@ class PublishSubscribeTest extends BasicScenarioXformTest {
 		new PublishSubscribeScenario(rand)
 	}
 	
+	override getModificationLabel() {
+		"Adding2NewClients"
+	}
+	
 }

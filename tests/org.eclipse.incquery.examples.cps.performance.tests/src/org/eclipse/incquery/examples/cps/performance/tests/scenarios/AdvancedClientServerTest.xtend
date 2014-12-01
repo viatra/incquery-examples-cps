@@ -13,4 +13,8 @@ class AdvancedClientServerTest extends BasicScenarioXformTest {
 		new AdvancedClientServerScenario(rand)
 	}
 	
+	override getModificationLabel() {
+		"Adding2NewClients"
+	}
+	
 }

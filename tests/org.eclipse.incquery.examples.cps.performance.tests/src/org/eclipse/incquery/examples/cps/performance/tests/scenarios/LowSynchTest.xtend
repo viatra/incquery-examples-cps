@@ -13,4 +13,7 @@ class LowSynchTest extends BasicScenarioXformTest {
 		new LowSynchScenario(rand)
 	}
 	
+	override getModificationLabel() {
+		"NONE"
+	}
 }

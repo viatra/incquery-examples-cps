@@ -10,7 +10,7 @@ public class BenchmarkResult {
 	// CONFIGS
 	private boolean isGeneratingHeader = true;
 	private int artifactSize = 0;
-	private int seriesCount = -1; // alapból -1 de ha többször futtatjuk akkro lehet magasabb
+	private int seriesCount = -1; // -1 by default, number of measurements when run multiple times
 	private Integer nMax = 2; // modify cycles
 	
 	public void setArtifactSize(int size){

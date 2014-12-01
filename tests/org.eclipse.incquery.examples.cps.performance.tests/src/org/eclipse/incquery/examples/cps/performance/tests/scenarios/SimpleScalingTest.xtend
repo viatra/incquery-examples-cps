@@ -13,4 +13,7 @@ class SimpleScalingTest extends BasicScenarioXformTest {
 		new SimpleScalingScenario(rand)
 	}
 	
+	override getModificationLabel() {
+		"NONE"
+	}
 }
