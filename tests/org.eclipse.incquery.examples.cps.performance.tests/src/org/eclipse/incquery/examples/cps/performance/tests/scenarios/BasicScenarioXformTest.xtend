@@ -3,6 +3,7 @@ package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 import com.google.common.base.Stopwatch
 import java.util.Random
 import java.util.concurrent.TimeUnit
+import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
@@ -13,7 +14,6 @@ import org.eclipse.incquery.examples.cps.performance.tests.benchmark.BenchmarkRe
 import org.eclipse.incquery.examples.cps.performance.tests.queries.QueryRegressionTest
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
-import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
@@ -24,6 +24,8 @@ import org.junit.runners.Parameterized
 
 @RunWith(Parameterized)
 abstract class BasicScenarioXformTest extends CPS2DepTest {
+	
+	protected extension Logger traintLogger = Logger.getLogger("cps.trainbenchmark.log")
 	
 	new(CPSTransformationWrapper wrapper, String wrapperType) {
 		super(wrapper, wrapperType)
@@ -229,6 +231,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		Validation.instance.prepare(engine);
 		
 		val cpsStats = StatsUtil.generateStatsForCPS(engine, fragment.modelRoot)
+		result.benchmarkArtifact = cpsStats.eObjects.toString
 		cpsStats.log
 		
 		engine.dispose
@@ -307,7 +310,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		info("    Xform3 time: " + thirdXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("****************************************************************************")
 		
-		info(result.toString)
+		traintLogger.info(result.toString)
 	}
 	
 	abstract def String getModificationLabel()
