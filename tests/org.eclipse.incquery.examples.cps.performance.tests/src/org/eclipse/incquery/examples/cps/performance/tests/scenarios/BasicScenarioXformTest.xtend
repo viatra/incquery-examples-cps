@@ -243,10 +243,14 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		val long generateMemory = QueryRegressionTest.logMemoryProperties
 		result.addMemoryBytes(generateMemory)
 		
+		
 		var incQInitTime = Stopwatch.createStarted;
 		val engine = AdvancedIncQueryEngine.from(fragment.engine);
 		Validation.instance.prepare(engine);
 		incQInitTime.stop
+		val long incQueryMemory = QueryRegressionTest.logMemoryProperties
+		result.addMemoryBytes(incQueryMemory)
+		
 		
 		val cpsStats = StatsUtil.generateStatsForCPS(engine, fragment.modelRoot)
 		result.artifactSize = cpsStats.eObjects
@@ -322,7 +326,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		// Log the model stats to separated logger
 		
 		logModelStats(scenario.class.simpleName, size, cpsStats, depStats, traceStats)
-		logMemoryStats(scenario.class.simpleName, size, generateMemory, firstTransformationMemory, lastTransformationMemory);
+		logMemoryStats(scenario.class.simpleName, size, generateMemory,incQueryMemory, firstTransformationMemory, lastTransformationMemory);
 		logTimeStats(scenario.class.simpleName, size, generateTime.elapsed(TimeUnit.MILLISECONDS), incQInitTime.elapsed(TimeUnit.MILLISECONDS), transformTime.elapsed(TimeUnit.MILLISECONDS), secondXformTime.elapsed(TimeUnit.MILLISECONDS), thirdXformTime.elapsed(TimeUnit.MILLISECONDS))
 	}
 
@@ -338,13 +342,13 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		timeStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, generateTime, incQInitTime, transformTime, secondXformTime, thirdXformTime))
 	}
 	
-	def void logMemoryStats(String scenario, int scale, long genMemory, long firstTrafoMemory, long lastTrafoMemory){
+	def void logMemoryStats(String scenario, int scale, long genMemory, long incQMemory, long firstTrafoMemory, long lastTrafoMemory){
 		// Header
 		if(GENERATE_HEADER){
-			memoryStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm", "AfterGenerate", "AfterFirstTransformation", "AfterLastTransformation"))
+			memoryStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm", "AfterGenerate", "AfterIncQuery", "AfterFirstTransformation", "AfterLastTransformation"))
 		}
 		// Body
-		memoryStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, genMemory, firstTrafoMemory, lastTrafoMemory))
+		memoryStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, genMemory, incQMemory, firstTrafoMemory, lastTrafoMemory))
 	}
 	
 	def void logModelStats(String scenario, int scale, CPSStats cpsStats, DeploymentStats depStats, TraceabilityStats traceStats){
