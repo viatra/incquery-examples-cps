@@ -26,20 +26,28 @@ import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
 import org.eclipse.incquery.examples.cps.generator.dtos.DeploymentStats
 import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
 import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
+import org.junit.FixMethodOrder
+import org.junit.runners.MethodSorters
+import com.google.common.base.Joiner
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(Parameterized)
 abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
-	protected Logger trainLogger = Logger.getLogger("cps.trainbenchmark.log")
-	protected Logger modelStatsLogger = Logger.getLogger("cps.modelstats.log")
+	protected Logger trainLogger = Logger.getLogger("cps.mondosam.log")
+	protected Logger modelStatsLogger = Logger.getLogger("cps.stats.model")
+	protected Logger memoryStatsLogger = Logger.getLogger("cps.stats.memory")
+	protected Logger timeStatsLogger = Logger.getLogger("cps.stats.time")
+	
+	private boolean GENERATE_HEADER = false
 	
 	new(CPSTransformationWrapper wrapper, String wrapperType) {
 		super(wrapper, wrapperType)
 	}
 	
 //	@Ignore
-	@Test(timeout=10000)
-	def scale1(){
+	@Test(timeout=100000)
+	def scale00001(){
 		val testId = "scale1"
 		startTest(testId)
 		
@@ -50,7 +58,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 //	@Ignore
 	@Test(timeout=100000)
-	def scale8(){
+	def scale00008(){
 		val testId = "scale8"
 		startTest(testId)
 		
@@ -61,7 +69,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		
 //	@Ignore
 	@Test(timeout=300000)
-	def scale16(){
+	def scale00016(){
 		val testId = "scale16"
 		startTest(testId)
 		
@@ -72,7 +80,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 //	@Ignore
 	@Test(timeout=600000)
-	def scale32(){
+	def scale00032(){
 		val testId = "scale32"
 		startTest(testId)
 		
@@ -81,9 +89,9 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test(timeout=600000)
-	def scale64(){
+	def scale00064(){
 		val testId = "scale64"
 		startTest(testId)
 		
@@ -92,9 +100,9 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test(timeout=600000)
-	def scale128(){
+	def scale00128(){
 		val testId = "scale128"
 		startTest(testId)
 		
@@ -103,9 +111,9 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test(timeout=600000)
-	def scale256(){
+	def scale00256(){
 		val testId = "scale256"
 		startTest(testId)
 		
@@ -116,7 +124,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale512(){
+	def scale00512(){
 		val testId = "scale512"
 		startTest(testId)
 		
@@ -127,7 +135,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale1024(){
+	def scale01024(){
 		val testId = "scale1024"
 		startTest(testId)
 		
@@ -138,7 +146,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale1280(){
+	def scale01280(){
 		val testId = "scale1280"
 		startTest(testId)
 		
@@ -149,7 +157,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale1536(){
+	def scale01536(){
 		val testId = "scale1536"
 		startTest(testId)
 		
@@ -160,7 +168,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale2048(){
+	def scale02048(){
 		val testId = "scale2048"
 		startTest(testId)
 		
@@ -171,7 +179,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale2304(){
+	def scale02304(){
 		val testId = "scale2304"
 		startTest(testId)
 		
@@ -182,7 +190,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale2560(){
+	def scale02560(){
 		val testId = "scale2560"
 		startTest(testId)
 		
@@ -193,7 +201,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale3072(){
+	def scale03072(){
 		val testId = "scale3072"
 		startTest(testId)
 		
@@ -202,7 +210,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 
-	abstract def IScenario getScenario(Random rand)
+	def IScenario getScenario(Random rand)
 	
 	def executeScenarioXform(int size) {
 		val seed = 11111
@@ -235,9 +243,10 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		val long generateMemory = QueryRegressionTest.logMemoryProperties
 		result.addMemoryBytes(generateMemory)
 		
-		
+		var incQInitTime = Stopwatch.createStarted;
 		val engine = AdvancedIncQueryEngine.from(fragment.engine);
 		Validation.instance.prepare(engine);
+		incQInitTime.stop
 		
 		val cpsStats = StatsUtil.generateStatsForCPS(engine, fragment.modelRoot)
 		result.artifactSize = cpsStats.eObjects
@@ -256,8 +265,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		info("Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		result.addCheckTime(transformTime.elapsed(TimeUnit.MILLISECONDS))
 		
-		val long endMemory = QueryRegressionTest.logMemoryProperties
-		result.addMemoryBytes(endMemory)
+		val long firstTransformationMemory = QueryRegressionTest.logMemoryProperties
+		result.addMemoryBytes(firstTransformationMemory)
 		
 		// Persist models if needed
 		if(PropertiesUtil.persistResults){
@@ -268,20 +277,20 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		firstModification(cps2dep, result)
 		
 		// Re-transformation
-		var secondXform = Stopwatch.createStarted;
+		var secondXformTime = Stopwatch.createStarted;
 		executeTransformation
-		secondXform.stop;
-		info("Xform2 time: " + secondXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		result.addCheckTime(secondXform.elapsed(TimeUnit.MILLISECONDS))
+		secondXformTime.stop;
+		info("Xform2 time: " + secondXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		result.addCheckTime(secondXformTime.elapsed(TimeUnit.MILLISECONDS))
 		
 		
 		secondModification(cps2dep, result)
 
-		var thirdXform = Stopwatch.createStarted;
+		var thirdXformTime = Stopwatch.createStarted;
 		executeTransformation
-		thirdXform.stop;
-		info("Xform3 time: " + thirdXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		result.addCheckTime(thirdXform.elapsed(TimeUnit.MILLISECONDS))
+		thirdXformTime.stop;
+		info("Xform3 time: " + thirdXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		result.addCheckTime(thirdXformTime.elapsed(TimeUnit.MILLISECONDS))
 		val long lastTransformationMemory = QueryRegressionTest.logMemoryProperties
 		result.addMemoryBytes(lastTransformationMemory)
 
@@ -303,56 +312,63 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		info("    Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("    Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("       Xform1 init time: " + transformInitTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		info("    Xform2 time: " + secondXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		info("    Xform3 time: " + thirdXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		info("    Xform2 time: " + secondXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		info("    Xform3 time: " + thirdXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		info("****************************************************************************")
 		
 		// Log the benchmarkResult to separated logger
 		trainLogger.info(result.toString)
 		
 		// Log the model stats to separated logger
-		logModelStats(cpsStats, depStats, traceStats)
-	}
-	
-	def void logModelStats(CPSStats cpsStats, DeploymentStats depStats, TraceabilityStats traceStats){
-		// Header
-		modelStatsLogger.info("ModelName" + ModelStats.DELIMITER + "EObjects" + ModelStats.DELIMITER + "EReferences")
 		
-		// Body
-		cpsStats.logCSV(modelStatsLogger, "CPS")
-		depStats.logCSV(modelStatsLogger, "Deployment")
-		traceStats.logCSV(modelStatsLogger, "Traceability")
-		val sumEObjects = cpsStats.eObjects + depStats.eObjects + traceStats.eObjects
-		val sumEReferences = cpsStats.eReferences + depStats.eReferences + traceStats.eReferences
-		modelStatsLogger.info("Sum" + ModelStats.DELIMITER + sumEObjects + ModelStats.DELIMITER + sumEReferences)
+		logModelStats(scenario.class.simpleName, size, cpsStats, depStats, traceStats)
+		logMemoryStats(scenario.class.simpleName, size, generateMemory, firstTransformationMemory, lastTransformationMemory);
+		logTimeStats(scenario.class.simpleName, size, generateTime.elapsed(TimeUnit.MILLISECONDS), incQInitTime.elapsed(TimeUnit.MILLISECONDS), transformTime.elapsed(TimeUnit.MILLISECONDS), secondXformTime.elapsed(TimeUnit.MILLISECONDS), thirdXformTime.elapsed(TimeUnit.MILLISECONDS))
 	}
 
-	def void firstModification(CPSToDeployment cps2dep, BenchmarkResult result){
-		info("Adding new host instance")
-		var modifyTime1 = Stopwatch.createStarted;
-		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
-		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
-		var editTime1 = Stopwatch.createStarted;
-		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
-		editTime1.stop
-		modifyTime1.stop
-		result.addModificationTime(modifyTime1.elapsed(TimeUnit.MILLISECONDS))
-		result.addEditTime(editTime1.elapsed(TimeUnit.MILLISECONDS))
+	val D = ModelStats.DELIMITER
+	
+	def void logTimeStats(String scenario, int scale, long generateTime, long incQInitTime, long transformTime, long secondXformTime, long thirdXformTime){
+		// Header
+		if(GENERATE_HEADER){
+			timeStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm",  "GenerateTime", "IncQueryPrepareTime", "TransformTime", "SecondTransformTime", "ThirdTransformTime"))
+		}
+
+		// Body
+		timeStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, generateTime, incQInitTime, transformTime, secondXformTime, thirdXformTime))
 	}
 	
-	
-	def void secondModification(CPSToDeployment cps2dep, BenchmarkResult result){
-		info("Adding second new host instance")	
-		var modifyTime2 = Stopwatch.createStarted;	
-		var editTime2 = Stopwatch.createStarted;
-		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
-		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
-		appType.prepareApplicationInstanceWithId("new.app.instance2", hostInstance)
-		editTime2.stop
-		modifyTime2.stop
-		result.addModificationTime(modifyTime2.elapsed(TimeUnit.MILLISECONDS))
-		result.addEditTime(editTime2.elapsed(TimeUnit.MILLISECONDS))
+	def void logMemoryStats(String scenario, int scale, long genMemory, long firstTrafoMemory, long lastTrafoMemory){
+		// Header
+		if(GENERATE_HEADER){
+			memoryStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm", "AfterGenerate", "AfterFirstTransformation", "AfterLastTransformation"))
+		}
+		// Body
+		memoryStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, genMemory, firstTrafoMemory, lastTrafoMemory))
 	}
 	
-	abstract def String getModificationLabel()
+	def void logModelStats(String scenario, int scale, CPSStats cpsStats, DeploymentStats depStats, TraceabilityStats traceStats){
+		// Header
+		if(GENERATE_HEADER){
+			modelStatsLogger.info(Joiner.on(D).join("Scenario" , "Scale", "XForm", "CPSeObjects" , "CPSeReferences" + D 
+				+ "DepeObjects" , "DepeReferences", "TraceeObjects", "TraceeReferences"+ D 
+				+ "SUMeObjects" , "SUMeReferences"))
+		}
+		
+		val sumEObjects = cpsStats.eObjects + depStats.eObjects + traceStats.eObjects
+		val sumEReferences = cpsStats.eReferences + depStats.eReferences + traceStats.eReferences
+
+		// Body
+		modelStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, cpsStats.CSVEValues, depStats.CSVEValues, 
+			traceStats.CSVEValues, sumEObjects, sumEReferences
+		))
+		
+	}
+
+	def void firstModification(CPSToDeployment cps2dep, BenchmarkResult result)
+	
+	
+	def void secondModification(CPSToDeployment cps2dep, BenchmarkResult result)
+	
+	def String getModificationLabel()
 }

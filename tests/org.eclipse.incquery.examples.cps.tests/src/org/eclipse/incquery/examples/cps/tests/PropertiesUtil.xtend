@@ -18,6 +18,9 @@ class PropertiesUtil {
 	public static val PERSIST_RESULTS_PROP_KEY = "cps.persist.results"
 	public static val DISABLED_M2M_XFORM_PROP_KEY = "cps.xform.m2m.disabled.alternatives"
 	
+	public static val BENCHMARK_RESULT_LOGLEVEL = "cps.mondosam.loglevel"
+	public static val STATS_CSV_LOGLEVEL = "cps.stats.loglevel"
+	
 	private def static loadPropertiesFile() {
 		val configPath = "cps2dep.properties"
 		val properties = new Properties()
@@ -56,6 +59,14 @@ class PropertiesUtil {
 	
 	def static getIncQueryLogLevel(){
 		getLogLevel(INCQUERY_LOGLEVEL_PROP_KEY, "WARN")
+	}
+	
+	def static getBenchmarkLogLevel(){
+		getLogLevel(BENCHMARK_RESULT_LOGLEVEL, "WARN")
+	}
+	
+	def static getStatsLogLevel(){
+		getLogLevel(STATS_CSV_LOGLEVEL, "WARN")
 	}
 	
 	def static isPersistResults() {
