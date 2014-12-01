@@ -50,154 +50,154 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 //	@Ignore
 	@Test(timeout=100000)
-	def scale10(){
-		val testId = "scale10"
+	def scale8(){
+		val testId = "scale8"
 		startTest(testId)
 		
-		executeScenarioXform(10)
+		executeScenarioXform(8)
 	
 		endTest(testId)
 	}
 		
 //	@Ignore
 	@Test(timeout=300000)
-	def scale20(){
-		val testId = "scale20"
+	def scale16(){
+		val testId = "scale16"
 		startTest(testId)
 		
-		executeScenarioXform(20)
+		executeScenarioXform(16)
 	
 		endTest(testId)
 	}
 	
 //	@Ignore
 	@Test(timeout=600000)
-	def scale50(){
-		val testId = "scale50"
+	def scale32(){
+		val testId = "scale32"
 		startTest(testId)
 		
-		executeScenarioXform(50)
+		executeScenarioXform(32)
 	
 		endTest(testId)
 	}
 	
 //	@Ignore
 	@Test(timeout=600000)
-	def scale100(){
-		val testId = "scale100"
+	def scale64(){
+		val testId = "scale64"
 		startTest(testId)
 		
-		executeScenarioXform(100)
+		executeScenarioXform(64)
 	
 		endTest(testId)
 	}
 	
 //	@Ignore
 	@Test(timeout=600000)
-	def scale200(){
-		val testId = "scale200"
+	def scale128(){
+		val testId = "scale128"
 		startTest(testId)
 		
-		executeScenarioXform(200)
+		executeScenarioXform(128)
 	
 		endTest(testId)
 	}
 	
 //	@Ignore
 	@Test(timeout=600000)
-	def scale500(){
-		val testId = "scale500"
+	def scale256(){
+		val testId = "scale256"
 		startTest(testId)
 		
-		executeScenarioXform(500)
+		executeScenarioXform(256)
 	
 		endTest(testId)
 	}
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale750(){
-		val testId = "scale750"
+	def scale512(){
+		val testId = "scale512"
 		startTest(testId)
 		
-		executeScenarioXform(750)
+		executeScenarioXform(512)
 	
 		endTest(testId)
 	}
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale1000(){
-		val testId = "scale1000"
+	def scale1024(){
+		val testId = "scale1024"
 		startTest(testId)
 		
-		executeScenarioXform(1000)
+		executeScenarioXform(1024)
 	
 		endTest(testId)
 	}
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale1200(){
-		val testId = "scale1200"
+	def scale1280(){
+		val testId = "scale1280"
 		startTest(testId)
 		
-		executeScenarioXform(1200)
+		executeScenarioXform(1280)
 	
 		endTest(testId)
 	}
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale1500(){
-		val testId = "scale1500"
+	def scale1536(){
+		val testId = "scale1536"
 		startTest(testId)
 		
-		executeScenarioXform(1500)
+		executeScenarioXform(1536)
 	
 		endTest(testId)
 	}
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale2000(){
-		val testId = "scale2000"
+	def scale2048(){
+		val testId = "scale2048"
 		startTest(testId)
 		
-		executeScenarioXform(2000)
+		executeScenarioXform(2048)
 	
 		endTest(testId)
 	}
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale2250(){
-		val testId = "scale2250"
+	def scale2304(){
+		val testId = "scale2304"
 		startTest(testId)
 		
-		executeScenarioXform(2250)
+		executeScenarioXform(2304)
 	
 		endTest(testId)
 	}
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale2500(){
-		val testId = "scale2500"
+	def scale2560(){
+		val testId = "scale2560"
 		startTest(testId)
 		
-		executeScenarioXform(2500)
+		executeScenarioXform(2560)
 	
 		endTest(testId)
 	}
 	
 	@Ignore
 	@Test(timeout=600000)
-	def scale3000(){
-		val testId = "scale3000"
+	def scale3072(){
+		val testId = "scale3072"
 		startTest(testId)
 		
-		executeScenarioXform(3000)
+		executeScenarioXform(3072)
 	
 		endTest(testId)
 	}
