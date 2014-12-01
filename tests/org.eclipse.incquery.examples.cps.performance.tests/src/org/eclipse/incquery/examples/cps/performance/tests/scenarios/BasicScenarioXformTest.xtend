@@ -215,7 +215,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		// MONDO-SAM
 		val BenchmarkResult result = new BenchmarkResult(xform.class.simpleName, modificationLabel, new Random(seed))
 		result.scenario = scenario.class.simpleName
-		result.benchmarkArtifact = size.toString
+		result.benchmarkArtifact = "scale_" + size.toString
 		
 		// Constraints
 		val constraints = scenario.getConstraintsFor(size);
@@ -232,12 +232,15 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		generateTime.stop;
 		info("Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		result.setReadTime(generateTime.elapsed(TimeUnit.MILLISECONDS))
+		val long generateMemory = QueryRegressionTest.logMemoryProperties
+		result.addMemoryBytes(generateMemory)
+		
 		
 		val engine = AdvancedIncQueryEngine.from(fragment.engine);
 		Validation.instance.prepare(engine);
 		
 		val cpsStats = StatsUtil.generateStatsForCPS(engine, fragment.modelRoot)
-		result.benchmarkArtifact = cpsStats.eObjects.toString
+		result.artifactSize = cpsStats.eObjects
 		cpsStats.log
 		
 		engine.dispose
@@ -279,6 +282,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		thirdXform.stop;
 		info("Xform3 time: " + thirdXform.elapsed(TimeUnit.MILLISECONDS) + " ms");
 		result.addCheckTime(thirdXform.elapsed(TimeUnit.MILLISECONDS))
+		val long lastTransformationMemory = QueryRegressionTest.logMemoryProperties
+		result.addMemoryBytes(lastTransformationMemory)
 
 		// STATS
 		info("  ************************************************************************")

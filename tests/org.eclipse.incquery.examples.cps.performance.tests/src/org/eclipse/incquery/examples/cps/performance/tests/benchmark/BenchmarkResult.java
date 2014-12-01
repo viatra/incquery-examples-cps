@@ -18,8 +18,6 @@ public class BenchmarkResult {
 	}
 	
 	
-	
-	
 	protected String tool;
 	protected String query;
 	protected String scenario = "";
