@@ -6,15 +6,17 @@ import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 
 class ExplicitTraceability extends CPSTransformationWrapper {
 	
-	val xform = new CPS2DeploymentTransformation
+	CPS2DeploymentTransformation xform 
 	AdvancedIncQueryEngine engine
 	
 	override initializeTransformation(CPSToDeployment cps2dep) {
 		engine = AdvancedIncQueryEngine.createUnmanagedEngine(cps2dep.eResource.resourceSet);
-		xform.execute(cps2dep, engine)
+		xform = new CPS2DeploymentTransformation
+		xform.initialize(cps2dep, engine)
 	}
 	
 	override executeTransformation() {
+		xform.execute()
 		debug("Explicit Traceability transformation is incremental")
 	}
 	

@@ -16,7 +16,7 @@ class WrapperTest {
 		
 		val xform = new CPS2DeploymentTransformation
 		val cps2dep = new CPSModelBuilderUtil().prepareEmptyModel(testId)
-		xform.execute(cps2dep, null)
+		xform.initialize(cps2dep, null)
 		
 		info("END TEST: " + testId)
 	}

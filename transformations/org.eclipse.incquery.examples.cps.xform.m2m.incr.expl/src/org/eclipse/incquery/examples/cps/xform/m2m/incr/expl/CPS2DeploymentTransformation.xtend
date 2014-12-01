@@ -26,51 +26,67 @@ class CPS2DeploymentTransformation {
 	
 	ExecutionSchema schema = null
 	
-	def execute(CPSToDeployment mapping, IncQueryEngine engine) {
+	CPSToDeployment cps2dep
+	IncQueryEngine engine
+	
+	def initialize(CPSToDeployment mapping, IncQueryEngine iqEngine) {
 		checkArgument(mapping != null, "Mapping cannot be null!")
 		checkArgument(mapping.cps != null, "CPS not defined in mapping!")
 		checkArgument(mapping.deployment != null, "Deployment not defined in mapping!")
-		checkArgument(engine != null, "Engine cannot be null!")
+		checkArgument(iqEngine != null, "Engine cannot be null!")
 		
-		info('''
-			Executing transformation on:
-				Cyber-physical system: «mapping.cps.id»''')
+		this.cps2dep = mapping
+		this.engine = iqEngine
 		
 		debug("Preparing queries on engine.")
 		val watch = Stopwatch.createStarted
 		prepare(engine)
-		info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		info('''Prepared queries on engine («watch.stop.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		
+	}
 	
-		debug("Preparing transformation rules.")
-		watch.reset.start
+	def execute() {
 		
-		val rulesBuilder = ImmutableSet.builder
-		rulesBuilder.addAll(HostRules.getRules(engine))
-		rulesBuilder.addAll(ApplicationRules.getRules(engine))
-		rulesBuilder.addAll(StateMachineRules.getRules(engine))
-		rulesBuilder.addAll(StateRules.getRules(engine))
-		rulesBuilder.addAll(TransitionRules.getRules(engine))
-		rulesBuilder.addAll(TriggerRules.getRules(engine))
-//		rulesBuilder.addAll(TraceRules.getRules(engine))
-		val rules = rulesBuilder.build
-		
-		val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)
-		schema = ExecutionSchemas.createIncQueryExecutionSchema(engine, schedulerFactory)
-		rules.forEach[
-			schema.addRule(it)
-		]
-		
-		info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
-		
-		debug("Initial execution of transformation rules.")
-		watch.reset.start
-		schema.startUnscheduledExecution
-		info('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		if(schema == null){
+			info('''
+				Executing transformation on:
+					Cyber-physical system: «cps2dep.cps.id»''')
+				
+			debug("Preparing transformation rules.")
+			val watch = Stopwatch.createStarted
+			
+			val rulesBuilder = ImmutableSet.builder
+			rulesBuilder.addAll(HostRules.getRules(engine))
+			rulesBuilder.addAll(ApplicationRules.getRules(engine))
+			rulesBuilder.addAll(StateMachineRules.getRules(engine))
+			rulesBuilder.addAll(StateRules.getRules(engine))
+			rulesBuilder.addAll(TransitionRules.getRules(engine))
+			rulesBuilder.addAll(TriggerRules.getRules(engine))
+	//		rulesBuilder.addAll(TraceRules.getRules(engine))
+			val rules = rulesBuilder.build
+			
+			val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)
+			schema = ExecutionSchemas.createIncQueryExecutionSchema(engine, schedulerFactory)
+			rules.forEach[
+				schema.addRule(it)
+			]
+			
+			info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+			
+			debug("Initial execution of transformation rules.")
+			watch.reset.start
+			schema.startUnscheduledExecution
+			info('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+			
+		}
 	}
 	
 	def dispose() {
 		if(schema != null){
 			schema.dispose
 		}
+		engine = null
+		schema = null
+		cps2dep = null
 	}
 }

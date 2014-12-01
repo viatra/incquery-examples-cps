@@ -127,7 +127,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	}
 
 	private def reportPerformance() {
-		info(
+		debug(
 			'''
 			>>>Cleared model in: «clearModelPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
 			>>>Host transformation: «hostTransformationPerformance.elapsed(TimeUnit.MILLISECONDS)» ms
