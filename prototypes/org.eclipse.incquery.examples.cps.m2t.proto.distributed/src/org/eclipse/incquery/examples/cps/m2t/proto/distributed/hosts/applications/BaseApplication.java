@@ -1,11 +1,11 @@
 package org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications;
 
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.Host;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.statemachines.BehaviorISSBState;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.statemachines.State;
 
-public class BaseApplication implements Application {
+public class BaseApplication<StateType extends State> implements Application {
 
-	protected BehaviorISSBState currentState;
+	protected StateType currentState;
 	protected Host host;
 
 	// Add current ApplicationID
@@ -13,13 +13,10 @@ public class BaseApplication implements Application {
 	
 	public BaseApplication(Host host) {
 		this.host = host;
-		
-		// Set initial State
-		currentState = BehaviorISSBState.ISSWait;
 	}
 	
 	@Override
-	public BehaviorISSBState getCurrentState() {
+	public StateType getCurrentState() {
 		return currentState;
 	}
 

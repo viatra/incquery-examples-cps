@@ -34,12 +34,14 @@ public abstract class BaseHost implements Host{
 	@Override
 	public boolean hasMessageFor(String appID, String trigger) {
 		logger.info("Has message for " + trigger + "?  --> FALSE" );
+		// TODO Implement
 		return false;
 	}
 
 	@Override
 	public void sendTrigger(String trgHostIP, String trgAppID, String trgTransactionID) {
 		logger.info("Send trigger to " + trgHostIP + " : " + trgAppID + " : " + trgTransactionID);
+		// TODO Implement
 	}
 	
 	
