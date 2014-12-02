@@ -329,58 +329,11 @@ class CPS2DeploymentBatchTransformationOptimized {
 	 */
 	private def isConnectedTo(HostInstance src, HostInstance dst) {
 		traceBegin('''isConnectedTo(«src.name», «dst.name»)''')
-		val checked = newHashSet(src)
-		var depth = 0 as int
-		var nextHostIndex = 0 as int
-		val indices = Lists.newArrayList
-		indices.add(0 as int) // padding
-		indices.add(0 as int) // initial next index
-		val parents = Maps.newHashMap()
-		parents.put(1, src);
-
-		var currentHost = src
-		while (depth >= 0) {
-			if (currentHost.equals(dst)) {
-				traceEnd('''isConnectedTo(«src.name», «dst.name»)''')
-				return true
-			} else {
-				nextHostIndex = indices.get(depth + 1)
-				if (nextHostIndex >= currentHost.communicateWith.length) {
-
-					// Current host traversed, go up one level
-					depth--
-				} else {
-					checked += currentHost
-
-					// get the next element
-					var nextHost = currentHost.communicateWith.get(nextHostIndex)
-
-					if (checked.contains(nextHost)) {
-						nextHostIndex += 1
-						while (nextHostIndex < currentHost.communicateWith.length && checked.contains(nextHost)) {
-							nextHost = currentHost.communicateWith.get(nextHostIndex)
-							nextHostIndex += 1
-						}
-						indices.set(depth + 1, nextHostIndex)
-					}
-					if (nextHostIndex < currentHost.communicateWith.length) {
-
-						if (indices.length <= depth + 1) {
-							indices.add(nextHostIndex);
-						} else {
-							indices.set(depth, nextHostIndex);
-						}
-
-						parents.put(depth, currentHost)
-						currentHost = nextHost
-					}
-
-				}
-			}
-		}
+		
+		val communicates = src == dst || src.communicateWith.contains(dst)
 
 		traceEnd('''isConnectedTo(«src.name», «dst.name»)''')
-		return false;
+		return communicates;
 	}
 
 	/**
