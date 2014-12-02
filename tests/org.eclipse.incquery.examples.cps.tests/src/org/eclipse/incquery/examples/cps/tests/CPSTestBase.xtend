@@ -20,6 +20,7 @@ class CPSTestBase {
 		Logger.getLogger("org.eclipse.incquery").level = PropertiesUtil.getIncQueryLogLevel
 		Logger.getLogger("cps.mondosam").initLoggerForLevel(PropertiesUtil.getBenchmarkLogLevel)
 		Logger.getLogger("cps.stats").initLoggerForLevel(PropertiesUtil.getStatsLogLevel)
+		Logger.getLogger("cps.proto").initLoggerForLevel(PropertiesUtil.getStatsLogLevel)
 	}
 	
 	def static initLoggerForLevel(Logger logger, Level level) {
