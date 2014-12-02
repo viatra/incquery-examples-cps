@@ -69,4 +69,27 @@ public class IntegrationTest extends CPSTestBase {
 		assertEquals(BehaviorCameraB.CInit, appCamera.getCurrentState());
 	}
 	
+	@Test
+	public void threadTest() throws InterruptedException{
+		
+		CommunicationNetwork network = new CommunicationNetwork();
+		
+		// Create Hosts
+		Host152661025 hostStorage = new Host152661025(network);
+		Host152661026 hostSenders = new Host152661026(network);
+		
+		// Create HostRunners
+		HostRunner hostRunnerStorage = new HostRunner(hostStorage);
+		HostRunner hostRunnerSenders = new HostRunner(hostSenders);
+		
+		// Add hosts to network
+		network.addHost("152.66.102.5", hostRunnerStorage);
+		network.addHost("152.66.102.6", hostRunnerSenders);
+		
+		(new Thread(hostRunnerStorage)).start();
+		(new Thread(hostRunnerSenders)).start();
+		
+		Thread.sleep(15000);
+	}
+	
 }
