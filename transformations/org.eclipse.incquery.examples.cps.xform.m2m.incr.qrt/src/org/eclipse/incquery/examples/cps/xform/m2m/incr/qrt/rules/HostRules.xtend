@@ -23,11 +23,11 @@ class HostMapping extends AbstractRule<HostInstanceMatch> {
 	}
 
 	override getSpecification() {
-		Rules.newMatcherRuleSpecification(
-			hostInstance,
-			Lifecycles.getDefault(true, true),
-			#{appearedJob, updateJob, disappearedJob}
-		)
+		createPriorityRuleSpecification => [
+			ruleSpecification = Rules.newMatcherRuleSpecification(hostInstance, Lifecycles.getDefault(true, true),
+			#{appearedJob, updateJob, disappearedJob})
+			priority = 1
+		]
 	}
 
 	private def getAppearedJob() {

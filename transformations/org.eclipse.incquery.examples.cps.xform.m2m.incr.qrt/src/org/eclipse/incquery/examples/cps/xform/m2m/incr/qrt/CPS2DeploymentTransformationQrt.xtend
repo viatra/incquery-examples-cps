@@ -8,12 +8,14 @@ import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.CpsXformM2M
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.ApplicationRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.HostRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.util.PerJobFixedPriorityConflictResolver
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.api.ExecutionSchema
 import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas
 import org.eclipse.incquery.runtime.evm.specific.Schedulers
 
 import static com.google.common.base.Preconditions.*
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.StateMachineRules
 
 class CPS2DeploymentTransformationQrt {
 
@@ -40,18 +42,25 @@ class CPS2DeploymentTransformationQrt {
 
 		debug("Preparing transformation rules.")
 		watch.reset.start
-
+		
 		val rulesBuilder = ImmutableSet.builder
 		rulesBuilder.addAll(HostRules.getRules(engine))
 		rulesBuilder.addAll(ApplicationRules.getRules(engine))
+		rulesBuilder.addAll(StateMachineRules.getRules(engine));
 		val rules = rulesBuilder.build
-
+		
 		val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)
 		schema = ExecutionSchemas.createIncQueryExecutionSchema(engine, schedulerFactory)
+
+		val fpr = new PerJobFixedPriorityConflictResolver
+
 		rules.forEach [
-			schema.addRule(it)
+			fpr.setPriority(ruleSpecification, priority)
+			schema.addRule(it.ruleSpecification)
 		]
 
+		schema.conflictResolver = fpr;
+		
 		debug('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 
 		debug("Initial execution of transformation rules.")
