@@ -285,6 +285,12 @@
           xsi:type="predicates:LocationPredicate"
           pattern=".*/generator/.*"/>
     </workingSet>
+    <workingSet
+        name="CPS Prototypes">
+      <predicate
+          xsi:type="predicates:LocationPredicate"
+          pattern=".*/prototypes/.*"/>
+    </workingSet>
   </setupTask>
   <stream name="master">
     <setupTask
