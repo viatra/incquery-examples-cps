@@ -42,6 +42,12 @@ class ApplicationTypeGenerationOperation implements IOperation<CPSFragment> {
 				states.add(sm.prepareState(stateName + ".s"+s));
 			}
 			
+			// Initial State
+			if(states.get(0) != null && sm != null){
+				var initState = states.get(0)
+				sm.setInitial(initState)
+			}
+			
 			// Transitions
 			val numberOfTransactions = applicationClass.numberOfTrannsitions.randInt(fragment.random);
 			for(t : 0 ..< numberOfTransactions){
