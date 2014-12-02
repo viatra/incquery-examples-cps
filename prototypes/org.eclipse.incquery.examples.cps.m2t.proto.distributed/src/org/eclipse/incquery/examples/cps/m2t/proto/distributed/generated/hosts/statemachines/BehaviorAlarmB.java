@@ -13,8 +13,8 @@ public enum BehaviorAlarmB implements State<BehaviorAlarmB> {
 	// States
 	AInit {
         @Override
-        public List<BehaviorAlarmB> possibleNextStates(Application app) {
-        	List<BehaviorAlarmB> possibleStates = Lists.newArrayList();
+        public List<State<BehaviorAlarmB>> possibleNextStates(Application app) {
+        	List<State<BehaviorAlarmB>> possibleStates = Lists.newArrayList();
         	
         	// Add Neutral Transitions
         	
@@ -40,8 +40,8 @@ public enum BehaviorAlarmB implements State<BehaviorAlarmB> {
     },
     ASent {
         @Override
-        public List<BehaviorAlarmB> possibleNextStates(Application app) {
-        	List<BehaviorAlarmB> possibleStates = Lists.newArrayList();
+        public List<State<BehaviorAlarmB>> possibleNextStates(Application app) {
+        	List<State<BehaviorAlarmB>> possibleStates = Lists.newArrayList();
         	
         	// Add Neutral Transitions
         	possibleStates.add(AInit);
@@ -62,7 +62,7 @@ public enum BehaviorAlarmB implements State<BehaviorAlarmB> {
 	 /////////////////
 	// General part
 	@Override
-	abstract public List<BehaviorAlarmB> possibleNextStates(Application app);
+	abstract public List<State<BehaviorAlarmB>> possibleNextStates(Application app);
 	
 	@Override
 	public BehaviorAlarmB stepTo(BehaviorAlarmB nextState, Application app){

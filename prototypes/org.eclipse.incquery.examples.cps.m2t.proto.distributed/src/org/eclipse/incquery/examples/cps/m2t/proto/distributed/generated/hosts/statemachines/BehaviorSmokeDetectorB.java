@@ -12,8 +12,8 @@ public enum BehaviorSmokeDetectorB implements State<BehaviorSmokeDetectorB> {
 	// States
 	SDInit {
         @Override
-        public List<BehaviorSmokeDetectorB> possibleNextStates(Application app) {
-        	List<BehaviorSmokeDetectorB> possibleStates = Lists.newArrayList();
+        public List<State<BehaviorSmokeDetectorB>> possibleNextStates(Application app) {
+        	List<State<BehaviorSmokeDetectorB>> possibleStates = Lists.newArrayList();
         	
         	// Add Neutral Transitions
         	
@@ -40,8 +40,8 @@ public enum BehaviorSmokeDetectorB implements State<BehaviorSmokeDetectorB> {
     },
     SDSent {
         @Override
-        public List<BehaviorSmokeDetectorB> possibleNextStates(Application app) {
-        	List<BehaviorSmokeDetectorB> possibleStates = Lists.newArrayList();
+        public List<State<BehaviorSmokeDetectorB>> possibleNextStates(Application app) {
+        	List<State<BehaviorSmokeDetectorB>> possibleStates = Lists.newArrayList();
         	
         	// Add Neutral Transitions
         	possibleStates.add(SDInit);
@@ -60,7 +60,7 @@ public enum BehaviorSmokeDetectorB implements State<BehaviorSmokeDetectorB> {
 	 /////////////////
 	// General part
 	@Override
-	abstract public List<BehaviorSmokeDetectorB> possibleNextStates(Application app);
+	abstract public List<State<BehaviorSmokeDetectorB>> possibleNextStates(Application app);
 	
 	@Override
 	public BehaviorSmokeDetectorB stepTo(BehaviorSmokeDetectorB nextState, Application app){

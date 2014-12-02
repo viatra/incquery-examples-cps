@@ -12,8 +12,8 @@ public enum BehaviorISSBState implements State<BehaviorISSBState>{
 	// States
 	ISSWait {
         @Override
-        public List<BehaviorISSBState> possibleNextStates(Application app) {
-        	List<BehaviorISSBState> possibleStates = Lists.newArrayList();
+        public List<State<BehaviorISSBState>> possibleNextStates(Application app) {
+        	List<State<BehaviorISSBState>> possibleStates = Lists.newArrayList();
         	
         	// Add Neutral Transitions
         	
@@ -29,8 +29,8 @@ public enum BehaviorISSBState implements State<BehaviorISSBState>{
     },
     ISSReceived {
         @Override
-        public List<BehaviorISSBState> possibleNextStates(Application app) {
-        	List<BehaviorISSBState> possibleStates = Lists.newArrayList();
+        public List<State<BehaviorISSBState>> possibleNextStates(Application app) {
+        	List<State<BehaviorISSBState>> possibleStates = Lists.newArrayList();
         	
         	// Add Neutral Transitions
         	possibleStates.add(ISSWait);
@@ -50,8 +50,10 @@ public enum BehaviorISSBState implements State<BehaviorISSBState>{
 	
 	 /////////////////
 	// General part
-	abstract public List<BehaviorISSBState> possibleNextStates(Application app);
+	@Override
+	abstract public List<State<BehaviorISSBState>> possibleNextStates(Application app);
 	
+	@Override
 	public BehaviorISSBState stepTo(BehaviorISSBState nextState, Application app){
 		if(possibleNextStates(app).contains(nextState)){
 			return nextState;

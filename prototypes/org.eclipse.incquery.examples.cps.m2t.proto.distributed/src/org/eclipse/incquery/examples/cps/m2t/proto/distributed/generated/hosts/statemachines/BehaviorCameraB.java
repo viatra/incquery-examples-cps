@@ -12,8 +12,8 @@ public enum BehaviorCameraB implements State<BehaviorCameraB>{
 	// States
 	CInit {
         @Override
-        public List<BehaviorCameraB> possibleNextStates(Application app) {
-        	List<BehaviorCameraB> possibleStates = Lists.newArrayList();
+        public List<State<BehaviorCameraB>> possibleNextStates(Application app) {
+        	List<State<BehaviorCameraB>> possibleStates = Lists.newArrayList();
         	
         	// Add Neutral Transitions
         	
@@ -39,8 +39,8 @@ public enum BehaviorCameraB implements State<BehaviorCameraB>{
     },
     CSent {
         @Override
-        public List<BehaviorCameraB> possibleNextStates(Application app) {
-        	List<BehaviorCameraB> possibleStates = Lists.newArrayList();
+        public List<State<BehaviorCameraB>> possibleNextStates(Application app) {
+        	List<State<BehaviorCameraB>> possibleStates = Lists.newArrayList();
         	
         	// Add Neutral Transitions
         	possibleStates.add(CInit);
@@ -59,7 +59,7 @@ public enum BehaviorCameraB implements State<BehaviorCameraB>{
 	 /////////////////
 	// General part
 	@Override
-	abstract public List<BehaviorCameraB> possibleNextStates(Application app);
+	abstract public List<State<BehaviorCameraB>> possibleNextStates(Application app);
 	
 	@Override
 	public BehaviorCameraB stepTo(BehaviorCameraB nextState, Application app){
