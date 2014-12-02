@@ -1,9 +1,10 @@
-package org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.statemachines;
+package org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated.hosts.statemachines;
 
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications.Application;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.Application;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.statemachines.State;
 
 import com.google.common.collect.Lists;
 

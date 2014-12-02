@@ -1,6 +1,6 @@
-package org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts;
+package org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.hosts;
 
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications.Application;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.Application;
 
 public interface Host {
 

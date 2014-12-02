@@ -1,13 +1,13 @@
-package org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts;
+package org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.hosts;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.communicationlayer.CommunicationNetwork;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications.Application;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.statemachines.State;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.Application;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.statemachines.State;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.communicationlayer.CommunicationNetwork;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Lists;

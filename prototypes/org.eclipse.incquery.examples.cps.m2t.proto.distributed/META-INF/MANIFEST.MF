@@ -8,8 +8,11 @@ Bundle-Vendor: IncQueryLabs Ltd.
 Require-Bundle: org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
  com.google.guava;bundle-version="15.0.0",
  org.apache.log4j;bundle-version="1.2.15"
-Export-Package: org.eclipse.incquery.examples.cps.m2t.proto.distributed,
- org.eclipse.incquery.examples.cps.m2t.proto.distributed.communicationlayer,
- org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts,
- org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications,
- org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.statemachines
+Export-Package: org.eclipse.incquery.examples.cps.m2t.proto.distributed.general,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.statemachines,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.communicationlayer,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.hosts,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated.applications,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated.hosts,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated.hosts.statemachines

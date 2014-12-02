@@ -2,12 +2,12 @@ package org.eclipse.incquery.examples.cps.m2t.proto.distributed.tests;
 
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.HostRunner;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.communicationlayer.CommunicationNetwork;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.Host152661025;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.Host152661026;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications.Application;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.statemachines.BehaviorCameraB;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.HostRunner;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.Application;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.communicationlayer.CommunicationNetwork;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated.hosts.Host152661025;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated.hosts.Host152661026;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated.hosts.statemachines.BehaviorCameraB;
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase;
 import org.junit.Test;
 

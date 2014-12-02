@@ -1,10 +1,10 @@
-package org.eclipse.incquery.examples.cps.m2t.proto.distributed.communicationlayer;
+package org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.communicationlayer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.HostRunner;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.HostRunner;
 
 public class CommunicationNetwork {
 	private static Logger logger = Logger.getLogger("cps.proto.distributed.commnetwork"); 

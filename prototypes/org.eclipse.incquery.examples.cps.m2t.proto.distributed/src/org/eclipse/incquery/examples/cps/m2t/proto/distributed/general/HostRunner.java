@@ -1,7 +1,7 @@
-package org.eclipse.incquery.examples.cps.m2t.proto.distributed;
+package org.eclipse.incquery.examples.cps.m2t.proto.distributed.general;
 
 import org.apache.log4j.Logger;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.Host;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.hosts.Host;
 
 public class HostRunner implements Runnable  {
 

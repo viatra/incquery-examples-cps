@@ -1,7 +1,7 @@
-package org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications;
+package org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications;
 
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.Host;
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.statemachines.State;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.statemachines.State;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.hosts.Host;
 
 public abstract class BaseApplication<StateType extends State> implements Application {
 
