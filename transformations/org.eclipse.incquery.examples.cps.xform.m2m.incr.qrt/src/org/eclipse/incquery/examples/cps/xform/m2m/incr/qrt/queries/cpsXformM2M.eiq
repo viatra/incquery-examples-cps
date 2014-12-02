@@ -29,6 +29,15 @@ pattern stateMachine(appInstance, stateMachine) {
 	ApplicationType.behavior(appType, stateMachine);
 }
 
+pattern state(appInstance, stateMachine, state) {
+	find stateMachine(appInstance, stateMachine);
+	StateMachine.states(stateMachine, state);
+}
+
+pattern depBehaviorsState(depBehavior, depState) {
+	DeploymentBehavior.states(depBehavior, depState);
+}
+
 pattern allocatedDeploymentApplication(depHost, depApp) {
 	DeploymentHost.applications(depHost, depApp);
 }
