@@ -1,5 +1,6 @@
 package org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts;
 
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.communicationlayer.CommunicationNetwork;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications.AlarmApplication;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications.Application;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications.CameraApplication;
@@ -10,7 +11,8 @@ import com.google.common.collect.Lists;
 
 public class Host152661026 extends BaseHost {
 	
-	public Host152661026() {
+	public Host152661026(CommunicationNetwork network) {
+		super(network);
 		// Add Applications of Host
 		applications = Lists.<Application>newArrayList(
 				new CameraApplication(this),

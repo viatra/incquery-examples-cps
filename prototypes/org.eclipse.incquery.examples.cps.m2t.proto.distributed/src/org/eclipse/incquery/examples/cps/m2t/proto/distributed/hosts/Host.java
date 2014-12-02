@@ -4,6 +4,5 @@ public interface Host {
 
 	boolean hasMessageFor(String appID, String trigger);
 	void sendTrigger(String trgHostIP, String trgAppID, String trgTransactionID);
-	
 	void receiveTrigger(String trgAppID, String trgTransactionID);
 }
