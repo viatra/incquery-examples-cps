@@ -14,5 +14,10 @@ public class AlarmApplication extends BaseApplication<BehaviorAlarmB> {
 		// Set initial State
 		currentState = BehaviorAlarmB.AInit;
 	}
+
+	@Override
+	public String getAppID() {
+		return APP_ID;
+	}
 	
 }

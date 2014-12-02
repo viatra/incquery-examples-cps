@@ -29,7 +29,7 @@ public enum BehaviorSmokeDetectorB implements State<BehaviorSmokeDetectorB> {
         	// Send triggers
         	if(nextState == SDSent){
         		// Send to all corresponding App Instances on all Host Instances (send to N waiter)
-        		app.sendTrigger("152.6.102.5", "IBM System Storage", "ISSReceiving");
+        		app.sendTrigger("152.66.102.5", "IBM System Storage", "ISSReceiving");
         		return nextState;
         	}
         	
@@ -58,8 +58,10 @@ public enum BehaviorSmokeDetectorB implements State<BehaviorSmokeDetectorB> {
     
 	 /////////////////
 	// General part
+	@Override
 	abstract public List<BehaviorSmokeDetectorB> possibleNextStates(Application app);
 	
+	@Override
 	public BehaviorSmokeDetectorB stepTo(BehaviorSmokeDetectorB nextState, Application app){
 		if(possibleNextStates(app).contains(nextState)){
 			return nextState;

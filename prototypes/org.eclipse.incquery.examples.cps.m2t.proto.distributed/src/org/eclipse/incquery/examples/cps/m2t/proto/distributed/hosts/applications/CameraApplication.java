@@ -15,4 +15,9 @@ public class CameraApplication extends BaseApplication<BehaviorCameraB> {
 		currentState = BehaviorCameraB.CInit;
 	}
 	
+	@Override
+	public String getAppID() {
+		return APP_ID;
+	}
+	
 }

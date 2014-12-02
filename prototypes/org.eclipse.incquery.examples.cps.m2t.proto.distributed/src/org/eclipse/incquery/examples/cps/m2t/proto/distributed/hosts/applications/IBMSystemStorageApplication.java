@@ -15,4 +15,9 @@ public class IBMSystemStorageApplication extends BaseApplication<BehaviorISSBSta
 		currentState = BehaviorISSBState.ISSWait;
 	}
 	
+	@Override
+	public String getAppID() {
+		return APP_ID;
+	}
+	
 }

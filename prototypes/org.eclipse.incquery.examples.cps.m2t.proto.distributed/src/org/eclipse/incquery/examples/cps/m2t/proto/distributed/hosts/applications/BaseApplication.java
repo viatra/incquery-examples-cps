@@ -1,18 +1,16 @@
 package org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.applications;
 
-import org.apache.log4j.Logger;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.Host;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.hosts.statemachines.State;
 
-public class BaseApplication<StateType extends State> implements Application {
+public abstract class BaseApplication<StateType extends State> implements Application {
 
-	private static Logger logger = Logger.getLogger("cps.proto.distributed.application");
 	
 	protected StateType currentState;
 	protected Host host;
 
-	// Add current ApplicationID
-	protected static final String APP_ID = "";
+	@Override
+	abstract public String getAppID();
 	
 	public BaseApplication(Host host) {
 		this.host = host;
@@ -25,12 +23,19 @@ public class BaseApplication<StateType extends State> implements Application {
 
 	@Override
 	public boolean hasMessageFor(String trigger) {
-		return host.hasMessageFor(APP_ID, trigger);
+		return host.hasMessageFor(getAppID(), trigger);
 	}
 
 	@Override
 	public void sendTrigger(String trgHostIP, String trgAppID, String trgTransactionID) {
 		host.sendTrigger(trgHostIP, trgAppID, trgTransactionID);
+	}
+
+	@Override
+	public void stepToState(State nextState) {
+		// TODO ...
+		State newState = currentState.stepTo(nextState, this);
+		currentState = (StateType) newState;
 	}
 
 }

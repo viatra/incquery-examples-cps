@@ -58,9 +58,14 @@ public abstract class BaseHost implements Host{
 	
 	@Override
 	public synchronized void receiveTrigger(String trgAppID, String trgTransactionID) {
-		logger.info("Received trigger[ AppID: " + trgAppID + " TriggerID: " + trgTransactionID + "]");
+		logger.info("Received trigger[ AppID: " + trgAppID + ", TriggerID: " + trgTransactionID + "]");
 		
 		triggers.put(trgAppID, trgTransactionID, new Date());
+	}
+	
+	@Override
+	public Iterable<Application> getApplications(){
+		return applications;
 	}
 	
 }

@@ -15,4 +15,9 @@ public class SmokeDetectorApplication extends BaseApplication<BehaviorSmokeDetec
 		currentState = BehaviorSmokeDetectorB.SDInit;
 	}
 	
+	@Override
+	public String getAppID() {
+		return APP_ID;
+	}
+	
 }

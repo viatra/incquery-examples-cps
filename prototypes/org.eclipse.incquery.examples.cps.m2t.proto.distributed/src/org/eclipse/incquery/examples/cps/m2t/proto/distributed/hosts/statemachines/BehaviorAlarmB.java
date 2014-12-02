@@ -29,7 +29,7 @@ public enum BehaviorAlarmB implements State<BehaviorAlarmB> {
         public BehaviorAlarmB stepTo(BehaviorAlarmB nextState, Application app) {
         	// Send triggers
         	if(nextState == ASent){
-        		app.sendTrigger("152.6.102.5", "IBM System Storage", "ISSReceiving");
+        		app.sendTrigger("152.66.102.5", "IBM System Storage", "ISSReceiving");
         		return super.stepTo(nextState, app); // TODO remove--> else if needed!
         	}
         	

@@ -12,6 +12,7 @@ public class CommunicationNetwork {
 	Map<String, HostRunner> hosts = new HashMap<String, HostRunner>();
 	
 	public void addHost(String ipAddress, HostRunner hostRunner){
+		logger.info("Host added: " + ipAddress);
 		hosts.put(ipAddress, hostRunner);
 	}
 	

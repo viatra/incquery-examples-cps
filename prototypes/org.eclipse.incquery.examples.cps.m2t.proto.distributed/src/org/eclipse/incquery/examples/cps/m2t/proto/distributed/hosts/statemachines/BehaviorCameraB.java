@@ -28,7 +28,7 @@ public enum BehaviorCameraB implements State<BehaviorCameraB>{
         public BehaviorCameraB stepTo(BehaviorCameraB nextState, Application app) {
         	// Send triggers
         	if(nextState == CSent){
-        		app.sendTrigger("152.6.102.5", "IBM System Storage", "ISSReceiving");
+        		app.sendTrigger("152.66.102.5", "IBM System Storage", "ISSReceiving");
         		return nextState;
         	}
         	
@@ -57,8 +57,10 @@ public enum BehaviorCameraB implements State<BehaviorCameraB>{
     
 	 /////////////////
 	// General part
+	@Override
 	abstract public List<BehaviorCameraB> possibleNextStates(Application app);
 	
+	@Override
 	public BehaviorCameraB stepTo(BehaviorCameraB nextState, Application app){
 		if(possibleNextStates(app).contains(nextState)){
 			return nextState;
