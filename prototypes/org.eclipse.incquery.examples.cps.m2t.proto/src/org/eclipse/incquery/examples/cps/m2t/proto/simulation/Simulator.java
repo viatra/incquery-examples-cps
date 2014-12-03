@@ -1,6 +1,7 @@
 package org.eclipse.incquery.examples.cps.m2t.proto.simulation;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.incquery.examples.cps.m2t.proto.elements.Application;
@@ -78,7 +79,7 @@ public class Simulator {
 		aInit.addOutgoingTransition(aSending);
 		aSending.setTargetState(aSent);
 		aSending.setTriggeredTransition(issReceiving);
-		
+
 		Application detector = new Application();
 		host2.addApp(detector);
 		apps.add(detector);
@@ -102,8 +103,44 @@ public class Simulator {
 
 	public static <E> void main(String[] args) {
 		initDeployment();
-		
-		
+
+		Iterator<Application> appIterator = apps.iterator();
+		while (true) {
+			
+			if(appIterator.hasNext() == false){
+				appIterator = apps.iterator();
+			}
+			
+			Application app = appIterator.next();
+			
+			List<Transition> enabledTransitions = app.getCurrentState().getOutgoingTransitions();
+			// Fire a transition (only one for each application), when
+			// * enabled and triggers a transition that is also enabled (first priority) 
+			// This case both the triggering and the triggered are fired
+			for (Transition transition : enabledTransitions) {
+				Transition triggeredTransition = transition.getTriggeredTransition();
+				if (triggeredTransition != null) {
+
+					State sourceState = triggeredTransition.getSourceState();
+					Application targetApplication = sourceState.getApplication();
+					if(sourceState == targetApplication.getCurrentState()) {
+						app.setCurrent(transition.getTargetState());
+						targetApplication.setCurrent(triggeredTransition.getTargetState());
+						continue;
+					}
+				}
+			}
+			for (Transition transition : enabledTransitions) {
+				Transition triggeredTransition = transition.getTriggeredTransition();
+				// * enabled and triggers no transition (third priority)
+				if (transition.getTriggeredTransition() == null && triggeredTransition == null) {					
+						app.setCurrent(transition.getTargetState());
+						continue;
+				}
+			}
+		}
+
+
 	}
 
 }

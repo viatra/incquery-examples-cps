@@ -11,6 +11,7 @@ public class State {
 	
 	public void addOutgoingTransition(Transition t) {
 		outgoingTransitions.add(t);
+		t.setSourceState(this);
 	}
 	
 	public List<Transition> getOutgoingTransitions() {
