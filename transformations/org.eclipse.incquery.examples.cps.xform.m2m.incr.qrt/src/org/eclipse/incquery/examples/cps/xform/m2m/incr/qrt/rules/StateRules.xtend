@@ -67,24 +67,24 @@ class StateMapping extends AbstractRule<StateMatch> {
 				val state = match.state
 				val stateId = state.id
 				debug('''Updating mapped state with ID: «stateId»''')
-				val depStates = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.state).filter(
-					BehaviorState)
-				depStates.forEach [
-					val depBehavior = engine.depBehaviorsState.getAllValuesOfdepBehavior(it).head
-					val oldDesc = description
-					if (oldDesc != stateId) {
-						trace('''ID changed to «stateId»''')
-						description = stateId
+				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).filter(
+					DeploymentApplication).head
+				val depState = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.state).filter(
+					BehaviorState).findFirst[depApp.behavior.states.contains(it)]
+				val depBehavior = depApp.behavior
+				val oldDesc = depState.description
+				if (oldDesc != stateId) {
+					trace('''ID changed to «stateId»''')
+					depState.description = stateId
+				}
+				val initState = match.stateMachine.initial
+				if (state == initState) {
+					val currentState = depBehavior.current
+					if (currentState != depState) {
+						trace('''Current state changed to «stateId»''')
+						depBehavior.current = depState
 					}
-					val initState = match.stateMachine.initial
-					if (state == initState) {
-						val currentState = depBehavior.current
-						if (currentState != it) {
-							trace('''Current state changed to «stateId»''')
-							depBehavior.current = it
-						}
-					}
-				]
+				}
 				debug('''Updated mapped state with ID: «stateId»''')
 			])
 	}
@@ -94,7 +94,8 @@ class StateMapping extends AbstractRule<StateMatch> {
 			[ StateMatch match |
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).head as DeploymentApplication
 				val depBehavior = depApp.behavior
-				val depState = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.state).filter(BehaviorState).findFirst[depApp.behavior.states.contains(it)];
+				val depState = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.state).filter(
+					BehaviorState).findFirst[depApp.behavior.states.contains(it)];
 				val stateId = depState.description
 				logger.debug('''Removing state with ID: «stateId»''')
 				if (depBehavior != null) {

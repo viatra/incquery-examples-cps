@@ -34,8 +34,16 @@ pattern state(appInstance, stateMachine, state) {
 	StateMachine.states(stateMachine, state);
 }
 
-pattern depBehaviorsState(depBehavior, depState) {
+pattern transition(appInstance, srcState, targetState, transition) {
+	find state(appInstance, stateMachine, srcState);
+	State.outgoingTransitions(srcState, transition);
+	Transition.targetState(transition, targetState);
+	StateMachine.states(stateMachine, targetState);
+}
+
+pattern depBehaviorsStateAndTransitions(depBehavior, depState, depTransition) {
 	DeploymentBehavior.states(depBehavior, depState);
+	DeploymentBehavior.transitions(depBehavior, depTransition);
 }
 
 pattern allocatedDeploymentApplication(depHost, depApp) {
