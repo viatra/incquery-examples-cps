@@ -12,6 +12,7 @@ public class Application {
 	
 	public void addState(State s) {
 		states.add(s);
+		s.setApplication(this);
 	}
 	
 	public void addTransition(Transition t) {

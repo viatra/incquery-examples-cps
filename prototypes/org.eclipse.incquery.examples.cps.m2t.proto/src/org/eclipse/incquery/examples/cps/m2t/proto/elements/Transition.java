@@ -1,38 +1,45 @@
 package org.eclipse.incquery.examples.cps.m2t.proto.elements;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Transition {
 	
 	private State targetState;
+	private State sourceState;
 	
-	private List<Transition> triggeredTransitions;
+	private Transition triggeredTransition;
 	private Transition triggeredBy;
 	
-	public Transition() {
-		triggeredTransitions = new ArrayList<Transition>();
-	}
-	
-	public void addTriggeredTransition(Transition t){
-		triggeredTransitions.add(t);
+	public void setTriggeredTransition(Transition t){
+		triggeredTransition = t;
 		t.triggeredBy = this;
 	}
 	
-	public void setTrigger(Transition t){
-		t.addTriggeredTransition(this);
+	public Transition getTriggeredTransition() {
+		return triggeredTransition;
+	}
+	
+	public void setTriggeredBy(Transition t){
+		t.setTriggeredTransition(this);
 	}
 	
 	public Transition getTriggeredBy() {
 		return triggeredBy;
 	}
 	
+	public State getTargetState() {
+		return targetState;
+	}
+
 	public void setTargetState(State s) {
 		targetState = s;
 	}
-	
-	public State getTargetState() {
-		return targetState;
+
+	public State getSourceState() {
+		return sourceState;
+	}
+
+	public void setSourceState(State sourceState) {
+		this.sourceState = sourceState;
 	}
 	
 	
