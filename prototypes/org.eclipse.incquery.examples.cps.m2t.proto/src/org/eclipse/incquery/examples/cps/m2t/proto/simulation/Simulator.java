@@ -11,10 +11,19 @@ import org.eclipse.incquery.examples.cps.m2t.proto.elements.Transition;
 
 public class Simulator {
 
-	static List<Application> apps = new ArrayList<Application>();
+	private List<Application> apps ;
+	private Iterator<Application> appIterator;
 
+	public List<Application> getApplications() {
+		return apps;
+	}
+	
+	public Simulator() {
+		apps = new ArrayList<Application>();
+	}
+	
 	// The contents of this method will be generated
-	public static void initDeployment() {
+	public void initDeployment() {
 
 		// Host 1 creation
 
@@ -99,48 +108,40 @@ public class Simulator {
 		sdSending.setTargetState(sdSent);
 		sdSending.setTriggeredTransition(issReceiving);
 
+		appIterator = apps.iterator();
 	}
 
-	public static <E> void main(String[] args) {
-		initDeployment();
+	public void stepSimulation() {
+		if(appIterator.hasNext() == false){
+			appIterator = apps.iterator();
+		}
+		
+		Application app = appIterator.next();
+		
+		List<Transition> enabledTransitions = app.getCurrentState().getOutgoingTransitions();
+		// Fire a transition (only one for each application), when
+		// * enabled and triggers a transition that is also enabled (first priority) 
+		// This case both the triggering and the triggered are fired
+		for (Transition transition : enabledTransitions) {
+			Transition triggeredTransition = transition.getTriggeredTransition();
+			if (triggeredTransition != null) {
 
-		Iterator<Application> appIterator = apps.iterator();
-		while (true) {
-			
-			if(appIterator.hasNext() == false){
-				appIterator = apps.iterator();
-			}
-			
-			Application app = appIterator.next();
-			
-			List<Transition> enabledTransitions = app.getCurrentState().getOutgoingTransitions();
-			// Fire a transition (only one for each application), when
-			// * enabled and triggers a transition that is also enabled (first priority) 
-			// This case both the triggering and the triggered are fired
-			for (Transition transition : enabledTransitions) {
-				Transition triggeredTransition = transition.getTriggeredTransition();
-				if (triggeredTransition != null) {
-
-					State sourceState = triggeredTransition.getSourceState();
-					Application targetApplication = sourceState.getApplication();
-					if(sourceState == targetApplication.getCurrentState()) {
-						app.setCurrent(transition.getTargetState());
-						targetApplication.setCurrent(triggeredTransition.getTargetState());
-						continue;
-					}
-				}
-			}
-			for (Transition transition : enabledTransitions) {
-				Transition triggeredTransition = transition.getTriggeredTransition();
-				// * enabled and triggers no transition (third priority)
-				if (transition.getTriggeredTransition() == null && triggeredTransition == null) {					
-						app.setCurrent(transition.getTargetState());
-						continue;
+				State sourceState = triggeredTransition.getSourceState();
+				Application targetApplication = sourceState.getApplication();
+				if(sourceState == targetApplication.getCurrentState()) {
+					app.setCurrent(transition.getTargetState());
+					targetApplication.setCurrent(triggeredTransition.getTargetState());
+					continue;
 				}
 			}
 		}
-
-
+		for (Transition transition : enabledTransitions) {
+			// * enabled and triggers no transition (third priority)
+			if (transition.getTriggeredTransition() == null && transition.getTriggeredBy() == null) {					
+					app.setCurrent(transition.getTargetState());
+					continue;
+			}
+		}
 	}
 
 }

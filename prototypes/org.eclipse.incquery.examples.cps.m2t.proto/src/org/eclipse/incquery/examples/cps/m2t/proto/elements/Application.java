@@ -22,6 +22,10 @@ public class Application {
 	public State getCurrentState() {
 		return currentState;
 	}
+	
+	public List<State> getStates() {
+		return states;
+	}
 
 	public void setCurrent(State s) {
 		this.currentState = s;
