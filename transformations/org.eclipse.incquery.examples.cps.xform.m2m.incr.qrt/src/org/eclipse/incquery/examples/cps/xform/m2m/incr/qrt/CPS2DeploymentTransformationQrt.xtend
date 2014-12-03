@@ -18,6 +18,7 @@ import static com.google.common.base.Preconditions.*
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.StateMachineRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.StateRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.TransitionRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.TriggerRules
 
 class CPS2DeploymentTransformationQrt {
 
@@ -26,51 +27,62 @@ class CPS2DeploymentTransformationQrt {
 
 	ExecutionSchema schema = null
 
-	def execute(CPSToDeployment mapping, IncQueryEngine engine) {
-		checkArgument(mapping != null, "Mapping cannot be null!")
-		checkArgument(mapping.cps != null, "CPS not defined in mapping!")
-		checkArgument(mapping.deployment != null, "Deployment not defined in mapping!")
+	CPSToDeployment cps2dep
+	IncQueryEngine engine
+
+	def initialize(CPSToDeployment cps2dep, IncQueryEngine engine) {
+		checkArgument(cps2dep != null, "Mapping cannot be null!")
+		checkArgument(cps2dep.cps != null, "CPS not defined in mapping!")
+		checkArgument(cps2dep.deployment != null, "Deployment not defined in mapping!")
 		checkArgument(engine != null, "Engine cannot be null!")
 
-		info(
-			'''
-			Executing transformation on:
-				Cyber-physical system: «mapping.cps.id»''')
+		this.cps2dep = cps2dep
+		this.engine = engine
 
 		debug("Preparing queries on engine.")
 		val watch = Stopwatch.createStarted
 		prepare(engine)
-		debug('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+	}
 
-		debug("Preparing transformation rules.")
-		watch.reset.start
-		
-		val rulesBuilder = ImmutableSet.builder
-		rulesBuilder.addAll(HostRules.getRules(engine))
-		rulesBuilder.addAll(ApplicationRules.getRules(engine))
-		rulesBuilder.addAll(StateMachineRules.getRules(engine));
-		rulesBuilder.addAll(StateRules.getRules(engine));
-		rulesBuilder.addAll(TransitionRules.getRules(engine));
-		val rules = rulesBuilder.build
-		
-		val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)
-		schema = ExecutionSchemas.createIncQueryExecutionSchema(engine, schedulerFactory)
+	def execute() {
+		if (schema == null) {
+			info(
+				'''
+				Executing transformation on:
+					Cyber-physical system: «cps2dep.cps.id»''')
 
-		val fpr = new PerJobFixedPriorityConflictResolver
+			debug("Preparing transformation rules.")
+			val watch = Stopwatch.createStarted
 
-		rules.forEach [
-			fpr.setPriority(ruleSpecification, priority)
-			schema.addRule(it.ruleSpecification)
-		]
+			val rulesBuilder = ImmutableSet.builder
+			rulesBuilder.addAll(HostRules.getRules(engine))
+			rulesBuilder.addAll(ApplicationRules.getRules(engine))
+			rulesBuilder.addAll(StateMachineRules.getRules(engine));
+			rulesBuilder.addAll(StateRules.getRules(engine));
+			rulesBuilder.addAll(TransitionRules.getRules(engine));
+			rulesBuilder.addAll(TriggerRules.getRules(engine));
+			val rules = rulesBuilder.build
 
-		schema.conflictResolver = fpr;
-		
-		debug('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+			val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)
+			schema = ExecutionSchemas.createIncQueryExecutionSchema(engine, schedulerFactory)
 
-		debug("Initial execution of transformation rules.")
-		watch.reset.start
-		schema.startUnscheduledExecution
-		debug('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+			val fpr = new PerJobFixedPriorityConflictResolver
+
+			rules.forEach [
+				fpr.setPriority(ruleSpecification, priority)
+				schema.addRule(it.ruleSpecification)
+			]
+
+			schema.conflictResolver = fpr;
+
+			info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+
+			debug("Initial execution of transformation rules.")
+			watch.reset.start
+			schema.startUnscheduledExecution
+			info('''Initial execution of transformation rules finished («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		}
 	}
 
 	def dispose() {

@@ -1,14 +1,13 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules
 
+import org.eclipse.incquery.examples.cps.deployment.BehaviorState
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
-import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.StateMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.evm.specific.Jobs
 import org.eclipse.incquery.runtime.evm.specific.Lifecycles
 import org.eclipse.incquery.runtime.evm.specific.Rules
 import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
-import org.eclipse.incquery.examples.cps.deployment.BehaviorState
 
 class StateRules {
 	static def getRules(IncQueryEngine engine) {
