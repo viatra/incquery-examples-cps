@@ -7,4 +7,10 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
 Require-Bundle: org.eclipse.xtend;bundle-version="2.0.0",
  org.eclipse.xtext.xbase.lib;bundle-version="2.6.0",
- org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0"
+ org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
+ org.eclipse.incquery.runtime;bundle-version="0.8.1",
+ org.apache.log4j;bundle-version="1.2.15"
+Export-Package: org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.api,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.exceptions,
+ org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.utils
