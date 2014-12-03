@@ -17,6 +17,7 @@ import org.eclipse.incquery.runtime.evm.specific.Schedulers
 import static com.google.common.base.Preconditions.*
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.StateMachineRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.StateRules
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.TransitionRules
 
 class CPS2DeploymentTransformationQrt {
 
@@ -49,6 +50,7 @@ class CPS2DeploymentTransformationQrt {
 		rulesBuilder.addAll(ApplicationRules.getRules(engine))
 		rulesBuilder.addAll(StateMachineRules.getRules(engine));
 		rulesBuilder.addAll(StateRules.getRules(engine));
+		rulesBuilder.addAll(TransitionRules.getRules(engine));
 		val rules = rulesBuilder.build
 		
 		val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)
