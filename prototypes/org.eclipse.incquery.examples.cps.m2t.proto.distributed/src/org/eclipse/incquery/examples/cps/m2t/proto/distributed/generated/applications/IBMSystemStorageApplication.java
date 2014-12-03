@@ -7,6 +7,7 @@ import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated.hosts.s
 
 public class IBMSystemStorageApplication extends BaseApplication<BehaviorISSBState> {
 
+	// Set ApplicationID
 	protected static final String APP_ID = "IBM System Storage";
 
 	public IBMSystemStorageApplication(Host host) {
