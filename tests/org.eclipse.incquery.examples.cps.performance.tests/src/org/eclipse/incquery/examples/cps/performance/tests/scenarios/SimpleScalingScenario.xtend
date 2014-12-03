@@ -7,11 +7,11 @@ import java.util.Map
 import java.util.Random
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
+import org.eclipse.incquery.examples.cps.generator.dtos.BuildableCPSConstraint
 import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.BuildableCPSConstraint
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
+import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 
 class SimpleScalingScenario implements IScenario {

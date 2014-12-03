@@ -1,5 +1,6 @@
 package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
+import com.google.common.base.Joiner
 import com.google.common.base.Stopwatch
 import java.util.Random
 import java.util.concurrent.TimeUnit
@@ -7,28 +8,27 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
+import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
+import org.eclipse.incquery.examples.cps.generator.dtos.DeploymentStats
+import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
+import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
+import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.performance.tests.benchmark.BenchmarkResult
 import org.eclipse.incquery.examples.cps.performance.tests.queries.QueryRegressionTest
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
+import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
+import org.junit.FixMethodOrder
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
-import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
-import org.eclipse.incquery.examples.cps.generator.dtos.DeploymentStats
-import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
-import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
-import org.junit.FixMethodOrder
 import org.junit.runners.MethodSorters
-import com.google.common.base.Joiner
+import org.junit.runners.Parameterized
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(Parameterized)

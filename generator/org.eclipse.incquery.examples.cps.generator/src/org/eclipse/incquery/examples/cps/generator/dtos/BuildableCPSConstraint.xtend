@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.tests.constraints
+package org.eclipse.incquery.examples.cps.generator.dtos
 
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData

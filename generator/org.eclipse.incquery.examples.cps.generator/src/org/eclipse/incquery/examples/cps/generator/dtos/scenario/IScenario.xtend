@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios
+package org.eclipse.incquery.examples.cps.generator.dtos.scenario
 
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 

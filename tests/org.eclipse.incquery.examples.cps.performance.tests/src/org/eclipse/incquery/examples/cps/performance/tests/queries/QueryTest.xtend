@@ -7,9 +7,9 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.BasicScenario
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.IScenario
+import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
+import org.eclipse.incquery.examples.cps.performance.tests.scenarios.SimpleScalingScenario
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.CpsXformM2M
@@ -20,7 +20,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
-import org.eclipse.incquery.examples.cps.performance.tests.scenarios.SimpleScalingScenario
 
 @RunWith(Parameterized)
 class QueryTest extends CPSTestBase{
