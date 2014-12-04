@@ -68,7 +68,7 @@ public class GeneratorTest extends CPSTestBase {
 		IncQueryEngine engine = AdvancedIncQueryEngine.on(model);
 		DeploymentQueries.instance().prepare(engine);
 		
-		ICPSGenerator generator = new Generator("org.alma", engine);
+		ICPSGenerator generator = new Generator("org.alma", engine, false);
 		try{
 			for(DeploymentHost host : model.getHosts()){
 				logger.info(generator.generateHostCode(host));

@@ -53,15 +53,15 @@ val seed = 11111
 			.build
 			
 		val scales = ImmutableList.<Integer>builder
-//	        .add(1)
+	        .add(1)
 			.add(8)
 			.add(16)
         	.add(32)
-//        	.add(64)
-//        	.add(128)
-//        	.add(256)
-//        	.add(512)
-//        	.add(1024)
+        	.add(64)
+        	.add(128)
+        	.add(256)
+        	.add(512)
+        	.add(1024)
 			.build
 			
 		
@@ -98,7 +98,7 @@ val seed = 11111
 				
 				
 				// Generate Code
-				var codeGenerator = new Generator("org.eclipse.incquery.testcode", engine)
+				var codeGenerator = new Generator("org.eclipse.incquery.testcode", engine, false)
 				
 				var sumHostSize = 0 as long
 				var appCount = 0
@@ -112,7 +112,6 @@ val seed = 11111
 					val hostCodeLength = codeGenerator.generateHostCode(host).length;
 					hostTime.stop
 					sumHostSize += hostCodeLength
-//					hostStatsLogger.info(toCSV(scenarioName, scale, hostCodeLength, hostTime.elapsed(TimeUnit.MILLISECONDS)))
 					
 					val actAppCount = appCount
 					val actSumAppSize = sumAppSize

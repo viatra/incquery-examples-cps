@@ -1,7 +1,6 @@
 package org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator
 
 import com.google.common.base.Joiner
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
 import java.util.HashMap
 import org.apache.log4j.Logger
@@ -11,28 +10,39 @@ import org.eclipse.incquery.examples.cps.deployment.Deployment
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
-import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage
+import org.eclipse.incquery.examples.cps.deployment.common.WaitTransitionMatcher
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.exceptions.CPSGeneratorException
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.utils.GeneratorHelper
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
-import org.eclipse.incquery.examples.cps.deployment.common.WaitTransitionMatcher
+import org.eclipse.jdt.core.formatter.CodeFormatter
+import org.eclipse.jdt.core.ToolFactory
 
 class Generator implements ICPSGenerator  {
 	
 	private extension Logger logger = Logger.getLogger("cps.codegenerator")
 	
 	private extension GeneratorHelper helper = new GeneratorHelper
-	val String PROJECT_NAME // = "org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated"
+	val String PROJECT_NAME
 	val IncQueryEngine engine
+	val boolean forceCodeFormatting
+	val CodeFormatter formatter
 	
-	new(String projectName, IncQueryEngine engine){
+	new(String projectName, IncQueryEngine engine, boolean forceCodeFormatting){
 		PROJECT_NAME = projectName
 		this.engine = engine
+		this.forceCodeFormatting = forceCodeFormatting
+		this.formatter = ToolFactory.createCodeFormatter(null);
 	}
 	
-	override generateHostCode(DeploymentHost host) '''
+	override generateHostCode(DeploymentHost host){
+		if(forceCodeFormatting){
+//			formatter.format(CodeFormatter.K_UNKNOWN, host.calculateHostCode, 0, host.calculateHostCode.length, 0, null)
+		}
+		return host.calculateHostCode
+	}
+	
+	def calculateHostCode(DeploymentHost host) '''
 	package «PROJECT_NAME».hosts;
 
 	import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.Application;
