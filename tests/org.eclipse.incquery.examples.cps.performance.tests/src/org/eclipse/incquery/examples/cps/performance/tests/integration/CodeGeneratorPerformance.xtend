@@ -49,8 +49,8 @@ val seed = 11111
 		
 		//(LowSynch, SimpleScaling, ClientServer, PublishSubscribe)
 		val scenarios = ImmutableList.builder
-//        	.add(new ClientServerScenario(rand))
-        	.add(new PublishSubscribeScenario(rand))
+        	.add(new ClientServerScenario(rand))
+//        	.add(new PublishSubscribeScenario(rand))
 			.build
 			
 		val scales = ImmutableList.<Integer>builder
@@ -90,13 +90,12 @@ val seed = 11111
 				// Transform
 				xform.initializeTransformation(cps2dep)
 				xform.executeTransformation
+				xform.cleanupTransformation
 				
-				val engine = AdvancedIncQueryEngine.from(fragment.engine);
+				val engine = AdvancedIncQueryEngine.createUnmanagedEngine(cps2dep.deployment);
 				DeploymentQueries.instance.prepare(engine);
-				
 				val depStats = StatsUtil.generateStatsForDeployment(engine, cps2dep.deployment)
 				depStats.log
-				
 				
 				// Generate Code
 				var codeGenerator = new Generator("org.eclipse.incquery.testcode", engine, false)
@@ -138,7 +137,6 @@ val seed = 11111
 				val usedMemKB = QueryRegressionTest.logMemoryProperties				
 				logFinalStats(scenarioName, scale, cps2dep, appCount, behCount, sumHostSize, sumAppSize, sumBehSize, fullTime, usedMemKB)
 			
-				
 				// Cleanup
 				if (engine != null) {
 					engine.dispose
@@ -194,12 +192,13 @@ val seed = 11111
 		val generTime = Stopwatch.createStarted
 		val out =  CPSGeneratorBuilder.buildAndGenerateModel(seed, const, model);
 		generTime.stop
-		val IncQueryEngine engine = IncQueryEngine.on(out.modelRoot);
+		val AdvancedIncQueryEngine engine = AdvancedIncQueryEngine.from(out.engine);
 		Validation.instance.prepare(engine);
 		val stats = StatsUtil.generateStatsForCPS(engine, out.modelRoot)
 		
 		info(scenario.class.simpleName + D + scale + D + stats.eObjects + D + stats.eReferences + D + generTime.elapsed(TimeUnit.MILLISECONDS))
 	
+		engine.dispose
 		out
 	}
 	
