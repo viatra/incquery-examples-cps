@@ -1,6 +1,8 @@
 package org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator
 
+import com.google.common.base.Joiner
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.Lists
 import java.util.HashMap
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.deployment.BehaviorState
@@ -13,9 +15,9 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.exceptions.CPSGeneratorException
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.utils.GeneratorHelper
+import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
-import com.google.common.collect.Lists
-import com.google.common.base.Joiner
+import org.eclipse.incquery.examples.cps.deployment.common.WaitTransitionMatcher
 
 class Generator implements ICPSGenerator  {
 	
@@ -23,9 +25,11 @@ class Generator implements ICPSGenerator  {
 	
 	private extension GeneratorHelper helper = new GeneratorHelper
 	val String PROJECT_NAME // = "org.eclipse.incquery.examples.cps.m2t.proto.distributed.generated"
+	val IncQueryEngine engine
 	
-	new(String projectName){
+	new(String projectName, IncQueryEngine engine){
 		PROJECT_NAME = projectName
+		this.engine = engine
 	}
 	
 	override generateHostCode(DeploymentHost host) '''
@@ -152,8 +156,8 @@ class Generator implements ICPSGenerator  {
 		    	«ENDFOR»
 		    	
 		    	// Add Send Transitions
-		    	«FOR trgState : state.calculateSendStateTransition»
-		    	possibleStates.add(«trgState.description.purifyAndToUpperCamel»);
+		    	«FOR transition : state.calculateSendStateTransition»
+		    	possibleStates.add(«transition.to.description.purifyAndToUpperCamel»);
 		    	«ENDFOR»
 		    	
 		    	// Add Wait Transitions
@@ -171,9 +175,9 @@ class Generator implements ICPSGenerator  {
 		    @Override
 		    public «behaviorClassName» stepTo(«behaviorClassName» nextState, Application app) {
 		    	// Send triggers
-		    	«FOR trgState : state.calculateSendStateTransition»
-		    	if(nextState == «trgState.description.purifyAndToUpperCamel»){
-		    		app.sendTrigger(«state.calculateSendTriggerParameters(trgState)»);
+		    	«FOR transition : state.calculateSendStateTransition»
+		    	if(nextState == «transition.to.description.purifyAndToUpperCamel»){
+		    		app.sendTrigger(«state.calculateSendTriggerParameters(transition)»);
 		    		return super.stepTo(nextState, app);
 		    	}
 		    	«ENDFOR»
@@ -184,13 +188,12 @@ class Generator implements ICPSGenerator  {
 		}
 	'''
 	
-	def String calculateSendTriggerParameters(BehaviorState srcState, BehaviorState trgState){
+	def String calculateSendTriggerParameters(BehaviorState srcState, BehaviorTransition transition){
 		//"152.66.102.5", "IBM System Storage", "ISSReceiving"
-		val transition = srcState.outgoing.findFirst[transition | transition.to == trgState]
 		if(transition != null){
 			'''"«transition.trigger.head.host.ip»", "«transition.trigger.head.app.id»", "«transition.trigger.head.name»"'''
 		}else{
-			throw new CPSGeneratorException("#Error: Cannot find transition from " + srcState.name + " to " + trgState.name)
+			throw new CPSGeneratorException("#Error: Cannot find transition from " + srcState.name + " to " + transition.to.name)
 		}
 	}
 	
@@ -238,18 +241,15 @@ class Generator implements ICPSGenerator  {
 		return srcState.outgoing.exists[ transition | !transition.trigger.empty]
 	}
 	
-	def Iterable<BehaviorState> calculateSendStateTransition(BehaviorState srcState){
+	def Iterable<BehaviorTransition> calculateSendStateTransition(BehaviorState srcState){
 		srcState.outgoing.filter[transition | 
 	        		return !transition.trigger.empty
-	    ].map[transition | transition.to]
+	    ]
 	}
 	
 	def calculateWaitStateTransition(BehaviorState srcState){
-		// TODO optimize
-		val baseIndex = IncQueryBaseFactory.getInstance.createNavigationHelper(srcState.eResource.resourceSet, true, logger)
 		val waitTransitions = srcState.outgoing.filter[transition | 
-	        		val incomingTrigger = baseIndex.getInverseReferences(transition, ImmutableList.of(DeploymentPackage.Literals.BEHAVIOR_TRANSITION__TRIGGER))
-	        		return transition.trigger.empty && !incomingTrigger.empty
+	        		return transition.trigger.empty && transition.hasIncomingTrigger
 	    ]
 	    val map = new HashMap<BehaviorTransition, BehaviorState>
 	    
@@ -262,11 +262,15 @@ class Generator implements ICPSGenerator  {
 	
 	def Iterable<BehaviorState> calculateNeutralStateTransition(BehaviorState srcState){
 		// TODO optimize
-		val incomingTrigger = IncQueryBaseFactory.getInstance.createNavigationHelper(srcState.eResource.resourceSet, true, Logger.getLogger("cps.codegenerator"))
+//		val incomingTrigger = IncQueryBaseFactory.getInstance.createNavigationHelper(srcState.eResource.resourceSet, true, Logger.getLogger("cps.codegenerator"))
 		srcState.outgoing.filter[transition | 
-	        		val reverse = incomingTrigger.getInverseReferences(transition, ImmutableList.of(DeploymentPackage.Literals.BEHAVIOR_TRANSITION__TRIGGER))
-	        		return transition.trigger.empty && reverse.empty
+//	        		val reverse = incomingTrigger.getInverseReferences(transition, ImmutableList.of(DeploymentPackage.Literals.BEHAVIOR_TRANSITION__TRIGGER))
+	        		return transition.trigger.empty && !transition.hasIncomingTrigger
 	    ].map[transition | transition.to]
+	}
+	
+	def boolean hasIncomingTrigger(BehaviorTransition transition){
+		WaitTransitionMatcher.on(engine).hasMatch(transition, null);
 	}
 	
 	override generateDeploymentCode(Deployment deployment) {
