@@ -5,3 +5,7 @@ import "http://org.eclipse.incquery/model/deployment"
 pattern deploymentElements(element) {
 	DeploymentElement(element);
 }
+
+pattern waitTransition(WT : BehaviorTransition, ST : BehaviorTransition){
+	BehaviorTransition.trigger(ST, WT);
+}

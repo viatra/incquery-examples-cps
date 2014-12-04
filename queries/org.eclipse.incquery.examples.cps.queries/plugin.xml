@@ -35,4 +35,7 @@
   <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerHW" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerHW" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerHW"/>
   </extension>
+  <extension id="org.eclipse.incquery.examples.cps.deployment.common.DeploymentQueries" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.deployment.common.DeploymentQueries" id="org.eclipse.incquery.examples.cps.deployment.common.DeploymentQueries"/>
+  </extension>
 </plugin>
