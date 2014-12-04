@@ -45,7 +45,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		super(wrapper, wrapperType)
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test(timeout=100000)
 	def scale00001(){
 		val testId = "scale1"
@@ -56,7 +56,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-//	@Ignore
+	@Ignore
 	@Test(timeout=100000)
 	def scale00008(){
 		val testId = "scale8"
@@ -89,7 +89,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale00064(){
 		val testId = "scale64"

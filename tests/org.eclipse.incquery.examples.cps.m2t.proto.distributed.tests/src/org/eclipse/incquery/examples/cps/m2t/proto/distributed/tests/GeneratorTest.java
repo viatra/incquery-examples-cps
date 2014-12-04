@@ -4,7 +4,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -15,23 +17,58 @@ import org.eclipse.incquery.examples.cps.deployment.Deployment;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage;
+import org.eclipse.incquery.examples.cps.deployment.common.DeploymentQueries;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.Generator;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.api.ICPSGenerator;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.exceptions.CPSGeneratorException;
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase;
+import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
+import org.eclipse.incquery.runtime.api.IncQueryEngine;
+import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.junit.Ignore;
 import org.junit.Test;
+
+import com.google.common.base.Stopwatch;
 
 public class GeneratorTest extends CPSTestBase {
 
 	private static Logger logger = Logger.getLogger("cps.proto.generator");
 	
+//	@Ignore
 	@Test
-	public void test(){
+	public void testSmall() throws IncQueryException{
 		logger.info("Start Generating...");
 		
 		Deployment model = loadModel("C:\\Eclipses\\CPSDemonstrator\\git\\incquery-examples-cps\\models\\org.eclipse.incquery.examples.cps.instances\\example.deployment");
 		
-		ICPSGenerator generator = new Generator("org.alma");
+		generateCode(model);
+		
+		assertTrue(true);
+	}
+	
+	@Ignore
+	@Test
+	public void test64ClientServer() throws IncQueryException{
+		logger.info("Start Generating...");
+		
+		Logger.getLogger("cps.proto.generator").setLevel(Level.OFF);
+		
+		Deployment model = loadModel("C:\\Eclipses\\CPSDemonstrator\\git\\incquery-examples-cps\\models\\org.eclipse.incquery.examples.cps.instances\\ClientServerScenario\\BatchIncQuery64_1234495999981128.deployment");
+		
+		Stopwatch fullTime = Stopwatch.createStarted();
+		generateCode(model);
+		fullTime.stop();
+		Logger.getLogger("cps.proto.generator").setLevel(Level.INFO);
+		logger.info("Full Time: " + fullTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		
+		assertTrue(true);
+	}
+
+	private void generateCode(Deployment model) throws IncQueryException {
+		IncQueryEngine engine = AdvancedIncQueryEngine.on(model);
+		DeploymentQueries.instance().prepare(engine);
+		
+		ICPSGenerator generator = new Generator("org.alma", engine);
 		try{
 			for(DeploymentHost host : model.getHosts()){
 				logger.info(generator.generateHostCode(host));
@@ -52,8 +89,6 @@ public class GeneratorTest extends CPSTestBase {
 			e.printStackTrace();
 			fail();
 		}
-		
-		assertTrue(true);
 	}
 
 	public Deployment loadModel(String filePath) {
