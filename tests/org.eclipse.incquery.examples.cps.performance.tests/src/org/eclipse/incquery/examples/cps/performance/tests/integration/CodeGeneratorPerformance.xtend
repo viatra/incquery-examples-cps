@@ -27,6 +27,7 @@ import org.junit.Test
 
 import static org.junit.Assert.assertTrue
 import org.eclipse.incquery.examples.cps.deployment.common.DeploymentQueries
+import org.eclipse.incquery.examples.cps.performance.tests.scenarios.PublishSubscribeScenario
 
 class CodeGeneratorPerformance extends CPSTestBase {
 	
@@ -48,8 +49,8 @@ val seed = 11111
 		
 		//(LowSynch, SimpleScaling, ClientServer, PublishSubscribe)
 		val scenarios = ImmutableList.builder
-        	.add(new ClientServerScenario(rand))
-//        	.add(new PublishSubscribeScenario(rand))
+//        	.add(new ClientServerScenario(rand))
+        	.add(new PublishSubscribeScenario(rand))
 			.build
 			
 		val scales = ImmutableList.<Integer>builder
