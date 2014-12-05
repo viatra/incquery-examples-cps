@@ -1,14 +1,22 @@
 package org.eclipse.incquery.examples.cps.xform.m2t;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.zip.Adler32;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
+
+import com.google.common.io.Files;
 
 /**
  * A helper class with static methods for file and folder creation for the
@@ -17,6 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public class GeneratorHelper {
 
+	// TODO correct doc
 	/**
 	 * Creates a java file into the project that the parameter
 	 * <code>nextTo</code> is in. The file is placed into the folder named
@@ -45,18 +54,18 @@ public class GeneratorHelper {
 	 * @throws CoreException
 	 *             If the folder named src doesn't exists or one of the folder
 	 *             or the java file itself can not be created.
+	 * @throws IOException 
 	 */
 	public static IFile createJavaFile(Resource nextTo, String name,
-			Boolean derived, CharSequence content) throws CoreException {
+			Boolean derived, CharSequence content) throws CoreException, IOException {
 		// Getting the project from the name described in the URI of the
 		// resource
-		IProject project = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(nextTo.getURI().segment(1));
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(nextTo.getURI().segment(1));
 		// Getting the default source folder in the project called "src-gen"
 		IFolder targetFolder = project.getFolder("src-gen");
 
 		// At the end a new java file is created in the target folder.
-		return createFile(targetFolder, name, derived, content);
+		return createFile(targetFolder, name, derived, content, false);
 	}
 
 	/**
@@ -102,24 +111,40 @@ public class GeneratorHelper {
 	 *            The derived property of the new file.
 	 * @param content
 	 *            The content of the new file.
+	 * @param forceReCreate TODO
 	 * @return The new file.
 	 * @throws CoreException
 	 *             If an existing file can not be deleted, the new file can not
 	 *             be created or the derived property can not be set.
+	 * @throws IOException 
 	 */
 	public static IFile createFile(IFolder folder, String name,
-			boolean derived, CharSequence content) throws CoreException {
+			boolean derived, CharSequence content, boolean forceReCreate) throws CoreException, IOException {
 		// Referring a file by a relative name.
 		IFile file = folder.getFile(name);
 
 		// If the file existed before, and it is not editable, it should be
 		// deleted
 		IProgressMonitor monitor = new NullProgressMonitor();
+		// If the file existed befor check the content
+		if(file.exists()){
+			long fileCheckSum = calculateFileCheckSum(file);
+			long contentCheckSum = calculateCharSequenceCheckSum(content);
+			// Same content do not write again!
+			if(fileCheckSum == contentCheckSum){
+				return file;
+			}
+		}
+		
+		
 		if (file.exists() && file.isDerived())
 			file.delete(true, monitor);
 
 		// Create the file if it is to exists.
-		if (!file.exists()) {
+		if(file.exists() && forceReCreate){
+			file.delete(true, monitor);
+		}
+		if(!file.exists()){
 			file.create(
 					new ByteArrayInputStream(content.toString().getBytes()),
 					true, monitor);
@@ -128,29 +153,52 @@ public class GeneratorHelper {
 			if (derived)
 				file.setDerived(true, monitor);
 		}
-
+		
 		// Return with the file.
 		return file;
 	}
 
-	// public static IProject createProject(String name) throws CoreException {
-	// // Referring a project in the workspace by it's name
-	// IProject project = ResourcesPlugin.getWorkspace().getRoot()
-	// .getProject(name);
-	//
-	// // If the project is not exist it will be created.
-	// IProgressMonitor monitor = new NullProgressMonitor();
-	// if (!project.exists())
-	// project.create(monitor);
-	//
-	// // The project should be opened.
-	// project.open(IResource.BACKGROUND_REFRESH, monitor);
-	//
-	// // Setting natures of the project
-	// IProjectDescription desc = project.getDescription();
-	// desc.setNatureIds(new String[] { "org.eclipse.jdt.core.javanature"
-	// /* ,"org.eclipse.pde.PluginNature" */});
-	// project.setDescription(desc, monitor);
-	// return project;
-	// }
+	public static long calculateCharSequenceCheckSum(CharSequence content) {
+		byte[] byteArray = new byte[content.length()];
+		for(int i = 0; i < content.length(); i++){
+			byteArray[i] = (byte) content.charAt(i);
+		}
+		return calculateCheckSum(byteArray);
+	}
+
+	public static long calculateFileCheckSum(IFile file) throws IOException {
+		return calculateFileCheckSum(file.getRawLocation().makeAbsolute().toFile());
+	}
+	
+	public static long calculateFileCheckSum(File file) throws IOException {
+		byte[] fileByteArray = Files.toByteArray(file);
+		return calculateCheckSum(fileByteArray);
+	}
+
+	public static long calculateCheckSum(byte[] byteArray) {
+		Adler32 a32 = new Adler32();
+		a32.update(byteArray);
+		return a32.getValue();
+	}
+	
+	 public static IProject createProject(String name) throws CoreException {
+		 // Referring a project in the workspace by it's name
+		 IProject project = ResourcesPlugin.getWorkspace().getRoot()
+		 .getProject(name);
+		
+		 // If the project is not exist it will be created.
+		 IProgressMonitor monitor = new NullProgressMonitor();
+		 if (!project.exists())
+		 project.create(monitor);
+		
+		 // The project should be opened.
+		 project.open(IResource.BACKGROUND_REFRESH, monitor);
+		
+		 // Setting natures of the project
+		 IProjectDescription desc = project.getDescription();
+		 desc.setNatureIds(new String[] { "org.eclipse.jdt.core.javanature"
+		 /* ,"org.eclipse.pde.PluginNature" */});
+		 project.setDescription(desc, monitor);
+		 return project;
+	 }
 }
