@@ -18,6 +18,7 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage;
 import org.eclipse.incquery.examples.cps.deployment.common.DeploymentQueries;
+import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.CodeGenerator;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.Generator;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.api.ICPSGenerator;
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.exceptions.CPSGeneratorException;
@@ -68,7 +69,7 @@ public class GeneratorTest extends CPSTestBase {
 		IncQueryEngine engine = AdvancedIncQueryEngine.on(model);
 		DeploymentQueries.instance().prepare(engine);
 		
-		ICPSGenerator generator = new Generator("org.alma", engine, false);
+		ICPSGenerator generator = new CodeGenerator("org.alma", engine, false);
 		try{
 			for(DeploymentHost host : model.getHosts()){
 				logger.info(generator.generateHostCode(host));

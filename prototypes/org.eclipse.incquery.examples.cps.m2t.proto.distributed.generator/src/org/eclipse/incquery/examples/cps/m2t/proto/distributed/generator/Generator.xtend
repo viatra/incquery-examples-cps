@@ -11,38 +11,28 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.deployment.common.WaitTransitionMatcher
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.exceptions.CPSGeneratorException
 import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.utils.GeneratorHelper
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.jdt.core.formatter.CodeFormatter
 import org.eclipse.jdt.core.ToolFactory
+import org.eclipse.jdt.core.formatter.CodeFormatter
 
-class Generator implements ICPSGenerator  {
+class Generator {
 	
 	private extension Logger logger = Logger.getLogger("cps.codegenerator")
 	
 	private extension GeneratorHelper helper = new GeneratorHelper
 	val String PROJECT_NAME
 	val IncQueryEngine engine
-	val boolean forceCodeFormatting
 	val CodeFormatter formatter
 	
-	new(String projectName, IncQueryEngine engine, boolean forceCodeFormatting){
+	new(String projectName, IncQueryEngine engine){
 		PROJECT_NAME = projectName
 		this.engine = engine
-		this.forceCodeFormatting = forceCodeFormatting
 		this.formatter = ToolFactory.createCodeFormatter(null);
 	}
 	
-	override generateHostCode(DeploymentHost host){
-		if(forceCodeFormatting){
-//			formatter.format(CodeFormatter.K_UNKNOWN, host.calculateHostCode, 0, host.calculateHostCode.length, 0, null)
-		}
-		return host.calculateHostCode
-	}
-	
-	def calculateHostCode(DeploymentHost host) '''
+	def generateHostCode(DeploymentHost host) '''
 	package «PROJECT_NAME».hosts;
 
 	import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.Application;
@@ -75,7 +65,7 @@ class Generator implements ICPSGenerator  {
 		list
 	}
 	
-	override generateApplicationCode(DeploymentApplication app)'''
+	def generateApplicationCode(DeploymentApplication app)'''
 		«val behavior = "Behavior"+app.id.purifyAndToUpperCamel»
 		«val appClassName = app.id.purifyAndToUpperCamel + "Application"»
 		package «PROJECT_NAME».applications;
@@ -106,7 +96,7 @@ class Generator implements ICPSGenerator  {
 		}
 	'''
 	
-	override generateBehaviorCode(DeploymentBehavior behavior)'''
+	def generateBehaviorCode(DeploymentBehavior behavior)'''
 		«val app = behavior.eContainer as DeploymentApplication»
 		«val behaviorClassName = "Behavior"+app.id.purifyAndToUpperCamel»
 		package «PROJECT_NAME».hosts.statemachines;
@@ -283,7 +273,7 @@ class Generator implements ICPSGenerator  {
 		WaitTransitionMatcher.on(engine).hasMatch(transition, null);
 	}
 	
-	override generateDeploymentCode(Deployment deployment) {
+	def CharSequence generateDeploymentCode(Deployment deployment) {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
