@@ -45,7 +45,19 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		super(wrapper, wrapperType)
 	}
 	
-	@Ignore
+//	@Ignore
+	@Test(timeout=100000)
+	def scale00000WarmUp(){
+		val testId = "warmup"
+		startTest(testId)
+		
+		executeScenarioXform(16)
+	
+		endTest(testId)
+	}
+	
+	
+//	@Ignore
 	@Test(timeout=100000)
 	def scale00001(){
 		val testId = "scale1"
@@ -56,7 +68,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=100000)
 	def scale00008(){
 		val testId = "scale8"
@@ -67,7 +79,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 		
-	@Ignore
+//	@Ignore
 	@Test(timeout=300000)
 	def scale00016(){
 		val testId = "scale16"
@@ -78,7 +90,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale00032(){
 		val testId = "scale32"
@@ -100,7 +112,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale00128(){
 		val testId = "scale128"
@@ -111,7 +123,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale00256(){
 		val testId = "scale256"
@@ -122,7 +134,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale00512(){
 		val testId = "scale512"
@@ -133,7 +145,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale01024(){
 		val testId = "scale1024"
@@ -144,7 +156,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale01280(){
 		val testId = "scale1280"
@@ -155,7 +167,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale01536(){
 		val testId = "scale1536"
@@ -166,7 +178,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale02048(){
 		val testId = "scale2048"
@@ -177,7 +189,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale02304(){
 		val testId = "scale2304"
@@ -188,7 +200,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale02560(){
 		val testId = "scale2560"
@@ -199,7 +211,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale03072(){
 		val testId = "scale3072"
@@ -244,26 +256,21 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		result.addMemoryBytes(generateMemory)
 		
 		
-		var incQInitTime = Stopwatch.createStarted;
 		val engine = AdvancedIncQueryEngine.from(fragment.engine);
 		Validation.instance.prepare(engine);
-		incQInitTime.stop
-		val long incQueryMemory = QueryRegressionTest.logMemoryProperties
-		result.addMemoryBytes(incQueryMemory)
-		
-		
 		val cpsStats = StatsUtil.generateStatsForCPS(engine, fragment.modelRoot)
 		result.artifactSize = cpsStats.eObjects
 		cpsStats.log
-		
 		engine.dispose
-
 
 		// Transformation
 		var transformTime = Stopwatch.createStarted;
 		var transformInitTime = Stopwatch.createStarted;
 		initializeTransformation(cps2dep)
 		transformInitTime.stop
+		val long incQueryMemory = QueryRegressionTest.logMemoryProperties
+		result.addMemoryBytes(incQueryMemory)
+
 		executeTransformation
 		transformTime.stop;
 		info("Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
@@ -326,8 +333,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		// Log the model stats to separated logger
 		
 		logModelStats(scenario.class.simpleName, size, cpsStats, depStats, traceStats)
-		logMemoryStats(scenario.class.simpleName, size, generateMemory,incQueryMemory, firstTransformationMemory, lastTransformationMemory);
-		logTimeStats(scenario.class.simpleName, size, generateTime.elapsed(TimeUnit.MILLISECONDS), incQInitTime.elapsed(TimeUnit.MILLISECONDS), transformTime.elapsed(TimeUnit.MILLISECONDS), secondXformTime.elapsed(TimeUnit.MILLISECONDS), thirdXformTime.elapsed(TimeUnit.MILLISECONDS))
+		logMemoryStats(scenario.class.simpleName, size, generateMemory, incQueryMemory, firstTransformationMemory, lastTransformationMemory);
+		logTimeStats(scenario.class.simpleName, size, generateTime.elapsed(TimeUnit.MILLISECONDS), transformInitTime.elapsed(TimeUnit.MILLISECONDS), transformTime.elapsed(TimeUnit.MILLISECONDS), secondXformTime.elapsed(TimeUnit.MILLISECONDS), thirdXformTime.elapsed(TimeUnit.MILLISECONDS))
 	}
 
 	val D = ModelStats.DELIMITER
@@ -335,7 +342,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	def void logTimeStats(String scenario, int scale, long generateTime, long incQInitTime, long transformTime, long secondXformTime, long thirdXformTime){
 		// Header
 		if(GENERATE_HEADER){
-			timeStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm",  "GenerateTime", "IncQueryPrepareTime", "TransformTime", "SecondTransformTime", "ThirdTransformTime"))
+			timeStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm",  "GenerateTime", "XformInitTime", "FirstXformTime", "SecondXformTime", "ThirdXformTime"))
 		}
 
 		// Body
@@ -345,7 +352,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	def void logMemoryStats(String scenario, int scale, long genMemory, long incQMemory, long firstTrafoMemory, long lastTrafoMemory){
 		// Header
 		if(GENERATE_HEADER){
-			memoryStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm", "AfterGenerate", "AfterIncQuery", "AfterFirstTransformation", "AfterLastTransformation"))
+			memoryStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm", "AfterGenerate", "AfterXformInit", "AfterFirstXform", "AfterLastXform"))
 		}
 		// Body
 		memoryStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, genMemory, incQMemory, firstTrafoMemory, lastTrafoMemory))
