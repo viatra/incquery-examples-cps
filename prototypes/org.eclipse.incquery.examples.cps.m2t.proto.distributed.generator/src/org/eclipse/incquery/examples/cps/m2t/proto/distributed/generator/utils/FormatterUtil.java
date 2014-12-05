@@ -16,6 +16,12 @@ public class FormatterUtil {
 		CodeFormatter formatter = ToolFactory.createCodeFormatter(null);
 		
 		TextEdit textEdit = formatter.format(CodeFormatter.K_COMPILATION_UNIT, code.toString(), 0, code.length(), 0, null);
+		
+		if(textEdit == null){
+			// TODO handle...
+			return code.toString();
+		}
+		
 		IDocument doc = new Document(code.toString());
 		try {
 			textEdit.apply(doc);
