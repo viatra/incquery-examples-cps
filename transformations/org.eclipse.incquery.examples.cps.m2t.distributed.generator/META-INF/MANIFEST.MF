@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CPS Demonstrator Proto Distribution Generator
-Bundle-SymbolicName: org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.m2t.distributed.generator
 Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
