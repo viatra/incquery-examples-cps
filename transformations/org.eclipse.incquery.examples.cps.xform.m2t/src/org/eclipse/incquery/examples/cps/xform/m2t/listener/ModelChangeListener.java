@@ -23,6 +23,7 @@ import org.eclipse.incquery.runtime.evm.specific.job.EnableJob;
 import org.eclipse.incquery.runtime.evm.specific.scheduler.UpdateCompleteBasedScheduler.UpdateCompleteBasedSchedulerFactory;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 public class ModelChangeListener implements IModelChangeListener {
@@ -32,20 +33,18 @@ public class ModelChangeListener implements IModelChangeListener {
 
 	@Override
 	public synchronized void createCheckpoint() {
-		this.changesBetweenCheckpoints = this.changeAccumulator;
-		this.changeAccumulator = Sets.newHashSet();
+		changesBetweenCheckpoints = changeAccumulator;
+		changeAccumulator = Sets.newHashSet();
 	}
 
 	@Override
-	public DeploymentElement getChangedElements() {
-		// TODO Auto-generated method stub
-		return null;
+	public ImmutableSet<Object> getChangedElementsSinceCheckpoint() {
+		return ImmutableSet.copyOf(changeAccumulator); 
 	}
 
 	@Override
-	public DeploymentElement createCheckpointAndGetChangedElements() {
-		// TODO Auto-generated method stub
-		return null;
+	public ImmutableSet<Object> getChangedElementsBetweenLastCheckpoints() {
+		return ImmutableSet.copyOf(changesBetweenCheckpoints);
 	}
 
 	@Override
@@ -278,5 +277,6 @@ public class ModelChangeListener implements IModelChangeListener {
 		jobs.add(Jobs.newEnableJob(disappear));
 		jobs.add(Jobs.newEnableJob(update));
 	}
+
 
 }

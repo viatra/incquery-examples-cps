@@ -1,9 +1,10 @@
 package org.eclipse.incquery.examples.cps.xform.m2t.listener;
 
 import org.eclipse.incquery.examples.cps.deployment.Deployment;
-import org.eclipse.incquery.examples.cps.deployment.DeploymentElement;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
+
+import com.google.common.collect.ImmutableSet;
 
 public interface IModelChangeListener {
 
@@ -24,16 +25,15 @@ public interface IModelChangeListener {
 	
 	/**
 	 * Returns all changed elements between the last two checkpoints
-	 * @return the changed elements
+	 * @return the list of changed elements
 	 */
-	DeploymentElement getChangedElements();
+	ImmutableSet<Object> getChangedElementsSinceCheckpoint();
 
 	/**
-	 * TODO
-	 * Implementations of this method should call createCheckpoint and subsequently getChangedElements  
-	 * @return
+	 * Implementations of this method should return changed elements between the last two Checkpoints
+	 * @return the list of elements that changed
 	 */
-	DeploymentElement createCheckpointAndGetChangedElements();
+	ImmutableSet<Object> getChangedElementsBetweenLastCheckpoints();
 
 	
 }
