@@ -57,7 +57,7 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 	}
 
 	@Override
-	public synchronized void startListening(Deployment deployment,
+	public synchronized void startMonitoring(Deployment deployment,
 			IncQueryEngine engine) throws IncQueryException {
 
 		this.changesBetweenCheckpoints = Sets.newHashSet();
@@ -70,8 +70,7 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
 		Set<Job<?>> allJobs = Sets.newHashSet();
 
-		Set<Job<IPatternMatch>> deploymentJobs = Sets.newHashSet();
-		createDeploymentJobs(deploymentJobs);
+		Set<Job<IPatternMatch>> deploymentJobs = createDeploymentJobs();
 		allJobs.addAll(deploymentJobs);
 
 		IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> deploymentHostChangeQuerySpec = (IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) DeploymentHostsChangeQuerySpecification.instance();
@@ -80,8 +79,7 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		registerJobsForPattern(executionSchema, deploymentJobs, deploymentHostChangeQuerySpec);
 		registerJobsForPattern(executionSchema, deploymentJobs, deploymentHostIpChangeQuerySpec);
 		
-		Set<Job<IPatternMatch>> deploymentElementJobs = Sets.newHashSet();
-		createDeploymentElementJobs(deploymentElementJobs);
+		Set<Job<IPatternMatch>> deploymentElementJobs = createDeploymentElementJobs();
 		allJobs.addAll(deploymentElementJobs);
 
 		List<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>> querySpecifications = getDeploymentElementChangeQuerySpecifications();
@@ -90,13 +88,13 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 			registerJobsForPattern(executionSchema, deploymentElementJobs,querySpec);
 		}
 
+		executionSchema.startUnscheduledExecution();
+
 		// Enable the jobs to listen to changes
 		for (Job<?> job : allJobs) {
-			@SuppressWarnings("rawtypes")
-			EnableJob enableJob = (EnableJob) job;
+			EnableJob<?> enableJob = (EnableJob<?>) job;
 			enableJob.setEnabled(true);
 		}
-		executionSchema.startUnscheduledExecution();
 
 	}
 
@@ -125,8 +123,10 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		executionSchema.addRule(applicationRules);
 	}
 
-	private void createDeploymentJobs(Set<Job<IPatternMatch>> jobs) {
+	private Set<Job<IPatternMatch>> createDeploymentJobs() {
 
+		Set<Job<IPatternMatch>> jobs = Sets.newHashSet();
+		
 		Job<IPatternMatch> appear = Jobs.newStatelessJob(
 				IncQueryActivationStateEnum.APPEARED,
 				new IMatchProcessor<IPatternMatch>() {
@@ -161,11 +161,15 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		jobs.add(Jobs.newEnableJob(appear));
 		jobs.add(Jobs.newEnableJob(disappear));
 		jobs.add(Jobs.newEnableJob(update));
+		
+		return jobs;
 	}
 
 	
-	private void createDeploymentElementJobs(Set<Job<IPatternMatch>> jobs) {
+	private Set<Job<IPatternMatch>> createDeploymentElementJobs() {
 
+		Set<Job<IPatternMatch>> jobs = Sets.newHashSet();
+		
 		Job<IPatternMatch> appear = Jobs.newStatelessJob(
 				IncQueryActivationStateEnum.APPEARED,
 				new IMatchProcessor<IPatternMatch>() {
@@ -200,6 +204,8 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		jobs.add(Jobs.newEnableJob(appear));
 		jobs.add(Jobs.newEnableJob(disappear));
 		jobs.add(Jobs.newEnableJob(update));
+		
+		return jobs;
 	}
 
 }

@@ -12,7 +12,7 @@ public interface IDeploymentChangeMonitor {
 	 * @param engine engine associated with the 
 	 * @throws IncQueryException 
 	 */
-	void startListening(Deployment deployment, IncQueryEngine engine) throws IncQueryException;
+	void startMonitoring(Deployment deployment, IncQueryEngine engine) throws IncQueryException;
 	
 	/**
 	 * Creates a checkpoint which means:
