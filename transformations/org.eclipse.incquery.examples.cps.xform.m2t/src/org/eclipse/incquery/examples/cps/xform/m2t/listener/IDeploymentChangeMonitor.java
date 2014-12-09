@@ -4,9 +4,7 @@ import org.eclipse.incquery.examples.cps.deployment.Deployment;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
 
-import com.google.common.collect.ImmutableSet;
-
-public interface IModelChangeListener {
+public interface IDeploymentChangeMonitor {
 
 	/**
 	 * Sets the model whose changes are observed. Also creates an initial checkpoint with no changes registered.
@@ -20,20 +18,14 @@ public interface IModelChangeListener {
 	 * Creates a checkpoint which means:
 	 * <li>Model changes since the last checkpont are saved</li>
 	 * <li>The model changes in the future are tracked separately from the changes before the checkpoint</li>
+	 * @return the DTO containing the changed elements since the last checkpoint
 	 */
-	void createCheckpoint();
+	DeploymentChangeDelta createCheckpoint();
 	
 	/**
 	 * Returns all changed elements between the last two checkpoints
-	 * @return the list of changed elements
+	 * @return the DTO containing the changed elements
 	 */
-	ImmutableSet<Object> getChangedElementsSinceCheckpoint();
-
-	/**
-	 * Implementations of this method should return changed elements between the last two Checkpoints
-	 * @return the list of elements that changed
-	 */
-	ImmutableSet<Object> getChangedElementsBetweenLastCheckpoints();
-
+	DeploymentChangeDelta getDeltaSinceLastCheckpoint();
 	
 }

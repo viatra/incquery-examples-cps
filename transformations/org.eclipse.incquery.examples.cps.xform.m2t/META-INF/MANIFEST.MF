@@ -22,6 +22,7 @@ Require-Bundle: org.eclipse.incquery.examples.cps.model,
  org.apache.commons.io;bundle-version="2.2.0",
  org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
  org.junit;bundle-version="4.11.0",
- org.eclipse.incquery.examples.cps.xform.m2m.tests
+ org.eclipse.incquery.examples.cps.xform.m2m.tests,
+ org.eclipse.xtend.standalone;bundle-version="2.6.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j
