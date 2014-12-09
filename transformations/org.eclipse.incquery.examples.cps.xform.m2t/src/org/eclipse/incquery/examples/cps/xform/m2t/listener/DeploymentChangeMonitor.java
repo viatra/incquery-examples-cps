@@ -1,5 +1,6 @@
 package org.eclipse.incquery.examples.cps.xform.m2t.listener;
 
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.incquery.examples.cps.deployment.Deployment;
@@ -9,7 +10,10 @@ import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.BehaviorChangeQ
 import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.DeploymentChangeQuerySpecification;
 import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.HostChangeQuerySpecification;
 import org.eclipse.incquery.runtime.api.IMatchProcessor;
+import org.eclipse.incquery.runtime.api.IPatternMatch;
+import org.eclipse.incquery.runtime.api.IQuerySpecification;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;
+import org.eclipse.incquery.runtime.api.IncQueryMatcher;
 import org.eclipse.incquery.runtime.evm.api.ExecutionSchema;
 import org.eclipse.incquery.runtime.evm.api.Job;
 import org.eclipse.incquery.runtime.evm.api.RuleSpecification;
@@ -23,23 +27,28 @@ import org.eclipse.incquery.runtime.evm.specific.job.EnableJob;
 import org.eclipse.incquery.runtime.evm.specific.scheduler.UpdateCompleteBasedScheduler.UpdateCompleteBasedSchedulerFactory;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+@SuppressWarnings("unchecked")
 public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
 	Set<DeploymentElement> changesBetweenCheckpoints;
 	Set<DeploymentElement> changeAccumulator;
+	boolean deploymentBetweenCheckpointsChanged;
+	boolean deploymentChanged;
 
 	@Override
 	public synchronized DeploymentChangeDelta createCheckpoint() {
 		changesBetweenCheckpoints = changeAccumulator;
 		changeAccumulator = Sets.newHashSet();
-		return new DeploymentChangeDelta(changesBetweenCheckpoints);
+		deploymentBetweenCheckpointsChanged = deploymentChanged;
+		return new DeploymentChangeDelta(changesBetweenCheckpoints, deploymentBetweenCheckpointsChanged);
 	}
 
 	@Override
 	public DeploymentChangeDelta getDeltaSinceLastCheckpoint() {
-		return new DeploymentChangeDelta(changeAccumulator);
+		return new DeploymentChangeDelta(changeAccumulator, deploymentChanged);
 	}
 
 	@Override
@@ -48,97 +57,89 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
 		this.changesBetweenCheckpoints = Sets.newHashSet();
 		this.changeAccumulator = Sets.newHashSet();
+		deploymentBetweenCheckpointsChanged = false;
+		deploymentChanged = false;
 
-		UpdateCompleteBasedSchedulerFactory schedulerFactory = Schedulers
-				.getIQEngineSchedulerFactory(engine);
-		ExecutionSchema executionSchema = ExecutionSchemas
-				.createIncQueryExecutionSchema(engine, schedulerFactory);
+		UpdateCompleteBasedSchedulerFactory schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine);
+		ExecutionSchema executionSchema = ExecutionSchemas.createIncQueryExecutionSchema(engine, schedulerFactory);
 
 		Set<Job<?>> allJobs = Sets.newHashSet();
 
-		Set<Job<DeploymentChangeMatch>> deploymentJobs = Sets.newHashSet();
+		Set<Job<IPatternMatch>> deploymentJobs = Sets.newHashSet();
 		createDeploymentJobs(deploymentJobs);
 		allJobs.addAll(deploymentJobs);
 
-		Set<Job<HostChangeMatch>> hostJobs = Sets.newHashSet();
-		createHostJobs(hostJobs);
-		allJobs.addAll(hostJobs);
+		Set<Job<IPatternMatch>> deploymentElementJobs = Sets.newHashSet();
+		createDeploymentElementJobs(deploymentElementJobs);
+		allJobs.addAll(deploymentElementJobs);
 
-		Set<Job<ApplicationChangeMatch>> applicationJobs = Sets.newHashSet();
-		createApplicationJobs(applicationJobs);
-		allJobs.addAll(applicationJobs);
-
-		Set<Job<BehaviorChangeMatch>> behaviorJobs = Sets.newHashSet();
-		createBehaviorJobs(behaviorJobs);
-		allJobs.addAll(behaviorJobs);
-
-		RuleSpecification<DeploymentChangeMatch> deploymentRules = Rules
-				.newMatcherRuleSpecification(
-						DeploymentChangeQuerySpecification.instance(),
-						Lifecycles.getDefault(true, true), deploymentJobs);
-		executionSchema.addRule(deploymentRules);
-
-		RuleSpecification<HostChangeMatch> hostRules = Rules
-				.newMatcherRuleSpecification(
-						HostChangeQuerySpecification.instance(),
-						Lifecycles.getDefault(true, true), hostJobs);
-		executionSchema.addRule(hostRules);
-
-		RuleSpecification<ApplicationChangeMatch> applicationRules = Rules
-				.newMatcherRuleSpecification(
-						ApplicationChangeQuerySpecification.instance(),
-						Lifecycles.getDefault(true, true), applicationJobs);
-		executionSchema.addRule(applicationRules);
-
-		RuleSpecification<BehaviorChangeMatch> behaviorRules = Rules
-				.newMatcherRuleSpecification(
-						BehaviorChangeQuerySpecification.instance(),
-						Lifecycles.getDefault(true, true), behaviorJobs);
-		executionSchema.addRule(behaviorRules);
+		List<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>> querySpecifications = getQuerySpecifications();
+				
+		for (IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> querySpec : querySpecifications) {
+			registerJobsForPattern(executionSchema, deploymentJobs,querySpec);
+		}
 
 		executionSchema.startUnscheduledExecution();
 
 		// Enable the jobs to listen to changes
 		for (Job<?> job : allJobs) {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@SuppressWarnings("rawtypes")
 			EnableJob<ApplicationChangeMatch> enableJob = (EnableJob) job;
 			enableJob.setEnabled(true);
 		}
 
 	}
 
-	private void createHostJobs(Set<Job<HostChangeMatch>> jobs) {
+	private List<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>> getQuerySpecifications()
+			throws IncQueryException {
+		List<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>> querySpecifications = Lists.newArrayList();
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) DeploymentChangeQuerySpecification.instance());
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) HostChangeQuerySpecification.instance());
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) ApplicationChangeQuerySpecification.instance());
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) BehaviorChangeQuerySpecification.instance());
+		return querySpecifications;
+	}
 
-		Job<HostChangeMatch> appear = Jobs.newStatelessJob(
+	private void registerJobsForPattern(
+			ExecutionSchema executionSchema,
+			Set<Job<IPatternMatch>> deploymentElementJobs,
+			IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> applicationChangeQuerySpecification) {
+		RuleSpecification<IPatternMatch> applicationRules = Rules
+				.newMatcherRuleSpecification(
+						applicationChangeQuerySpecification,
+						Lifecycles.getDefault(true, true), deploymentElementJobs);
+		executionSchema.addRule(applicationRules);
+	}
+
+	private void createDeploymentJobs(Set<Job<IPatternMatch>> jobs) {
+
+		Job<IPatternMatch> appear = Jobs.newStatelessJob(
 				IncQueryActivationStateEnum.APPEARED,
-				new IMatchProcessor<HostChangeMatch>() {
+				new IMatchProcessor<IPatternMatch>() {
 
 					@Override
-					public void process(HostChangeMatch match) {
-						changeAccumulator.add(match.getDeploymentHost());
-						
+					public void process(IPatternMatch match) {
+						deploymentChanged = true;
 					}
 
 				});
-		Job<HostChangeMatch> disappear = Jobs.newStatelessJob(
+		Job<IPatternMatch> disappear = Jobs.newStatelessJob(
 				IncQueryActivationStateEnum.DISAPPEARED,
-				new IMatchProcessor<HostChangeMatch>() {
+				new IMatchProcessor<IPatternMatch>() {
 
 					@Override
-					public void process(HostChangeMatch match) {
-						changeAccumulator.add(match.getDeploymentHost());
-						
+					public void process(IPatternMatch match) {
+						deploymentChanged = true;
 					}
 
 				});
-		Job<HostChangeMatch> update = Jobs.newStatelessJob(
+		Job<IPatternMatch> update = Jobs.newStatelessJob(
 				IncQueryActivationStateEnum.UPDATED,
-				new IMatchProcessor<HostChangeMatch>() {
+				new IMatchProcessor<IPatternMatch>() {
 
 					@Override
-					public void process(HostChangeMatch match) {
-						changeAccumulator.add(match.getDeploymentHost());
-						
+					public void process(IPatternMatch match) {
+						deploymentChanged = true;
 					}
 
 				});
@@ -148,38 +149,36 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		jobs.add(Jobs.newEnableJob(update));
 	}
 
-	private void createApplicationJobs(Set<Job<ApplicationChangeMatch>> jobs) {
+	
+	private void createDeploymentElementJobs(Set<Job<IPatternMatch>> jobs) {
 
-		Job<ApplicationChangeMatch> appear = Jobs.newStatelessJob(
+		Job<IPatternMatch> appear = Jobs.newStatelessJob(
 				IncQueryActivationStateEnum.APPEARED,
-				new IMatchProcessor<ApplicationChangeMatch>() {
+				new IMatchProcessor<IPatternMatch>() {
 
 					@Override
-					public void process(ApplicationChangeMatch match) {
-						changeAccumulator.add(match.getApp());
-						
+					public void process(IPatternMatch match) {
+						changeAccumulator.add((DeploymentElement) match.get(0));
 					}
 
 				});
-		Job<ApplicationChangeMatch> disappear = Jobs.newStatelessJob(
+		Job<IPatternMatch> disappear = Jobs.newStatelessJob(
 				IncQueryActivationStateEnum.DISAPPEARED,
-				new IMatchProcessor<ApplicationChangeMatch>() {
+				new IMatchProcessor<IPatternMatch>() {
 
 					@Override
-					public void process(ApplicationChangeMatch match) {
-						changeAccumulator.add(match.getApp());
-						
+					public void process(IPatternMatch match) {
+						changeAccumulator.add((DeploymentElement) match.get(0));
 					}
 
 				});
-		Job<ApplicationChangeMatch> update = Jobs.newStatelessJob(
+		Job<IPatternMatch> update = Jobs.newStatelessJob(
 				IncQueryActivationStateEnum.UPDATED,
-				new IMatchProcessor<ApplicationChangeMatch>() {
+				new IMatchProcessor<IPatternMatch>() {
 
 					@Override
-					public void process(ApplicationChangeMatch match) {
-						changeAccumulator.add(match.getApp());
-						
+					public void process(IPatternMatch match) {
+						changeAccumulator.add((DeploymentElement) match.get(0));
 					}
 
 				});
@@ -188,90 +187,5 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		jobs.add(Jobs.newEnableJob(disappear));
 		jobs.add(Jobs.newEnableJob(update));
 	}
-
-	private void createDeploymentJobs(Set<Job<DeploymentChangeMatch>> jobs) {
-//
-//		Job<DeploymentChangeMatch> appear = Jobs.newStatelessJob(
-//				IncQueryActivationStateEnum.APPEARED,
-//				new IMatchProcessor<DeploymentChangeMatch>() {
-//
-//					@Override
-//					public void process(DeploymentChangeMatch match) {
-//						changeAccumulator.add(match.getDeployment());
-//						
-//					}
-//
-//				});
-//		Job<DeploymentChangeMatch> disappear = Jobs.newStatelessJob(
-//				IncQueryActivationStateEnum.DISAPPEARED,
-//				new IMatchProcessor<DeploymentChangeMatch>() {
-//
-//					@Override
-//					public void process(DeploymentChangeMatch match) {
-//						changeAccumulator.add(match.getDeployment());
-//						
-//					}
-//
-//				});
-//		Job<DeploymentChangeMatch> update = Jobs.newStatelessJob(
-//				IncQueryActivationStateEnum.UPDATED,
-//				new IMatchProcessor<DeploymentChangeMatch>() {
-//
-//					@Override
-//					public void process(DeploymentChangeMatch match) {
-//						changeAccumulator.add(match.getDeployment());
-//						
-//					}
-//
-//				});
-//
-//		jobs.add(Jobs.newEnableJob(appear));
-//		jobs.add(Jobs.newEnableJob(disappear));
-//		jobs.add(Jobs.newEnableJob(update));
-	}
-
-	private void createBehaviorJobs(Set<Job<BehaviorChangeMatch>> jobs) {
-
-		Job<BehaviorChangeMatch> appear = Jobs.newStatelessJob(
-				IncQueryActivationStateEnum.APPEARED,
-				new IMatchProcessor<BehaviorChangeMatch>() {
-
-					@Override
-					public void process(BehaviorChangeMatch match) {
-						changeAccumulator.add((DeploymentElement) match
-								.getBehavior());
-						
-					}
-
-				});
-		Job<BehaviorChangeMatch> disappear = Jobs.newStatelessJob(
-				IncQueryActivationStateEnum.DISAPPEARED,
-				new IMatchProcessor<BehaviorChangeMatch>() {
-
-					@Override
-					public void process(BehaviorChangeMatch match) {
-						changeAccumulator.add((DeploymentElement) match
-								.getBehavior());
-						
-					}
-
-				});
-		Job<BehaviorChangeMatch> update = Jobs.newStatelessJob(
-				IncQueryActivationStateEnum.UPDATED,
-				new IMatchProcessor<BehaviorChangeMatch>() {
-
-					@Override
-					public void process(BehaviorChangeMatch match) {
-						changeAccumulator.add(match.getBehavior());
-						
-					}
-
-				});
-
-		jobs.add(Jobs.newEnableJob(appear));
-		jobs.add(Jobs.newEnableJob(disappear));
-		jobs.add(Jobs.newEnableJob(update));
-	}
-
 
 }
