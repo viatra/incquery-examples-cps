@@ -5,10 +5,15 @@ import java.util.Set;
 
 import org.eclipse.incquery.examples.cps.deployment.Deployment;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentElement;
-import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.ApplicationChangeQuerySpecification;
+import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.ApplicationBehaviorChangeQuerySpecification;
+import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.ApplicationIdChangeQuerySpecification;
 import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.BehaviorChangeQuerySpecification;
-import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.DeploymentChangeQuerySpecification;
-import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.HostChangeQuerySpecification;
+import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.DeploymentHostIpChangeQuerySpecification;
+import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.DeploymentHostsChangeQuerySpecification;
+import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.HostApplicationsChangeQuerySpecification;
+import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.HostIpChangeQuerySpecification;
+import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.TransitionChangeQuerySpecification;
+import org.eclipse.incquery.examples.cps.xform.m2t.listener.util.TriggerChangeQuerySpecification;
 import org.eclipse.incquery.runtime.api.IMatchProcessor;
 import org.eclipse.incquery.runtime.api.IPatternMatch;
 import org.eclipse.incquery.runtime.api.IQuerySpecification;
@@ -69,45 +74,54 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		createDeploymentJobs(deploymentJobs);
 		allJobs.addAll(deploymentJobs);
 
+		IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> deploymentHostChangeQuerySpec = (IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) DeploymentHostsChangeQuerySpecification.instance();
+		IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> deploymentHostIpChangeQuerySpec = (IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) DeploymentHostIpChangeQuerySpecification.instance();
+		
+		registerJobsForPattern(executionSchema, deploymentJobs, deploymentHostChangeQuerySpec);
+		registerJobsForPattern(executionSchema, deploymentJobs, deploymentHostIpChangeQuerySpec);
+		
 		Set<Job<IPatternMatch>> deploymentElementJobs = Sets.newHashSet();
 		createDeploymentElementJobs(deploymentElementJobs);
 		allJobs.addAll(deploymentElementJobs);
 
-		List<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>> querySpecifications = getQuerySpecifications();
-				
+		List<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>> querySpecifications = getDeploymentElementChangeQuerySpecifications();
+		
 		for (IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> querySpec : querySpecifications) {
-			registerJobsForPattern(executionSchema, deploymentJobs,querySpec);
+			registerJobsForPattern(executionSchema, deploymentElementJobs,querySpec);
 		}
-
-		executionSchema.startUnscheduledExecution();
 
 		// Enable the jobs to listen to changes
 		for (Job<?> job : allJobs) {
 			@SuppressWarnings("rawtypes")
-			EnableJob<ApplicationChangeMatch> enableJob = (EnableJob) job;
+			EnableJob enableJob = (EnableJob) job;
 			enableJob.setEnabled(true);
 		}
+		executionSchema.startUnscheduledExecution();
 
 	}
 
-	private List<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>> getQuerySpecifications()
+	private List<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>> getDeploymentElementChangeQuerySpecifications()
 			throws IncQueryException {
 		List<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>> querySpecifications = Lists.newArrayList();
-		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) DeploymentChangeQuerySpecification.instance());
-		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) HostChangeQuerySpecification.instance());
-		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) ApplicationChangeQuerySpecification.instance());
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) HostApplicationsChangeQuerySpecification.instance());
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) HostIpChangeQuerySpecification.instance());
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) ApplicationIdChangeQuerySpecification.instance());
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) ApplicationBehaviorChangeQuerySpecification.instance());
 		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) BehaviorChangeQuerySpecification.instance());
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) TransitionChangeQuerySpecification.instance());
+		querySpecifications.add((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) TriggerChangeQuerySpecification.instance());
 		return querySpecifications;
 	}
 
 	private void registerJobsForPattern(
 			ExecutionSchema executionSchema,
 			Set<Job<IPatternMatch>> deploymentElementJobs,
-			IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> applicationChangeQuerySpecification) {
+			IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> changeQuerySpecification) {
 		RuleSpecification<IPatternMatch> applicationRules = Rules
 				.newMatcherRuleSpecification(
-						applicationChangeQuerySpecification,
-						Lifecycles.getDefault(true, true), deploymentElementJobs);
+						changeQuerySpecification,
+						Lifecycles.getDefault(true, true), 
+						deploymentElementJobs);
 		executionSchema.addRule(applicationRules);
 	}
 

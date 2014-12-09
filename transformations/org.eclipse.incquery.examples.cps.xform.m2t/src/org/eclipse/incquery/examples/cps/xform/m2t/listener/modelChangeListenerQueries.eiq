@@ -2,30 +2,44 @@ package org.eclipse.incquery.examples.cps.xform.m2t.listener
 
 import "http://org.eclipse.incquery/model/deployment"
 
-pattern deploymentChange(deployment : Deployment) {
-	Deployment.hosts(deployment, _);
-} 
-or {
-	Deployment.hosts.ip(deployment, _);
+pattern deploymentHostsChange(deployment : Deployment, host) {
+	Deployment.hosts(deployment, host);
 }
 
-pattern hostChange(deploymentHost : DeploymentHost) {
-	DeploymentHost.ip(deploymentHost, _);
-} or { 
-	DeploymentHost.applications(deploymentHost, _);
+pattern deploymentHostIpChange(deployment : Deployment, ip) {
+	Deployment.hosts.ip(deployment, ip);
 }
 
-pattern applicationChange(app : DeploymentApplication) 
-{
-	DeploymentApplication.id(app, _);
-} or {
-	DeploymentApplication.behavior.current(app, _);
+
+
+pattern hostApplicationsChange(deploymentHost : DeploymentHost, app) {
+	DeploymentHost.applications(deploymentHost, app);
 }
 
-pattern behaviorChange(behavior : DeploymentBehavior) {
-	DeploymentBehavior.states(behavior, _);
-} or {
-	DeploymentBehavior.transitions(behavior, _);
-} or {
-	DeploymentBehavior.transitions.trigger(behavior, _);
+pattern hostIpChange(deploymentHost : DeploymentHost, ip) {
+	DeploymentHost.ip(deploymentHost,ip);
+}
+
+
+
+pattern applicationIdChange(app : DeploymentApplication, id) {
+	DeploymentApplication.id(app, id);
+}
+
+pattern applicationBehaviorChange(app : DeploymentApplication, state) {
+	DeploymentApplication.behavior.current(app, state);
+}
+
+
+
+pattern behaviorChange(behavior : DeploymentBehavior, state) {
+	DeploymentBehavior.states(behavior, state);
+}
+
+pattern transitionChange(behavior : DeploymentBehavior, transition) {
+	DeploymentBehavior.transitions(behavior,transition);
+}
+
+pattern triggerChange(behavior : DeploymentBehavior, triggerTransition) {
+	DeploymentBehavior.transitions.trigger(behavior,triggerTransition);
 }
