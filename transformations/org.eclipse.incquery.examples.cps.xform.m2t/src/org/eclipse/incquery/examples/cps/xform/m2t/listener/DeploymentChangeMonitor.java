@@ -38,30 +38,42 @@ import com.google.common.collect.Sets;
 @SuppressWarnings("unchecked")
 public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
-	Set<DeploymentElement> changesBetweenCheckpoints;
-	Set<DeploymentElement> changeAccumulator;
+	Set<DeploymentElement> appearBetweenCheckpoints;
+	Set<DeploymentElement> updateBetweenCheckpoints;
+	Set<DeploymentElement> disappearBetweenCheckpoints;
+	Set<DeploymentElement> appearAccumulator;
+	Set<DeploymentElement> updateAccumulator;
+	Set<DeploymentElement> disappearAccumulator;
 	boolean deploymentBetweenCheckpointsChanged;
 	boolean deploymentChanged;
 
 	@Override
 	public synchronized DeploymentChangeDelta createCheckpoint() {
-		changesBetweenCheckpoints = changeAccumulator;
-		changeAccumulator = Sets.newHashSet();
+		appearBetweenCheckpoints = appearAccumulator;
+		updateBetweenCheckpoints = updateAccumulator;
+		disappearBetweenCheckpoints = disappearAccumulator;
+		appearAccumulator = Sets.newHashSet();
+		updateAccumulator = Sets.newHashSet();
+		disappearAccumulator = Sets.newHashSet();
 		deploymentBetweenCheckpointsChanged = deploymentChanged;
-		return new DeploymentChangeDelta(changesBetweenCheckpoints, deploymentBetweenCheckpointsChanged);
+		return new DeploymentChangeDelta(appearBetweenCheckpoints, updateBetweenCheckpoints, disappearBetweenCheckpoints, deploymentBetweenCheckpointsChanged);
 	}
 
 	@Override
 	public DeploymentChangeDelta getDeltaSinceLastCheckpoint() {
-		return new DeploymentChangeDelta(changeAccumulator, deploymentChanged);
+		return new DeploymentChangeDelta(appearAccumulator, updateAccumulator, disappearAccumulator, deploymentChanged);
 	}
 
 	@Override
 	public synchronized void startMonitoring(Deployment deployment,
 			IncQueryEngine engine) throws IncQueryException {
 
-		this.changesBetweenCheckpoints = Sets.newHashSet();
-		this.changeAccumulator = Sets.newHashSet();
+		this.appearBetweenCheckpoints = Sets.newHashSet();
+		this.updateBetweenCheckpoints = Sets.newHashSet();
+		this.disappearBetweenCheckpoints = Sets.newHashSet();
+		this.appearAccumulator = Sets.newHashSet();
+		this.updateAccumulator = Sets.newHashSet();
+		this.disappearAccumulator = Sets.newHashSet();
 		deploymentBetweenCheckpointsChanged = false;
 		deploymentChanged = false;
 
@@ -176,7 +188,11 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
 					@Override
 					public void process(IPatternMatch match) {
-						changeAccumulator.add((DeploymentElement) match.get(0));
+						DeploymentElement deploymentElement = (DeploymentElement) match.get(0);
+						if(disappearAccumulator.contains(deploymentElement)){
+							disappearAccumulator.remove(deploymentElement);
+						}
+						appearAccumulator.add(deploymentElement);
 					}
 
 				});
@@ -186,7 +202,13 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
 					@Override
 					public void process(IPatternMatch match) {
-						changeAccumulator.add((DeploymentElement) match.get(0));
+						DeploymentElement deploymentElement = (DeploymentElement) match.get(0);
+						if(appearAccumulator.contains(deploymentElement)){
+							appearAccumulator.remove(deploymentElement);
+						} else if(updateAccumulator.contains(deploymentElement)){
+							updateAccumulator.remove(deploymentElement);
+						} 
+						disappearAccumulator.add(deploymentElement);
 					}
 
 				});
@@ -196,7 +218,11 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
 					@Override
 					public void process(IPatternMatch match) {
-						changeAccumulator.add((DeploymentElement) match.get(0));
+						DeploymentElement deploymentElement = (DeploymentElement) match.get(0);
+						if(appearAccumulator.contains(deploymentElement)){
+							appearAccumulator.remove(deploymentElement);
+						}
+						updateAccumulator.add(deploymentElement);
 					}
 
 				});

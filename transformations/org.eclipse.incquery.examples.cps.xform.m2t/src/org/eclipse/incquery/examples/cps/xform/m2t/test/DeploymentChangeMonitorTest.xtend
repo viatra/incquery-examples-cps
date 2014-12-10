@@ -48,7 +48,8 @@ class DeploymentChangeMonitorTest {
 		
 		val host3 = prepareHost("host3","1.1.1.3",deployment)
 		
-		assertTrue("Host not found in the deltas",deployment.hosts.contains(host3))
+		assertTrue("Host not found in the deltas",monitor.deltaSinceLastCheckpoint.appeared.contains(host3))
+		assertTrue("Too many deltas stored",monitor.deltaSinceLastCheckpoint.appeared.size == 1)
 	}
 
 	def prepareDefaultBehavior(DeploymentApplication application) {
