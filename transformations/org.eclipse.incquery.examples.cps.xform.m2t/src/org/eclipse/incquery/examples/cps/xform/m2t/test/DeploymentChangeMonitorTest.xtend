@@ -15,6 +15,7 @@ import static org.junit.Assert.*
 import org.eclipse.incquery.examples.cps.xform.m2t.listener.IDeploymentChangeMonitor
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.junit.After
+import org.junit.Ignore
 
 /**
  * Test cases for the DeploymentChangeMonitor. The cases should cover every rule defined for tracing
@@ -23,8 +24,7 @@ import org.junit.After
 class DeploymentChangeMonitorTest {
 
 	Deployment deployment
-//	AdvancedIncQueryEngine engine
-	IncQueryEngine engine
+	AdvancedIncQueryEngine engine
 	IDeploymentChangeMonitor monitor
 
 	@Before
@@ -44,14 +44,13 @@ class DeploymentChangeMonitorTest {
 
 		behavior1.transitions.head.trigger += behavior2.transitions.head
 		
-//		engine = AdvancedIncQueryEngine.createUnmanagedEngine(deployment)
-		engine = IncQueryEngine.on(deployment)
+		engine = AdvancedIncQueryEngine.createUnmanagedEngine(deployment)
 		
 		monitor = new DeploymentChangeMonitor
 	}
 	@After
 	def void tearDownEngine(){
-//		engine.dispose
+		engine.dispose
 	}
 
 	def prepareDefaultBehavior(DeploymentApplication application) {
@@ -105,9 +104,9 @@ class DeploymentChangeMonitorTest {
 		assertTrue("The update list should be empty",monitor.deltaSinceLastCheckpoint.updated.size == 0)		
 	}
 
-	// Test for pattern deploymentHostIpChange
+	// Test for pattern deploymentHostIpChange and hostIpChange
 	@Test
-	def void hostIPChange(){
+	def void deploymenthostIPChange(){
 		monitor.startMonitoring(deployment,engine)
 		
 		// Update
@@ -119,7 +118,8 @@ class DeploymentChangeMonitorTest {
 		
 		host = iterator.next
 		host.ip = "2.2.2.3"		
-		assertTrue("Host not found in the deltas",monitor.deltaSinceLastCheckpoint.updated.contains(host))
+		val test = monitor.deltaSinceLastCheckpoint.updated
+		assertTrue("Host not found in the deltas",test.contains(host))
 		assertTrue("Too many deltas stored",monitor.deltaSinceLastCheckpoint.updated.size == 2)		
 	}
 
@@ -138,10 +138,10 @@ class DeploymentChangeMonitorTest {
 		
 		assertTrue("Application not found in the deltas",monitor.deltaSinceLastCheckpoint.disappeared.contains(app))
 		// Changes: the application deletion removes the application and its behavior from the model.
-		assertTrue("Too many deltas stored",monitor.deltaSinceLastCheckpoint.disappeared.size == 3)
-		// Also modifies app list on host
+		assertTrue("Too many deltas stored",monitor.deltaSinceLastCheckpoint.disappeared.size == 2)
+		// Also modifies app list on host, but the host is not deleted
 		assertTrue("Host not found in the deltas",monitor.deltaSinceLastCheckpoint.updated.contains(host))
-		
+		assertTrue("Too many deltas stored",monitor.deltaSinceLastCheckpoint.updated.size == 1)
 	}
 
 
