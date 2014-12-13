@@ -1,4 +1,4 @@
-package org.eclipse.incquery.example.cps.xform.m2t.tests.utils;
+package org.eclipse.incquery.examples.cps.xform.m2t.tests.utils;
 
 
 import static org.junit.Assert.*;
