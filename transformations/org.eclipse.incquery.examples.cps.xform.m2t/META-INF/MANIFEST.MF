@@ -5,23 +5,18 @@ Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2t;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: IncQueryLabs Ltd.
 Export-Package: org.eclipse.incquery.examples.cps.xform.m2t,
- org.eclipse.incquery.examples.cps.xform.m2t.listener,
  org.eclipse.incquery.examples.cps.xform.m2t.listener.util,
- org.eclipse.incquery.examples.cps.xform.m2t.util
+ org.eclipse.incquery.examples.cps.xform.m2t.monitor,
+ org.eclipse.incquery.examples.cps.xform.m2t.monitor.util
 Require-Bundle: org.eclipse.incquery.examples.cps.model,
  org.eclipse.emf.ecore,
  org.eclipse.incquery.runtime;bundle-version="[0.8.0,0.9.0)",
- org.eclipse.xtext.xbase.lib,
- org.eclipse.xtext,
  org.eclipse.ui,
  org.eclipse.core.resources,
  org.eclipse.core.runtime,
- org.eclipse.xtext.builder,
- org.eclipse.xtext.ui,
- org.eclipse.incquery.runtime.evm,
+ org.eclipse.incquery.runtime.evm;bundle-version="[0.8.0,0.9.0)",
  org.apache.commons.io;bundle-version="2.2.0",
- org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
- org.junit;bundle-version="4.11.0",
- org.eclipse.xtend.standalone;bundle-version="2.6.0"
+ org.eclipse.incquery.examples.cps.deployment,
+ org.eclipse.xtend.lib;bundle-version="2.6.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j

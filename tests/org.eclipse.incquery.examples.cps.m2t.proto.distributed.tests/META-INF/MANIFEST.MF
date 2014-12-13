@@ -9,6 +9,6 @@ Require-Bundle: org.eclipse.incquery.examples.cps.m2t.proto.distributed;bundle-v
  org.junit;bundle-version="4.11.0",
  org.eclipse.incquery.examples.cps.tests,
  org.apache.log4j,
- org.eclipse.incquery.examples.cps.m2t.distributed.generator;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.xform.m2t.distributed;bundle-version="0.1.0",
  org.eclipse.emf.ecore.xmi,
  org.eclipse.incquery.examples.cps.queries

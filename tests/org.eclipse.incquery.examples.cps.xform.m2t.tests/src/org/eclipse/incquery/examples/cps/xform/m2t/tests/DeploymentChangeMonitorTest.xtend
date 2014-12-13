@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2t.test
+package org.eclipse.incquery.examples.cps.xform.m2t.tests
 
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.incquery.examples.cps.deployment.Deployment
@@ -9,10 +9,10 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.junit.Test
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.examples.cps.xform.m2t.listener.DeploymentChangeMonitor
+import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeMonitor
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.examples.cps.xform.m2t.listener.IDeploymentChangeMonitor
+import org.eclipse.incquery.examples.cps.xform.m2t.monitor.IDeploymentChangeMonitor
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.junit.After
 import org.junit.Ignore

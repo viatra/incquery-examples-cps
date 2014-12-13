@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2t.listener;
+package org.eclipse.incquery.examples.cps.xform.m2t.monitor;
 
 import java.util.Collection;
 import java.util.Map;

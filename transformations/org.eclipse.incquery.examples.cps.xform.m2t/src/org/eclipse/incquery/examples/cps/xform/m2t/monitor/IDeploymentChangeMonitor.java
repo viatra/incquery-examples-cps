@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.xform.m2t.listener;
+package org.eclipse.incquery.examples.cps.xform.m2t.monitor;
 
 import org.eclipse.incquery.examples.cps.deployment.Deployment;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;

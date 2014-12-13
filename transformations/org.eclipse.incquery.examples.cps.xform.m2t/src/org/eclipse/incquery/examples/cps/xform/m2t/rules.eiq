@@ -1,7 +1,0 @@
-package org.eclipse.incquery.examples.cps.xform.m2t
-
-import "http://org.eclipse.incquery/model/cps"
-
-pattern allocation(app : ApplicationInstance, host : HostInstance) {
-	ApplicationInstance.allocatedTo(app,host);
-}
