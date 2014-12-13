@@ -6,8 +6,8 @@ pattern deploymentHostsChange(deployment : Deployment, host) {
 	Deployment.hosts(deployment, host);
 }
 
-pattern deploymentHostIpChange(deployment : Deployment, ip) {
-	Deployment.hosts.ip(deployment, ip);
+pattern deploymentHostIpChange(deployment : Deployment) {
+	Deployment.hosts.ip(deployment,_);
 }
 
 
@@ -16,18 +16,19 @@ pattern hostApplicationsChange(deploymentHost : DeploymentHost, app) {
 	DeploymentHost.applications(deploymentHost, app);
 }
 
-pattern hostIpChange(deploymentHost : DeploymentHost, ip) {
-	DeploymentHost.ip(deploymentHost,ip);
+pattern hostIpChange(deploymentHost : DeploymentHost) {
+	DeploymentHost.ip(deploymentHost,_);
 }
 
 
 
-pattern applicationIdChange(app : DeploymentApplication, id) {
-	DeploymentApplication.id(app, id);
+pattern applicationIdChange(app : DeploymentApplication) {
+	DeploymentApplication.id(app,_);
 }
 
-pattern applicationBehaviorChange(app : DeploymentApplication, state) {
-	DeploymentApplication.behavior.current(app, state);
+pattern applicationBehaviorCurrentStateChange(app : DeploymentApplication, beh) {
+	DeploymentApplication.behavior(app,beh);
+	DeploymentBehavior.current(beh, _);
 }
 
 
@@ -40,6 +41,6 @@ pattern transitionChange(behavior : DeploymentBehavior, transition) {
 	DeploymentBehavior.transitions(behavior,transition);
 }
 
-pattern triggerChange(behavior : DeploymentBehavior, triggerTransition) {
-	DeploymentBehavior.transitions.trigger(behavior,triggerTransition);
+pattern triggerChange(behavior : DeploymentBehavior) {
+	DeploymentBehavior.transitions.trigger(behavior,_);
 }

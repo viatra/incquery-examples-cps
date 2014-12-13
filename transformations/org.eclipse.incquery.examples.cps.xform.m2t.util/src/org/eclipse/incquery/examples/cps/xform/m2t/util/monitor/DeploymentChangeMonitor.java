@@ -4,10 +4,12 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.incquery.examples.cps.deployment.BehaviorState;
+import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition;
 import org.eclipse.incquery.examples.cps.deployment.Deployment;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentElement;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost;
-import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.util.ApplicationBehaviorChangeQuerySpecification;
+import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.util.ApplicationBehaviorCurrentStateChangeQuerySpecification;
 import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.util.ApplicationIdChangeQuerySpecification;
 import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.util.BehaviorChangeQuerySpecification;
 import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.util.DeploymentHostIpChangeQuerySpecification;
@@ -86,7 +88,8 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 				.getIQEngineSchedulerFactory(engine);
 		ExecutionSchema executionSchema = ExecutionSchemas
 				.createIncQueryExecutionSchema(engine, schedulerFactory);
-
+//		executionSchema.getLogger().setLevel(Level.DEBUG);
+		
 		Set<Job<?>> allJobs = Sets.newHashSet();
 
 		Set<Job<IPatternMatch>> deploymentJobs = createDeploymentJobs();
@@ -192,17 +195,17 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) ApplicationIdChangeQuerySpecification
 						.instance(), applicationChangeJobs());
 		querySpecifications
-				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) ApplicationBehaviorChangeQuerySpecification
+				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) ApplicationBehaviorCurrentStateChangeQuerySpecification
 						.instance(), applicationChangeJobs());
 		querySpecifications
 				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) BehaviorChangeQuerySpecification
-						.instance(), defaultChangeJobs());
+						.instance(), behaviorChangeJobs());
 		querySpecifications
 				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) TransitionChangeQuerySpecification
-						.instance(), defaultChangeJobs());
+						.instance(), behaviorChangeJobs());
 		querySpecifications
 				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) TriggerChangeQuerySpecification
-						.instance(), defaultChangeJobs());
+						.instance(), behaviorChangeJobs());
 		return querySpecifications;
 	}
 
@@ -227,6 +230,11 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		IMatchProcessor<IPatternMatch> updateProcessor = new IMatchProcessor<IPatternMatch>() {
 			@Override
 			public void process(IPatternMatch match) {
+//				if(match.get("app") != null){
+//					// TODO this is just a workaround
+//					updateAccumulator.add((DeploymentElement) match.get("app"));
+//				}
+					
 				registerUpdate(match);
 			}
 		};
@@ -235,6 +243,9 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 				updateProcessor);
 	}
 
+	/**
+	 * @return specific jobs for applicationChanges
+	 */
 	private Set<Job<IPatternMatch>> applicationChangeJobs() {
 		IMatchProcessor<IPatternMatch> appearProcessor = new IMatchProcessor<IPatternMatch>() {
 			@Override
@@ -282,30 +293,65 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		return createDeploymentElementJobs(appearProcessor, disappearProcessor,
 				updateProcessor);
 	}
+	
+	private Set<Job<IPatternMatch>> behaviorChangeJobs() {
+		IMatchProcessor<IPatternMatch> appearProcessor = new IMatchProcessor<IPatternMatch>() {
+			@Override
+			public void process(IPatternMatch match) {
+				registerAppear(match);
+			}
+		};
+		IMatchProcessor<IPatternMatch> disappearProcessor = new IMatchProcessor<IPatternMatch>() {
+			@Override
+			public void process(IPatternMatch match) {
+				if(match.get("state") != null){
+					BehaviorState state = ((BehaviorState)match.get("state"));
+					if(state.eContainer() == null){
+						registerUpdate(match);
+					}
+				} else if (match.get("transition") != null) {
+					BehaviorTransition transition = ((BehaviorTransition)match.get("transition"));
+					if(transition.eContainer() == null){
+						registerUpdate(match);
+					}
+				} else {
+					registerDisappear(match);
+				}
+			}
+		};
+		IMatchProcessor<IPatternMatch> updateProcessor = new IMatchProcessor<IPatternMatch>() {
+			@Override
+			public void process(IPatternMatch match) {
+				registerUpdate(match);
+			}
+		};
+
+		return createDeploymentElementJobs(appearProcessor, disappearProcessor,
+				updateProcessor);
+	}
 
 	private void registerUpdate(IPatternMatch match) {
 		DeploymentElement deploymentElement = (DeploymentElement) match.get(0);
-		if (appearAccumulator.contains(deploymentElement)) {
-			appearAccumulator.remove(deploymentElement);
+		if (!appearAccumulator.contains(deploymentElement)) {
+			updateAccumulator.add(deploymentElement);
 		}
-		updateAccumulator.add(deploymentElement);
 	}
 
 	private void registerAppear(IPatternMatch match) {
 		DeploymentElement deploymentElement = (DeploymentElement) match.get(0);
-		if (disappearAccumulator.contains(deploymentElement)) {
-			disappearAccumulator.remove(deploymentElement);
-		}
+		
+		disappearAccumulator.remove(deploymentElement);
+		updateAccumulator.remove(deploymentElement);
+		
 		appearAccumulator.add(deploymentElement);
 	}
 
-	private void registerDisappear(IPatternMatch match) {
+	private synchronized void registerDisappear(IPatternMatch match) {
 		DeploymentElement deploymentElement = (DeploymentElement) match.get(0);
-		if (appearAccumulator.contains(deploymentElement)) {
-			appearAccumulator.remove(deploymentElement);
-		} else if (updateAccumulator.contains(deploymentElement)) {
-			updateAccumulator.remove(deploymentElement);
-		}
+		
+		appearAccumulator.remove(deploymentElement);
+		updateAccumulator.remove(deploymentElement);
+		
 		disappearAccumulator.add(deploymentElement);
 	}
 
