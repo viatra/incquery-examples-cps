@@ -16,12 +16,12 @@ import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.CPSGeneratorBuilder
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
-import org.eclipse.incquery.examples.cps.m2t.proto.distributed.generator.CodeGenerator
 import org.eclipse.incquery.examples.cps.performance.tests.queries.QueryRegressionTest
 import org.eclipse.incquery.examples.cps.performance.tests.scenarios.PublishSubscribeScenario
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
+import org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.junit.Test
 
