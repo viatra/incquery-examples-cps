@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests fro Xform m2t
-Bundle-SymbolicName: org.eclipse.incquery.example.cps.xform.m2t.tests
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2t.tests
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: IncQueryLabs Ltd.
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
