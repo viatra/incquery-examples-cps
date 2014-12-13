@@ -52,7 +52,7 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 	boolean deploymentChanged;
 
 	@Override
-	public synchronized DeploymentChangeDelta createCheckpoint() {
+	public DeploymentChangeDelta createCheckpoint() {
 		appearBetweenCheckpoints = appearAccumulator;
 		updateBetweenCheckpoints = updateAccumulator;
 		disappearBetweenCheckpoints = disappearAccumulator;
@@ -72,7 +72,7 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 	}
 
 	@Override
-	public synchronized void startMonitoring(Deployment deployment,
+	public void startMonitoring(Deployment deployment,
 			IncQueryEngine engine) throws IncQueryException {
 
 		this.appearBetweenCheckpoints = Sets.newHashSet();
@@ -346,7 +346,7 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		appearAccumulator.add(deploymentElement);
 	}
 
-	private synchronized void registerDisappear(IPatternMatch match) {
+	private void registerDisappear(IPatternMatch match) {
 		DeploymentElement deploymentElement = (DeploymentElement) match.get(0);
 		
 		appearAccumulator.remove(deploymentElement);
