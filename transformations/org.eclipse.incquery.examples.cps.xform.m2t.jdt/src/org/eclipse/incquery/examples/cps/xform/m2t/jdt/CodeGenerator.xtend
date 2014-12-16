@@ -13,7 +13,7 @@ class CodeGenerator implements ICPSGenerator {
 	
 	val Generator generator;
 	
-	new (String projectName, IncQueryEngine engine, boolean forceCodeFormatting) {
+	new (String projectName, IncQueryEngine engine) {
 		generator = new Generator(projectName, engine);
 	}
 	
@@ -26,7 +26,7 @@ class CodeGenerator implements ICPSGenerator {
 	}
 	
 	override generateBehaviorCode(DeploymentBehavior behavior) throws CPSGeneratorException {
-		
+		FormatterUtil.formatCode(generator.generateBehaviorCode(behavior))
 	}
 	
 	override generateDeploymentCode(Deployment deployment) throws CPSGeneratorException {
