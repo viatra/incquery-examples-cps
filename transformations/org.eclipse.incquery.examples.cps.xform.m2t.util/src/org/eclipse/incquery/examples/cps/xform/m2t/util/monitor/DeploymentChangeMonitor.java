@@ -132,7 +132,7 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
 		Set<Job<IPatternMatch>> jobs = Sets.newHashSet();
 
-		Job<IPatternMatch> appear = Jobs.newStatelessJob(
+		Job<IPatternMatch> appear = new ChangeMonitorJob(
 				IncQueryActivationStateEnum.APPEARED,
 				new IMatchProcessor<IPatternMatch>() {
 
