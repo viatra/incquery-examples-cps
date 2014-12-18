@@ -28,9 +28,13 @@ class PropertiesUtil {
     	try {
     		//load a properties file
             inputStream = PropertiesUtil.classLoader.getResourceAsStream("cps2dep.properties")
-            properties.load(inputStream);
+            if(inputStream != null){
+	            properties.load(inputStream);
+            } else {
+	    		logger.debug('''Could not find properties at «configPath»''')
+            }
     	} catch (IOException ex) {
-    		logger.debug('''Could not find properties at «configPath»''')
+    		logger.debug('''Could not load properties at «configPath»''')
         } finally {
             if (inputStream != null) {
                 try {

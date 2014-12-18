@@ -12,17 +12,6 @@
 	<artifactId>org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq</artifactId>
 	<packaging>eclipse-plugin</packaging>
 	<build>
-		<resources>
-			<resource>
-				<directory>src</directory>
-			</resource>
-			<resource>
-				<directory>src-gen</directory>
-			</resource>
-			<resource>
-				<directory>xtend-gen</directory>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

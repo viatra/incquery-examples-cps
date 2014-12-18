@@ -12,11 +12,7 @@
 	<modules>
 		<!-- Target platform -->
 		<module>releng/org.eclipse.incquery.examples.cps.target</module>
-		
-		<!-- Addons -->
-		<module>addons/org.eclipse.incquery.examples.cps.queries.validation</module>
-		<module>addons/org.eclipse.incquery.examples.cps.view</module>
-		
+
 		<!-- Domains -->
 		<module>domains/org.eclipse.incquery.examples.cps.deployment</module>
 		<module>domains/org.eclipse.incquery.examples.cps.deployment.edit</module>
@@ -27,30 +23,38 @@
 		<module>domains/org.eclipse.incquery.examples.cps.traceability</module>
 		<module>domains/org.eclipse.incquery.examples.cps.traceability.edit</module>
 		<module>domains/org.eclipse.incquery.examples.cps.traceability.editor</module>
-		
+
 		<!-- Generator -->
 		<module>generator/org.eclipse.incquery.examples.cps.generator</module>
 		<module>generator/org.eclipse.incquery.examples.cps.planexecutor</module>
-		
+
 		<!-- Queries -->
 		<module>queries/org.eclipse.incquery.examples.cps.queries</module>
+
+		<!-- Addons -->
+		<module>addons/org.eclipse.incquery.examples.cps.queries.validation</module>
+		<module>addons/org.eclipse.incquery.examples.cps.view</module>
+
+		<!-- M2M Transformations -->
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.util</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.simple</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.expl</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr</module>
+
+		<!-- M2T Transformations -->
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.util</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.distributed</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.jdt</module>
 		
 		<!-- Tests -->
 		<module>tests/org.eclipse.incquery.examples.cps.generator.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.xform.m2m.tests</module>
-				
-		<!-- Transformations -->
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.simple</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.expl</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.util</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq</module>
-	
-	
-	</modules>	
+
+	</modules>
 	<properties>
 		<tycho.version>0.21.0</tycho.version>
 		<xtend.compiler.version>2.6.1</xtend.compiler.version>
@@ -141,9 +145,9 @@
 		            		<include>**/*Test.java</include>
 		            	</includes>
 		            </configuration>
-		          </execution>		          
-		        </executions> -->	
-			</plugin>			
+		          </execution>
+		        </executions> -->
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>

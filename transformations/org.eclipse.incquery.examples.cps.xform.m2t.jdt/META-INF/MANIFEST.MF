@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Jdt
+Bundle-Name: CPS Demonstrator JDT M2T Generator
 Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2t.jdt
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipse.incquery.examples.cps.xform.m2t.jdt.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -17,4 +17,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources;bundle-version="3.9.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.incquery.examples.cps.xform.m2t.jdt
+Bundle-Vendor: IncQueryLabs Ltd.
 

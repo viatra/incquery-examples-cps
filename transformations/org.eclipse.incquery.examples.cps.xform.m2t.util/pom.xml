@@ -31,6 +31,12 @@
 										<include>**/*</include>
 									</includes>
 								</fileset>
+								<fileset>
+									<directory>xtend-gen</directory>
+									<excludes>
+										<exclude>.gitignore</exclude>
+									</excludes>
+								</fileset>
 							</filesets>
 						</configuration>
 					</execution>
@@ -42,6 +48,7 @@
 				<version>${incquery.compiler.version}</version>
 				<executions>
 					<execution>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
@@ -80,7 +87,26 @@
 						<artifactId>org.eclipse.incquery.examples.cps.traceability</artifactId>
 						<version>${project.version}</version>
 					</dependency>
+					<dependency>
+						<groupId>org.eclipse.incquery.examples.cps</groupId>
+						<artifactId>org.eclipse.incquery.examples.cps.xform.m2m.util</artifactId>
+						<version>${project.version}</version>
+					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtend.compiler.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
