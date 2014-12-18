@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.AST
 import org.eclipse.jdt.core.dom.CompilationUnit
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword
 import org.eclipse.jdt.core.dom.Name
+import org.eclipse.jdt.core.dom.InfixExpression.Operator
 
 class Generator {
 
@@ -199,6 +200,126 @@ class Generator {
 			}
 		]
 
+		val loggerField = ast.newFieldDeclaration(
+			ast.newVariableDeclarationFragment => [
+				name = ast.newSimpleName("logger")
+				initializer = ast.newMethodInvocation => [
+					expression = ast.newSimpleName("Logger")
+					name = ast.newSimpleName("getLogger")
+					arguments += ast.newStringLiteral => [literalValue = "cps.proto.distributed.state"]
+				]
+			]) => [
+			type = ast.newSimpleType("Logger")
+			modifiers() += #[
+				ast.newModifier(ModifierKeyword.PRIVATE_KEYWORD),
+				ast.newModifier(ModifierKeyword.STATIC_KEYWORD)
+			]
+		]
+
+		var possibleNextStatesMethodDeclaration = ast.newMethodDeclaration => [
+			modifiers() += #[
+				ast.newMarkerAnnotation => [typeName = ast.newSimpleName("Override")],
+				ast.newModifier(ModifierKeyword.ABSTRACT_KEYWORD),
+				ast.newModifier(ModifierKeyword.PUBLIC_KEYWORD)
+			]
+			name = ast.newSimpleName("possibleNextStates")
+			parameters += ast.newVariableDeclaration(false, "Application", "app")
+			returnType2 = ast.newParameterizedType(ast.newSimpleType("List")) => [
+				typeArguments += ast.newParameterizedType(ast.newSimpleType("State")) => [
+					typeArguments += ast.newSimpleType(behaviorClassName)
+				]
+			]
+		]
+
+		val stepToMethodDecl = ast.newMethodDeclaration => [
+			modifiers() += #[
+				ast.newMarkerAnnotation => [typeName = ast.newSimpleName("Override")],
+				ast.newModifier(ModifierKeyword.PUBLIC_KEYWORD)
+			]
+			name = ast.newSimpleName("stepTo")
+			parameters += ast.newVariableDeclaration(false, behaviorClassName, "nextState")
+			parameters += ast.newVariableDeclaration(false, "Application", "app")
+			returnType2 = ast.newSimpleType(behaviorClassName)
+		]
+
+		val stepToBody = ast.newBlock => [
+			statements += ast.newIfStatement => [
+				expression = ast.newMethodInvocation => [
+					expression = ast.newMethodInvocation => [
+						name = ast.newSimpleName("possibleNextStates")
+						arguments += ast.newSimpleName("app")
+					]
+					name = ast.newSimpleName("contains")
+					arguments += ast.newSimpleName("nextState")
+				]
+				thenStatement = ast.newBlock => [
+					statements += ast.newExpressionStatement(
+						ast.newMethodInvocation => [
+							expression = ast.newSimpleName("logger")
+							name = ast.newSimpleName("info")
+							arguments += ast.newInfixExpression => [
+								operator = Operator.PLUS
+								leftOperand = ast.newStringLiteral => [literalValue = "Step from "]
+								rightOperand = ast.newInfixExpression => [
+									operator = Operator.PLUS
+									leftOperand = ast.newMethodInvocation => [
+										expression = ast.newThisExpression
+										name = ast.newSimpleName("name")
+									]
+									rightOperand = ast.newInfixExpression => [
+										operator = Operator.PLUS
+										leftOperand = ast.newStringLiteral => [literalValue = " to "]
+										rightOperand = ast.newMethodInvocation => [
+											expression = ast.newSimpleName("nextState")
+											name = ast.newSimpleName("name")
+										]
+									]
+								]
+							]
+						])
+					statements += ast.newReturnStatement => [
+						expression = ast.newSimpleName("nextState")
+					]
+				]
+				elseStatement = ast.newExpressionStatement(
+					ast.newMethodInvocation => [
+						expression = ast.newSimpleName("logger")
+						name = ast.newSimpleName("info")
+						arguments += ast.newInfixExpression => [
+							operator = Operator.PLUS
+							leftOperand = ast.newStringLiteral => [literalValue = "!!! Warning: Unable to step from "]
+							rightOperand = ast.newInfixExpression => [
+								operator = Operator.PLUS
+								leftOperand = ast.newMethodInvocation => [
+									expression = ast.newThisExpression
+									name = ast.newSimpleName("name")
+								]
+								rightOperand = ast.newInfixExpression => [
+									operator = Operator.PLUS
+									leftOperand = ast.newStringLiteral => [literalValue = " to "]
+									rightOperand = ast.newInfixExpression => [
+										operator = Operator.PLUS
+										leftOperand = ast.newMethodInvocation => [
+											expression = ast.newSimpleName("nextState")
+											name = ast.newSimpleName("name")
+										]
+										rightOperand = ast.newStringLiteral => [ literalValue = " because the target state is not possible state." ]
+									]
+								]
+							]
+						]
+					])
+			]
+			statements += ast.newReturnStatement => [expression = ast.newThisExpression]
+		]
+		stepToMethodDecl.body = stepToBody
+
+		enumDecl.bodyDeclarations += #[
+			loggerField,
+			possibleNextStatesMethodDeclaration,
+			stepToMethodDecl
+		]
+
 		cu.types += enumDecl
 		cu.toString
 	}
@@ -215,6 +336,11 @@ class Generator {
 			]
 			name = ast.newSimpleName("possibleNextStates")
 			parameters += ast.newVariableDeclaration(false, "Application", "app")
+			returnType2 = ast.newParameterizedType(ast.newSimpleType("List")) => [
+				typeArguments += ast.newParameterizedType(ast.newSimpleType("State")) => [
+					typeArguments += ast.newSimpleType(behaviorClassName)
+				]
+			]
 		]
 
 		val possibleNextStatesBody = ast.newBlock => [
@@ -233,18 +359,20 @@ class Generator {
 				]
 			]
 			for (trgState : state.calculateNeutralStateTransition) {
-				statements += ast.newExpressionStatement(ast.newMethodInvocation => [
-					expression = ast.newSimpleName("possibleStates")
-					name = ast.newSimpleName("add")
-					arguments += ast.newSimpleName(trgState.description.purifyAndToUpperCamel)
-				])
+				statements += ast.newExpressionStatement(
+					ast.newMethodInvocation => [
+						expression = ast.newSimpleName("possibleStates")
+						name = ast.newSimpleName("add")
+						arguments += ast.newSimpleName(trgState.description.purifyAndToUpperCamel)
+					])
 			}
 			for (transition : state.calculateSendStateTransition) {
-				statements += ast.newExpressionStatement(ast.newMethodInvocation => [
-					expression = ast.newSimpleName("possibleStates")
-					name = ast.newSimpleName("add")
-					arguments += ast.newSimpleName(transition.to.description.purifyAndToUpperCamel)
-				])
+				statements += ast.newExpressionStatement(
+					ast.newMethodInvocation => [
+						expression = ast.newSimpleName("possibleStates")
+						name = ast.newSimpleName("add")
+						arguments += ast.newSimpleName(transition.to.description.purifyAndToUpperCamel)
+					])
 			}
 			val map = state.calculateWaitStateTransition
 			for (trgTransition : map.keySet) {
@@ -268,10 +396,91 @@ class Generator {
 		]
 		possibleNextStatesMethodDecl.body = possibleNextStatesBody
 
+		val stepToMethodDecl = ast.newMethodDeclaration => [
+			modifiers() += #[
+				ast.newMarkerAnnotation => [typeName = ast.newSimpleName("Override")],
+				ast.newModifier(ModifierKeyword.PUBLIC_KEYWORD)
+			]
+			name = ast.newSimpleName("stepTo")
+			parameters += ast.newVariableDeclaration(false, behaviorClassName, "nextState")
+			parameters += ast.newVariableDeclaration(false, "Application", "app")
+			returnType2 = ast.newSimpleType(behaviorClassName)
+		]
+
+		val stepToBody = ast.newBlock => [
+			for (transition : state.calculateSendStateTransition) {
+				statements += ast.newIfStatement => [
+					expression = ast.newInfixExpression => [
+						operator = Operator.EQUALS
+						leftOperand = ast.newSimpleName("nextState")
+						rightOperand = ast.newSimpleName(transition.to.description.purifyAndToUpperCamel)
+					]
+					thenStatement = ast.newBlock => [
+						statements += ast.newExpressionStatement(
+							ast.newMethodInvocation => [
+								expression = ast.newSimpleName("app")
+								name = ast.newSimpleName("sendTrigger")
+								for (arg : state.calculateSendTriggerParameters(transition))
+									arguments += ast.newStringLiteral => [literalValue = arg]
+							])
+						statements += ast.newReturnStatement => [
+							expression = ast.newSuperMethodInvocation => [
+								name = ast.newSimpleName("stepTo")
+								arguments += ast.newSimpleName("nextState")
+								arguments += ast.newSimpleName("app")
+							]
+						]
+					]
+				]
+			}
+			statements += ast.newReturnStatement => [
+				expression = ast.newSuperMethodInvocation => [
+					name = ast.newSimpleName("stepTo")
+					arguments += ast.newSimpleName("nextState")
+					arguments += ast.newSimpleName("app")
+				]
+			]
+		]
+		stepToMethodDecl.body = stepToBody
+
 		enumConst.anonymousClassDeclaration = ast.newAnonymousClassDeclaration => [
 			bodyDeclarations += possibleNextStatesMethodDecl
+			bodyDeclarations += stepToMethodDecl
 		]
 		enumConst
+	}
+
+	def calculateSendTriggerParameters(BehaviorState srcState, BehaviorTransition transition) {
+		if (transition != null) {
+			#[transition.trigger.head.host.ip, transition.trigger.head.app.id, transition.trigger.head.name]
+		} else {
+			throw new CPSGeneratorException(
+				"#Error: Cannot find transition from " + srcState.name + " to " + transition.to.name)
+		}
+	}
+
+	def DeploymentHost host(BehaviorTransition transition) {
+		val app = transition?.eContainer?.eContainer?.eContainer
+		if (app != null && app instanceof DeploymentHost) {
+			return app as DeploymentHost
+		}
+		throw new CPSGeneratorException("#Error: Cannot find Host of the Transition (" + transition.name + ")")
+	}
+
+	def DeploymentApplication app(BehaviorTransition transition) {
+		val app = transition?.eContainer?.eContainer
+		if (app != null && app instanceof DeploymentApplication) {
+			return app as DeploymentApplication
+		}
+		throw new CPSGeneratorException("#Error: Cannot find Application of the Transition (" + transition.name + ")")
+	}
+
+	def String name(BehaviorState state) {
+		state.description.purifyAndToUpperCamel
+	}
+
+	def String name(BehaviorTransition transition) {
+		transition.description.purifyAndToUpperCamel
 	}
 
 	def calculateWaitStateTransition(BehaviorState srcState) {
