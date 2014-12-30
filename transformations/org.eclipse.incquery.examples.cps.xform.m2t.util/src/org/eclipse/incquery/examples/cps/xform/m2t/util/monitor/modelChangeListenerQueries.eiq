@@ -1,46 +1,48 @@
 package org.eclipse.incquery.examples.cps.xform.m2t.util.monitor
 
-import "http://org.eclipse.incquery/model/deployment"
+import "http://org.eclipse.incquery/model/deployment" 
 
 pattern deploymentHostsChange(deployment : Deployment, host) {
 	Deployment.hosts(deployment, host);
 }
 
 pattern deploymentHostIpChange(deployment : Deployment) {
-	Deployment.hosts.ip(deployment,_);
+	Deployment.hosts.ip(deployment, _);
 }
 
 
 
-pattern hostApplicationsChange(deploymentHost : DeploymentHost, app) {
-	DeploymentHost.applications(deploymentHost, app);
+pattern hostApplicationsChange(deploymentHost : DeploymentHost) {
+	DeploymentHost.applications(deploymentHost, _);
 }
 
 pattern hostIpChange(deploymentHost : DeploymentHost) {
-	DeploymentHost.ip(deploymentHost,_);
+	DeploymentHost.ip(deploymentHost, _);
 }
 
 
 
 pattern applicationIdChange(app : DeploymentApplication) {
-	DeploymentApplication.id(app,_);
+	DeploymentApplication.id(app, _);
 }
 
-pattern applicationBehaviorCurrentStateChange(app : DeploymentApplication, beh) {
-	DeploymentApplication.behavior(app,beh);
+pattern
+applicationBehaviorCurrentStateChange(app : DeploymentApplication, beh) {
+	DeploymentApplication.behavior(app, beh);
 	DeploymentBehavior.current(beh, _);
 }
 
 
 
-pattern behaviorChange(behavior : DeploymentBehavior, state) {
-	DeploymentBehavior.states(behavior, state);
+pattern behaviorChange(behavior : DeploymentBehavior) {
+	DeploymentBehavior.states(behavior, _);
 }
 
-pattern transitionChange(behavior : DeploymentBehavior, transition) {
+pattern transitionChange(behavior : DeploymentBehavior) {
+	DeploymentBehavior.transitions(behavior, _);
+}
+
+pattern triggerChange(behavior : DeploymentBehavior,transition) {
 	DeploymentBehavior.transitions(behavior,transition);
-}
-
-pattern triggerChange(behavior : DeploymentBehavior) {
-	DeploymentBehavior.transitions.trigger(behavior,_);
+	BehaviorTransition.trigger(transition,_);
 }

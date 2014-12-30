@@ -16,7 +16,9 @@ import com.google.common.collect.Maps;
 
 public class ChangeMonitorJob<Match extends IPatternMatch> extends StatelessJob<Match> {
 
-	private static final String OUTDATED_ELEMENTS = "changedDeploymentElements";
+	public static final String OUTDATED_ELEMENTS = "changedDeploymentElements";
+	public static final String HOSTS = "deploymentHosts";
+	public static final String APPLICATIONS = "deploymentApps";
 
 	public ChangeMonitorJob(
 			IncQueryActivationStateEnum incQueryActivationStateEnum,
@@ -24,30 +26,32 @@ public class ChangeMonitorJob<Match extends IPatternMatch> extends StatelessJob<
 		super(incQueryActivationStateEnum, matchProcessor);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void execute(Activation<? extends Match> activation, Context context) {
+		super.execute(activation, context);
 		// For update jobs, store the old name
 		if(getActivationState().equals(IncQueryActivationStateEnum.UPDATED)){
-			@SuppressWarnings("unchecked")
 			Map<DeploymentElement, String> map = (Map<DeploymentElement, String>) context.get(OUTDATED_ELEMENTS);
 			if (map == null) {
 				map = Maps.newHashMap();
 				context.put(OUTDATED_ELEMENTS, map);
 			}
 			DeploymentElement changedElement = (DeploymentElement) activation.getAtom().get(0);
-			store(changedElement, map);
+			store(changedElement, context);
 		}
 		
 	}
 
-	private void store(DeploymentElement changedElement, Map<DeploymentElement, String> map) {
+	@SuppressWarnings("unchecked")
+	private void store(DeploymentElement changedElement,Context context) {
+		Map<DeploymentElement, String> map = (Map<DeploymentElement, String>) context.get(OUTDATED_ELEMENTS);
+		// Sotre the old data in the values of the map
 		if(changedElement instanceof DeploymentHost){
-			map.put(changedElement, ((DeploymentHost)changedElement).getIp());						
+			map.put(changedElement, ((Map<DeploymentHost,String>)context.get(HOSTS)).get((DeploymentHost)changedElement));						
 		}
 		else if(changedElement instanceof DeploymentApplication){
-			map.put(changedElement, ((DeploymentApplication)changedElement).getId());						
-		} else {
-			throw new IllegalStateException("Unexpected DeploymentElement subtype encountered: " + changedElement.getClass().toString());
+			map.put(changedElement, ((Map<DeploymentApplication,String>)context.get(APPLICATIONS)).get((DeploymentApplication)changedElement));						
 		}
 	}
 

@@ -61,15 +61,17 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 		info(
 			scenario.class.simpleName + D + scale + D + stats.eObjects + D + stats.eReferences + D +
 				generationTime.elapsed(TimeUnit.MILLISECONDS))
-
-		// TODO add infos and debugs
-		val cps2dep = prepareEmptyModel("test_cpsID")
+				
+		// TODO there was something with the resources.........
+		// TODO make sure that this way of creating a model is appropriate
+		val cps2dep = prepareEmptyModel("cpsModel")
 
 		cps2dep.cps = cpsFragment.modelRoot
 		cps2dep.deployment = DeploymentFactory.eINSTANCE.createDeployment
 
 		cps2dep.initializeTransformation
 
+		// TODO this is also associated with the resources. Check how it was solved within the other test scenarios
 		// FIXME the incremental transformations for some reason don't work
 		// Maybe the bug is associated with the engine used by the transformation
 		executeTransformation
@@ -89,9 +91,9 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 		GeneratorUtil.generateAll(cps2dep.deployment, codeGenerator, srcFolder)
 
 		
-		val changeMonitor = new DeploymentChangeMonitor
+		val changeMonitor = new DeploymentChangeMonitor(cps2dep.deployment, engine2)
 
-		changeMonitor.startMonitoring(cps2dep.deployment, engine2)
+		changeMonitor.startMonitoring
 
 		info("Adding new host instance")
 		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
@@ -99,11 +101,9 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
 
 		executeTransformation
-		
-		
+
 
 		codeGenerator.writeChanges(changeMonitor, srcFolder)
-
 	}
 
 	def writeChanges(CodeGenerator generator, DeploymentChangeMonitor monitor, IFolder folder) {

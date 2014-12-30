@@ -1,12 +1,14 @@
 package org.eclipse.incquery.examples.cps.xform.m2t.util.monitor;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.incquery.examples.cps.deployment.BehaviorState;
 import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition;
 import org.eclipse.incquery.examples.cps.deployment.Deployment;
+import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentElement;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost;
 import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.util.ApplicationBehaviorCurrentStateChangeQuerySpecification;
@@ -40,41 +42,22 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 @SuppressWarnings("unchecked")
-public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
+public class DeploymentChangeMonitor extends IDeploymentChangeMonitor {
 
-	Set<DeploymentElement> appearBetweenCheckpoints;
-	Set<DeploymentElement> updateBetweenCheckpoints;
-	Set<DeploymentElement> disappearBetweenCheckpoints;
-	Set<DeploymentElement> appearAccumulator;
-	Set<DeploymentElement> updateAccumulator;
-	Set<DeploymentElement> disappearAccumulator;
-	boolean deploymentBetweenCheckpointsChanged;
-	boolean deploymentChanged;
-
-	@Override
-	public DeploymentChangeDelta createCheckpoint() {
-		appearBetweenCheckpoints = appearAccumulator;
-		updateBetweenCheckpoints = updateAccumulator;
-		disappearBetweenCheckpoints = disappearAccumulator;
-		appearAccumulator = Sets.newHashSet();
-		updateAccumulator = Sets.newHashSet();
-		disappearAccumulator = Sets.newHashSet();
-		deploymentBetweenCheckpointsChanged = deploymentChanged;
-		return new DeploymentChangeDelta(appearBetweenCheckpoints,
-				updateBetweenCheckpoints, disappearBetweenCheckpoints,
-				deploymentBetweenCheckpointsChanged);
-	}
-
-	@Override
-	public DeploymentChangeDelta getDeltaSinceLastCheckpoint() {
-		return new DeploymentChangeDelta(appearAccumulator, updateAccumulator,
-				disappearAccumulator, deploymentChanged);
-	}
-
-	@Override
-	public void startMonitoring(Deployment deployment,
-			IncQueryEngine engine) throws IncQueryException {
-
+	private Set<DeploymentElement> appearBetweenCheckpoints;
+	private Set<DeploymentElement> updateBetweenCheckpoints;
+	private Set<DeploymentElement> disappearBetweenCheckpoints;
+	private Set<DeploymentElement> appearAccumulator;
+	private Set<DeploymentElement> updateAccumulator;
+	private Set<DeploymentElement> disappearAccumulator;
+	private boolean deploymentBetweenCheckpointsChanged;
+	private boolean deploymentChanged;
+	private ExecutionSchema executionSchema;
+	private HashMap<DeploymentApplication, String> appsToIDs;
+	private HashMap<DeploymentHost, String> hostsToIPs;
+	
+	public DeploymentChangeMonitor(Deployment deployment, IncQueryEngine engine) {
+		super(deployment, engine);
 		this.appearBetweenCheckpoints = Sets.newHashSet();
 		this.updateBetweenCheckpoints = Sets.newHashSet();
 		this.disappearBetweenCheckpoints = Sets.newHashSet();
@@ -84,12 +67,69 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		deploymentBetweenCheckpointsChanged = false;
 		deploymentChanged = false;
 
+
 		UpdateCompleteBasedSchedulerFactory schedulerFactory = Schedulers
 				.getIQEngineSchedulerFactory(engine);
-		ExecutionSchema executionSchema = ExecutionSchemas
+		executionSchema = ExecutionSchemas
 				.createIncQueryExecutionSchema(engine, schedulerFactory);
-//		executionSchema.getLogger().setLevel(Level.DEBUG);
+
+		hostsToIPs = Maps.newHashMap();
+		appsToIDs = Maps.newHashMap();
+		for (DeploymentHost deploymentHost : deployment.getHosts()) {
+			hostsToIPs.put(deploymentHost, deploymentHost.getIp());
+			for (DeploymentApplication deploymentApplication : deploymentHost.getApplications()) {
+				appsToIDs.put(deploymentApplication, deploymentApplication.getId());
+			}
+		}
+		executionSchema.getContext().put(ChangeMonitorJob.HOSTS,hostsToIPs);
+		executionSchema.getContext().put(ChangeMonitorJob.APPLICATIONS,Maps.newHashMap());
+	}
+	
+	@Override 
+	public DeploymentChangeDelta createCheckpoint() {
+		appearBetweenCheckpoints = appearAccumulator;
+		updateBetweenCheckpoints = updateAccumulator;
+		disappearBetweenCheckpoints = disappearAccumulator;
+		appearAccumulator = Sets.newHashSet();
+		updateAccumulator = Sets.newHashSet();
+		disappearAccumulator = Sets.newHashSet();
+		deploymentBetweenCheckpointsChanged = deploymentChanged;
+		Map<DeploymentElement, String> elementsUpdatedOrDeleted = (Map<DeploymentElement, String>) executionSchema.getContext().get(ChangeMonitorJob.OUTDATED_ELEMENTS);
+
+		for (DeploymentElement deploymentElement : elementsUpdatedOrDeleted.keySet()) {
+			// Refresh the list of host IP addresses and app identifiers
+			if(deploymentElement instanceof DeploymentHost){
+				hostsToIPs.put((DeploymentHost) deploymentElement, ((DeploymentHost) deploymentElement).getIp());
+			}
+			else if(deploymentElement instanceof DeploymentApplication){
+				appsToIDs.put((DeploymentApplication) deploymentElement, ((DeploymentApplication) deploymentElement).getId());
+			}
+		}
+		executionSchema.getContext().put(ChangeMonitorJob.OUTDATED_ELEMENTS,Maps.newHashMap());
 		
+		return new DeploymentChangeDelta(
+				appearBetweenCheckpoints,
+				updateBetweenCheckpoints, 
+				disappearBetweenCheckpoints, 
+				elementsUpdatedOrDeleted,
+				deploymentBetweenCheckpointsChanged
+				);
+	}
+
+	@Override
+	public DeploymentChangeDelta getDeltaSinceLastCheckpoint() {
+		return new DeploymentChangeDelta(
+				appearAccumulator, 
+				updateAccumulator,
+				disappearAccumulator, 
+				(Map<DeploymentElement, String>) executionSchema.getContext().get(ChangeMonitorJob.OUTDATED_ELEMENTS),
+				deploymentChanged
+				);
+	}
+
+	@Override
+	public void startMonitoring() throws IncQueryException {
+
 		Set<Job<?>> allJobs = Sets.newHashSet();
 
 		Set<Job<IPatternMatch>> deploymentJobs = createDeploymentJobs();
@@ -132,37 +172,20 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
 		Set<Job<IPatternMatch>> jobs = Sets.newHashSet();
 
-		Job<IPatternMatch> appear = new ChangeMonitorJob(
-				IncQueryActivationStateEnum.APPEARED,
-				new IMatchProcessor<IPatternMatch>() {
+		IMatchProcessor<IPatternMatch> matchProcessor = new IMatchProcessor<IPatternMatch>() {
+			@Override
+			public void process(IPatternMatch match) {
+				deploymentChanged = true;
+			}
+		};
 
-					@Override
-					public void process(IPatternMatch match) {
-						deploymentChanged = true;
-					}
-
-				});
+		Job<IPatternMatch> appear = Jobs.newStatelessJob(
+				IncQueryActivationStateEnum.APPEARED, matchProcessor);
 		Job<IPatternMatch> disappear = Jobs.newStatelessJob(
-				IncQueryActivationStateEnum.DISAPPEARED,
-				new IMatchProcessor<IPatternMatch>() {
-
-					@Override
-					public void process(IPatternMatch match) {
-						deploymentChanged = true;
-					}
-
-				});
+				IncQueryActivationStateEnum.DISAPPEARED, matchProcessor);
 		Job<IPatternMatch> update = Jobs.newStatelessJob(
-				IncQueryActivationStateEnum.UPDATED,
-				new IMatchProcessor<IPatternMatch>() {
-
-					@Override
-					public void process(IPatternMatch match) {
-						deploymentChanged = true;
-					}
-
-				});
-
+				IncQueryActivationStateEnum.UPDATED,matchProcessor);
+		
 		jobs.add(Jobs.newEnableJob(appear));
 		jobs.add(Jobs.newEnableJob(disappear));
 		jobs.add(Jobs.newEnableJob(update));
@@ -230,11 +253,6 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		IMatchProcessor<IPatternMatch> updateProcessor = new IMatchProcessor<IPatternMatch>() {
 			@Override
 			public void process(IPatternMatch match) {
-//				if(match.get("app") != null){
-//					// TODO this is just a workaround
-//					updateAccumulator.add((DeploymentElement) match.get("app"));
-//				}
-					
 				registerUpdate(match);
 			}
 		};
@@ -269,31 +287,7 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		return createDeploymentElementJobs(appearProcessor, disappearProcessor,
 				updateProcessor);
 	}
-	
-	private Set<Job<IPatternMatch>> defaultChangeJobs() {
-		IMatchProcessor<IPatternMatch> appearProcessor = new IMatchProcessor<IPatternMatch>() {
-			@Override
-			public void process(IPatternMatch match) {
-				registerAppear(match);
-			}
-		};
-		IMatchProcessor<IPatternMatch> disappearProcessor = new IMatchProcessor<IPatternMatch>() {
-			@Override
-			public void process(IPatternMatch match) {
-				registerDisappear(match);
-			}
-		};
-		IMatchProcessor<IPatternMatch> updateProcessor = new IMatchProcessor<IPatternMatch>() {
-			@Override
-			public void process(IPatternMatch match) {
-				registerUpdate(match);
-			}
-		};
 
-		return createDeploymentElementJobs(appearProcessor, disappearProcessor,
-				updateProcessor);
-	}
-	
 	private Set<Job<IPatternMatch>> behaviorChangeJobs() {
 		IMatchProcessor<IPatternMatch> appearProcessor = new IMatchProcessor<IPatternMatch>() {
 			@Override
@@ -304,14 +298,15 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 		IMatchProcessor<IPatternMatch> disappearProcessor = new IMatchProcessor<IPatternMatch>() {
 			@Override
 			public void process(IPatternMatch match) {
-				if(match.get("state") != null){
-					BehaviorState state = ((BehaviorState)match.get("state"));
-					if(state.eContainer() == null){
+				if (match.get("state") != null) {
+					BehaviorState state = ((BehaviorState) match.get("state"));
+					if (state.eContainer() == null) {
 						registerUpdate(match);
 					}
 				} else if (match.get("transition") != null) {
-					BehaviorTransition transition = ((BehaviorTransition)match.get("transition"));
-					if(transition.eContainer() == null){
+					BehaviorTransition transition = ((BehaviorTransition) match
+							.get("transition"));
+					if (transition.eContainer() == null) {
 						registerUpdate(match);
 					}
 				} else {
@@ -339,19 +334,19 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 
 	private void registerAppear(IPatternMatch match) {
 		DeploymentElement deploymentElement = (DeploymentElement) match.get(0);
-		
+
 		disappearAccumulator.remove(deploymentElement);
 		updateAccumulator.remove(deploymentElement);
-		
+
 		appearAccumulator.add(deploymentElement);
 	}
 
 	private void registerDisappear(IPatternMatch match) {
 		DeploymentElement deploymentElement = (DeploymentElement) match.get(0);
-		
+
 		appearAccumulator.remove(deploymentElement);
 		updateAccumulator.remove(deploymentElement);
-		
+
 		disappearAccumulator.add(deploymentElement);
 	}
 
@@ -361,11 +356,11 @@ public class DeploymentChangeMonitor implements IDeploymentChangeMonitor {
 			IMatchProcessor<IPatternMatch> updateProcessor) {
 		Set<Job<IPatternMatch>> jobs = Sets.newHashSet();
 
-		Job<IPatternMatch> appear = Jobs.newStatelessJob(
+		Job<IPatternMatch> appear = new ChangeMonitorJob<IPatternMatch>(
 				IncQueryActivationStateEnum.APPEARED, appearProcessor);
-		Job<IPatternMatch> disappear = Jobs.newStatelessJob(
+		Job<IPatternMatch> disappear = new ChangeMonitorJob<IPatternMatch>(
 				IncQueryActivationStateEnum.DISAPPEARED, disappearProcessor);
-		Job<IPatternMatch> update = Jobs.newStatelessJob(
+		Job<IPatternMatch> update = new ChangeMonitorJob<IPatternMatch>(
 				IncQueryActivationStateEnum.UPDATED, updateProcessor);
 
 		jobs.add(Jobs.newEnableJob(appear));
