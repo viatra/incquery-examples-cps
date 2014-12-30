@@ -13,6 +13,7 @@ import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTracea
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.QueryResultTraceability
 import org.junit.After
 import org.junit.runners.Parameterized.Parameters
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.PartialBatch
 
 class CPS2DepTest extends CPSTestBase {
 
@@ -37,6 +38,7 @@ class CPS2DepTest extends CPSTestBase {
         	.add(new BatchIncQuery())
         	.add(new QueryResultTraceability())
 			.add(new ExplicitTraceability())
+			.add(new PartialBatch())
 			.build
 		
 		val disabled = PropertiesUtil.getDisabledM2MTransformations
