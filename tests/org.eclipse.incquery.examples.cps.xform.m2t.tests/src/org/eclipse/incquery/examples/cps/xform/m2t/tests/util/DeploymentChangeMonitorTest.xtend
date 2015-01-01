@@ -17,6 +17,7 @@ import org.junit.Test
 
 import static org.junit.Assert.*
 import org.eclipse.incquery.examples.cps.deployment.DeploymentElement
+import org.junit.Ignore
 
 /**
  * Test cases for the DeploymentChangeMonitor. The cases should cover every rule defined for tracing
@@ -250,7 +251,7 @@ class DeploymentChangeMonitorTest {
 	}
 
 	// Test for pattern transitionChange
-	// @Ignore
+	@Ignore
 	@Test
 	def void removeTransitionFromBehavior() {
 		monitor.startMonitoring()

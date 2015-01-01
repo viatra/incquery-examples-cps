@@ -53,6 +53,7 @@
 		<module>tests/org.eclipse.incquery.examples.cps.generator.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.xform.m2m.tests</module>
+		<module>tests/org.eclipse.incquery.examples.cps.xform.m2t.tests</module>
 
 	</modules>
 	<properties>
