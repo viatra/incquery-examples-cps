@@ -1,8 +1,8 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers
 
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.CPS2DeploymentPartialBatchTransformation
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.CPS2DeploymentPartialBatchTransformation
 
 class PartialBatch extends CPSTransformationWrapper {
 

@@ -1,9 +1,7 @@
 package org.eclipse.incquery.examples.cps.performance.tests.integration
 
 import com.google.common.base.CaseFormat
-import com.google.common.base.Stopwatch
 import java.util.Random
-import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.emf.common.util.URI
@@ -20,7 +18,6 @@ import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.CPSGeneratorBuilder
-import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.performance.tests.scenarios.ClientServerScenario
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
@@ -56,14 +53,6 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 
 	@Test
 	def void completeToolchainIntegrationTest() {
-
-
-
-
-
-
-
-
 
 		val rs = new ResourceSetImpl()
 		val cpsRes = rs.createResource(URI.createURI("cps.cyberphysicalsystem"))

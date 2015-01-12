@@ -1,27 +1,21 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests
 
 import com.google.common.collect.ImmutableList
-import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
-import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchOptimized
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.QueryResultTraceability
-import org.junit.After
-import org.junit.runners.Parameterized.Parameters
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.PartialBatch
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.QueryResultTraceability
+import org.junit.runners.Parameterized.Parameters
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 
-class CPS2DepTest extends CPSTestBase {
+class CPS2DepTest extends CPS2DepTestWithoutParameters {
 
-	protected extension Logger logger = Logger.getLogger("cps.xform.CPS2DepTest")
-	protected extension CPSTransformationWrapper xform
-	protected extension CPSModelBuilderUtil modelBuilder
-	
-	String wrapperType
+	new(CPSTransformationWrapper wrapper, String wrapperType) {
+		super(wrapper, wrapperType)
+	}
 	
 	@Parameters(name = "{index}: {1}")
     public static def transformations() {
@@ -48,24 +42,4 @@ class CPS2DepTest extends CPSTestBase {
 		]
     }
     
-    new(CPSTransformationWrapper wrapper, String wrapperType){
-    	xform = wrapper
-    	modelBuilder = new CPSModelBuilderUtil
-    	this.wrapperType = wrapperType
-    }
-    
-    def startTest(String testId){
-    	info('''START TEST: type: «wrapperType» ID: «testId»''')
-    }
-    
-    def endTest(String testId){
-    	info('''END TEST: type: «wrapperType» ID: «testId»''')
-    }
-	
-	@After
-	def cleanup() {
-		cleanupTransformation;
-		
-		(0..4).forEach[Runtime.getRuntime().gc()]
-	}
 }
