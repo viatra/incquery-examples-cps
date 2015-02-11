@@ -27,7 +27,7 @@ abstract class AbstractRule<M extends IPatternMatch> {
 
 	def getRootMapping() {
 		val matcher = cpsXformM2M.getMappedCPS(engine)
-		checkState(matcher.countMatches == 1, "Multiple CPSToDeployment mappings!")
+		checkState(matcher.countMatches == 1, "Incorrect number of CPSToDeployment mappings!")
 		return matcher.oneArbitraryMatch.cps2dep
 	}
 
