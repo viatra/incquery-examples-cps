@@ -9,6 +9,7 @@ import org.eclipse.gef4.zest.core.viewers.GraphViewer;
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditor;
 import org.eclipse.incquery.runtime.api.IQuerySpecification;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;
+import org.eclipse.incquery.runtime.emf.EMFScope;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
 import org.eclipse.incquery.viewers.runtime.model.Containment;
 import org.eclipse.incquery.viewers.runtime.model.Edge;
@@ -117,7 +118,7 @@ public abstract class AbstractCpsViewPart extends ViewPart implements IPartListe
 					return;
 				
 	            try {
-					engine = IncQueryEngine.on(resourceSet);
+					engine = IncQueryEngine.on(new EMFScope(resourceSet));
 				} catch (IncQueryException e) {
 					e.printStackTrace();
 				} 

@@ -15,6 +15,7 @@ import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 
 import static org.junit.Assert.*
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 abstract class TestBase extends CPSTestBase{
 	protected extension Logger logger = Logger.getLogger("cps.generator.Tests")
@@ -61,7 +62,7 @@ abstract class TestBase extends CPSTestBase{
 
 		assertInRange("NumberOfSignals", out.numberOfSignals, constraints.numberOfSignals.minValue, constraints.numberOfSignals.maxValue);
 		
-		val IncQueryEngine engine = IncQueryEngine.on(out.modelRoot);
+		val IncQueryEngine engine = IncQueryEngine.on(new EMFScope(out.modelRoot));
 		Validation.instance.prepare(engine);
 		
 		assertNotNull("IncQueryEngine is null", engine);

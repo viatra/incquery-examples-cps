@@ -17,6 +17,7 @@ import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.junit.Test
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 class CPSModelGeneratorPerformance extends CPSTestBase{
 	val seed = 11111
@@ -57,7 +58,7 @@ class CPSModelGeneratorPerformance extends CPSTestBase{
 				val generTime = Stopwatch.createStarted
 				val out =  generate(const, seed)
 				generTime.stop
-				val IncQueryEngine engine = IncQueryEngine.on(out.modelRoot);
+				val IncQueryEngine engine = IncQueryEngine.on(new EMFScope(out.modelRoot));
 				Validation.instance.prepare(engine);
 				val stats = StatsUtil.generateStatsForCPS(engine, out.modelRoot)
 

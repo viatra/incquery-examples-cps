@@ -32,6 +32,7 @@ import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 /**
  * Tests the whole toolchain using each transformation one-by-one
@@ -98,7 +99,7 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 
 		executeTransformation
 
-		val engine2 = IncQueryEngine.on(cps2dep)
+		val engine2 = IncQueryEngine.on(new EMFScope(cps2dep))
 
 		val projectName = "integration.test.generated.code"
 		val codeGenerator = new CodeGenerator(projectName, engine2, true);

@@ -3,6 +3,7 @@ package org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq.CPS2DeploymentBatchTransformationEiq
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 class BatchIncQuery extends CPSTransformationWrapper {
 
@@ -10,7 +11,7 @@ class BatchIncQuery extends CPSTransformationWrapper {
 	AdvancedIncQueryEngine engine
 
 	override initializeTransformation(CPSToDeployment cps2dep) {
-		engine = AdvancedIncQueryEngine.createUnmanagedEngine(cps2dep.eResource.resourceSet);
+		engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource.resourceSet));
 		xform = new CPS2DeploymentBatchTransformationEiq(cps2dep, engine)
 	}
 

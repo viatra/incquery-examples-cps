@@ -18,6 +18,7 @@ import org.junit.Test
 import static org.junit.Assert.*
 import org.eclipse.incquery.examples.cps.deployment.DeploymentElement
 import org.junit.Ignore
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 /**
  * Test cases for the DeploymentChangeMonitor. The cases should cover every rule defined for tracing
@@ -52,7 +53,7 @@ class DeploymentChangeMonitorTest {
 
 		info("Prepared model for testing deployment change monitor")
 
-		engine = AdvancedIncQueryEngine.createUnmanagedEngine(deployment)
+		engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(deployment))
 		info("Created unmanaged IncQuery engine")
  
 		monitor = new DeploymentChangeMonitor(deployment,engine)

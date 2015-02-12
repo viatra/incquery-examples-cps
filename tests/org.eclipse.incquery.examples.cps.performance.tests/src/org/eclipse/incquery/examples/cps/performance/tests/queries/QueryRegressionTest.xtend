@@ -22,6 +22,7 @@ import org.eclipse.incquery.runtime.api.GenericPatternGroup
 import org.eclipse.incquery.runtime.api.IQueryGroup
 import org.eclipse.incquery.runtime.api.IQuerySpecification
 import org.junit.Test
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 class QueryRegressionTest extends CPSTestBase{
 	
@@ -36,7 +37,7 @@ class QueryRegressionTest extends CPSTestBase{
 		info("Preparing query performance test")
 		
 		val rs = executeScenarioXformForConstraints(200)
-		incQueryEngine = AdvancedIncQueryEngine.createUnmanagedEngine(rs)
+		incQueryEngine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(rs))
 		queryGroup = GenericPatternGroup.of(
 			CpsXformM2M.instance
 		)

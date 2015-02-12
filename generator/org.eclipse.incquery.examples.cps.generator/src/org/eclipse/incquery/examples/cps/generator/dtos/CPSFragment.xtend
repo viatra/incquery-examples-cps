@@ -9,6 +9,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
 import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 class CPSFragment extends GeneratorFragment<CyberPhysicalSystem>{
 	int numberOfSignals;
@@ -19,7 +20,7 @@ class CPSFragment extends GeneratorFragment<CyberPhysicalSystem>{
 	new(GeneratorInput<CyberPhysicalSystem> input) throws ModelGeneratorException {
 		super(input)
 		if(modelRoot != null){
-			engine = AdvancedIncQueryEngine.createUnmanagedEngine(modelRoot);
+			engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(modelRoot));
 		}else{
 			throw new ModelGeneratorException("Cannot initialize IncQueryEngine on a null model.");
 		}
