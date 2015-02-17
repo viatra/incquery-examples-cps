@@ -20,6 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 @RunWith(Parameterized)
 class QueryTest extends CPSTestBase{
@@ -96,7 +97,7 @@ class QueryTest extends CPSTestBase{
 		info("Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms")
 			
 		var matcherTime = Stopwatch.createStarted
-		val engine = AdvancedIncQueryEngine.createUnmanagedEngine(cps2dep.eResource.resourceSet)
+		val engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource.resourceSet))
 		val matcher = engine.getMatcher(querySpec)
 		matcherTime.stop
 		info("Match set size: " + matcher.countMatches)

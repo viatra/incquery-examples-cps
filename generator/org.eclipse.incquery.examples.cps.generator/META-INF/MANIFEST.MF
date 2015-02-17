@@ -22,6 +22,6 @@ Require-Bundle: org.eclipse.incquery.examples.cps.planexecutor;bundle-version="0
  org.eclipse.incquery.examples.cps.model;bundle-version="0.1.0",
  org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
  org.eclipse.incquery.examples.cps.traceability;bundle-version="0.1.0",
- org.eclipse.incquery.runtime;bundle-version="[0.8.0,0.9.0)"
+ org.eclipse.incquery.runtime;bundle-version="[1.0.0,1.1.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j

@@ -26,6 +26,7 @@ import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.junit.Test
 
 import static org.junit.Assert.assertTrue
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 class CodeGeneratorPerformance extends CPSTestBase {
 	
@@ -90,7 +91,7 @@ val seed = 11111
 				xform.executeTransformation
 				xform.cleanupTransformation
 				
-				val engine = AdvancedIncQueryEngine.createUnmanagedEngine(cps2dep.deployment);
+				val engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.deployment));
 				DeploymentQueries.instance.prepare(engine);
 				val depStats = StatsUtil.generateStatsForDeployment(engine, cps2dep.deployment)
 				depStats.log

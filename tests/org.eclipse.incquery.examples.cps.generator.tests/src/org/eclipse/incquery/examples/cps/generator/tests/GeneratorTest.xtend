@@ -23,6 +23,7 @@ import org.junit.Ignore
 import org.junit.Test
 
 import static org.junit.Assert.*
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 class GeneratorTest extends TestBase {
 	
@@ -167,7 +168,7 @@ class GeneratorTest extends TestBase {
 		val constraints = new AllocationCPSConstraints()
 		val out = runGeneratorOn(constraints, SEED);
 		
-		val engine = IncQueryEngine.on(out.modelRoot)
+		val engine = IncQueryEngine.on(new EMFScope(out.modelRoot))
 		val stats = StatsUtil.generateStatsForCPS(engine, out.modelRoot)
 		
 //		persistModel(out);

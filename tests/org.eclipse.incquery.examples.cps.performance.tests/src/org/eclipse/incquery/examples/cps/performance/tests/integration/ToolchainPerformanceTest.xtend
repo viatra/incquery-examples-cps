@@ -42,6 +42,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 import org.eclipse.incquery.examples.cps.xform.m2t.distributed.api.ICPSGenerator
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 /**
  * Tests the whole toolchain using each transformation one-by-one
@@ -159,7 +160,7 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 
 		executeTransformation
 
-		val engine2 = IncQueryEngine.on(cps2dep)
+		val engine2 = IncQueryEngine.on(new EMFScope(cps2dep))
 
 		val projectName = "integration.test.generated.code"
 		var ICPSGenerator codeGenerator = null

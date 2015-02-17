@@ -24,6 +24,7 @@ import org.eclipse.incquery.examples.cps.xform.m2t.distributed.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.xform.m2t.distributed.exceptions.CPSGeneratorException;
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;
+import org.eclipse.incquery.runtime.emf.EMFScope;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -65,7 +66,7 @@ public class GeneratorTest extends CPSTestBase {
 	}
 
 	private void generateCode(Deployment model) throws IncQueryException {
-		IncQueryEngine engine = AdvancedIncQueryEngine.on(model);
+		IncQueryEngine engine = AdvancedIncQueryEngine.on(new EMFScope(model));
 		DeploymentQueries.instance().prepare(engine);
 		
 		ICPSGenerator generator = new CodeGenerator("org.alma", engine, false);
