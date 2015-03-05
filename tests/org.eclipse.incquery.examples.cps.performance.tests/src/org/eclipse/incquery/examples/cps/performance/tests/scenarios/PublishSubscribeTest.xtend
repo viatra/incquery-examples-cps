@@ -3,7 +3,7 @@ package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 import com.google.common.base.Stopwatch
 import java.util.Random
 import java.util.concurrent.TimeUnit
-import org.eclipse.incquery.examples.cps.performance.tests.benchmark.BenchmarkResult
+import org.eclipse.incquery.examples.cps.performance.tests.results.BenchmarkResult
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 
@@ -30,8 +30,8 @@ class PublishSubscribeTest extends BasicScenarioXformTest {
 		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
 		editTime1.stop
 		modifyTime1.stop
-		result.addModificationTime(modifyTime1.elapsed(TimeUnit.MILLISECONDS))
-		result.addEditTime(editTime1.elapsed(TimeUnit.MILLISECONDS))
+//		result.addModificationTime(modifyTime1.elapsed(TimeUnit.MILLISECONDS))
+//		result.addEditTime(editTime1.elapsed(TimeUnit.MILLISECONDS))
 	}
 	
 	

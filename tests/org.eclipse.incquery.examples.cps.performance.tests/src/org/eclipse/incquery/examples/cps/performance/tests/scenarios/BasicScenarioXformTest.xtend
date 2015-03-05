@@ -15,8 +15,10 @@ import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
 import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
-import org.eclipse.incquery.examples.cps.performance.tests.benchmark.BenchmarkResult
+import org.eclipse.incquery.examples.cps.performance.tests.metrics.TimerMetric
 import org.eclipse.incquery.examples.cps.performance.tests.queries.QueryRegressionTest
+import org.eclipse.incquery.examples.cps.performance.tests.results.BenchmarkResult
+import org.eclipse.incquery.examples.cps.performance.tests.results.PhaseResult
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
@@ -233,9 +235,15 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	def executeScenarioXformForConstraints(IScenario scenario, int size, long seed) {
 		
 		// MONDO-SAM
-		val BenchmarkResult result = new BenchmarkResult(xform.class.simpleName, modificationLabel, new Random(seed))
-		result.scenario = scenario.class.simpleName
-		result.benchmarkArtifact = "scale_" + size.toString
+//		val BenchmarkResult result = new BenchmarkResult(xform.class.simpleName, modificationLabel, new Random(seed))
+		val BenchmarkResult result = new BenchmarkResult
+		var generatorTimer = new TimerMetric("Time")
+		var transformInitTimer = new TimerMetric("Time")
+		var transformTimer = new TimerMetric("Time")
+		var secondTransformTimer = new TimerMetric("Time")
+		var thirdTransformTimer = new TimerMetric("Time")
+//		result.scenario = scenario.class.simpleName
+//		result.benchmarkArtifact = "scale_" + size.toString
 		
 		// Constraints
 		val constraints = scenario.getConstraintsFor(size);
@@ -247,37 +255,41 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		var PlanExecutor<CPSFragment, CPSGeneratorInput> generator = new PlanExecutor();
 		
 		// Generating
-		var generateTime = Stopwatch.createStarted;
+		generatorTimer.startMesure
 		var fragment = generator.process(plan, input);
-		generateTime.stop;
-		info("Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		result.setReadTime(generateTime.elapsed(TimeUnit.MILLISECONDS))
+		generatorTimer.stopMeasure
+		
+		info("Generating time: " + generatorTimer.getValue + " ms")
 		val long generateMemory = QueryRegressionTest.logMemoryProperties
-		result.addMemoryBytes(generateMemory)
+//		result.addMemoryBytes(generateMemory)
+		createPhaseResult(result, generatorTimer, "Generation Phase")
 		
-		
-		val engine = AdvancedIncQueryEngine.from(fragment.engine);
+		val engine = AdvancedIncQueryEngine.from(fragment.engine)
 		Validation.instance.prepare(engine);
 		val cpsStats = StatsUtil.generateStatsForCPS(engine, fragment.modelRoot)
-		result.artifactSize = cpsStats.eObjects
+//		result.artifactSize = cpsStats.eObjects
 		cpsStats.log
 		engine.dispose
 
 		// Transformation
-		var transformTime = Stopwatch.createStarted;
-		var transformInitTime = Stopwatch.createStarted;
+		transformInitTimer.startMesure
 		initializeTransformation(cps2dep)
-		transformInitTime.stop
-		val long incQueryMemory = QueryRegressionTest.logMemoryProperties
-		result.addMemoryBytes(incQueryMemory)
+		transformInitTimer.stopMeasure
 
+		val long incQueryMemory = QueryRegressionTest.logMemoryProperties
+//		result.addMemoryBytes(incQueryMemory)
+
+		transformTimer.startMesure
 		executeTransformation
-		transformTime.stop;
-		info("Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		result.addCheckTime(transformTime.elapsed(TimeUnit.MILLISECONDS))
+		transformTimer.stopMeasure
+		info("Xform1 time: " + transformTimer.getValue + " ms");
+//		result.addCheckTime(transformTime.elapsed(TimeUnit.MILLISECONDS))
 		
 		val long firstTransformationMemory = QueryRegressionTest.logMemoryProperties
-		result.addMemoryBytes(firstTransformationMemory)
+//		result.addMemoryBytes(firstTransformationMemory)
+		createPhaseResult(result, transformInitTimer, "Transformation Initialization Phase")
+		createPhaseResult(result, transformTimer, "Transformation Phase")
+		
 		
 		// Persist models if needed
 		if(PropertiesUtil.persistResults){
@@ -285,25 +297,26 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		}
 		
 		// Modification
-		var secondXformTime = Stopwatch.createStarted;
+		secondTransformTimer.startMesure
 		firstModification(cps2dep, result)
 		
 		// Re-transformation
 		executeTransformation
-		secondXformTime.stop;
-		info("Xform2 time: " + secondXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		result.addCheckTime(secondXformTime.elapsed(TimeUnit.MILLISECONDS))
+		secondTransformTimer.stopMeasure
+		info("Xform2 time: " + secondTransformTimer.getValue + " ms");
+//		result.addCheckTime(secondXformTime.elapsed(TimeUnit.MILLISECONDS))
+		createPhaseResult(result, secondTransformTimer, "Second Transformation Time")
 		
-		
-		var thirdXformTime = Stopwatch.createStarted;
+		thirdTransformTimer.startMesure
 		secondModification(cps2dep, result)
 
 		executeTransformation
-		thirdXformTime.stop;
-		info("Xform3 time: " + thirdXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		result.addCheckTime(thirdXformTime.elapsed(TimeUnit.MILLISECONDS))
+		thirdTransformTimer.stopMeasure
+		info("Xform3 time: " + thirdTransformTimer.getValue + " ms");
 		val long lastTransformationMemory = QueryRegressionTest.logMemoryProperties
-		result.addMemoryBytes(lastTransformationMemory)
+		createPhaseResult(result, thirdTransformTimer, "Third Transformation Time")
+		result.publishResults
+//		result.addMemoryBytes(lastTransformationMemory)
 
 		// STATS
 		info("  ************************************************************************")
@@ -320,11 +333,11 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		val traceStats = StatsUtil.generateStatsForTraceability(engine, cps2dep)
 		traceStats.log
 		info(" EXECUTION TIMES: ")
-		info("    Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		info("    Xform1 time: " + transformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		info("       Xform1 init time: " + transformInitTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		info("    Xform2 time: " + secondXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
-		info("    Xform3 time: " + thirdXformTime.elapsed(TimeUnit.MILLISECONDS) + " ms");
+		info("    Generating time: " + generatorTimer.getValue + " ms");
+		info("    Xform1 time: " + transformTimer.getValue + " ms");
+		info("       Xform1 init time: " + transformInitTimer.getValue + " ms");
+		info("    Xform2 time: " + secondTransformTimer.getValue + " ms");
+		info("    Xform3 time: " + thirdTransformTimer.getValue + " ms");
 		info("****************************************************************************")
 		
 		// Log the benchmarkResult to separated logger
@@ -334,12 +347,19 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		
 		logModelStats(scenario.class.simpleName, size, cpsStats, depStats, traceStats)
 		logMemoryStats(scenario.class.simpleName, size, generateMemory, incQueryMemory, firstTransformationMemory, lastTransformationMemory);
-		logTimeStats(scenario.class.simpleName, size, generateTime.elapsed(TimeUnit.MILLISECONDS), transformInitTime.elapsed(TimeUnit.MILLISECONDS), transformTime.elapsed(TimeUnit.MILLISECONDS), secondXformTime.elapsed(TimeUnit.MILLISECONDS), thirdXformTime.elapsed(TimeUnit.MILLISECONDS))
+		logTimeStats(scenario.class.simpleName, size, generatorTimer.getValue, transformInitTimer.getValue, transformTimer.getValue, secondTransformTimer.getValue, thirdTransformTimer.getValue)
+	}
+	
+	protected def createPhaseResult(BenchmarkResult result, TimerMetric generatorTimer, String name) {
+		var phase1 = new PhaseResult
+		phase1.name = name
+		phase1.addMetrics(generatorTimer)
+		result.addResults(phase1)
 	}
 
 	val D = ModelStats.DELIMITER
 	
-	def void logTimeStats(String scenario, int scale, long generateTime, long incQInitTime, long transformTime, long secondXformTime, long thirdXformTime){
+	def void logTimeStats(String scenario, int scale, String generateTime, String incQInitTime, String transformTime, String secondXformTime, String thirdXformTime){
 		// Header
 		if(GENERATE_HEADER){
 			timeStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm",  "GenerateTime", "XformInitTime", "FirstXformTime", "SecondXformTime", "ThirdXformTime"))
