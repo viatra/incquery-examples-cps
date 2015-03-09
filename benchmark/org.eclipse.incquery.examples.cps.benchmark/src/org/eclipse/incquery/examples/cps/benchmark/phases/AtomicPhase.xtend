@@ -2,6 +2,8 @@ package org.eclipse.incquery.examples.cps.benchmark.phases
 
 import org.eclipse.incquery.examples.cps.benchmark.phases.iterators.AtomicPhaseIterator
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.incquery.examples.cps.benchmark.DataToken
+import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult
 
 abstract class AtomicPhase implements BenchmarkPhase{
 	
@@ -15,6 +17,6 @@ abstract class AtomicPhase implements BenchmarkPhase{
 		new AtomicPhaseIterator(this)
 	}
 	
-	def void execute()
+	def DataToken execute(DataToken token, PhaseResult phaseResult)
 	
 }

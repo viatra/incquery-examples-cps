@@ -14,7 +14,7 @@ import org.eclipse.xtext.xbase.lib.Pure;
 public class BenchmarkResult {
   @JsonProperty("CaseResults")
   @Accessors
-  private CaseResult caseResult;
+  private static CaseResult caseResult;
   
   @JsonProperty("PhaseResults")
   @Accessors({ AccessorType.PUBLIC_GETTER, AccessorType.NONE })
@@ -43,12 +43,12 @@ public class BenchmarkResult {
   }
   
   @Pure
-  public CaseResult getCaseResult() {
-    return this.caseResult;
+  public static CaseResult getCaseResult() {
+    return BenchmarkResult.caseResult;
   }
   
-  public void setCaseResult(final CaseResult caseResult) {
-    this.caseResult = caseResult;
+  public static void setCaseResult(final CaseResult caseResult) {
+    BenchmarkResult.caseResult = caseResult;
   }
   
   @Pure

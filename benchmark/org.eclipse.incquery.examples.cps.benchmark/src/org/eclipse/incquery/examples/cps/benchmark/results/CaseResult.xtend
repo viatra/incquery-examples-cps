@@ -6,17 +6,17 @@ import org.codehaus.jackson.annotate.JsonProperty
 class CaseResult {
 	
 	@JsonProperty("Scenario")
-	@Accessors String scenario
+	@Accessors static String scenario
 	
 	@JsonProperty("Tool")
-	@Accessors String tool
+	@Accessors static String tool
 	
 	@JsonProperty("Size")
-	@Accessors int size
+	@Accessors static int size
 	
 	@JsonProperty("RunIndex")
-	@Accessors int runIndex
+	@Accessors static int runIndex
 	
 	@JsonProperty("Case")
-	@Accessors String caseName
+	@Accessors static String caseName
 }

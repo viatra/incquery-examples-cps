@@ -4,11 +4,12 @@ import java.util.List
 import java.util.ArrayList
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.codehaus.jackson.annotate.JsonProperty
+import static extension org.eclipse.incquery.examples.cps.benchmark.results.ResultSerializer.serializeToJson
 
 class BenchmarkResult {
 
 	@JsonProperty("CaseResults")
-	@Accessors CaseResult caseResult
+	@Accessors static CaseResult caseResult
 	
 	@JsonProperty("PhaseResults")
 	@Accessors(PUBLIC_GETTER, NONE) List<PhaseResult> phaseResults
@@ -27,7 +28,7 @@ class BenchmarkResult {
 	def publishResults(){
 		var String filePath = path + "testResult.json"
 		if (publish){
-			ResultSerializer.serializeToJson(this, filePath);
+			this.serializeToJson(filePath);
 		}
 	}
 }

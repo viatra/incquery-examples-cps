@@ -1,8 +1,10 @@
 package org.eclipse.incquery.examples.cps.benchmark.phases;
 
 import java.util.Iterator;
+import org.eclipse.incquery.examples.cps.benchmark.DataToken;
 import org.eclipse.incquery.examples.cps.benchmark.phases.BenchmarkPhase;
 import org.eclipse.incquery.examples.cps.benchmark.phases.iterators.AtomicPhaseIterator;
+import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Pure;
@@ -20,7 +22,7 @@ public abstract class AtomicPhase implements BenchmarkPhase {
     return new AtomicPhaseIterator(this);
   }
   
-  public abstract void execute();
+  public abstract DataToken execute(final DataToken token, final PhaseResult phaseResult);
   
   @Pure
   public String getPhaseName() {

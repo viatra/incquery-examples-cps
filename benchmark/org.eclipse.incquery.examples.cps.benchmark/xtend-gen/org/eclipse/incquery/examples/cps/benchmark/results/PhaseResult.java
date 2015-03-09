@@ -22,6 +22,7 @@ public class PhaseResult {
   private int sequence;
   
   @JsonProperty("Metrics")
+  @Accessors
   private List<MetricResult> metricResults;
   
   public PhaseResult() {
@@ -57,5 +58,14 @@ public class PhaseResult {
   
   public void setSequence(final int sequence) {
     this.sequence = sequence;
+  }
+  
+  @Pure
+  public List<MetricResult> getMetricResults() {
+    return this.metricResults;
+  }
+  
+  public void setMetricResults(final List<MetricResult> metricResults) {
+    this.metricResults = metricResults;
   }
 }

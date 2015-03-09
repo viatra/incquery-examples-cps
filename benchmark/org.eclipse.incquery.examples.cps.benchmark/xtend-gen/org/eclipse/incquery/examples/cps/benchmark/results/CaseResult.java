@@ -8,66 +8,66 @@ import org.eclipse.xtext.xbase.lib.Pure;
 public class CaseResult {
   @JsonProperty("Scenario")
   @Accessors
-  private String scenario;
+  private static String scenario;
   
   @JsonProperty("Tool")
   @Accessors
-  private String tool;
+  private static String tool;
   
   @JsonProperty("Size")
   @Accessors
-  private int size;
+  private static int size;
   
   @JsonProperty("RunIndex")
   @Accessors
-  private int runIndex;
+  private static int runIndex;
   
   @JsonProperty("Case")
   @Accessors
-  private String caseName;
+  private static String caseName;
   
   @Pure
-  public String getScenario() {
-    return this.scenario;
+  public static String getScenario() {
+    return CaseResult.scenario;
   }
   
-  public void setScenario(final String scenario) {
-    this.scenario = scenario;
-  }
-  
-  @Pure
-  public String getTool() {
-    return this.tool;
-  }
-  
-  public void setTool(final String tool) {
-    this.tool = tool;
+  public static void setScenario(final String scenario) {
+    CaseResult.scenario = scenario;
   }
   
   @Pure
-  public int getSize() {
-    return this.size;
+  public static String getTool() {
+    return CaseResult.tool;
   }
   
-  public void setSize(final int size) {
-    this.size = size;
-  }
-  
-  @Pure
-  public int getRunIndex() {
-    return this.runIndex;
-  }
-  
-  public void setRunIndex(final int runIndex) {
-    this.runIndex = runIndex;
+  public static void setTool(final String tool) {
+    CaseResult.tool = tool;
   }
   
   @Pure
-  public String getCaseName() {
-    return this.caseName;
+  public static int getSize() {
+    return CaseResult.size;
   }
   
-  public void setCaseName(final String caseName) {
-    this.caseName = caseName;
+  public static void setSize(final int size) {
+    CaseResult.size = size;
+  }
+  
+  @Pure
+  public static int getRunIndex() {
+    return CaseResult.runIndex;
+  }
+  
+  public static void setRunIndex(final int runIndex) {
+    CaseResult.runIndex = runIndex;
+  }
+  
+  @Pure
+  public static String getCaseName() {
+    return CaseResult.caseName;
+  }
+  
+  public static void setCaseName(final String caseName) {
+    CaseResult.caseName = caseName;
   }
 }

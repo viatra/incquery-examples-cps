@@ -16,7 +16,7 @@ class PhaseResult {
 	@Accessors int sequence
 	
 	@JsonProperty("Metrics")
-	List<MetricResult> metricResults
+	@Accessors List<MetricResult> metricResults
 	
 	new(){
 		metricResults = new ArrayList<MetricResult>();
