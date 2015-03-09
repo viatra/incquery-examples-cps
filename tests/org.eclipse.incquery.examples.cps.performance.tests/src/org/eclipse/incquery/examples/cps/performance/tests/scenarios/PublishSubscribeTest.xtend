@@ -2,8 +2,7 @@ package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
 import com.google.common.base.Stopwatch
 import java.util.Random
-import java.util.concurrent.TimeUnit
-import org.eclipse.incquery.examples.cps.performance.tests.results.BenchmarkResult
+import org.eclipse.incquery.examples.cps.benchmark.results.BenchmarkResult
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 

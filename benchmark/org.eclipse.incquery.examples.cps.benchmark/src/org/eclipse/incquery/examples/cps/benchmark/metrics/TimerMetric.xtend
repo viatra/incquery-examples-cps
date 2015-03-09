@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.performance.tests.metrics
+package org.eclipse.incquery.examples.cps.benchmark.metrics
 
 import java.util.concurrent.TimeUnit;
 

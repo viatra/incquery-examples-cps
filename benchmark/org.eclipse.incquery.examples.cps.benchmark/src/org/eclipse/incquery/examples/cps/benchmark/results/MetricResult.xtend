@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.performance.tests.results
+package org.eclipse.incquery.examples.cps.benchmark.results
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.codehaus.jackson.annotate.JsonProperty

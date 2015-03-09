@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.performance.tests.results
+package org.eclipse.incquery.examples.cps.benchmark.results
 
 import org.codehaus.jackson.map.ObjectMapper
 import org.codehaus.jackson.map.SerializationConfig

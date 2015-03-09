@@ -1,6 +1,6 @@
-package org.eclipse.incquery.examples.cps.performance.tests.results
+package org.eclipse.incquery.examples.cps.benchmark.results
 
-import org.eclipse.incquery.examples.cps.performance.tests.metrics.BenchmarkMetric
+import org.eclipse.incquery.examples.cps.benchmark.metrics.BenchmarkMetric
 
 import java.util.List;
 import java.util.ArrayList;

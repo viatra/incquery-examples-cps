@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.performance.tests.results
+package org.eclipse.incquery.examples.cps.benchmark.results
 
 import java.util.List
 import java.util.ArrayList
@@ -7,8 +7,11 @@ import org.codehaus.jackson.annotate.JsonProperty
 
 class BenchmarkResult {
 
+	@JsonProperty("CaseResults")
+	@Accessors CaseResult caseResult
+	
 	@JsonProperty("PhaseResults")
-	List<PhaseResult> phaseResults
+	@Accessors(PUBLIC_GETTER, NONE) List<PhaseResult> phaseResults
 	
 	@Accessors var static String path = "./results/json/"
 	@Accessors var static boolean publish = true

@@ -1,9 +1,7 @@
 package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
 import com.google.common.base.Joiner
-import com.google.common.base.Stopwatch
 import java.util.Random
-import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
@@ -15,10 +13,10 @@ import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
 import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
-import org.eclipse.incquery.examples.cps.performance.tests.metrics.TimerMetric
+import org.eclipse.incquery.examples.cps.benchmark.metrics.TimerMetric
 import org.eclipse.incquery.examples.cps.performance.tests.queries.QueryRegressionTest
-import org.eclipse.incquery.examples.cps.performance.tests.results.BenchmarkResult
-import org.eclipse.incquery.examples.cps.performance.tests.results.PhaseResult
+import org.eclipse.incquery.examples.cps.benchmark.results.BenchmarkResult
+import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
