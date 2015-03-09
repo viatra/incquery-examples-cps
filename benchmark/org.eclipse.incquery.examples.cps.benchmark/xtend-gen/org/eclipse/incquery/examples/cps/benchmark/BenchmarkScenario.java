@@ -2,7 +2,6 @@ package org.eclipse.incquery.examples.cps.benchmark;
 
 import com.google.common.base.Objects;
 import java.util.Iterator;
-import org.eclipse.incquery.examples.cps.benchmark.DataToken;
 import org.eclipse.incquery.examples.cps.benchmark.phases.AtomicPhase;
 import org.eclipse.incquery.examples.cps.benchmark.phases.BenchmarkPhase;
 import org.eclipse.xtend.lib.annotations.Accessors;
@@ -16,8 +15,6 @@ public abstract class BenchmarkScenario {
   protected BenchmarkPhase rootPhase;
   
   public abstract void buildScenario();
-  
-  public abstract DataToken getDataToken();
   
   public boolean hasNextPhase() {
     boolean _xblockexpression = false;

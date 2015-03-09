@@ -22,7 +22,7 @@ public abstract class AtomicPhase implements BenchmarkPhase {
     return new AtomicPhaseIterator(this);
   }
   
-  public abstract DataToken execute(final DataToken token, final PhaseResult phaseResult);
+  public abstract void execute(final DataToken token, final PhaseResult phaseResult);
   
   @Pure
   public String getPhaseName() {

@@ -37,7 +37,8 @@ public class SequencePhaseIterator implements Iterator<BenchmarkPhase> {
     }
     final BenchmarkPhase atomic = this.iterator.next();
     boolean _hasNext = this.iterator.hasNext();
-    if (_hasNext) {
+    boolean _not = (!_hasNext);
+    if (_not) {
       this.index++;
       if ((this.index < size)) {
         LinkedList<BenchmarkPhase> _phases_1 = this.sequencePhase.getPhases();

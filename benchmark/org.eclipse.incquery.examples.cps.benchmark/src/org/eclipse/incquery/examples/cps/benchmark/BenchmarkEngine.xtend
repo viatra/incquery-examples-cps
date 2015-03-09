@@ -13,9 +13,9 @@ class BenchmarkEngine {
 		benchmarkResult = new BenchmarkResult
 	}
 	
-	def runBenchmark(BenchmarkScenario scenario){
+	def runBenchmark(BenchmarkScenario scenario, DataToken token){
 		var sequence = 1
-		var token = scenario.dataToken
+		scenario.buildScenario
 		token.init
 		
 		while(scenario.hasNextPhase){
@@ -24,7 +24,7 @@ class BenchmarkEngine {
 				val PhaseResult phaseResult = new PhaseResult
 				phaseResult.name = phase.phaseName
 				
-				token = phase.execute(token, phaseResult)
+				phase.execute(token, phaseResult)
 				
 				if (phaseResult.metricResults.size > 0){
 					phaseResult.sequence = sequence

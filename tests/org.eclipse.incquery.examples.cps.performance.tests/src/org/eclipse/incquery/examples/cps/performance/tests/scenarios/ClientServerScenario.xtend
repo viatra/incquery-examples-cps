@@ -11,8 +11,15 @@ import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
+import org.eclipse.incquery.examples.cps.benchmark.BenchmarkScenario
+import org.eclipse.incquery.examples.cps.benchmark.phases.SequencePhase
+import org.eclipse.incquery.examples.cps.benchmark.phases.IterationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.ModificationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.TransformationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.GenerationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.InitializationPhase
 
-class ClientServerScenario implements IScenario {
+class ClientServerScenario extends BenchmarkScenario implements IScenario {
 	
 	protected extension Logger logger = Logger.getLogger("cps.generator.ClientServerScenario")
 	protected extension RandomUtils randUtil = new RandomUtils;
@@ -160,6 +167,26 @@ class ClientServerScenario implements IScenario {
 		appClasses += clientAppClass
 		
 		return appClasses;
+	}
+	
+	override buildScenario() {
+		val seq = new SequencePhase
+		val innerSeq = new SequencePhase
+		innerSeq.addPhase(
+			new ModificationPhase("Modification"), 
+			new TransformationPhase("Transformation")
+		)
+		
+		val iter = new IterationPhase(2)
+		iter.phase = innerSeq
+		
+		seq.addPhase(
+			new GenerationPhase("Generation"),
+			new InitializationPhase("Initialization"),
+			new TransformationPhase("Transformation"),
+			iter
+		)
+		rootPhase = seq
 	}
 	
 }

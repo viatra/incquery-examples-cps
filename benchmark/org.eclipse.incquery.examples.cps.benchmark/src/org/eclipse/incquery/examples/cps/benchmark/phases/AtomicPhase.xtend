@@ -17,6 +17,6 @@ abstract class AtomicPhase implements BenchmarkPhase{
 		new AtomicPhaseIterator(this)
 	}
 	
-	def DataToken execute(DataToken token, PhaseResult phaseResult)
+	def void execute(DataToken token, PhaseResult phaseResult)
 	
 }

@@ -12,7 +12,7 @@ public class CaseResult {
   
   @JsonProperty("Tool")
   @Accessors
-  private static String tool;
+  private static String tool = "IncQuery";
   
   @JsonProperty("Size")
   @Accessors
@@ -20,7 +20,7 @@ public class CaseResult {
   
   @JsonProperty("RunIndex")
   @Accessors
-  private static int runIndex;
+  private static int runIndex = 1;
   
   @JsonProperty("Case")
   @Accessors

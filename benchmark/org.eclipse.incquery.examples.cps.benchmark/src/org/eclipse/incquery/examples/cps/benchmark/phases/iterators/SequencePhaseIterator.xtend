@@ -29,7 +29,7 @@ class SequencePhaseIterator implements Iterator<BenchmarkPhase>{
 		}
 		
 		val atomic = iterator.next
-		if (iterator.hasNext){
+		if (!iterator.hasNext){
 			index++
 			if (index < size){
 				iterator = sequencePhase.phases.get(index).iterator

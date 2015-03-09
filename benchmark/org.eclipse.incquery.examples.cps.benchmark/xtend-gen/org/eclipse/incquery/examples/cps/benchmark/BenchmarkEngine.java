@@ -24,9 +24,9 @@ public class BenchmarkEngine {
     this.benchmarkResult = _benchmarkResult;
   }
   
-  public void runBenchmark(final BenchmarkScenario scenario) {
+  public void runBenchmark(final BenchmarkScenario scenario, final DataToken token) {
     int sequence = 1;
-    DataToken token = scenario.getDataToken();
+    scenario.buildScenario();
     token.init();
     while (scenario.hasNextPhase()) {
       {
@@ -36,8 +36,7 @@ public class BenchmarkEngine {
           final PhaseResult phaseResult = new PhaseResult();
           String _phaseName = phase.getPhaseName();
           phaseResult.setName(_phaseName);
-          DataToken _execute = phase.execute(token, phaseResult);
-          token = _execute;
+          phase.execute(token, phaseResult);
           List<MetricResult> _metricResults = phaseResult.getMetricResults();
           int _size = _metricResults.size();
           boolean _greaterThan = (_size > 0);

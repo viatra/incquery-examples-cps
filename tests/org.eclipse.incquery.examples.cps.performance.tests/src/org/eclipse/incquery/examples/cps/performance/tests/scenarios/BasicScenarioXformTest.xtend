@@ -13,22 +13,32 @@ import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
 import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
-import org.eclipse.incquery.examples.cps.benchmark.metrics.TimerMetric
+
 import org.eclipse.incquery.examples.cps.performance.tests.queries.QueryRegressionTest
+
 import org.eclipse.incquery.examples.cps.benchmark.results.BenchmarkResult
 import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult
+import org.eclipse.incquery.examples.cps.benchmark.results.CaseResult
+import org.eclipse.incquery.examples.cps.benchmark.metrics.TimerMetric
+import org.eclipse.incquery.examples.cps.benchmark.BenchmarkEngine
+import org.eclipse.incquery.examples.cps.benchmark.BenchmarkScenario
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
+
+import org.eclipse.incquery.examples.cps.performance.tests.CPSDataToken
+
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
+
 import org.junit.FixMethodOrder
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.junit.runners.Parameterized
+
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(Parameterized)
@@ -227,7 +237,23 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	def executeScenarioXform(int size) {
 		val seed = 11111
 		val Random rand = new Random(seed);
-		getScenario(rand).executeScenarioXformForConstraints(size, seed)
+//		getScenario(rand).executeScenarioXformForConstraints(size, seed)
+		
+		val scenario = getScenario(rand)
+		val CPSDataToken token = new CPSDataToken
+		token.scenarioName = scenario.class.simpleName
+		token.constraints = scenario.getConstraintsFor(size)
+		token.instancesDirPath = instancesDirPath
+		token.seed = seed
+		token.size = size
+		token.xform = xform
+		
+		CaseResult::scenario = scenario.class.simpleName
+		CaseResult::size = size
+		CaseResult::caseName = xform.class.simpleName
+		
+		val engine = new BenchmarkEngine
+		engine.runBenchmark(scenario as BenchmarkScenario, token)
 	}
 	
 	def executeScenarioXformForConstraints(IScenario scenario, int size, long seed) {

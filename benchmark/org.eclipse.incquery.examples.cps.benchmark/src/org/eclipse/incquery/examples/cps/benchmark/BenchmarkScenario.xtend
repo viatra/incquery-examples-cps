@@ -12,8 +12,6 @@ abstract class BenchmarkScenario {
 	
 	def void buildScenario()
 	
-	def DataToken getDataToken()
-	
 	def boolean hasNextPhase(){
 		if (iterator == null){
 			iterator = rootPhase.iterator
