@@ -5,8 +5,51 @@ import "http://org.eclipse.incquery/model/deployment"
 import "http://org.eclipse.incquery/model/cps-traceability"
 import java org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil
 
-pattern hostInstances(hostType, hostInstance) {
-	HostType.instances(hostType, hostInstance);
+pattern hostInstances(hostInstance) {
+	HostType.instances(_hostType, hostInstance);
+}
+pattern appTypes(appType) {
+	CyberPhysicalSystem.appTypes(_cps, appType);
+}
+
+pattern appInstances(appInstance) {
+	ApplicationType.instances(_appType, appInstance);
+}
+pattern stateMachines(stateMachine) {
+	ApplicationType.behavior(_appType, stateMachine);
+}
+pattern states(state) {
+	StateMachine.states(_sm,state);
+}
+pattern transitions(transition) {
+	State.outgoingTransitions(_sm,transition);
+}
+
+pattern depApp2depHost(depapp, dephost){
+	DeploymentHost.applications(dephost,depapp);
+}
+
+pattern depBehavior2depApp(behavior, depapp){
+	DeploymentApplication.behavior(depapp, behavior);
+}
+
+pattern state2Statemachine(state, sm){
+	StateMachine.states(sm, state);
+}
+
+pattern transition2StateMachine(trans, sm){
+	StateMachine.states(sm, state);
+	State.outgoingTransitions(state, trans);
+}
+pattern sm2Deploymentbehavior(cps2dep : CPSToDeployment,sm : StateMachine,dapp,db) {
+	find cps2depTrace(cps2dep,_trace,sm,db);
+	DeploymentApplication.behavior(dapp,db);	
+	
+}
+pattern transition2AppType(trans, appType){
+	ApplicationType.behavior(appType, sm);
+	StateMachine.states(sm, state);
+	State.outgoingTransitions(state, trans);
 }
 
 pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
@@ -24,35 +67,21 @@ pattern depTransition(depTransition) {
 	BehaviorTransition(depTransition);
 }
 
-pattern stateMachineTransitions(cpsBeh, trans) {
-	StateMachine.states(cpsBeh, state);
-	State.outgoingTransitions(state, trans);
-}
-
+//
 pattern applicationInstance(appType, appInstance, host) {
 	ApplicationType.instances(appType, appInstance);
 	ApplicationInstance.allocatedTo(appInstance, host);
 }
-
-pattern transitionAction(transition, appType, action) {
-	State.outgoingTransitions(state, transition);
-	StateMachine.states(sm, state);
-	ApplicationType.behavior(appType, sm);
-	Transition.action(transition, action);
-}
-
 pattern cpsApplicationTransition(cpsApp, cpsTransition) {
 	find cps2depTrace(_, _, cpsTransition, depTransition);
 	DeploymentApplication.behavior.transitions(depApp, depTransition);
 	find cps2depTrace(_, _, cpsApp, depApp);
 }
-
 pattern sendTransitionAppSignal(transition, app, signal) {
  	Transition.action(transition, action);
  	app == eval(SignalUtil.getAppId(action));
  	signal == eval(SignalUtil.getSignalId(action));
 }
-
 pattern waitTransitionAppSignal(transition, appType, signal) {
  	ApplicationType.behavior(appType, stateMachine);
 	StateMachine.states(stateMachine, source);
@@ -63,13 +92,13 @@ pattern waitTransitionAppSignal(transition, appType, signal) {
  	);
  	signal == eval(SignalUtil.getSignalId(action));
 }
-
+//
 pattern triggerPair(cpsTrigger, cpsTarget) {
 	find sendTransitionAppSignal(cpsTrigger, appId, signal);
 	find waitTransitionAppSignal(cpsTarget, waitApp, signal);
 	ApplicationType.id(waitApp, appId);
 }
-
+//
 pattern communicatingAppInstances(sourceAppInstance, targetAppInstance) {
 	find applicationInstance(_, sourceAppInstance, sourceHostInstance);
 	find applicationInstance(_, targetAppInstance, targetHostInstance);
