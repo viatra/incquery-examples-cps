@@ -59,15 +59,12 @@
 					<metamodels>
 						<metamodel>
 							<packageClass>org.eclipse.incquery.examples.cps.deployment.DeploymentPackage</packageClass>
-							<genmodelUri>../../domains/org.eclipse.incquery.examples.cps.deployment/model/deployment.genmodel</genmodelUri>
 						</metamodel>
 						<metamodel>
 							<packageClass>org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage</packageClass>
-							<genmodelUri>../../domains/org.eclipse.incquery.examples.cps.model/model/model.genmodel</genmodelUri>
 						</metamodel>
 						<metamodel>
 							<packageClass>org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage</packageClass>
-							<genmodelUri>../../domains/org.eclipse.incquery.examples.cps.traceability/model/traceability.genmodel</genmodelUri>
 						</metamodel>
 					</metamodels>
 				</configuration>
