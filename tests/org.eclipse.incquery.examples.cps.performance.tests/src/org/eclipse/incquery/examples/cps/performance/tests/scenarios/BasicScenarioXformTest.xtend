@@ -101,7 +101,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale00064(){
 		val testId = "scale64"
@@ -112,7 +112,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale00128(){
 		val testId = "scale128"
@@ -123,7 +123,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale00256(){
 		val testId = "scale256"
@@ -134,7 +134,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale00512(){
 		val testId = "scale512"
@@ -145,7 +145,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale01024(){
 		val testId = "scale1024"
@@ -156,7 +156,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale01280(){
 		val testId = "scale1280"
@@ -167,7 +167,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale01536(){
 		val testId = "scale1536"
@@ -178,7 +178,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale02048(){
 		val testId = "scale2048"
@@ -189,7 +189,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale02304(){
 		val testId = "scale2304"
@@ -200,7 +200,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale02560(){
 		val testId = "scale2560"
@@ -211,7 +211,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		endTest(testId)
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test(timeout=600000)
 	def scale03072(){
 		val testId = "scale3072"
