@@ -47,6 +47,7 @@ import org.eclipse.incquery.runtime.api.IncQueryMatcher
 import static com.google.common.base.Preconditions.*
 
 import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingUtil.*
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.HostInstancesQuerySpecification
 
 class CPS2DeploymentPartialBatchTransformation {
 
@@ -105,12 +106,12 @@ class CPS2DeploymentPartialBatchTransformation {
 
 		monitor = new ChangeMonitor(engine);
 
-		monitor.addSpecification(cpsXformM2M.hostInstances)
-		monitor.addSpecification(AppTypesQuerySpecification.instance)
-		monitor.addSpecification(AppInstancesQuerySpecification.instance)
-		monitor.addSpecification(StateMachinesQuerySpecification.instance)
-		monitor.addSpecification(StatesQuerySpecification.instance)
-		monitor.addSpecification(TransitionsQuerySpecification.instance);
+		monitor.addRule(HostInstancesQuerySpecification.instance)
+		monitor.addRule(AppTypesQuerySpecification.instance)
+		monitor.addRule(AppInstancesQuerySpecification.instance)
+		monitor.addRule(StateMachinesQuerySpecification.instance)
+		monitor.addRule(StatesQuerySpecification.instance)
+		monitor.addRule(TransitionsQuerySpecification.instance);
 		monitor.startMonitoring
 
 		watch.stop
