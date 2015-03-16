@@ -1,9 +1,9 @@
 package org.eclipse.incquery.examples.cps.performance.tests.phases
 
-import org.eclipse.incquery.examples.cps.benchmark.phases.OptionalPhase
-import org.eclipse.incquery.examples.cps.benchmark.phases.AtomicPhase
-import org.eclipse.incquery.examples.cps.benchmark.DataToken
-import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult
+import eu.mondo.sam.core.phases.OptionalPhase
+import eu.mondo.sam.core.phases.AtomicPhase;
+import eu.mondo.sam.core.DataToken;
+import eu.mondo.sam.core.results.PhaseResult;
 import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
 import org.eclipse.incquery.examples.cps.performance.tests.CPSDataToken
 

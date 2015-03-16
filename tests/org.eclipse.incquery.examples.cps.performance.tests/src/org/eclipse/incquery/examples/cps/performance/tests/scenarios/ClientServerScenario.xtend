@@ -11,13 +11,14 @@ import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.benchmark.BenchmarkScenario
-import org.eclipse.incquery.examples.cps.benchmark.phases.SequencePhase
-import org.eclipse.incquery.examples.cps.benchmark.phases.IterationPhase
+import eu.mondo.sam.core.scenarios.BenchmarkScenario
+import eu.mondo.sam.core.phases.SequencePhase
+import eu.mondo.sam.core.phases.IterationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.ModificationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.TransformationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.GenerationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.InitializationPhase
+import eu.mondo.sam.core.results.CaseDescriptor
 
 class ClientServerScenario extends BenchmarkScenario implements IScenario {
 	
@@ -169,10 +170,10 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 		return appClasses;
 	}
 	
-	override buildScenario() {
+	override build() {
 		val seq = new SequencePhase
 		val innerSeq = new SequencePhase
-		innerSeq.addPhase(
+		innerSeq.addPhases(
 			new ModificationPhase("Modification"), 
 			new TransformationPhase("Transformation")
 		)
@@ -180,13 +181,24 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 		val iter = new IterationPhase(2)
 		iter.phase = innerSeq
 		
-		seq.addPhase(
+		seq.addPhases(
 			new GenerationPhase("Generation"),
 			new InitializationPhase("Initialization"),
 			new TransformationPhase("Transformation"),
 			iter
 		)
 		rootPhase = seq
+	}
+	
+	override getCaseDescriptor() {
+		val descriptor = new CaseDescriptor
+		descriptor.tool = "IncQuery"
+		descriptor.caseName = caseName
+		descriptor.size = size
+		descriptor.runIndex = 1
+		descriptor.scenario = "Client Server"
+		
+		return descriptor
 	}
 	
 }

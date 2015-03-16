@@ -1,6 +1,6 @@
 package org.eclipse.incquery.examples.cps.performance.tests
 
-import org.eclipse.incquery.examples.cps.benchmark.DataToken
+import eu.mondo.sam.core.DataToken;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -29,6 +29,9 @@ class CPSDataToken implements DataToken{
 	}
 	
 	override destroy() {
+		
 	}
+	
+	
 	
 }

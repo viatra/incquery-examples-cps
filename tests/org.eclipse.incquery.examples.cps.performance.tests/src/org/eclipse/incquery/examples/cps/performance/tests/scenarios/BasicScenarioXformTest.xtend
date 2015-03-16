@@ -16,12 +16,11 @@ import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 
 import org.eclipse.incquery.examples.cps.performance.tests.queries.QueryRegressionTest
 
-import org.eclipse.incquery.examples.cps.benchmark.results.BenchmarkResult
-import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult
-import org.eclipse.incquery.examples.cps.benchmark.results.CaseResult
-import org.eclipse.incquery.examples.cps.benchmark.metrics.TimerMetric
-import org.eclipse.incquery.examples.cps.benchmark.BenchmarkEngine
-import org.eclipse.incquery.examples.cps.benchmark.BenchmarkScenario
+import eu.mondo.sam.core.results.BenchmarkResult
+import eu.mondo.sam.core.results.PhaseResult
+import eu.mondo.sam.core.metrics.TimerMetric
+import eu.mondo.sam.core.BenchmarkEngine
+import eu.mondo.sam.core.scenarios.BenchmarkScenario
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.PropertiesUtil
 
@@ -237,7 +236,6 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	def executeScenarioXform(int size) {
 		val seed = 11111
 		val Random rand = new Random(seed);
-//		getScenario(rand).executeScenarioXformForConstraints(size, seed)
 		
 		val scenario = getScenario(rand)
 		val CPSDataToken token = new CPSDataToken
@@ -247,13 +245,13 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		token.seed = seed
 		token.size = size
 		token.xform = xform
-		
-		CaseResult::scenario = scenario.class.simpleName
-		CaseResult::size = size
-		CaseResult::caseName = xform.class.simpleName
+		val benchmarkScenario = scenario as BenchmarkScenario
+		benchmarkScenario.size = size
+		benchmarkScenario.caseName = xform.class.simpleName
 		
 		val engine = new BenchmarkEngine
-		engine.runBenchmark(scenario as BenchmarkScenario, token)
+		BenchmarkResult::setResultPath("./results/json/")
+		engine.runBenchmark(benchmarkScenario, token)
 	}
 	
 	def executeScenarioXformForConstraints(IScenario scenario, int size, long seed) {
@@ -279,7 +277,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		var PlanExecutor<CPSFragment, CPSGeneratorInput> generator = new PlanExecutor();
 		
 		// Generating
-		generatorTimer.startMesure
+//		generatorTimer.startMesure
 		var fragment = generator.process(plan, input);
 		generatorTimer.stopMeasure
 		
@@ -296,14 +294,14 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		engine.dispose
 
 		// Transformation
-		transformInitTimer.startMesure
+//		transformInitTimer.startMesure
 		initializeTransformation(cps2dep)
 		transformInitTimer.stopMeasure
 
 		val long incQueryMemory = QueryRegressionTest.logMemoryProperties
 //		result.addMemoryBytes(incQueryMemory)
 
-		transformTimer.startMesure
+//		transformTimer.startMesure
 		executeTransformation
 		transformTimer.stopMeasure
 		info("Xform1 time: " + transformTimer.getValue + " ms");
@@ -321,8 +319,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		}
 		
 		// Modification
-		secondTransformTimer.startMesure
-		firstModification(cps2dep, result)
+//		secondTransformTimer.startMesure
+//		firstModification(cps2dep, result)
 		
 		// Re-transformation
 		executeTransformation
@@ -331,8 +329,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 //		result.addCheckTime(secondXformTime.elapsed(TimeUnit.MILLISECONDS))
 		createPhaseResult(result, secondTransformTimer, "Second Transformation Time")
 		
-		thirdTransformTimer.startMesure
-		secondModification(cps2dep, result)
+//		thirdTransformTimer.startMesure
+//		secondModification(cps2dep, result)
 
 		executeTransformation
 		thirdTransformTimer.stopMeasure
@@ -376,7 +374,7 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 	
 	protected def createPhaseResult(BenchmarkResult result, TimerMetric generatorTimer, String name) {
 		var phase1 = new PhaseResult
-		phase1.name = name
+//		phase1.name = name
 		phase1.addMetrics(generatorTimer)
 		result.addResults(phase1)
 	}
@@ -420,10 +418,10 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		
 	}
 
-	def void firstModification(CPSToDeployment cps2dep, BenchmarkResult result)
+//	def void firstModification(CPSToDeployment cps2dep, BenchmarkResult result)
 	
 	
-	def void secondModification(CPSToDeployment cps2dep, BenchmarkResult result)
+//	def void secondModification(CPSToDeployment cps2dep, BenchmarkResult result)
 	
 	def String getModificationLabel()
 }

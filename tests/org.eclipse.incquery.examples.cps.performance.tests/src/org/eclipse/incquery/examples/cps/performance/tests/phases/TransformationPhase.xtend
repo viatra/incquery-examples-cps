@@ -1,9 +1,11 @@
 package org.eclipse.incquery.examples.cps.performance.tests.phases
 
-import org.eclipse.incquery.examples.cps.benchmark.phases.AtomicPhase
-import org.eclipse.incquery.examples.cps.benchmark.DataToken
-import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult
+import eu.mondo.sam.core.phases.AtomicPhase;
+import eu.mondo.sam.core.DataToken;
+import eu.mondo.sam.core.results.PhaseResult;
 import org.eclipse.incquery.examples.cps.performance.tests.CPSDataToken
+import eu.mondo.sam.core.metrics.TimerMetric
+import eu.mondo.sam.core.metrics.MemoryMetric
 
 class TransformationPhase extends AtomicPhase{
 	
@@ -12,14 +14,16 @@ class TransformationPhase extends AtomicPhase{
 	}
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
-//		transformTimer.startMesure
-		val cpsToken =token as CPSDataToken 
-		cpsToken.xform.executeTransformation
-//		transformTimer.stopMeasure
-//		info("Xform1 time: " + transformTimer.getValue + " ms");
-//		result.addCheckTime(transformTime.elapsed(TimeUnit.MILLISECONDS))
+		val cpsToken =token as CPSDataToken
+		val timer = new TimerMetric("Time")
+		val memory = new MemoryMetric("Memory")
 		
-//		val long firstTransformationMemory = QueryRegressionTest.logMemoryProperties
+		timer.startMeasure
+		cpsToken.xform.executeTransformation
+		timer.stopMeasure
+		memory.measure
+		
+		phaseResult.addMetrics(timer, memory)
 	}
 	
 }

@@ -1,9 +1,10 @@
 package org.eclipse.incquery.examples.cps.performance.tests.phases
 
-import org.eclipse.incquery.examples.cps.benchmark.phases.AtomicPhase
-import org.eclipse.incquery.examples.cps.benchmark.DataToken
-import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult
+import eu.mondo.sam.core.phases.AtomicPhase;
+import eu.mondo.sam.core.DataToken;
+import eu.mondo.sam.core.results.PhaseResult;
 import org.eclipse.incquery.examples.cps.performance.tests.CPSDataToken
+import eu.mondo.sam.core.metrics.TimerMetric
 
 class InitializationPhase extends AtomicPhase{
 	
@@ -13,11 +14,13 @@ class InitializationPhase extends AtomicPhase{
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
 		val cpsToken = token as CPSDataToken
-
-		// Transformation
-//		transformInitTimer.startMesure
+		val transformInitTimer = new TimerMetric("Init time")
+		
+		transformInitTimer.startMeasure
 		cpsToken.xform.initializeTransformation(cpsToken.cps2dep)
-//		transformInitTimer.stopMeasure
+		transformInitTimer.stopMeasure
+		
+		phaseResult.addMetrics(transformInitTimer)
 	}
 	
 }

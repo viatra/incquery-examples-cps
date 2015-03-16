@@ -1,10 +1,11 @@
 package org.eclipse.incquery.examples.cps.performance.tests.phases
 
-import org.eclipse.incquery.examples.cps.benchmark.phases.AtomicPhase
-import org.eclipse.incquery.examples.cps.benchmark.DataToken
-import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult
+import eu.mondo.sam.core.phases.AtomicPhase;
+import eu.mondo.sam.core.DataToken;
+import eu.mondo.sam.core.results.PhaseResult;
 import org.eclipse.incquery.examples.cps.performance.tests.CPSDataToken
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
+import eu.mondo.sam.core.metrics.TimerMetric
 
 class ModificationPhase extends AtomicPhase{
 	
@@ -17,18 +18,22 @@ class ModificationPhase extends AtomicPhase{
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
 		val cpsToken = token as CPSDataToken
+		val modifyTimer = new TimerMetric("Modify Time")
+		val editTimer = new TimerMetric("Edit Time")
+		
 //		info("Adding new host instance")
-//		var modifyTime1 = Stopwatch.createStarted;
+		modifyTimer.startMeasure
 		val appType = cpsToken.cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
 		val hostInstance = cpsToken.cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
-//		var editTime1 = Stopwatch.createStarted;
+		
+		editTimer.startMeasure
 		val index = cpsToken.modificationIndex
 		val appID = if (index == 1) "new.app.instance" else "new.app.instance" + index 
 		appType.prepareApplicationInstanceWithId(appID, hostInstance)
-//		editTime1.stop
-//		modifyTime1.stop
-//		result.addModificationTime(modifyTime1.elapsed(TimeUnit.MILLISECONDS))
-//		result.addEditTime(editTime1.elapsed(TimeUnit.MILLISECONDS))
+		editTimer.stopMeasure
+		modifyTimer.stopMeasure
+		
+		phaseResult.addMetrics(editTimer, modifyTimer)
 	}
 	
 }

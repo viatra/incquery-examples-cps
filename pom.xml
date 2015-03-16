@@ -49,9 +49,6 @@
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.distributed</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.jdt</module>
 		
-		<!-- Benchmark -->
-		<module>benchmark/org.eclipse.incquery.examples.cps.benchmark</module>
-
 		<!-- Tests -->
 		<module>tests/org.eclipse.incquery.examples.cps.generator.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.tests</module>
