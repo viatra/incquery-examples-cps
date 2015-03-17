@@ -1,17 +1,13 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr
 
 import com.google.common.base.Stopwatch
-import com.google.common.collect.ArrayListMultimap
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Maps
-import com.google.common.collect.Multimap
 import com.google.common.collect.Table
-import java.util.HashMap
 import java.util.List
 import java.util.Map
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
@@ -31,26 +27,14 @@ import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.CpsXformM2M
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.AppInstancesQuerySpecification
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.AppTypesQuerySpecification
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.StateMachinesQuerySpecification
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.StatesQuerySpecification
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.TransitionsQuerySpecification
-import org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil
-import org.eclipse.incquery.examples.cps.xform.m2t.util.genericmonitor.ChangeDelta
-import org.eclipse.incquery.examples.cps.xform.m2t.util.genericmonitor.ChangeMonitor
-import org.eclipse.incquery.runtime.api.IPatternMatch
-import org.eclipse.incquery.runtime.api.IQuerySpecification
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.api.IncQueryMatcher
 
 import static com.google.common.base.Preconditions.*
 
 import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingUtil.*
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.HostInstancesQuerySpecification
 
 class CPS2DeploymentPartialBatchTransformation {
-
+	
 	extension Logger logger = Logger.getLogger("cps.xform.m2m.incr.aggr")
 	extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
@@ -59,7 +43,6 @@ class CPS2DeploymentPartialBatchTransformation {
 
 	CPSToDeployment mapping
 	IncQueryEngine engine
-	ChangeMonitor monitor;
 
 	Stopwatch clearModelPerformance;
 	Stopwatch hostTransformationPerformance;
@@ -73,7 +56,6 @@ class CPS2DeploymentPartialBatchTransformation {
 
 	Table<State, DeploymentBehavior, BehaviorState> stateTable
 	Map<Identifiable, CPS2DeplyomentTrace> traceTable
-	Map<Transition, String> transitionMap
 
 	/**
 	 * Initializes a new instance of the transformation using the specified
@@ -101,19 +83,6 @@ class CPS2DeploymentPartialBatchTransformation {
 		debug("Preparing queries on engine.")
 		val watch = Stopwatch.createStarted
 		prepare(engine)
-		transitionMap = new HashMap
-		engine.transitions.allMatches.forEach[m|transitionMap.put(m.transition, m.transition.action)]
-
-		monitor = new ChangeMonitor(engine);
-
-		monitor.addRule(HostInstancesQuerySpecification.instance)
-		monitor.addRule(AppTypesQuerySpecification.instance)
-		monitor.addRule(AppInstancesQuerySpecification.instance)
-		monitor.addRule(StateMachinesQuerySpecification.instance)
-		monitor.addRule(StatesQuerySpecification.instance)
-		monitor.addRule(TransitionsQuerySpecification.instance);
-		monitor.startMonitoring
-
 		watch.stop
 		info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 	}
@@ -123,44 +92,9 @@ class CPS2DeploymentPartialBatchTransformation {
      */
 	def execute() {
 		initPerformanceTimers()
-		val delta = monitor.createCheckpoint
-		if (delta.appeared.keySet.size > 0) {
-			info("APPEARED")
-		}
-		delta.appeared.keySet.forEach [ spec |
-			delta.appeared.get(spec).forEach [ b |
-				info("SPEC name: " + spec.fullyQualifiedName + " ELEMENT: " + b.eClass.name)
-			]
-		]
-		if (delta.updated.keySet.size > 0) {
-			info("UPDATED")
-		}
-		delta.updated.keySet.forEach [ spec |
-			delta.updated.get(spec).forEach [ b |
-				info("SPEC name: " + spec.fullyQualifiedName + " ELEMENT: " + b.eClass.name)
-			]
-		]
-		if (delta.disappeared.keySet.size > 0) {
-			info("DISAPPEARED")
-		}
-		delta.disappeared.keySet.forEach [ spec |
-			delta.disappeared.get(spec).forEach [ b |
-				info("SPEC name: " + spec.fullyQualifiedName + " ELEMENT: " + b.eClass.name)
-			]
-		]
-
-		delta.appeared.keySet.forEach [ spec |
-			delta.appeared.get(spec).forEach [ b |
-				if (b instanceof Transition) {
-					val transition = b as Transition
-					transitionMap.put(transition, transition.action)
-
-				}
-			]
-		]
 
 		clearModelPerformance.start
-		delta.clearModel
+		clearModel
 		clearModelPerformance.stop
 
 		info(
@@ -213,36 +147,22 @@ class CPS2DeploymentPartialBatchTransformation {
 	 * @param cpsHost
 	 *            The host to be transformed.
 	 */
-	private def void transform(HostInstance cpsHost) {
+	private def transform(HostInstance cpsHost) {
 		trace('''Executing: transform(cpsHost = «cpsHost.name»)''')
 		hostTransformationPerformance.start
+		val depHost = cpsHost.createDepHost
 
-		if (engine.cps2depTrace.getAllMatches(mapping, null, cpsHost, null).size == 0) {
-			val depHost = cpsHost.createDepHost
-			debug('''Adding host («depHost.description») to deployment model.''')
-			mapping.deployment.hosts += depHost
-			addTrace(cpsHost, depHost)
+		debug('''Adding host («depHost.description») to deployment model.''')
+		mapping.deployment.hosts += depHost
+		addTrace(cpsHost, depHost)
 
-			hostTransformationPerformance.stop
-			debug("Running application instance transformations.")
-			cpsHost.applications.filter[type?.cps == mapping.cps].forEach [
-				transform(depHost)
-			]
-			debug('''Running application instance transformations finished''')
-			trace('''Execution ended: transform''')
-
-		} else {
-			var element = engine.cps2depTrace.getAllMatches(mapping, null, cpsHost, null).get(0).depElement
-			val depHost = element as DeploymentHost
-			hostTransformationPerformance.stop
-			debug("Running application instance transformations.")
-			cpsHost.applications.filter[type?.cps == mapping.cps].forEach [
-				transform(depHost)
-			]
-			debug('''Running application instance transformations finished''')
-			trace('''Execution ended: transform''')
-		}
-
+		hostTransformationPerformance.stop
+		debug("Running application instance transformations.")
+		cpsHost.applications.filter[type?.cps == mapping.cps].forEach [
+			transform(depHost)
+		]
+		debug('''Running application instance transformations finished''')
+		trace('''Execution ended: transform''')
 	}
 
 	/**
@@ -259,31 +179,17 @@ class CPS2DeploymentPartialBatchTransformation {
 	private def transform(ApplicationInstance cpsInstance, DeploymentHost depHost) {
 		trace('''Executing: transform(cpsInstance = «cpsInstance.name», depHost = «depHost.name»)''')
 		appTransformationPerformance.start
-		if (engine.cps2depTrace.getAllMatches(mapping, null, cpsInstance, null).size == 0) {
+		val depApp = cpsInstance.createDepApplication
 
-			val depApp = cpsInstance.createDepApplication
+		depHost.applications += depApp
+		addTrace(cpsInstance, depApp)
 
-			depHost.applications += depApp
-			addTrace(cpsInstance, depApp)
-
-			appTransformationPerformance.stop
-			debug("Running state machine transformations.")
-			val watch = Stopwatch.createStarted
-			cpsInstance.type.behavior?.transform(depApp)
-			debug('''Running state machine transformations («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
-			trace('''Execution ended: transform''')
-
-		} else {
-
-			val depApp = engine.cps2depTrace.getAllMatches(mapping, null, cpsInstance, null).get(0).depElement as DeploymentApplication
-
-			appTransformationPerformance.stop
-			debug("Running state machine transformations.")
-			val watch = Stopwatch.createStarted
-			cpsInstance.type.behavior?.transform(depApp)
-			debug('''Running state machine transformations («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
-			trace('''Execution ended: transform''')
-		}
+		appTransformationPerformance.stop
+		debug("Running state machine transformations.")
+		val watch = Stopwatch.createStarted
+		cpsInstance.type.behavior?.transform(depApp)
+		debug('''Running state machine transformations («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+		trace('''Execution ended: transform''')
 	}
 
 	/**
@@ -301,39 +207,34 @@ class CPS2DeploymentPartialBatchTransformation {
 	private def transform(StateMachine cpsBehavior, DeploymentApplication depApp) {
 		trace('''Executing: transform(cpsBehavior = «cpsBehavior.name», depApp = «depApp.name»)''')
 		stateMachineTransformationPerformance.start
+		val depBehavior = cpsBehavior.createDepBehavior
 
-		val matches = engine.sm2Deploymentbehavior.getAllMatches(mapping, cpsBehavior, depApp, null)
-		if (matches.size == 0) {
-			val depBehavior = cpsBehavior.createDepBehavior
+		depApp.behavior = depBehavior
+		addTraceOneToN(cpsBehavior, #[depBehavior])
 
-			depApp.behavior = depBehavior
-			addTraceOneToN(cpsBehavior, #[depBehavior])
+		stateMachineTransformationPerformance.stop
+		debug("Running state transformations.")
+		val watch = Stopwatch.createStarted
+		cpsBehavior.states.forEach [
+			transform(depBehavior)
+		]
+		debug('''Running state transformations finished''')
 
-			stateMachineTransformationPerformance.stop
-			debug("Running state transformations.")
-			val watch = Stopwatch.createStarted
-			cpsBehavior.states.forEach [
-				transform(depBehavior)
-			]
-			debug('''Running state transformations finished''')
+		debug("Resolving state relationships.")
+		watch.reset.start
+		cpsBehavior.states.forEach [
+			buildStateRelations(depBehavior, cpsBehavior)
+		]
+		debug('''Resolving state relationships finished''')
 
-			debug("Resolving state relationships.")
-			watch.reset.start
-			cpsBehavior.states.forEach [
-				buildStateRelations(depBehavior, cpsBehavior)
-			]
-			debug('''Resolving state relationships finished''')
-
-			debug("Resolving initial state.")
-			stateMachineTransformationPerformance.start
-			watch.reset.start
-			if (cpsBehavior.initial != null)
-				depBehavior.current = engine.cps2depTrace.getAllMatches(mapping, null, cpsBehavior.initial, null).map[
-					depElement].filter(BehaviorState).findFirst[depBehavior.states.contains(it)]
-			else
-				depBehavior.current = null
-
-		}
+		debug("Resolving initial state.")
+		stateMachineTransformationPerformance.start
+		watch.reset.start
+		if (cpsBehavior.initial != null)
+			depBehavior.current = engine.cps2depTrace.getAllMatches(mapping, null, cpsBehavior.initial, null).map[
+				depElement].filter(BehaviorState).findFirst[depBehavior.states.contains(it)]
+		else
+			depBehavior.current = null
 		stateMachineTransformationPerformance.stop
 		debug('''Resolving initial state finished''')
 		trace('''Execution ended: transform''')
@@ -381,6 +282,8 @@ class CPS2DeploymentPartialBatchTransformation {
 				name»)''')
 		transitionTransformationPerformance.start
 
+		//		val depState = engine.cps2depTrace.getAllMatches(mapping, null, cpsState, null).map[depElement].filter(
+		//			BehaviorState).findFirst[depBehavior.states.contains(it)]
 		val depState = stateTable.get(cpsState, depBehavior)
 		cpsState.outgoingTransitions.filter[targetState != null && cpsBehavior.states.contains(targetState)].forEach [
 			mapTransition(depState, depBehavior)
@@ -525,178 +428,11 @@ class CPS2DeploymentPartialBatchTransformation {
 	/**
 	 * Clears the initial model, removing every trace and host (thus deployment application etc.) from it.
 	 */
-	private def clearModel(ChangeDelta delta) {
-
-		trace('''Executing: clearModel(ChangeDelta delta)''')
-		val Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, EObject> queue = ArrayListMultimap.create();
-		queue.putAll(delta.disappeared)
-		queue.putAll(delta.updated)
-		
-		queue.keySet.forEach [ spec |
-			queue.get(spec).forEach [ b |
-				if (b instanceof HostInstance) {
-					removeHostInstance(b as HostInstance)
-				}
-				if (b instanceof ApplicationType) {
-					removeAppType(b as ApplicationType)
-				}
-				if (b instanceof ApplicationInstance) {
-					removeAppInstance(b as ApplicationInstance)
-				}
-				if (b instanceof StateMachine) {
-					removeStateMachine(b as StateMachine)
-				}
-				if (b instanceof State) {
-					val state = b as State
-					state.removeState
-					engine.state2Statemachine.getAllMatches(state, null).forEach [ match |
-						match.sm.removeStateMachine
-					]
-				}
-				if (b instanceof Transition) {
-					val transition = b as Transition
-					val action = transitionMap.get(transition)
-					if (SignalUtil.isWait(action)) {
-						val id = SignalUtil.getSignalId(action)
-						engine.sendTransitionAppSignal.getAllMatches(null, null, id).forEach [ match |
-							match.transition.removeTransition
-							engine.transition2StateMachine.getAllMatches(match.transition, null).forEach [ m |
-								m.sm.removeStateMachine
-							]
-						]
-					}
-					transition.removeTransition
-					engine.transition2StateMachine.getAllMatches(transition, null).forEach [ match |
-						match.sm.removeStateMachine
-					]
-				}
-			]
-		]
+	private def clearModel() {
+		trace('''Executing: clearModel()''')
+		mapping.traces.clear
+		mapping.deployment.hosts.clear
 		trace('''Execution ended: clearModel''')
-	}
-
-
-	/**
-	 * Removes the deployment elements representing the specified {@link HostInstance}, as well as the elements representing its contained objects
-	 * 
-	 * @param {@link HostInstance} to be removed
-	 */
-	private def removeHostInstance(HostInstance host) {
-		trace('''Executing: removeHostInstance(app = «host.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, host, null).forEach [ c |
-			mapping.traces.remove(c.trace)
-			mapping.deployment.hosts.remove(c.depElement);
-		]
-
-		host.applications.forEach[app|app.removeAppInstance]
-		trace('''Execution ended: removeHostInstance''')
-	}
-	
-	
-	/**
-	 * Removes the deployment elements representing the specified {@link ApplicationInstance}, as well as the elements representing its contained objects
-	 * 
-	 * @param {@link ApplicationInstance} to be removed
-	 */
-	private def removeAppInstance(ApplicationInstance app) {
-		trace('''Executing: removeAppinstance(app = «app.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, app, null).forEach [ c |
-			if (c.depElement != null) {
-				mapping.traces.remove(c.trace)
-				val depapp = c.depElement as DeploymentApplication
-				engine.depApp2depHost.getAllMatches(depapp, null).forEach [ match |
-					val host = match.dephost
-					host.applications.remove(depapp)
-				]
-
-			}
-		]
-		if (app.type != null) {
-			app.type.behavior.removeStateMachine
-		}
-		trace('''Execution ended: removeAppinstance''')
-	}
-	
-	
-	/**
-	 * Removes the deployment elements representing the specified {@link ApplicationType}, as well as the elements representing its contained objects
-	 * 
-	 * @param {@link ApplicationType} to be removed
-	 */
-	private def removeAppType(ApplicationType app) {
-		trace('''Executing: removeAppType(app = «app.name»)''')
-		try {
-			app.behavior.removeStateMachine
-		} catch (Exception e) {
-		}
-		trace('''Execution ended: removeAppType''')
-	}
-
-	/**
-	 * Removes the deployment elements representing the specified {@link StateMachine}, as well as the elements representing the {@link State} and {@link Transition} objects it contains
-	 * 
-	 * @param {@link StateMachine} to be removed
-	 */
-	private def void removeStateMachine(StateMachine sm) {
-		trace('''Executing: removeStateMachine(sm = «sm.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, sm, null).forEach [ c |
-			if (c.depElement != null) {
-				mapping.traces.remove(c.trace)
-				val depBehavior = c.depElement as DeploymentBehavior
-				engine.depBehavior2depApp.getAllMatches(depBehavior, null).forEach [ match |
-					val app = match.depapp
-					app.behavior = null;
-				]
-
-			}
-		]
-		sm.states.forEach [ state |
-			state.removeState
-			state.outgoingTransitions.forEach [ trans |
-				val action = transitionMap.get(trans)
-				if (action != null && SignalUtil.isWait(action)) {
-					val id = SignalUtil.getSignalId(action)
-					engine.sendTransitionAppSignal.getAllMatches(null, null, id).forEach [ match |
-						engine.transition2StateMachine.getAllMatches(match.transition, null).forEach [ m |
-							m.sm.removeStateMachine
-						]
-					]
-				}
-				trans.removeTransition
-			]
-		]
-		trace('''Execution ended: removeState''')
-	}
-
-	/**
-	 * Removes the deployment elements representing the specified {@link State}
-	 * @param State to be removed
-	 */
-	private def removeState(State state) {
-		trace('''Executing: removeState(trans = «state.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, state, null).forEach [ c |
-			if (c.depElement != null) {
-				mapping.traces.remove(c.trace)
-			}
-		]
-		trace('''Execution ended: removeState''')
-	}
-
-	/**
-	 * Removes the deployment elements representing the specified {@link Transition}
-	 * @param Transition to be removed
-	 */
-	private def removeTransition(Transition trans) {
-		trace('''Executing: removeTransition(trans = «trans.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, trans, null).forEach [ c |
-			if (c.depElement != null) {
-				mapping.traces.remove(c.trace)
-				val depTrans = c.depElement as BehaviorTransition
-				depTrans.trigger.clear
-			}
-		]
-
-		trace('''Execution ended: removeTransition''')
 	}
 
 	/**
