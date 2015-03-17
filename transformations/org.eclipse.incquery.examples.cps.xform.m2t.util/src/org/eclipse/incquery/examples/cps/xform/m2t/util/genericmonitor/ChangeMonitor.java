@@ -31,6 +31,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
+@SuppressWarnings("unchecked")
 public class ChangeMonitor extends IChangeMonitor {
 	private Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, EObject> appearBetweenCheckpoints;
 	private Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, EObject> updateBetweenCheckpoints;
@@ -90,7 +91,6 @@ public class ChangeMonitor extends IChangeMonitor {
 	}
 
 	public void addRule(IQuerySpecification<?> spec) {
-		@SuppressWarnings("unchecked")
 		RuleSpecification<IPatternMatch> rule = Rules
 				.newMatcherRuleSpecification(
 						(IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) spec,
@@ -108,7 +108,7 @@ public class ChangeMonitor extends IChangeMonitor {
 	public void removeRule(IQuerySpecification<?> spec){
 		RuleSpecification<IPatternMatch> ruleSpecification = specs.get(spec);
 		rules.remove(ruleSpecification);
-		specs.remove(spec);
+		specs.remove(spec, ruleSpecification);
 		executionSchema.removeRule(ruleSpecification);
 	}
 
@@ -196,7 +196,6 @@ public class ChangeMonitor extends IChangeMonitor {
 			objects.add((EObject) match.get(i));
 			i++;
 		}
-		@SuppressWarnings("unchecked")
 		Collection<EObject> updateElements = updateAccumulator
 				.get((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) specification);
 		updateElements.addAll(objects);
@@ -211,7 +210,6 @@ public class ChangeMonitor extends IChangeMonitor {
 			objects.add((EObject) match.get(i));
 			i++;
 		}
-		@SuppressWarnings("unchecked")
 		Collection<EObject> appearElements = appearAccumulator
 				.get((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) specification);
 		appearElements.addAll(objects);
@@ -226,13 +224,10 @@ public class ChangeMonitor extends IChangeMonitor {
 			objects.add((EObject) match.get(i));
 			i++;
 		}
-		@SuppressWarnings("unchecked")
 		Collection<EObject> appearElements = appearAccumulator
 				.get((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) specification);
-		@SuppressWarnings("unchecked")
 		Collection<EObject> updateElements = updateAccumulator
 				.get((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) specification);
-		@SuppressWarnings("unchecked")
 		Collection<EObject> disappearElements = disappearAccumulator
 				.get((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) specification);
 		for (EObject eObject : objects) {
