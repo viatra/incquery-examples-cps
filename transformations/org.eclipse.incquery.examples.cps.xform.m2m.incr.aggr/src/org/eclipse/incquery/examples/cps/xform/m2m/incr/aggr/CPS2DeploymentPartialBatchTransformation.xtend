@@ -124,31 +124,7 @@ class CPS2DeploymentPartialBatchTransformation {
 	def execute() {
 		initPerformanceTimers()
 		val delta = monitor.createCheckpoint
-		if (delta.appeared.keySet.size > 0) {
-			info("APPEARED")
-		}
-		delta.appeared.keySet.forEach [ spec |
-			delta.appeared.get(spec).forEach [ b |
-				info("SPEC name: " + spec.fullyQualifiedName + " ELEMENT: " + b.eClass.name)
-			]
-		]
-		if (delta.updated.keySet.size > 0) {
-			info("UPDATED")
-		}
-		delta.updated.keySet.forEach [ spec |
-			delta.updated.get(spec).forEach [ b |
-				info("SPEC name: " + spec.fullyQualifiedName + " ELEMENT: " + b.eClass.name)
-			]
-		]
-		if (delta.disappeared.keySet.size > 0) {
-			info("DISAPPEARED")
-		}
-		delta.disappeared.keySet.forEach [ spec |
-			delta.disappeared.get(spec).forEach [ b |
-				info("SPEC name: " + spec.fullyQualifiedName + " ELEMENT: " + b.eClass.name)
-			]
-		]
-
+		
 		delta.appeared.keySet.forEach [ spec |
 			delta.appeared.get(spec).forEach [ b |
 				if (b instanceof Transition) {
@@ -528,10 +504,11 @@ class CPS2DeploymentPartialBatchTransformation {
 	private def clearModel(ChangeDelta delta) {
 
 		trace('''Executing: clearModel(ChangeDelta delta)''')
-		val Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, EObject> queue = ArrayListMultimap.create();
+		val Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, EObject> queue = ArrayListMultimap.
+			create();
 		queue.putAll(delta.disappeared)
 		queue.putAll(delta.updated)
-		
+
 		queue.keySet.forEach [ spec |
 			queue.get(spec).forEach [ b |
 				if (b instanceof HostInstance) {
@@ -556,7 +533,7 @@ class CPS2DeploymentPartialBatchTransformation {
 				if (b instanceof Transition) {
 					val transition = b as Transition
 					val action = transitionMap.get(transition)
-					if (SignalUtil.isWait(action)) {
+					if (action != null && SignalUtil.isWait(action)) {
 						val id = SignalUtil.getSignalId(action)
 						engine.sendTransitionAppSignal.getAllMatches(null, null, id).forEach [ match |
 							match.transition.removeTransition
@@ -575,61 +552,59 @@ class CPS2DeploymentPartialBatchTransformation {
 		trace('''Execution ended: clearModel''')
 	}
 
-
 	/**
 	 * Removes the deployment elements representing the specified {@link HostInstance}, as well as the elements representing its contained objects
 	 * 
 	 * @param {@link HostInstance} to be removed
 	 */
 	private def removeHostInstance(HostInstance host) {
-		trace('''Executing: removeHostInstance(app = «host.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, host, null).forEach [ c |
-			mapping.traces.remove(c.trace)
-			mapping.deployment.hosts.remove(c.depElement);
-		]
+			trace('''Executing: removeHostInstance(app = «host.name»)''')
+			engine.cps2depTrace.getAllMatches(mapping, null, host, null).forEach [ c |
+				mapping.traces.remove(c.trace)
+				mapping.deployment.hosts.remove(c.depElement);
+			]
 
-		host.applications.forEach[app|app.removeAppInstance]
-		trace('''Execution ended: removeHostInstance''')
+			host.applications.forEach[app|app.removeAppInstance]
+
+			trace('''Execution ended: removeHostInstance''')
 	}
-	
-	
+
 	/**
 	 * Removes the deployment elements representing the specified {@link ApplicationInstance}, as well as the elements representing its contained objects
 	 * 
 	 * @param {@link ApplicationInstance} to be removed
 	 */
 	private def removeAppInstance(ApplicationInstance app) {
-		trace('''Executing: removeAppinstance(app = «app.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, app, null).forEach [ c |
-			if (c.depElement != null) {
-				mapping.traces.remove(c.trace)
-				val depapp = c.depElement as DeploymentApplication
-				engine.depApp2depHost.getAllMatches(depapp, null).forEach [ match |
-					val host = match.dephost
-					host.applications.remove(depapp)
-				]
+			trace('''Executing: removeAppinstance(app = «app.name»)''')
+			engine.cps2depTrace.getAllMatches(mapping, null, app, null).forEach [ c |
+				if (c.depElement != null) {
+					mapping.traces.remove(c.trace)
+					val depapp = c.depElement as DeploymentApplication
+					engine.depApp2depHost.getAllMatches(depapp, null).forEach [ match |
+						val host = match.dephost
+						host.applications.remove(depapp)
+					]
 
-			}
-		]
-		if (app.type != null) {
-			app.type.behavior.removeStateMachine
-		}
-		trace('''Execution ended: removeAppinstance''')
+				}
+			]
+			app.type?.behavior?.removeStateMachine
+
+			trace('''Execution ended: removeAppinstance''')
 	}
-	
-	
+
 	/**
 	 * Removes the deployment elements representing the specified {@link ApplicationType}, as well as the elements representing its contained objects
 	 * 
 	 * @param {@link ApplicationType} to be removed
 	 */
 	private def removeAppType(ApplicationType app) {
-		trace('''Executing: removeAppType(app = «app.name»)''')
-		try {
-			app.behavior.removeStateMachine
-		} catch (Exception e) {
-		}
-		trace('''Execution ended: removeAppType''')
+
+			trace('''Executing: removeAppType(app = «app.name»)''')
+
+			app.behavior?.removeStateMachine
+
+			trace('''Execution ended: removeAppType''')
+
 	}
 
 	/**
@@ -638,34 +613,37 @@ class CPS2DeploymentPartialBatchTransformation {
 	 * @param {@link StateMachine} to be removed
 	 */
 	private def void removeStateMachine(StateMachine sm) {
-		trace('''Executing: removeStateMachine(sm = «sm.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, sm, null).forEach [ c |
-			if (c.depElement != null) {
-				mapping.traces.remove(c.trace)
-				val depBehavior = c.depElement as DeploymentBehavior
-				engine.depBehavior2depApp.getAllMatches(depBehavior, null).forEach [ match |
-					val app = match.depapp
-					app.behavior = null;
-				]
 
-			}
-		]
-		sm.states.forEach [ state |
-			state.removeState
-			state.outgoingTransitions.forEach [ trans |
-				val action = transitionMap.get(trans)
-				if (action != null && SignalUtil.isWait(action)) {
-					val id = SignalUtil.getSignalId(action)
-					engine.sendTransitionAppSignal.getAllMatches(null, null, id).forEach [ match |
-						engine.transition2StateMachine.getAllMatches(match.transition, null).forEach [ m |
-							m.sm.removeStateMachine
-						]
+			trace('''Executing: removeStateMachine(sm = «sm.name»)''')
+			engine.cps2depTrace.getAllMatches(mapping, null, sm, null).forEach [ c |
+				if (c.depElement != null) {
+					mapping.traces.remove(c.trace)
+					val depBehavior = c.depElement as DeploymentBehavior
+					engine.depBehavior2depApp.getAllMatches(depBehavior, null).forEach [ match |
+						val app = match.depapp
+						app.behavior = null;
 					]
+
 				}
-				trans.removeTransition
 			]
-		]
-		trace('''Execution ended: removeState''')
+			sm.states.forEach [ state |
+				state.removeState
+				state.outgoingTransitions.forEach [ trans |
+					val action = transitionMap.get(trans)
+					if (action != null && SignalUtil.isWait(action)) {
+						val id = SignalUtil.getSignalId(action)
+						engine.sendTransitionAppSignal.getAllMatches(null, null, id).forEach [ match |
+							engine.transition2StateMachine.getAllMatches(match.transition, null).forEach [ m |
+								m.sm.removeStateMachine
+							]
+						]
+					}
+					trans.removeTransition
+				]
+			]
+
+			trace('''Execution ended: removeState''')
+
 	}
 
 	/**
@@ -673,13 +651,17 @@ class CPS2DeploymentPartialBatchTransformation {
 	 * @param State to be removed
 	 */
 	private def removeState(State state) {
-		trace('''Executing: removeState(trans = «state.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, state, null).forEach [ c |
-			if (c.depElement != null) {
-				mapping.traces.remove(c.trace)
-			}
-		]
-		trace('''Execution ended: removeState''')
+
+			trace('''Executing: removeState(trans = «state.name»)''')
+			engine.cps2depTrace.getAllMatches(mapping, null, state, null).forEach [ c |
+				if (c.depElement != null) {
+					mapping.traces.remove(c.trace)
+				}
+			]
+
+			trace('''Execution ended: removeState''')
+
+
 	}
 
 	/**
@@ -687,16 +669,16 @@ class CPS2DeploymentPartialBatchTransformation {
 	 * @param Transition to be removed
 	 */
 	private def removeTransition(Transition trans) {
-		trace('''Executing: removeTransition(trans = «trans.name»)''')
-		engine.cps2depTrace.getAllMatches(mapping, null, trans, null).forEach [ c |
-			if (c.depElement != null) {
-				mapping.traces.remove(c.trace)
-				val depTrans = c.depElement as BehaviorTransition
-				depTrans.trigger.clear
-			}
-		]
+			trace('''Executing: removeTransition(trans = «trans.name»)''')
+			engine.cps2depTrace.getAllMatches(mapping, null, trans, null).forEach [ c |
+				if (c.depElement != null) {
+					mapping.traces.remove(c.trace)
+					val depTrans = c.depElement as BehaviorTransition
+					depTrans.trigger.clear
+				}
+			]
 
-		trace('''Execution ended: removeTransition''')
+			trace('''Execution ended: removeTransition''')
 	}
 
 	/**

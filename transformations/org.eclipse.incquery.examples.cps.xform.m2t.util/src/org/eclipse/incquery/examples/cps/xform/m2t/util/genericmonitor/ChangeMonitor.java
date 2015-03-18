@@ -31,6 +31,23 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
+/**
+ * Class responsible for monitoring changes in a specified model. It uses
+ * IncQuery QuerySpecification objects or EMV Rules defined by the user to
+ * achieve this.
+ * 
+ * Based on the instance model to be monitored, an IncQuery Engine should be
+ * initialized and handed over to this class. An ExecutionSchema is initialized
+ * based on the IncQuery Engine, then the rules defined by the user are
+ * registered in it.
+ * 
+ * By default the monitor accumulates the changes of the defined
+ * QuerySpecifications, this behavior, however can be overridden via
+ * inheritance.
+ * 
+ * @author Lunk Péter
+ *
+ */
 @SuppressWarnings("unchecked")
 public class ChangeMonitor extends IChangeMonitor {
 	private Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, EObject> appearBetweenCheckpoints;
@@ -40,14 +57,22 @@ public class ChangeMonitor extends IChangeMonitor {
 	private Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, EObject> updateAccumulator;
 	private Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, EObject> disappearAccumulator;
 	private Set<RuleSpecification<IPatternMatch>> rules;
-	private Map<IQuerySpecification<?> ,RuleSpecification<IPatternMatch>> specs;
+	private Map<IQuerySpecification<?>, RuleSpecification<IPatternMatch>> specs;
 	private Set<Job<?>> allJobs;
-
+	
 	private boolean deploymentBetweenCheckpointsChanged;
 	private boolean changed;
 	private boolean started;
 	private ExecutionSchema executionSchema;
 
+	/**
+	 * Constructor that creates a new ChangeMonitor instance based on the
+	 * specified IncQuery engine. Note that to monitor changes of a specific
+	 * model instance, an IncQuery should be initialized on said model instance.
+	 * 
+	 * @param engine
+	 *            The IncQueryEngine the monitor is based on.
+	 */
 	public ChangeMonitor(IncQueryEngine engine) {
 		super(engine);
 		this.appearBetweenCheckpoints = ArrayListMultimap.create();
@@ -70,8 +95,14 @@ public class ChangeMonitor extends IChangeMonitor {
 				engine, schedulerFactory);
 
 	}
-	
-	
+
+	/**
+	 * Public method used for adding new rules to the monitor. This method can
+	 * be used both before and after monitoring has been started.
+	 * 
+	 * @param rule
+	 *            The rule to be added to the monitor
+	 */
 	public void addRule(RuleSpecification<IPatternMatch> rule) {
 		rules.add(rule);
 		Multimap<ActivationState, Job<IPatternMatch>> jobs = rule.getJobs();
@@ -81,8 +112,8 @@ public class ChangeMonitor extends IChangeMonitor {
 		for (ActivationState state : jobs.keySet()) {
 			for (Job<?> job : jobs.get(state)) {
 				if (started) {
-				EnableJob<?> enableJob = (EnableJob<?>) job;
-				enableJob.setEnabled(true);
+					EnableJob<?> enableJob = (EnableJob<?>) job;
+					enableJob.setEnabled(true);
 				} else {
 					allJobs.add(job);
 				}
@@ -90,6 +121,15 @@ public class ChangeMonitor extends IChangeMonitor {
 		}
 	}
 
+	/**
+	 * Public method used for adding new rules to the monitor. Based on the
+	 * QuerySpecification provided here, a new Rule will be added to the
+	 * monitor. This method can be used both before and after monitoring has
+	 * been started.
+	 * 
+	 * @param spec
+	 *            QuerySpecification to be added to the Monitor
+	 */
 	public void addRule(IQuerySpecification<?> spec) {
 		RuleSpecification<IPatternMatch> rule = Rules
 				.newMatcherRuleSpecification(
@@ -99,19 +139,42 @@ public class ChangeMonitor extends IChangeMonitor {
 		specs.put(spec, rule);
 		addRule(rule);
 	}
-	
-	public void removeRule(RuleSpecification<IPatternMatch> rule){
+
+	/**
+	 * Public method used for removing rules from the Monitor. This method can
+	 * be used both before and after monitoring has been started.
+	 * 
+	 * @param rule
+	 *            Rule to be removed
+	 */
+	public void removeRule(RuleSpecification<IPatternMatch> rule) {
 		rules.remove(rule);
 		executionSchema.removeRule(rule);
 	}
-	
-	public void removeRule(IQuerySpecification<?> spec){
+
+	/**
+	 * Public method used for removing rules from the Monitor. This method can
+	 * be used both before and after monitoring has been started.
+	 * 
+	 * @param spec
+	 *            The rules based on this QuerySpecification will be removed
+	 */
+	public void removeRule(IQuerySpecification<?> spec) {
 		RuleSpecification<IPatternMatch> ruleSpecification = specs.get(spec);
 		rules.remove(ruleSpecification);
-		specs.remove(spec, ruleSpecification);
+		specs.remove(spec);
 		executionSchema.removeRule(ruleSpecification);
 	}
 
+	/**
+	 * Creates a new checkpoint and returns the changes in the model so far. The
+	 * ChangeDelta object returned contains objects that have APPEARED,
+	 * DISAPPEARED or have been UPDATED.
+	 * 
+	 * If this method is used, the history accumulated is erased, as a new
+	 * checkpoint is created.
+	 * 
+	 */
 	@Override
 	public ChangeDelta createCheckpoint() {
 		appearBetweenCheckpoints = appearAccumulator;
@@ -127,19 +190,30 @@ public class ChangeMonitor extends IChangeMonitor {
 				deploymentBetweenCheckpointsChanged);
 	}
 
+	/**
+	 * Returns the changes in the model since the last checkpoint. The
+	 * accumulated data is not erased.
+	 * 
+	 */
 	@Override
 	public ChangeDelta getDeltaSinceLastCheckpoint() {
 		return new ChangeDelta(appearAccumulator, updateAccumulator,
 				disappearAccumulator, changed);
 	}
 
+	/**
+	 * Adds the defined rules to the ExecutionSchema and enables them. Call this
+	 * method after the rules have been added, and the model instance to be
+	 * monitored is initialized.
+	 * 
+	 */
 	@Override
 	public void startMonitoring() throws IncQueryException {
 
 		for (RuleSpecification<IPatternMatch> rule : rules) {
 			executionSchema.addRule(rule);
 		}
-		
+
 		executionSchema.startUnscheduledExecution();
 		// Enable the jobs to listen to changes
 		for (Job<?> job : allJobs) {
@@ -149,7 +223,14 @@ public class ChangeMonitor extends IChangeMonitor {
 		started = true;
 	}
 
+	/**
+	 * Creates the default EVM Jobs which are executed as a new match appears,
+	 * disappears or is updated. Can be overridden to specify domain specific functionality
+	 * 
+	 * @return
+	 */
 	protected Set<Job<IPatternMatch>> createDefaultProcessorJobs() {
+		//Define default MatchProcessors
 		IMatchProcessor<IPatternMatch> appearProcessor = new IMatchProcessor<IPatternMatch>() {
 			@Override
 			public void process(IPatternMatch match) {
@@ -172,6 +253,7 @@ public class ChangeMonitor extends IChangeMonitor {
 			}
 		};
 
+		//Create Jobs
 		Set<Job<IPatternMatch>> jobs = Sets.newHashSet();
 		Job<IPatternMatch> appear = new StatelessJob<IPatternMatch>(
 				IncQueryActivationStateEnum.APPEARED, appearProcessor);
@@ -187,6 +269,11 @@ public class ChangeMonitor extends IChangeMonitor {
 		return jobs;
 	}
 
+	/**
+	 * Extracts updated elements from the given match
+	 * 
+	 * @param match
+	 */
 	private void registerUpdate(IPatternMatch match) {
 		IQuerySpecification<? extends IncQueryMatcher<? extends IPatternMatch>> specification = match
 				.specification();
@@ -201,6 +288,11 @@ public class ChangeMonitor extends IChangeMonitor {
 		updateElements.addAll(objects);
 	}
 
+	/**
+	 * Extracts appeared elements from the given match
+	 * 
+	 * @param match
+	 */
 	private void registerAppear(IPatternMatch match) {
 		IQuerySpecification<? extends IncQueryMatcher<? extends IPatternMatch>> specification = match
 				.specification();
@@ -215,6 +307,11 @@ public class ChangeMonitor extends IChangeMonitor {
 		appearElements.addAll(objects);
 	}
 
+	/**
+	 * Extracts disappeared elements from the given match
+	 * 
+	 * @param match
+	 */
 	private void registerDisappear(IPatternMatch match) {
 		IQuerySpecification<? extends IncQueryMatcher<? extends IPatternMatch>> specification = match
 				.specification();
