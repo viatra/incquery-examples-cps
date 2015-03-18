@@ -108,7 +108,7 @@ public class ChangeMonitor extends IChangeMonitor {
 	public void removeRule(IQuerySpecification<?> spec){
 		RuleSpecification<IPatternMatch> ruleSpecification = specs.get(spec);
 		rules.remove(ruleSpecification);
-		specs.remove(spec, ruleSpecification);
+		specs.remove(spec);
 		executionSchema.removeRule(ruleSpecification);
 	}
 

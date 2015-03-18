@@ -32,19 +32,17 @@ import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformat
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.PartialBatch
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.QueryResultTraceability
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ViatraTransformation
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.xform.m2t.util.GeneratorHelper
 import org.eclipse.incquery.examples.cps.xform.m2t.util.GeneratorUtil
 import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.DeploymentChangeMonitor
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.emf.EMFScope
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
+import org.eclipse.incquery.examples.cps.xform.m2t.distributed.api.ICPSGenerator
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 /**
  * Tests the whole toolchain using each transformation one-by-one
@@ -67,8 +65,7 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 		val transformation4 = #[new QueryResultTraceability(),QueryResultTraceability.simpleName]
 		val transformation5 = #[new ExplicitTraceability(),ExplicitTraceability.simpleName]
 		val transformation6 = #[new PartialBatch(),PartialBatch.simpleName]
-		val transformation7 = #[new ViatraTransformation(),ViatraTransformation.simpleName]
-		
+
         val xforms = ImmutableSet.builder
 	        .add(transformation1)
 			.add(transformation2)
@@ -76,7 +73,6 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
         	.add(transformation4)
 			.add(transformation5)
 			.add(transformation6)
-			.add(transformation7)
 			.build
 
 		val sizes = ImmutableSet.builder
@@ -169,7 +165,7 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 		val projectName = "integration.test.generated.code"
 		var ICPSGenerator codeGenerator = null
 		if(generatorType.equals(GeneratorType.DISTRIBUTED)){
-			codeGenerator = new CodeGenerator(projectName, engine2, true);
+			codeGenerator = new org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator(projectName, engine2, true);
 		} else if(generatorType.equals(GeneratorType.JDT_BASED)) {
 			codeGenerator = new org.eclipse.incquery.examples.cps.xform.m2t.jdt.CodeGenerator(projectName, engine2);
 		}
