@@ -124,31 +124,7 @@ class CPS2DeploymentPartialBatchTransformation {
 	def execute() {
 		initPerformanceTimers()
 		val delta = monitor.createCheckpoint
-		if (delta.appeared.keySet.size > 0) {
-			info("APPEARED")
-		}
-		delta.appeared.keySet.forEach [ spec |
-			delta.appeared.get(spec).forEach [ b |
-				info("SPEC name: " + spec.fullyQualifiedName + " ELEMENT: " + b.eClass.name)
-			]
-		]
-		if (delta.updated.keySet.size > 0) {
-			info("UPDATED")
-		}
-		delta.updated.keySet.forEach [ spec |
-			delta.updated.get(spec).forEach [ b |
-				info("SPEC name: " + spec.fullyQualifiedName + " ELEMENT: " + b.eClass.name)
-			]
-		]
-		if (delta.disappeared.keySet.size > 0) {
-			info("DISAPPEARED")
-		}
-		delta.disappeared.keySet.forEach [ spec |
-			delta.disappeared.get(spec).forEach [ b |
-				info("SPEC name: " + spec.fullyQualifiedName + " ELEMENT: " + b.eClass.name)
-			]
-		]
-
+		
 		delta.appeared.keySet.forEach [ spec |
 			delta.appeared.get(spec).forEach [ b |
 				if (b instanceof Transition) {
