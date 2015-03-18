@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2t.util;singleton:
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: IncQueryLabs Ltd.
 Export-Package: org.eclipse.incquery.examples.cps.xform.m2t.util,
+ org.eclipse.incquery.examples.cps.xform.m2t.util.genericmonitor,
  org.eclipse.incquery.examples.cps.xform.m2t.util.monitor,
  org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.util
 Require-Bundle: org.eclipse.emf.ecore,
