@@ -43,6 +43,7 @@
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.expl</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra</module>
 
 		<!-- M2T Transformations -->
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.util</module>
@@ -60,6 +61,7 @@
 		<tycho.version>0.22.0</tycho.version>
 		<xtend.compiler.version>2.7.2</xtend.compiler.version>
 		<incquery.repository.url>http://download.eclipse.org/incquery/updates-extra/integration</incquery.repository.url>
+		<viatra.repository.url>http://download.eclipse.org/viatra2/emf/updates/milestone</viatra.repository.url>
 		<incquery.compiler.version>1.0.0-SNAPSHOT</incquery.compiler.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sonar.skippedModules></sonar.skippedModules>
@@ -175,6 +177,11 @@
 			<id>incquery.update</id>
 			<layout>p2</layout>
 			<url>${incquery.repository.url}</url>
+		</repository>
+		<repository>
+			<id>viatra.update</id>
+			<layout>p2</layout>
+			<url>${viatra.repository.url}</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>

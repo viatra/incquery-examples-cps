@@ -8,14 +8,13 @@ import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.CpsXform
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.rules.RuleProvider
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.util.PerJobFixedPriorityConflictResolver
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.viatra.emf.runtime.rules.EventDrivenTransformationRuleGroup
 import org.eclipse.viatra.emf.runtime.transformation.eventdriven.EventDrivenTransformation
 
 import static com.google.common.base.Preconditions.*
 
 class CPS2DeploymentTransformationViatra {
 
-	extension Logger logger = Logger.getLogger("cps.xform.m2m.expl.incr")
+	extension Logger logger = Logger.getLogger("cps.xform.m2m.incr.viatra")
 	extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 	extension RuleProvider ruleProvider
 

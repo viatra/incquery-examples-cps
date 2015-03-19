@@ -25,10 +25,12 @@ import org.eclipse.viatra.emf.runtime.modelmanipulation.IModelManipulations
 import org.eclipse.viatra.emf.runtime.modelmanipulation.SimpleModelManipulations
 import org.eclipse.viatra.emf.runtime.rules.eventdriven.EventDrivenTransformationRuleFactory
 import org.eclipse.viatra.emf.runtime.transformation.eventdriven.EventDrivenTransformationRule
+import org.eclipse.incquery.runtime.api.IncQueryMatcher
+import org.eclipse.incquery.runtime.api.IPatternMatch
 
 public class RuleProvider {
 
-	extension Logger logger = Logger.getLogger("cps.xform.m2m.expl.incr")
+	extension Logger logger = Logger.getLogger("cps.xform.m2m.incr.viatra")
 	extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 	extension IModelManipulations manipulation
 	extension DeploymentPackage depPackage = DeploymentPackage::eINSTANCE
@@ -39,12 +41,12 @@ public class RuleProvider {
 	CPSToDeployment cps2dep
 	IncQueryEngine engine
 
-	EventDrivenTransformationRule hostRule
-	EventDrivenTransformationRule applicationRule
-	EventDrivenTransformationRule stateMachineRule
-	EventDrivenTransformationRule stateRule
-	EventDrivenTransformationRule transitionRule
-	EventDrivenTransformationRule triggerRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> hostRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> applicationRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateMachineRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> transitionRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> triggerRule
 
 	new(IncQueryEngine engine, CPSToDeployment cps2dep) {
 		this.engine = engine
@@ -116,6 +118,7 @@ public class RuleProvider {
 				val depApp = trace.deploymentElements.head as DeploymentApplication
 				engine.allocatedDeploymentApplication.getAllValuesOfdepHost(depApp).head.applications -= depApp
 				cps2dep.traces -= trace
+				
 			].addLifeCycle(DefaultActivationLifeCycle.DEFAULT).build
 
 		}
@@ -339,9 +342,6 @@ public class RuleProvider {
 		return transitionRule
 	}
 
-	/**
-	 * 
-	 */
 	public def getTriggerRule() {
 		if (triggerRule == null) {
 			triggerRule = createRule.precondition(TriggerPairMatcher.querySpecification).action(
