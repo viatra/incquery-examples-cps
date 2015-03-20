@@ -60,6 +60,9 @@
         name="org.eclipse.gef4.zest.sdk.feature.group"/>
     <requirement
         name="org.eclipse.incquery.tooling.ui.visualization.feature.feature.group"/>
+    <requirement
+        name="com.google.inject.multibindings"
+        versionRange="[3.0.0,4.0.0)"/>
     <repository
         url="http://download.eclipse.org/incquery/updates-extra/integration/"/>
     <repository
@@ -116,6 +119,9 @@
           name="org.apache.commons.io"/>
       <requirement
           name="org.eclipse.incquery.tooling.ui.visualization.feature.feature.group"/>
+      <requirement
+          name="com.google.inject.multibindings"
+          versionRange="[3.0.0,4.0.0)"/>
       <repositoryList
           name="Dependencies">
         <repository
