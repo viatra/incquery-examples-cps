@@ -1,3 +1,2 @@
-/.Aggr.java._trace
-/.CPS2DeploymentPartialBatchTransformation.java._trace
-/CPS2DeploymentPartialBatchTransformation.java
+*
+!.gitignore
