@@ -63,12 +63,17 @@
     <requirement
         name="com.google.inject.multibindings"
         versionRange="[3.0.0,4.0.0)"/>
+    <requirement
+        name="org.eclipse.viatra.emf.runtime.feature.feature.group"
+        versionRange="[0.7.0,0.8.0)"/>
     <repository
         url="http://download.eclipse.org/incquery/updates-extra/integration/"/>
     <repository
         url="http://download.eclipse.org/releases/luna"/>
     <repository
         url="http://download.eclipse.org/tools/gef/gef4/updates/integration"/>
+    <repository
+        url="http://download.eclipse.org/viatra2/emf/updates/integration"/>
   </setupTask>
   <setupTask
       xsi:type="setup.targlets:TargletTask">
@@ -122,6 +127,9 @@
       <requirement
           name="com.google.inject.multibindings"
           versionRange="[3.0.0,4.0.0)"/>
+      <requirement
+          name="org.eclipse.viatra.emf.runtime.feature.feature.group"
+          versionRange="[0.7.0,0.8.0)"/>
       <repositoryList
           name="Dependencies">
         <repository
@@ -132,6 +140,8 @@
             url="http://download.eclipse.org/tools/gef/gef4/updates/integration"/>
         <repository
             url="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
+        <repository
+            url="http://download.eclipse.org/viatra2/emf/updates/integration"/>
       </repositoryList>
     </targlet>
   </setupTask>
