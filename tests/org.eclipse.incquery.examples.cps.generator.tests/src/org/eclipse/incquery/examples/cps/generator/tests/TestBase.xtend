@@ -3,6 +3,7 @@ package org.eclipse.incquery.examples.cps.generator.tests
 import com.google.common.base.Stopwatch
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
+import org.eclipse.incquery.examples.cps.generator.CPSPlans
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.queries.AppTypesMatcher
@@ -13,9 +14,9 @@ import org.eclipse.incquery.examples.cps.generator.utils.PersistenceUtil
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.incquery.runtime.emf.EMFScope
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.runtime.emf.EMFScope
 
 abstract class TestBase extends CPSTestBase{
 	protected extension Logger logger = Logger.getLogger("cps.generator.Tests")
@@ -52,9 +53,12 @@ abstract class TestBase extends CPSTestBase{
 		return runGeneratorOn(constraints, seed, false);
 	}
 	def runGeneratorOn(ICPSConstraints constraints, long seed, boolean persist) {
+		runGeneratorOn(constraints,seed,persist,CPSPlans.DEFAULT)
+	}
+	def runGeneratorOn(ICPSConstraints constraints, long seed, boolean persist, CPSPlans cpsplan) {
 		var Stopwatch fullTime = Stopwatch.createStarted;
 		
-		val out = CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints);		
+		val out = CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints, cpsplan);		
 		
 		// Assertions
 		assertNotNull("The output fragment is null", out);

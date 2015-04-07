@@ -1,6 +1,7 @@
 package org.eclipse.incquery.examples.cps.generator.dtos
 
 import java.util.Map
+//import org.eclipse.xtend.lib.annotations.Data
 
 @Data
 class AppClass {

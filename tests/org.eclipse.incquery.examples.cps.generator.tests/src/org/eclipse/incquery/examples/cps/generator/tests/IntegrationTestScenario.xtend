@@ -4,6 +4,8 @@ import java.util.Random
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.BasicScenario
 import org.junit.Test
 import org.junit.Ignore
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.StatisticsBasedScenario
+import org.eclipse.incquery.examples.cps.generator.CPSPlans
 
 class IntegrationTestScenario extends TestBase {
 
@@ -22,6 +24,17 @@ class IntegrationTestScenario extends TestBase {
 		val BasicScenario bs = new BasicScenario(rand);
 		val const = bs.getConstraintsFor(1000);		
 		runGeneratorOn(const, seed)
+	
+		return;
+	}
+
+	@Test
+	def statisticsBasedScenario(){
+		val seed = 11111
+		val Random rand = new Random(seed);
+		val StatisticsBasedScenario sbs = new StatisticsBasedScenario(rand);
+		val const = sbs.getConstraintsFor(1);		
+		runGeneratorOn(const, seed, false, CPSPlans.STATISTICS_BASED)
 	
 		return;
 	}

@@ -9,17 +9,22 @@ import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
+import org.eclipse.incquery.examples.cps.generator.CPSPlans
 
 class CPSGeneratorBuilder {
 	
 	protected static extension Logger logger = Logger.getLogger("cps.generator.impl.CPSGeneratorBuilder")
 	
 	def static CPSFragment buildAndGenerateModel(long seed,  ICPSConstraints constraints){
+		buildAndGenerateModel(seed, constraints, CPSPlans.DEFAULT)
+	}
+
+	def static CPSFragment buildAndGenerateModel(long seed,  ICPSConstraints constraints, CPSPlans cpsplan){
 		val CPSModelBuilderUtil mb = new CPSModelBuilderUtil;
 		val cps2dep = mb.prepareEmptyModel("testModel"+System.nanoTime);
 		
 		if(cps2dep != null && cps2dep.cps != null){
-			return buildAndGenerateModel(seed, constraints, cps2dep.cps);
+			return buildAndGenerateModel(seed, constraints, cps2dep.cps, cpsplan);
 		}else{
 			info("!!! Error: Cannot create CPS model");
 			return new CPSFragment(new CPSGeneratorInput(seed, constraints, null));
@@ -27,8 +32,17 @@ class CPSGeneratorBuilder {
 	}
 	
 	def static buildAndGenerateModel(long seed,  ICPSConstraints constraints, CyberPhysicalSystem model){
+		buildAndGenerateModel(seed, constraints, model, CPSPlans.DEFAULT)
+	}
+
+	def static buildAndGenerateModel(long seed,  ICPSConstraints constraints, CyberPhysicalSystem model, CPSPlans cpsplan){
 		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, model);
-		var plan = CPSPlanBuilder.buildDefaultPlan;
+		var plan = switch (cpsplan){
+			case CPSPlans.STATISTICS_BASED:
+				CPSPlanBuilder.buildCharacteristicBasedPlan
+			default:
+				CPSPlanBuilder.buildDefaultPlan
+		}
 		
 		var PlanExecutor<CPSFragment, CPSGeneratorInput> generator = new PlanExecutor();
 		

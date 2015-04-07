@@ -6,11 +6,10 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.operations.ActionGenerationOperation
+import org.eclipse.incquery.examples.cps.generator.queries.ReachableAppTypesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.TransitionsMatcher
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
-import org.eclipse.incquery.examples.cps.generator.queries.ReachableAppTypesMatcher
 
 class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 	

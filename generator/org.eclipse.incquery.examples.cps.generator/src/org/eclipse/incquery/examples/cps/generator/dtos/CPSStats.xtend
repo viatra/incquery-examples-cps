@@ -20,6 +20,7 @@ import org.eclipse.incquery.examples.cps.generator.utils.SumProcessor
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.base.api.IEStructuralFeatureProcessor
 import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
+import org.eclipse.incquery.examples.cps.generator.queries.TransitionWithoutActionMatcher
 
 class CPSStats extends ModelStats {
 	
@@ -35,6 +36,7 @@ class CPSStats extends ModelStats {
 	public int connectedHostCount = 0;
 	public int sendActions = 0;
 	public int waitActions = 0;
+	public int emptyTransition = 0;
 
 	new(IncQueryEngine engine, CyberPhysicalSystem model){
 		this.appTypeCount = AppTypesMatcher.on(engine).countMatches;
@@ -47,6 +49,7 @@ class CPSStats extends ModelStats {
 		this.connectedHostCount = ConnectedHostsMatcher.on(engine).countMatches;
 		this.eObjects = model.eAllContents.size;
 		this.eReferences = StatsUtil.countEdges(model)
+		this.emptyTransition = TransitionWithoutActionMatcher.on(engine).countMatches;
 		
 		val baseIndex = IncQueryBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
 		
@@ -66,6 +69,8 @@ class CPSStats extends ModelStats {
 		})	
 		sp2.resetSum
 		
+		
+		
 	}
 	
 	def log() {
@@ -79,6 +84,7 @@ class CPSStats extends ModelStats {
 		logger.info("=   Transitions: " + transitionCount);
 		logger.info("=     Send: " + sendActions);
 		logger.info("=     Wait: " + waitActions);
+		logger.info("=     Without action: " + emptyTransition);
 		logger.info("=   Allocated AppInstances: " + allocatedAppCount);
 		logger.info("=   Connected HostsInstances: " + connectedHostCount);
 		logger.info("=   EObjects: " + eObjects);
