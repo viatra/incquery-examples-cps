@@ -18,6 +18,10 @@ import org.junit.Test
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.incquery.examples.cps.generator.CPSPlans
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.StatisticsBasedScenario
+import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
+import org.apache.log4j.Level
 
 class CPSModelGeneratorPerformance extends CPSTestBase{
 	val seed = 11111
@@ -25,8 +29,14 @@ class CPSModelGeneratorPerformance extends CPSTestBase{
 	
 	protected extension Logger logger = Logger.getLogger("cps.performance.generator.Tests")
 	
+	private static var verbose = false
+	
 	@Test
 	def scenarios(){
+		
+		if(!verbose){
+			turnOffLoggers();		
+		}
 		
 		val Random rand = new Random(seed);
 		
@@ -36,6 +46,7 @@ class CPSModelGeneratorPerformance extends CPSTestBase{
 			.add(new SimpleScalingScenario(rand))
         	.add(new ClientServerScenario(rand))
         	.add(new PublishSubscribeScenario(rand))
+			.add(new StatisticsBasedScenario(rand))
 			.build
 			
 		val scales = ImmutableList.builder
@@ -50,13 +61,12 @@ class CPSModelGeneratorPerformance extends CPSTestBase{
         	.add(1024)
 			.build
 		
-		
 		for(scenario : scenarios){
 			for(scale : scales){
 				val const = scenario.getConstraintsFor(scale);
 				
 				val generTime = Stopwatch.createStarted
-				val out =  generate(const, seed)
+				val out =  generate(const, seed, scenario)
 				generTime.stop
 				val IncQueryEngine engine = IncQueryEngine.on(new EMFScope(out.modelRoot));
 				Validation.instance.prepare(engine);
@@ -65,11 +75,29 @@ class CPSModelGeneratorPerformance extends CPSTestBase{
 				info(scenario.class.simpleName + D + scale + D + stats.eObjects + D + stats.eReferences + D + generTime.elapsed(TimeUnit.MILLISECONDS))
 			}
 		}
-	
 		return;
 	}
 	
-	def generate(ICPSConstraints constraints, int i) {
-		CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints);
+	def turnOffLoggers() {		
+		Logger.getLogger("cps.generator.impl.CPSPhaseInstanceGeneration").level = Level.OFF
+		Logger.getLogger("cps.proto.generator").level = Level.OFF
+		Logger.getLogger("cps.generator.impl.CPSGeneratorBuilder").level = Level.OFF
+		Logger.getLogger("cps.generator.Tests").level = Level.OFF
+//		 Generator logger prints the times for each generation phase
+		Logger.getLogger("cps.generator.Generator").level = Level.OFF
+		Logger.getLogger("cps.xform.LowSynchScenario").level = Level.OFF
+		Logger.getLogger("cps.xform.SimpleScalingScenario").level = Level.OFF
+		Logger.getLogger("cps.xform.ClientServerScenario").level = Level.OFF
+		Logger.getLogger("cps.generator.ClientServerScenario").level = Level.OFF
+		Logger.getLogger("cps.generator.PublishSubscribeScenario").level = Level.OFF
+		Logger.getLogger("cps.generator.Tests.StatisticsBasedScenario").level = Level.OFF
+	}
+	
+	def generate(ICPSConstraints constraints, int i, IScenario scenario) {
+		if(scenario instanceof StatisticsBasedScenario){
+			CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints, CPSPlans.STATISTICS_BASED);
+		} else {
+			CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints);
+		}
 	}
 }

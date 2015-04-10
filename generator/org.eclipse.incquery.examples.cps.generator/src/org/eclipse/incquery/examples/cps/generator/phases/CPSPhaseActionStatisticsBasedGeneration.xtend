@@ -26,20 +26,18 @@ class CPSPhaseActionStatisticsBasedGeneration implements IPhase<CPSFragment>{
 		val operations = Lists.newArrayList();
 		
 		val matcher = PossibleReceiverTypeMatcher.on(fragment.engine)
+		val receiverTransitionMatcher = ReceiverTransitionMatcher.on(fragment.engine)
 
 		val suppliedWithAction = Sets.<Transition>newHashSet
-
+		
 		matcher.allValuesOfSender.forEach [ senderTransition, index |
 			
 			val reachableTypeIds = matcher.getAllValuesOfReceiverAppTypeId(senderTransition)
-			
 			var boolean success = false;
-			
 			for(typeId : reachableTypeIds){
 				
 				if(!success) {
-					
-					val receiverTransitionMatcher = ReceiverTransitionMatcher.on(fragment.engine)
+					 
 					val receiverMatches = receiverTransitionMatcher.getAllMatches(typeId, null, null)
 					var Transition firstReceiver = null
 					var StateMachine firstSM = null
@@ -59,7 +57,8 @@ class CPSPhaseActionStatisticsBasedGeneration implements IPhase<CPSFragment>{
 							}					
 						}
 					}
-					if(!suppliedWithAction.contains(senderTransition) && firstReceiver != null && !suppliedWithAction.contains(firstReceiver)){
+					if(!suppliedWithAction.contains(senderTransition) && firstReceiver != null /* && !suppliedWithAction.contains(firstReceiver) <- this condition is implied by the firstReceiver !=null*/){
+						// Successfully found pairable transitions
 						success = true
 						suppliedWithAction.add(senderTransition) 
 						// Create send action
@@ -68,12 +67,12 @@ class CPSPhaseActionStatisticsBasedGeneration implements IPhase<CPSFragment>{
 						operations.add(new ActionGenerationOperation(senderAction, senderTransition));
 						 
 						// Create the receivers (1 or 2)
-						if(firstReceiver != null){
-							suppliedWithAction.add(firstReceiver) 
-							val receiverAction1 = WAIT_METHOD_NAME + "(" + index + ")";
-							debug(receiverAction1)
-							operations.add(new ActionGenerationOperation(receiverAction1, firstReceiver));
-						}
+						/*if(firstReceiver != null){  <-  This condition is true due to the outer if*/
+						suppliedWithAction.add(firstReceiver) 
+						val receiverAction1 = WAIT_METHOD_NAME + "(" + index + ")";
+						debug(receiverAction1)
+						operations.add(new ActionGenerationOperation(receiverAction1, firstReceiver));
+						/* } <- end of if that is always true here */
 						if(secondReceiver != null){
 							suppliedWithAction.add(secondReceiver) 
 							val receiverAction2 = WAIT_METHOD_NAME + "(" + index + ")";
@@ -86,10 +85,7 @@ class CPSPhaseActionStatisticsBasedGeneration implements IPhase<CPSFragment>{
 						debug("#Warning: more signal was generated than it is set in fragment.numberOfSignals");
 					}
 				}	
-				
 			}
-			
-
 		]
 		
 		operations.add(new DeleteTransitionWithoutAction(fragment))
