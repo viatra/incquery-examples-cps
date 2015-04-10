@@ -9,6 +9,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>../../domains/org.eclipse.incquery.examples.cps.model</module>
+		<module>../../releng/org.eclipse.incquery.examples.cps.target</module>
 	</modules>
 
 	<properties>
