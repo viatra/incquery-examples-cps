@@ -60,7 +60,7 @@ public class RuleProvider {
 				IncQueryActivationStateEnum.APPEARED) [
 				val hostinstance = hostInstance;
 				val nodeIp = hostInstance.nodeIp
-				debug('''Mapping host with IP: ï¿½nodeIpï¿½''')
+				debug('''Mapping host with IP: «nodeIp»''')
 				val host = createDeploymentHost => [
 					ip = nodeIp
 				]
@@ -72,17 +72,17 @@ public class RuleProvider {
 			].action(IncQueryActivationStateEnum.UPDATED) [
 				val depHost = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, hostInstance, null).depElement as DeploymentHost
 				val hostIp = depHost.ip
-				debug('''Updating mapped host with IP: ï¿½hostIpï¿½''')
+				debug('''Updating mapped host with IP: «hostIp»''')
 				val nodeIp = hostInstance.nodeIp
 				depHost.set(deploymentHost_Ip, nodeIp)
-				debug('''Updated mapped host with IP: ï¿½nodeIpï¿½''')
+				debug('''Updated mapped host with IP: «nodeIp»''')
 			].action(IncQueryActivationStateEnum.DISAPPEARED) [
 				val traceMatch = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, hostInstance, null)
 				val hostIp = hostInstance.nodeIp
-				logger.debug('''Removing host with IP: ï¿½hostIpï¿½''')
+				logger.debug('''Removing host with IP: «hostIp»''')
 				cps2dep.deployment.hosts -= traceMatch.depElement as DeploymentHost
 				cps2dep.remove(CPSToDeployment_Traces, traceMatch.trace)
-				logger.debug('''Removed host with IP: ï¿½hostIpï¿½''')
+				logger.debug('''Removed host with IP: «hostIp»''')
 			].addLifeCycle(DefaultActivationLifeCycle.DEFAULT).build
 
 		}
@@ -98,7 +98,7 @@ public class RuleProvider {
 					filter(DeploymentHost).head
 				val appinstance = appInstance
 				val appId = appInstance.id
-				debug('''Mapping application with ID: ï¿½appIdï¿½''')
+				debug('''Mapping application with ID: «appId»''')
 				val app = createDeploymentApplication => [
 					id = appId
 				]
@@ -107,7 +107,7 @@ public class RuleProvider {
 					cpsElements += appinstance
 					deploymentElements += app
 				]
-				debug('''Mapped application with ID: ï¿½appIdï¿½''')
+				debug('''Mapped application with ID: «appId»''')
 			].action(IncQueryActivationStateEnum.UPDATED) [
 				val depApp = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, appInstance, null).depElement as DeploymentApplication
 				if (depApp.id != appInstance.id)
@@ -132,7 +132,7 @@ public class RuleProvider {
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
 					DeploymentApplication).head
 				val smId = stateMachine.id
-				debug('''Mapping state machine with ID: ï¿½smIdï¿½''')
+				debug('''Mapping state machine with ID: «smId»''')
 				val behavior = depApp.createChild(deploymentApplication_Behavior, deploymentBehavior) as DeploymentBehavior
 				behavior.set(deploymentElement_Description, smId)
 				depApp.set(deploymentApplication_Behavior, behavior)
@@ -147,24 +147,24 @@ public class RuleProvider {
 					trace('''Adding new behavior to existing trace''')
 					traces.head.addTo(CPS2DeplyomentTrace_DeploymentElements, behavior)
 				}
-				debug('''Mapped state machine with ID: ï¿½smIdï¿½''')
+				debug('''Mapped state machine with ID: «smId»''')
 			].action(IncQueryActivationStateEnum.UPDATED) [
 				val smId = stateMachine.id
-				debug('''Updating mapped state machine with ID: ï¿½smIdï¿½''')
+				debug('''Updating mapped state machine with ID: «smId»''')
 				val depSMs = engine.cps2depTrace.getAllValuesOfdepElement(null, null, stateMachine).filter(
 					DeploymentBehavior)
 				depSMs.forEach [
 					if (description != smId) {
-						trace('''ID changed to ï¿½smIdï¿½''')
+						trace('''ID changed to «smId»''')
 						description = smId
 					}
 				]
-				debug('''Updated mapped state machine with ID: ï¿½smIdï¿½''')
+				debug('''Updated mapped state machine with ID: «smId»''')
 			].action(IncQueryActivationStateEnum.DISAPPEARED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).head as DeploymentApplication;
 				val depBehavior = depApp.behavior
 				val smId = depBehavior.description
-				logger.debug('''Removing state machine with ID: ï¿½smIdï¿½''')
+				logger.debug('''Removing state machine with ID: «smId»''')
 				depApp.behavior = null;
 				val smTrace = engine.cps2depTrace.getAllValuesOftrace(null, stateMachine, null).head
 				smTrace.deploymentElements -= depBehavior
@@ -172,7 +172,7 @@ public class RuleProvider {
 					trace('''Removing empty trace''')
 					cps2dep.traces -= smTrace
 				}
-				logger.debug('''Removed state machine with ID: ï¿½smIdï¿½''')
+				logger.debug('''Removed state machine with ID: «smId»''')
 			].addLifeCycle(DefaultActivationLifeCycle.DEFAULT).build
 
 		}
@@ -187,7 +187,7 @@ public class RuleProvider {
 				val depBehavior = depApp.behavior
 				val state = state
 				val stateId = state.id
-				debug('''Mapping state with ID: ï¿½stateIdï¿½''')
+				debug('''Mapping state with ID: «stateId»''')
 				val depState = createBehaviorState => [
 					description = stateId
 				]
@@ -206,11 +206,11 @@ public class RuleProvider {
 					trace('''Adding new state to existing trace''')
 					traces.head.deploymentElements += depState
 				}
-				debug('''Mapped state with ID: ï¿½stateIdï¿½''')
+				debug('''Mapped state with ID: «stateId»''')
 			].action(IncQueryActivationStateEnum.UPDATED) [
 				val state = state
 				val stateId = state.id
-				debug('''Updating mapped state with ID: ï¿½stateIdï¿½''')
+				debug('''Updating mapped state with ID: «stateId»''')
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
 					DeploymentApplication).head
 				val depState = engine.cps2depTrace.getAllValuesOfdepElement(null, null, state).filter(BehaviorState).
@@ -218,25 +218,25 @@ public class RuleProvider {
 				val depBehavior = depApp.behavior
 				val oldDesc = depState.description
 				if (oldDesc != stateId) {
-					trace('''ID changed to ï¿½stateIdï¿½''')
+					trace('''ID changed to «stateId»''')
 					depState.description = stateId
 				}
 				val initState = stateMachine.initial
 				if (state == initState) {
 					val currentState = depBehavior.current
 					if (currentState != depState) {
-						trace('''Current state changed to ï¿½stateIdï¿½''')
+						trace('''Current state changed to «stateId»''')
 						depBehavior.current = depState
 					}
 				}
-				debug('''Updated mapped state with ID: ï¿½stateIdï¿½''')
+				debug('''Updated mapped state with ID: «stateId»''')
 			].action(IncQueryActivationStateEnum.DISAPPEARED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).head as DeploymentApplication
 				val depBehavior = depApp.behavior
 				val depState = engine.cps2depTrace.getAllValuesOfdepElement(null, null, state).filter(BehaviorState).
 					findFirst[depApp.behavior.states.contains(it)];
 				val stateId = depState.description
-				logger.debug('''Removing state with ID: ï¿½stateIdï¿½''')
+				logger.debug('''Removing state with ID: «stateId»''')
 				if (depBehavior != null) {
 					depBehavior.states -= depState
 					if (depBehavior.current == depState) {
@@ -249,7 +249,7 @@ public class RuleProvider {
 					trace('''Removing empty trace''')
 					cps2dep.traces -= smTrace
 				}
-				logger.debug('''Removed state with ID: ï¿½stateIdï¿½''')
+				logger.debug('''Removed state with ID: «stateId»''')
 			].addLifeCycle(DefaultActivationLifeCycle.DEFAULT).build
 
 		}
@@ -264,7 +264,7 @@ public class RuleProvider {
 					DeploymentApplication).head
 				val transition = transition
 				val transitionId = transition.id
-				debug('''Mapping transition with ID: ï¿½transitionIdï¿½''')
+				debug('''Mapping transition with ID: «transitionId»''')
 				val depTransition = createBehaviorTransition => [
 					description = transitionId
 				]
@@ -286,11 +286,11 @@ public class RuleProvider {
 					trace('''Adding new transition to existing trace''')
 					traces.head.deploymentElements += depTransition
 				}
-				debug('''Mapped transition with ID: ï¿½transitionIdï¿½''')
+				debug('''Mapped transition with ID: «transitionId»''')
 			].action(IncQueryActivationStateEnum.UPDATED) [
 				val transition = transition
 				val trId = transition.id
-				debug('''Updating mapped transition with ID: ï¿½trIdï¿½''')
+				debug('''Updating mapped transition with ID: «trId»''')
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
 					DeploymentApplication).head
 				val depTransitions = engine.cps2depTrace.getAllValuesOfdepElement(null, null, transition).filter(
@@ -298,7 +298,7 @@ public class RuleProvider {
 				val depTransition = depApp.behavior.transitions.findFirst[depTransitions.contains(it)]
 				val oldDesc = depTransition.description
 				if (oldDesc != trId) {
-					trace('''ID changed to ï¿½oldDescï¿½''')
+					trace('''ID changed to «oldDesc»''')
 					depTransition.description = trId
 				}
 				val tempDepSources = engine.cps2depTrace.getAllValuesOfdepElement(null, null, srcState)
@@ -306,14 +306,14 @@ public class RuleProvider {
 				val tempDepTargets = engine.cps2depTrace.getAllValuesOfdepElement(null, null, transition.targetState);
 				val depTarget = depApp.behavior.states.findFirst[tempDepTargets.contains(it)]
 				if (!depSource.outgoing.contains(depTransition)) {
-					trace('''Source state changed to ï¿½depSource.descriptionï¿½''')
+					trace('''Source state changed to «depSource.description»''')
 					depSource.outgoing += depTransition
 				}
 				if (depTransition.to != depTarget) {
-					trace('''Target state changed to ï¿½depTarget.descriptionï¿½''')
+					trace('''Target state changed to «depTarget.description»''')
 					depTransition.to = depTarget
 				}
-				debug('''Updated mapped transition with ID: ï¿½trIdï¿½''')
+				debug('''Updated mapped transition with ID: «trId»''')
 			].action(IncQueryActivationStateEnum.DISAPPEARED) [
 				val transition = transition
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
@@ -323,7 +323,7 @@ public class RuleProvider {
 				val depTransition = engine.depBehaviorsStateAndTransitions.
 					getAllValuesOfdepTransition(depApp.behavior, null).findFirst[depTransitions.contains(it)]
 				val trId = depTransition.description
-				logger.debug('''Removing transition with ID: ï¿½trIdï¿½''')
+				logger.debug('''Removing transition with ID: «trId»''')
 				depTransition.to = null
 				val tempDepSources = engine.cps2depTrace.getAllValuesOfdepElement(null, null, srcState)
 				val depSource = depApp.behavior.states.findFirst[tempDepSources.contains(it)]
@@ -335,7 +335,7 @@ public class RuleProvider {
 					trace('''Removing empty trace''')
 					cps2dep.traces -= smTrace
 				}
-				logger.debug('''Removed transition with ID: ï¿½trIdï¿½''')
+				logger.debug('''Removed transition with ID: «trId»''')
 			].addLifeCycle(DefaultActivationLifeCycle.DEFAULT).build
 
 		}
@@ -354,12 +354,12 @@ public class RuleProvider {
 					BehaviorTransition).findFirst[depAppTrigger.behavior.transitions.contains(it)]
 				val waitTr = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsTarget).filter(
 					BehaviorTransition).findFirst[depAppTarget.behavior.transitions.contains(it)]
-				debug('''Mapping trigger between ï¿½sendTr.descriptionï¿½ and ï¿½waitTr.descriptionï¿½''')
+				debug('''Mapping trigger between «sendTr.description» and «waitTr.description»''')
 				if (!sendTr.trigger.contains(waitTr)) {
 					trace('''Adding new trigger''')
 					sendTr.trigger += waitTr
 				}
-				debug('''Mapped trigger between ï¿½sendTr.descriptionï¿½ and ï¿½waitTr.descriptionï¿½''')
+				debug('''Mapped trigger between «sendTr.description» and «waitTr.description»''')
 			].action(IncQueryActivationStateEnum.DISAPPEARED) [
 				val depAppTrigger = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstanceTrigger).
 					filter(DeploymentApplication).head
@@ -369,12 +369,12 @@ public class RuleProvider {
 					BehaviorTransition).findFirst[depAppTrigger.behavior.transitions.contains(it)]
 				val waitTr = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsTarget).filter(
 					BehaviorTransition).findFirst[depAppTarget.behavior.transitions.contains(it)]
-				debug('''Removing trigger between ï¿½sendTr.descriptionï¿½ and ï¿½waitTr.descriptionï¿½''')
+				debug('''Removing trigger between «sendTr.description» and «waitTr.description»''')
 				if (sendTr.trigger.contains(waitTr)) {
 					trace('''Removing existing trigger''')
 					sendTr.trigger -= waitTr
 				}
-				debug('''Removing trigger between ï¿½sendTr.descriptionï¿½ and ï¿½waitTr.descriptionï¿½''')
+				debug('''Removing trigger between «sendTr.description» and «waitTr.description»''')
 			].addLifeCycle(DefaultActivationLifeCycle.DEFAULT).build
 
 		}
