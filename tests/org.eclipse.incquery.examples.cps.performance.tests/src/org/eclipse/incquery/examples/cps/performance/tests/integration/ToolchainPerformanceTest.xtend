@@ -17,7 +17,7 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.generator.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
-import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
+import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.CPSGeneratorBuilder
@@ -45,6 +45,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.StatisticsBasedScenario
 
 /**
  * Tests the whole toolchain using each transformation one-by-one
@@ -83,39 +84,48 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 	        .add(1)
 			.add(8)
 			.add(16)
-        	.add(32)
-        	.add(64)
-        	.add(128)
-        	.add(256)
-        	.add(512)
-        	.add(1024)
+//        	.add(32)
+//        	.add(64)
+//        	.add(128)
+//        	.add(256)
+//        	.add(512)
+//        	.add(1024)
 			.build
-
-//		val codegens = ImmutableSet.builder
-//			.add(new org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator())
-//			.add(new org.eclipse.incquery.examples.cps.xform.m2t.jdt.CodeGenerator())
 
 		val codegens = ImmutableSet.builder
 			.add(ToolchainPerformanceTest.GeneratorType.DISTRIBUTED)
 			.add(ToolchainPerformanceTest.GeneratorType.JDT_BASED)
 			.build
-		val data = Sets::cartesianProduct(xforms,sizes,codegens)
+			
+		val scenarios = ImmutableSet.builder
+//			.add(new ClientServerScenario(new Random(RANDOM_SEED)))
+			.add(new StatisticsBasedScenario(new Random(RANDOM_SEED)))
+			.build 
+			
+		val data = Sets::cartesianProduct(xforms,sizes,codegens,scenarios)
         data.map[
-        	#[(it.get(0) as List<?>).get(0), (it.get(0) as List<?>).get(1), it.get(1),it.get(2)]
+        	#[(it.get(0) as List<?>).get(0), (it.get(0) as List<?>).get(1), it.get(1),it.get(2),it.get(3)]
         ].map[it.toArray].toList
     }
 
-	val seed = 11111
+	static val RANDOM_SEED = 11111
 	val int scale
+	val IScenario scenario
 	val ToolchainPerformanceTest.GeneratorType generatorType
-	val D = ModelStats.DELIMITER
 
 	protected extension CyberPhysicalSystemFactory cpsFactory = CyberPhysicalSystemFactory.eINSTANCE
 	protected extension DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
 	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
 
-	new(CPSTransformationWrapper wrapper, String wrapperType, int scale, ToolchainPerformanceTest.GeneratorType generatorType) {
+	new(
+		CPSTransformationWrapper wrapper,
+		String wrapperType,
+		int scale,
+		ToolchainPerformanceTest.GeneratorType generatorType,
+		IScenario scenario
+	) {
 		super(wrapper, wrapperType)
+		this.scenario = scenario
 		this.scale = scale 
 		this.generatorType = generatorType
 	}
@@ -143,12 +153,9 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 		trcRes.contents += cps2dep
 
 		// Generate model
-		val Random rand = new Random(seed)
-		val scenario = new ClientServerScenario(rand)
-
 		val const = scenario.getConstraintsFor(scale);
 
-		val CPSGeneratorInput input = new CPSGeneratorInput(seed, const, cps2dep.cps);
+		val CPSGeneratorInput input = new CPSGeneratorInput(RANDOM_SEED, const, cps2dep.cps);
 		var plan = CPSPlanBuilder.buildDefaultPlan;
 		
 		var PlanExecutor<CPSFragment, CPSGeneratorInput> generator = new PlanExecutor();
@@ -187,9 +194,10 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 
 		changeMonitor.startMonitoring
 
+		// TODO scenario should provide modification
 		info("Adding new host instance")
-		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
-		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
+		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("AC_withStateMachine")]
+		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("HC_appContainer")].instances.head
 		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
 
 		executeTransformation
@@ -235,7 +243,7 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 	}
 
 	def generate(ICPSConstraints constraints, int i) {
-		CPSGeneratorBuilder.buildAndGenerateModel(seed, constraints);
+		CPSGeneratorBuilder.buildAndGenerateModel(RANDOM_SEED, constraints);
 	}
 
 }
