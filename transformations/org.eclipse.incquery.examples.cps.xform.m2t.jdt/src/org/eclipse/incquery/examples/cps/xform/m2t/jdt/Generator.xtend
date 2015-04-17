@@ -138,12 +138,14 @@ class Generator {
 		]
 		ctorBody.statements += superCall
 
-		val currentState = ast.newAssignment => [
-			leftHandSide = ast.newSimpleName("currentState")
-			rightHandSide = ast.newQualifiedName(
-				'''«behavior».«application.behavior.current.description.purifyAndToUpperCamel»''')
-		]
-		ctorBody.statements += ast.newExpressionStatement(currentState)
+		if(application.behavior.current != null){
+			val currentState = ast.newAssignment => [
+				leftHandSide = ast.newSimpleName("currentState")
+				rightHandSide = ast.newQualifiedName(
+					'''«behavior».«application.behavior.current.description.purifyAndToUpperCamel»''')
+			]
+			ctorBody.statements += ast.newExpressionStatement(currentState)
+		}
 
 		ctor.body = ctorBody
 

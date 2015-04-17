@@ -84,8 +84,10 @@ class Generator {
 			public «appClassName»(Host host) {
 				super(host);
 				
+				«IF app.behavior.current != null»
 				// Set initial State
 				currentState = «behavior».«app.behavior.current.description.purifyAndToUpperCamel»;
+				«ENDIF»
 			}
 			
 			@Override
