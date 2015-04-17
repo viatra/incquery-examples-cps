@@ -44,7 +44,8 @@
       xsi:type="setup.p2:P2Task"
       label="Demo">
     <requirement
-        name="org.eclipse.incquery.sdk.feature.source.feature.group"/>
+        name="org.eclipse.incquery.sdk.feature.source.feature.group"
+        versionRange="[1.0.0,2.0.0)"/>
     <requirement
         name="org.eclipse.incquery.testing.sdk.feature.feature.group"/>
     <requirement
@@ -74,6 +75,8 @@
         url="http://download.eclipse.org/tools/gef/gef4/updates/integration"/>
     <repository
         url="http://download.eclipse.org/viatra2/emf/updates/integration"/>
+    <repository
+        url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
   </setupTask>
   <setupTask
       xsi:type="setup.targlets:TargletTask">
@@ -99,7 +102,8 @@
         </detail>
       </annotation>
       <requirement
-          name="org.eclipse.incquery.sdk.feature.source.feature.group"/>
+          name="org.eclipse.incquery.sdk.feature.source.feature.group"
+          versionRange="[1.0.0,2.0.0)"/>
       <requirement
           name="org.eclipse.incquery.testing.sdk.feature.feature.group"/>
       <requirement
@@ -142,6 +146,8 @@
             url="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
         <repository
             url="http://download.eclipse.org/viatra2/emf/updates/integration"/>
+        <repository
+            url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
       </repositoryList>
     </targlet>
   </setupTask>
