@@ -1,7 +1,6 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra
 
 import com.google.common.base.Stopwatch
-import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.CpsXformM2M
@@ -38,20 +37,20 @@ class CPS2DeploymentTransformationViatra {
 			debug("Preparing queries on engine.")
 			var watch = Stopwatch.createStarted
 			prepare(engine)
-			info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+			info('''Prepared queries on engine (ï¿½watch.elapsed(TimeUnit.MILLISECONDS)ï¿½ ms)''')
 
 			info("Preparing transformation rules.")
 			watch = Stopwatch.createStarted
 			ruleProvider = new RuleProvider(engine,cps2dep)
 			registerRulesWithCustomPriorities
-			info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+			info('''Prepared transformation rules (ï¿½watch.elapsed(TimeUnit.MILLISECONDS)ï¿½ ms)''')
 			initialized = true
 		}
 	}
 
 	
 	def execute() {
-		debug('''Executing transformation on: Cyber-physical system: «cps2dep.cps.id»''')
+		debug('''Executing transformation on: Cyber-physical system: ï¿½cps2dep.cps.idï¿½''')
 		transform.executionSchema.startUnscheduledExecution
 
 	}

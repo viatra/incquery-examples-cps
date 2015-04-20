@@ -8,6 +8,7 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage
+import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage
@@ -25,9 +26,8 @@ import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEn
 import org.eclipse.incquery.runtime.evm.specific.lifecycle.DefaultActivationLifeCycle
 import org.eclipse.viatra.emf.runtime.modelmanipulation.IModelManipulations
 import org.eclipse.viatra.emf.runtime.modelmanipulation.SimpleModelManipulations
+import org.eclipse.viatra.emf.runtime.rules.eventdriven.EventDrivenTransformationRule
 import org.eclipse.viatra.emf.runtime.rules.eventdriven.EventDrivenTransformationRuleFactory
-import org.eclipse.viatra.emf.runtime.transformation.eventdriven.EventDrivenTransformationRule
-import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace
 
 public class RuleProvider {
 
