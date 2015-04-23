@@ -193,13 +193,11 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 		val long generateMemory = QueryRegressionTest.logMemoryProperties
 		result.addMemoryBytes(generateMemory)
 		
-		
-		val engine = AdvancedIncQueryEngine.from(fragment.engine);
-		Validation.instance.prepare(engine);
-		val cpsStats = StatsUtil.generateStatsForCPS(engine, fragment.modelRoot)
+		Validation.instance.prepare(fragment.engine);
+		val cpsStats = StatsUtil.generateStatsForCPS(fragment.engine, fragment.modelRoot)
 		result.artifactSize = cpsStats.eObjects
 		cpsStats.log
-		engine.dispose
+		fragment.engine.dispose
 
 		// Transformation
 		var m2mTransformTime = Stopwatch.createStarted;
@@ -222,7 +220,7 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 
 		var m2tTransformTime = Stopwatch.createStarted;
 		var m2tTransformInitTime = Stopwatch.createStarted;
-		val engine2 = IncQueryEngine.on(new EMFScope(cps2dep))
+		val engine2 = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep))
 
 		val projectName = "integration.test.generated.code"
 		var ICPSGenerator codeGenerator = null
@@ -279,6 +277,9 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 		logModelStats(scenario.class.simpleName, scale, cpsStats, depStats, traceStats)
 		logMemoryStats(scenario.class.simpleName, scale, generateMemory, incQueryMemory, firstTransformationMemory, lastTransformationMemory);
 		logTimeStats(scenario.class.simpleName, scale, generateTime.elapsed(TimeUnit.MILLISECONDS), m2mTransformInitTime.elapsed(TimeUnit.MILLISECONDS), m2tTransformInitTime.elapsed(TimeUnit.MILLISECONDS), m2mTransformTime.elapsed(TimeUnit.MILLISECONDS),m2tTransformTime.elapsed(TimeUnit.MILLISECONDS),m2mSecondTransformTime.elapsed(TimeUnit.MILLISECONDS),m2tSecondTransformTime.elapsed(TimeUnit.MILLISECONDS) )
+		
+		cleanupTransformation
+		engine2.dispose
 		
 	}
 
