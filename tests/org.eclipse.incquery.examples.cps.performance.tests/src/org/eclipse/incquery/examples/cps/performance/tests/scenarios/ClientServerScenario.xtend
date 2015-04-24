@@ -192,11 +192,11 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 	
 	override getCaseDescriptor() {
 		val descriptor = new CaseDescriptor
-		descriptor.tool = "IncQuery"
+		descriptor.tool = tool
 		descriptor.caseName = caseName
 		descriptor.size = size
-		descriptor.runIndex = 1
-		descriptor.scenario = "Client Server"
+		descriptor.runIndex = runIndex
+		descriptor.scenario = "ClientServer"
 		
 		return descriptor
 	}

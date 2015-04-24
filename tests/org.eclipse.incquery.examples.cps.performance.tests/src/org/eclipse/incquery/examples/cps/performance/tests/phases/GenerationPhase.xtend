@@ -1,8 +1,5 @@
 package org.eclipse.incquery.examples.cps.performance.tests.phases
 
-//import org.eclipse.incquery.examples.cps.benchmark.phases.AtomicPhase
-//import org.eclipse.incquery.examples.cps.benchmark.DataToken
-//import org.eclipse.incquery.examples.cps.benchmark.results.PhaseResult
 import eu.mondo.sam.core.phases.AtomicPhase;
 import eu.mondo.sam.core.DataToken;
 import eu.mondo.sam.core.results.PhaseResult;
@@ -15,7 +12,7 @@ import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
-import eu.mondo.sam.core.metrics.TimerMetric
+import eu.mondo.sam.core.metrics.TimeMetric
 import eu.mondo.sam.core.metrics.MemoryMetric
 
 class GenerationPhase extends AtomicPhase{
@@ -29,7 +26,7 @@ class GenerationPhase extends AtomicPhase{
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
 		val cpsToken = token as CPSDataToken
-		val generatorTimer = new TimerMetric("Time")
+		val generatorTimer = new TimeMetric("Time")
 		val generatorMemory = new MemoryMetric("Memory")
 		
 		val cps2dep = preparePersistedCPSModel(cpsToken.instancesDirPath + "/" + cpsToken.scenarioName, 

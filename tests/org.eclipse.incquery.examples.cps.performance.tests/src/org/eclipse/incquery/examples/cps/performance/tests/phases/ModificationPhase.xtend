@@ -5,7 +5,7 @@ import eu.mondo.sam.core.DataToken;
 import eu.mondo.sam.core.results.PhaseResult;
 import org.eclipse.incquery.examples.cps.performance.tests.CPSDataToken
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
-import eu.mondo.sam.core.metrics.TimerMetric
+import eu.mondo.sam.core.metrics.TimeMetric
 
 class ModificationPhase extends AtomicPhase{
 	
@@ -18,8 +18,8 @@ class ModificationPhase extends AtomicPhase{
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
 		val cpsToken = token as CPSDataToken
-		val modifyTimer = new TimerMetric("Modify Time")
-		val editTimer = new TimerMetric("Edit Time")
+		val modifyTimer = new TimeMetric("Modify Time")
+		val editTimer = new TimeMetric("Edit Time")
 		
 //		info("Adding new host instance")
 		modifyTimer.startMeasure
