@@ -41,6 +41,27 @@
     <description>${scope.project.label}</description>
   </setupTask>
   <setupTask
+      xsi:type="git:GitCloneTask"
+      id="git.clone.mondosam"
+      remoteURI="FTSRG/mondo-sam">
+    <annotation
+        source="http://www.eclipse.org/oomph/setup/InducedChoices">
+      <detail
+          key="inherit">
+        <value>github.remoteURIs</value>
+      </detail>
+      <detail
+          key="label">
+        <value>MONDO-SAM Github repository</value>
+      </detail>
+      <detail
+          key="target">
+        <value>remoteURI</value>
+      </detail>
+    </annotation>
+    <description>${scope.project.label}</description>
+  </setupTask>
+  <setupTask
       xsi:type="setup.p2:P2Task"
       label="Demo">
     <requirement
@@ -127,6 +148,10 @@
       <requirement
           name="org.apache.commons.io"/>
       <requirement
+          name="org.codehaus.jackson.core"/>
+      <requirement
+          name="org.codehaus.jackson.mapper"/>
+      <requirement
           name="org.eclipse.incquery.tooling.ui.visualization.feature.feature.group"/>
       <requirement
           name="com.google.inject.multibindings"
@@ -155,6 +180,9 @@
       xsi:type="projects:ProjectsImportTask">
     <sourceLocator
         rootFolder="${git.clone.cps.location}"
+        locateNestedProjects="true"/>
+    <sourceLocator
+        rootFolder="${git.clone.mondosam.location}"
         locateNestedProjects="true"/>
   </setupTask>
   <setupTask

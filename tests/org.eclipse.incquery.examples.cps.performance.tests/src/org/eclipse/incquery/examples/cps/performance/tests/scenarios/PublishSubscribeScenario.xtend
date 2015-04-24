@@ -12,8 +12,14 @@ import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
+import eu.mondo.sam.core.scenarios.BenchmarkScenario
+import eu.mondo.sam.core.results.CaseDescriptor
+import eu.mondo.sam.core.phases.SequencePhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.GenerationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.InitializationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.TransformationPhase
 
-class PublishSubscribeScenario implements IScenario {
+class PublishSubscribeScenario extends BenchmarkScenario implements IScenario {
 	
 	protected extension Logger logger = Logger.getLogger("cps.generator.PublishSubscribeScenario")
 	protected extension RandomUtils randUtil = new RandomUtils;
@@ -164,6 +170,27 @@ class PublishSubscribeScenario implements IScenario {
 		appClasses += clientAppClass
 		
 		return appClasses;
+	}
+	
+	override build() {
+		val seq = new SequencePhase
+		seq.addPhases(
+			new GenerationPhase("Generation"),
+			new InitializationPhase("Initialization"),
+			new TransformationPhase("Transformation")
+		)
+		rootPhase = seq
+	}
+	
+	override getCaseDescriptor() {
+		val descriptor = new CaseDescriptor
+		descriptor.tool = tool
+		descriptor.caseName = caseName
+		descriptor.size = size
+		descriptor.runIndex = runIndex
+		descriptor.scenario = "PublishSubscribe"
+		
+		return descriptor
 	}
 	
 }
