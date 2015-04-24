@@ -521,13 +521,13 @@ class CPS2DeploymentPartialBatchTransformation {
 					removeAppInstance(b as ApplicationInstance)
 				}
 				if (b instanceof StateMachine) {
-					removeStateMachine(b as StateMachine)
+					removeStateMachine(b as StateMachine , true)
 				}
 				if (b instanceof State) {
 					val state = b as State
 					state.removeState
 					engine.state2Statemachine.getAllMatches(state, null).forEach [ match |
-						match.sm.removeStateMachine
+						match.sm.removeStateMachine(true)
 					]
 				}
 				if (b instanceof Transition) {
@@ -538,13 +538,13 @@ class CPS2DeploymentPartialBatchTransformation {
 						engine.sendTransitionAppSignal.getAllMatches(null, null, id).forEach [ match |
 							match.transition.removeTransition
 							engine.transition2StateMachine.getAllMatches(match.transition, null).forEach [ m |
-								m.sm.removeStateMachine
+								m.sm.removeStateMachine(true)
 							]
 						]
 					}
 					transition.removeTransition
 					engine.transition2StateMachine.getAllMatches(transition, null).forEach [ match |
-						match.sm.removeStateMachine
+						match.sm.removeStateMachine(true)
 					]
 				}
 			]
@@ -587,7 +587,7 @@ class CPS2DeploymentPartialBatchTransformation {
 
 				}
 			]
-			app.type?.behavior?.removeStateMachine
+			app.type?.behavior?.removeStateMachine(true)
 
 			trace('''Execution ended: removeAppinstance''')
 	}
@@ -601,7 +601,7 @@ class CPS2DeploymentPartialBatchTransformation {
 
 			trace('''Executing: removeAppType(app = «app.name»)''')
 
-			app.behavior?.removeStateMachine
+			app.behavior?.removeStateMachine(true)
 
 			trace('''Execution ended: removeAppType''')
 
@@ -612,7 +612,7 @@ class CPS2DeploymentPartialBatchTransformation {
 	 * 
 	 * @param {@link StateMachine} to be removed
 	 */
-	private def void removeStateMachine(StateMachine sm) {
+	private def void removeStateMachine(StateMachine sm, boolean recursive) {
 
 			trace('''Executing: removeStateMachine(sm = «sm.name»)''')
 			engine.cps2depTrace.getAllMatches(mapping, null, sm, null).forEach [ c |
@@ -629,14 +629,17 @@ class CPS2DeploymentPartialBatchTransformation {
 			sm.states.forEach [ state |
 				state.removeState
 				state.outgoingTransitions.forEach [ trans |
-					val action = transitionMap.get(trans)
-					if (action != null && SignalUtil.isWait(action)) {
-						val id = SignalUtil.getSignalId(action)
-						engine.sendTransitionAppSignal.getAllMatches(null, null, id).forEach [ match |
-							engine.transition2StateMachine.getAllMatches(match.transition, null).forEach [ m |
-								m.sm.removeStateMachine
+					if (recursive) {
+						val action = transitionMap.get(trans)
+						if (action != null && SignalUtil.isWait(action)) {
+							val id = SignalUtil.getSignalId(action)
+							engine.sendTransitionAppSignal.getAllMatches(null, null, id).forEach [ match |
+								engine.transition2StateMachine.getAllMatches(match.transition, null).forEach [ m |
+									if (!m.sm.equals(sm))
+										m.sm.removeStateMachine(false)
+								]
 							]
-						]
+						}
 					}
 					trans.removeTransition
 				]
