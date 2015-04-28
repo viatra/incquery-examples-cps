@@ -10,6 +10,7 @@ import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.viatra.emf.runtime.transformation.eventdriven.EventDrivenTransformation
 
 import static com.google.common.base.Preconditions.*
+import java.util.concurrent.TimeUnit
 
 class CPS2DeploymentTransformationViatra {
 
@@ -37,20 +38,20 @@ class CPS2DeploymentTransformationViatra {
 			debug("Preparing queries on engine.")
 			var watch = Stopwatch.createStarted
 			prepare(engine)
-			info('''Prepared queries on engine (�watch.elapsed(TimeUnit.MILLISECONDS)� ms)''')
+			info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 
 			info("Preparing transformation rules.")
 			watch = Stopwatch.createStarted
 			ruleProvider = new RuleProvider(engine,cps2dep)
 			registerRulesWithCustomPriorities
-			info('''Prepared transformation rules (�watch.elapsed(TimeUnit.MILLISECONDS)� ms)''')
+			info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 			initialized = true
 		}
 	}
 
 	
 	def execute() {
-		debug('''Executing transformation on: Cyber-physical system: �cps2dep.cps.id�''')
+		debug('''Executing transformation on: Cyber-physical system: «cps2dep.cps.id»''')
 		transform.executionSchema.startUnscheduledExecution
 
 	}
