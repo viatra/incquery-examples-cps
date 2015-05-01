@@ -16,6 +16,10 @@ class BatchSimple extends CPSTransformationWrapper {
 	}
 
 	override cleanupTransformation() {
+		if(xform != null){
+			xform.dispose
+		}
+		xform = null
 	}
 
 }

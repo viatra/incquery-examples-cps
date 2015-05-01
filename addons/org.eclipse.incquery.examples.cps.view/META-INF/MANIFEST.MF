@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CPS Demonstrator Viewers
 Bundle-SymbolicName: org.eclipse.incquery.examples.cps.view;singleton:=true
 Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: IncQueryLabs Ltd.
 Require-Bundle: org.eclipse.incquery.examples.cps.model,
  org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -16,4 +17,3 @@ Require-Bundle: org.eclipse.incquery.examples.cps.model,
  org.eclipse.incquery.examples.cps.queries
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j;version="1.2.15"
-Bundle-Vendor: IncQueryLabs Ltd.

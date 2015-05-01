@@ -726,4 +726,13 @@ class CPS2DeploymentPartialBatchTransformation {
 		mapping.traces += trace
 		trace('''Execution ended: addTrace''')
 	}
+	
+	def dispose() {
+		trace("dispose")
+		if(monitor != null){
+			monitor.dispose
+		}
+		monitor = null
+		return
+	}
 }

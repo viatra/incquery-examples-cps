@@ -28,5 +28,7 @@ class ExplicitTraceability extends CPSTransformationWrapper {
 		if(engine != null){
 			engine.dispose
 		}
+		xform = null
+		engine = null
 	}
 }

@@ -16,13 +16,14 @@ import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.performance.tests.scenarios.LowSynchScenario
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
-import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.CpsXformM2M
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.CpsXformM2M
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.runtime.api.GenericPatternGroup
 import org.eclipse.incquery.runtime.api.IQueryGroup
 import org.eclipse.incquery.runtime.api.IQuerySpecification
 import org.junit.Test
 import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.StatisticsBasedScenario
 
 class QueryRegressionTest extends CPSTestBase{
 	
@@ -36,7 +37,7 @@ class QueryRegressionTest extends CPSTestBase{
 	public def prepare() {
 		info("Preparing query performance test")
 		
-		val rs = executeScenarioXformForConstraints(200)
+		val rs = executeScenarioXformForConstraints(16)
 		incQueryEngine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(rs))
 		queryGroup = GenericPatternGroup.of(
 			CpsXformM2M.instance
@@ -52,7 +53,7 @@ class QueryRegressionTest extends CPSTestBase{
 	def executeScenarioXformForConstraints(int size) {	
 		val seed = 11111
 		val Random rand = new Random(seed)
-		val IScenario scenario = new LowSynchScenario(rand)
+		val IScenario scenario = new StatisticsBasedScenario(rand)
 		val constraints = scenario.getConstraintsFor(size)
 		val cps2dep = prepareEmptyModel("testModel"+System.nanoTime)
 		

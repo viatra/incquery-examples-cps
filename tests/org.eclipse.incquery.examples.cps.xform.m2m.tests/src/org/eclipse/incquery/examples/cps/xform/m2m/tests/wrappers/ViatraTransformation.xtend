@@ -26,9 +26,14 @@ class ViatraTransformation extends CPSTransformationWrapper {
 	}
 	
 	override cleanupTransformation() {
+		if(xform != null){
+			xform.dispose
+		}
 		if(engine != null){
 			engine.dispose
 		}
+		xform = null
+		engine = null
 	}
 	
 }

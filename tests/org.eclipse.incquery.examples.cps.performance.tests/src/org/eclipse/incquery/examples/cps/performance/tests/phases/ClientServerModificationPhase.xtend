@@ -7,7 +7,7 @@ import org.eclipse.incquery.examples.cps.performance.tests.CPSDataToken
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import eu.mondo.sam.core.metrics.TimeMetric
 
-class ModificationPhase extends AtomicPhase{
+class ClientServerModificationPhase extends AtomicPhase{
 	
 	extension CPSModelBuilderUtil builderUtil
 	

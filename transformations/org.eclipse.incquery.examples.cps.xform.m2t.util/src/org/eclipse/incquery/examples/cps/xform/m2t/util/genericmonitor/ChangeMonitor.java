@@ -335,4 +335,10 @@ public class ChangeMonitor extends IChangeMonitor {
 		}
 		disappearElements.addAll(objects);
 	}
+	
+	@Override
+	public void dispose() {
+		executionSchema.dispose();
+	}
+	
 }

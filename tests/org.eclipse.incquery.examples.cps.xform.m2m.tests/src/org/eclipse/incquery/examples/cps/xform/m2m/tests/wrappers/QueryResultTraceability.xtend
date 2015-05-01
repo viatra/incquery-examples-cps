@@ -28,5 +28,7 @@ class QueryResultTraceability extends CPSTransformationWrapper {
 		if(engine != null){
 			engine.dispose
 		}
+		engine = null
+		xform = null
 	}
 }

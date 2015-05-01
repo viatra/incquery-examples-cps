@@ -14,11 +14,11 @@ import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
 import eu.mondo.sam.core.scenarios.BenchmarkScenario
 import eu.mondo.sam.core.phases.SequencePhase
 import eu.mondo.sam.core.phases.IterationPhase
-import org.eclipse.incquery.examples.cps.performance.tests.phases.ModificationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.TransformationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.GenerationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.InitializationPhase
 import eu.mondo.sam.core.results.CaseDescriptor
+import org.eclipse.incquery.examples.cps.performance.tests.phases.ClientServerModificationPhase
 
 class ClientServerScenario extends BenchmarkScenario implements IScenario {
 	
@@ -174,7 +174,7 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 		val seq = new SequencePhase
 		val innerSeq = new SequencePhase
 		innerSeq.addPhases(
-			new ModificationPhase("Modification"), 
+			new ClientServerModificationPhase("Modification"), 
 			new TransformationPhase("Transformation")
 		)
 		

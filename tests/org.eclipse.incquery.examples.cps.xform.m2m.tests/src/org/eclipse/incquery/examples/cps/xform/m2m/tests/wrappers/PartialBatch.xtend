@@ -20,9 +20,13 @@ class PartialBatch extends CPSTransformationWrapper {
 	}
 
 	override cleanupTransformation() {
+		if(xform != null){
+			xform.dispose
+		}
 		if (engine != null) {
 			engine.dispose
 		}
+		engine = null
 		xform = null
 	}
 

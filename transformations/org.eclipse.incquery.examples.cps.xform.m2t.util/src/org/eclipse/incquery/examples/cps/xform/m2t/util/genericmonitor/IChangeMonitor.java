@@ -32,4 +32,5 @@ public abstract class IChangeMonitor {
 	 */
 	public abstract ChangeDelta getDeltaSinceLastCheckpoint();
 	
+	public abstract void dispose();
 }

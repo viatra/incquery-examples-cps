@@ -5,7 +5,6 @@ import com.google.common.base.Joiner
 import com.google.common.base.Stopwatch
 import com.google.common.collect.ImmutableSet
 import com.google.common.collect.Sets
-import java.util.List
 import java.util.Random
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
@@ -30,12 +29,13 @@ import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.StatisticsBasedScenario
 import org.eclipse.incquery.examples.cps.generator.utils.CPSGeneratorBuilder
+import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.performance.tests.benchmark.BenchmarkResult
 import org.eclipse.incquery.examples.cps.performance.tests.queries.QueryRegressionTest
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
+import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
-import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTestWithoutParameters
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchOptimized
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchSimple
@@ -50,60 +50,78 @@ import org.eclipse.incquery.examples.cps.xform.m2t.util.GeneratorHelper
 import org.eclipse.incquery.examples.cps.xform.m2t.util.GeneratorUtil
 import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.DeploymentChangeMonitor
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.emf.EMFScope
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
+import org.eclipse.core.resources.IProject
 
 /**
  * Tests the whole toolchain using each transformation one-by-one
  */
 @RunWith(Parameterized)
-class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
+class ToolchainPerformanceTest extends CPSTestBase {
 
-	protected Logger trainLogger = Logger.getLogger("cps.mondosam.log")
+//	protected Logger trainLogger = Logger.getLogger("cps.mondosam.log")
 	protected Logger modelStatsLogger = Logger.getLogger("cps.stats.model")
 	protected Logger memoryStatsLogger = Logger.getLogger("cps.stats.memory")
 	protected Logger timeStatsLogger = Logger.getLogger("cps.stats.time")
 
+	protected extension Logger logger = Logger.getLogger("cps.xform.CPS2DepTest")
+	protected extension CyberPhysicalSystemFactory cpsFactory = CyberPhysicalSystemFactory.eINSTANCE
+	protected extension DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
+	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
+	protected extension CPSTransformationWrapper xform
+	protected extension CPSModelBuilderUtil modelBuilder
+	
+	static val RANDOM_SEED = 11111
+	
+	val D = ModelStats.DELIMITER
 	private boolean GENERATE_HEADER = true
+	val int scale
+	val IScenario scenario
+	val GeneratorType generatorType
+	val TransformationType wrapperType
+	IProject project
 
 	private enum GeneratorType{
 		DISTRIBUTED,
 		JDT_BASED
 	}
-	
-	
-	@Parameters(name = "{index}: {1}, model size: {2}, code generator: {3}")
-    public static def xformSizeGenerator() {
 
-		val transformation1 = #[new BatchSimple(),BatchSimple.simpleName]
-		val transformation2 = #[new BatchOptimized(),BatchOptimized.simpleName]
-		val transformation3 = #[new BatchIncQuery(),BatchIncQuery.simpleName]
-		val transformation4 = #[new QueryResultTraceability(),QueryResultTraceability.simpleName]
-		val transformation5 = #[new ExplicitTraceability(),ExplicitTraceability.simpleName]
-		val transformation6 = #[new PartialBatch(),PartialBatch.simpleName]
-		val transformation7 = #[new ViatraTransformation(),ViatraTransformation.simpleName]
+	private enum TransformationType{
+		BATCH_SIMPLE,
+		BATCH_OPTIMIZED,
+		BATCH_INCQUERY,
+		INCR_QUERY_RESULT_TRACEABILITY,
+		INCR_EXPLICIT_TRACEABILITY,
+		INCR_AGGREGATED,
+		INCR_VIATRA
+	}
+	
+	
+	@Parameters(name = "{index}: {0}, model size: {1}, code generator: {2}")
+    public static def xformSizeGenerator() {
 		
         val xforms = ImmutableSet.builder
-	        .add(transformation1)
-			.add(transformation2)
-        	.add(transformation3)
-        	.add(transformation4)
-			.add(transformation5)
-			.add(transformation6)
-			.add(transformation7)
+//	        .add(TransformationType.BATCH_SIMPLE)
+	        .add(TransformationType.BATCH_OPTIMIZED)
+	        .add(TransformationType.BATCH_INCQUERY)
+	        .add(TransformationType.INCR_QUERY_RESULT_TRACEABILITY)
+	        .add(TransformationType.INCR_EXPLICIT_TRACEABILITY)
+	        .add(TransformationType.INCR_AGGREGATED)
+	        .add(TransformationType.INCR_VIATRA)
 			.build
 
 		val sizes = ImmutableSet.builder
-	        .add(1)
-	        .add(2)
-	        .add(4)
-			.add(8)
-			.add(16)
-//        	.add(32)
+//	        .add(1)
+//	        .add(2)
+//	        .add(4)
+//			.add(8)
+//			.add(16)
+        	.add(32)
 //        	.add(64)
 //        	.add(128)
 //        	.add(256)
@@ -112,8 +130,8 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 			.build
 
 		val codegens = ImmutableSet.builder
-			.add(ToolchainPerformanceTest.GeneratorType.DISTRIBUTED)
-			.add(ToolchainPerformanceTest.GeneratorType.JDT_BASED)
+			.add(GeneratorType.DISTRIBUTED)
+			.add(GeneratorType.JDT_BASED)
 			.build
 			
 		val scenarios = ImmutableSet.builder
@@ -123,35 +141,62 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 			
 		val data = Sets::cartesianProduct(xforms,sizes,codegens,scenarios)
         data.map[
-        	#[(it.get(0) as List<?>).get(0), (it.get(0) as List<?>).get(1), it.get(1),it.get(2),it.get(3)]
+        	#[it.get(0), it.get(1),it.get(2),it.get(3)]
         ].map[it.toArray].toList
     }
 
-	static val RANDOM_SEED = 11111
-	val int scale
-	val IScenario scenario
-	val ToolchainPerformanceTest.GeneratorType generatorType
-
-	protected extension CyberPhysicalSystemFactory cpsFactory = CyberPhysicalSystemFactory.eINSTANCE
-	protected extension DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
-	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
-
 	new(
-		CPSTransformationWrapper wrapper,
-		String wrapperType,
+		TransformationType wrapperType,
 		int scale,
-		ToolchainPerformanceTest.GeneratorType generatorType,
+		GeneratorType generatorType,
 		IScenario scenario
 	) {
-		super(wrapper, wrapperType)
 		this.scenario = scenario
 		this.scale = scale 
+		this.wrapperType = wrapperType
 		this.generatorType = generatorType
+		modelBuilder = new CPSModelBuilderUtil
+		switch(wrapperType){
+			case BATCH_SIMPLE: xform = new BatchSimple
+			case BATCH_OPTIMIZED: xform = new BatchOptimized
+			case BATCH_INCQUERY: xform = new BatchIncQuery
+			case INCR_QUERY_RESULT_TRACEABILITY: xform = new QueryResultTraceability 
+			case INCR_EXPLICIT_TRACEABILITY: xform = new ExplicitTraceability
+			case INCR_AGGREGATED: xform = new PartialBatch
+			case INCR_VIATRA: xform = new ViatraTransformation
+		}
+		
+	}
+	
+	def startTest(){
+    	info('''START TEST: Xform: «wrapperType», Gen: «generatorType», Scale: «scale», Scenario: «scenario.class.name»''')
+    }
+    
+    def endTest(){
+    	info('''END TEST: Xform: «wrapperType», Gen: «generatorType», Scale: «scale», Scenario: «scenario.class.name»''')
+    }
+	
+	@After
+	def cleanup() {
+		cleanupTransformation;
+		
+		if(project != null && project.exists){
+			project.delete(true, true, new NullProgressMonitor)
+		}
+		
+		(0..4).forEach[Runtime.getRuntime().gc()]
+		
+		try{
+			Thread.sleep(1000)
+		} catch (InterruptedException ex) {
+			warn("Sleep after System GC interrupted")
+		}
 	}
 
-	@Test
+	@Test(timeout=60000)
 	def void completeToolchainIntegrationTest() {
-
+		startTest
+		
 		val rs = new ResourceSetImpl()
 		val cpsRes = rs.createResource(URI.createURI("cps.cyberphysicalsystem"))
 		val depRes = rs.createResource(URI.createURI("deployment.deployment"))
@@ -229,7 +274,7 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 		} else if(generatorType.equals(GeneratorType.JDT_BASED)) {
 			codeGenerator = new org.eclipse.incquery.examples.cps.xform.m2t.jdt.CodeGenerator(projectName, engine2);
 		}
-		val project = GeneratorHelper.createProject(projectName)
+		project = GeneratorHelper.createProject(projectName)
 		val srcFolder = project.getFolder("src");
 		val monitor = new NullProgressMonitor();
 		if (!srcFolder.exists()) {
@@ -278,9 +323,9 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 		logMemoryStats(scenario.class.simpleName, scale, generateMemory, incQueryMemory, firstTransformationMemory, lastTransformationMemory);
 		logTimeStats(scenario.class.simpleName, scale, generateTime.elapsed(TimeUnit.MILLISECONDS), m2mTransformInitTime.elapsed(TimeUnit.MILLISECONDS), m2tTransformInitTime.elapsed(TimeUnit.MILLISECONDS), m2mTransformTime.elapsed(TimeUnit.MILLISECONDS),m2tTransformTime.elapsed(TimeUnit.MILLISECONDS),m2mSecondTransformTime.elapsed(TimeUnit.MILLISECONDS),m2tSecondTransformTime.elapsed(TimeUnit.MILLISECONDS) )
 		
-		cleanupTransformation
 		engine2.dispose
 		
+		endTest
 	}
 
 	def writeChanges(ICPSGenerator generator, DeploymentChangeMonitor monitor, IFolder folder) {
@@ -323,9 +368,6 @@ class ToolchainPerformanceTest extends CPS2DepTestWithoutParameters {
 	def generate(ICPSConstraints constraints, int i) {
 		CPSGeneratorBuilder.buildAndGenerateModel(RANDOM_SEED, constraints);
 	}
-
-
-	val D = ModelStats.DELIMITER
 	
 	def void logTimeStats(String scenario, int scale, long generateTime, long incQInitTime, long codeGeneratorInitTime, long m2mTransformTime, long m2tTransformTime, long m2mSecondTransformTime, long m2tSecondTransformTime){
 		// Header

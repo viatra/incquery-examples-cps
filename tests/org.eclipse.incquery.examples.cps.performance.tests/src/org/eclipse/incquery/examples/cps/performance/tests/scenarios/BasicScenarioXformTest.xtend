@@ -261,44 +261,44 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		engine.runBenchmark(benchmarkScenario, token)
 	}
 	
-	val D = ModelStats.DELIMITER
+//	val D = ModelStats.DELIMITER
 	
-	def void logTimeStats(String scenario, int scale, String generateTime, String incQInitTime, String transformTime, String secondXformTime, String thirdXformTime){
-		// Header
-		if(GENERATE_HEADER){
-			timeStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm",  "GenerateTime", "XformInitTime", "FirstXformTime", "SecondXformTime", "ThirdXformTime"))
-		}
-
-		// Body
-		timeStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, generateTime, incQInitTime, transformTime, secondXformTime, thirdXformTime))
-	}
-	
-	def void logMemoryStats(String scenario, int scale, long genMemory, long incQMemory, long firstTrafoMemory, long lastTrafoMemory){
-		// Header
-		if(GENERATE_HEADER){
-			memoryStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm", "AfterGenerate", "AfterXformInit", "AfterFirstXform", "AfterLastXform"))
-		}
-		// Body
-		memoryStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, genMemory, incQMemory, firstTrafoMemory, lastTrafoMemory))
-	}
-	
-	def void logModelStats(String scenario, int scale, CPSStats cpsStats, DeploymentStats depStats, TraceabilityStats traceStats){
-		// Header
-		if(GENERATE_HEADER){
-			modelStatsLogger.info(Joiner.on(D).join("Scenario" , "Scale", "XForm", "CPSeObjects" , "CPSeReferences" + D 
-				+ "DepeObjects" , "DepeReferences", "TraceeObjects", "TraceeReferences"+ D 
-				+ "SUMeObjects" , "SUMeReferences"))
-		}
-		
-		val sumEObjects = cpsStats.eObjects + depStats.eObjects + traceStats.eObjects
-		val sumEReferences = cpsStats.eReferences + depStats.eReferences + traceStats.eReferences
-
-		// Body
-		modelStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, cpsStats.CSVEValues, depStats.CSVEValues, 
-			traceStats.CSVEValues, sumEObjects, sumEReferences
-		))
-		
-	}
+//	def void logTimeStats(String scenario, int scale, String generateTime, String incQInitTime, String transformTime, String secondXformTime, String thirdXformTime){
+//		// Header
+//		if(GENERATE_HEADER){
+//			timeStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm",  "GenerateTime", "XformInitTime", "FirstXformTime", "SecondXformTime", "ThirdXformTime"))
+//		}
+//
+//		// Body
+//		timeStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, generateTime, incQInitTime, transformTime, secondXformTime, thirdXformTime))
+//	}
+//	
+//	def void logMemoryStats(String scenario, int scale, long genMemory, long incQMemory, long firstTrafoMemory, long lastTrafoMemory){
+//		// Header
+//		if(GENERATE_HEADER){
+//			memoryStatsLogger.info(Joiner.on(D).join("Scenario", "Scale", "XForm", "AfterGenerate", "AfterXformInit", "AfterFirstXform", "AfterLastXform"))
+//		}
+//		// Body
+//		memoryStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, genMemory, incQMemory, firstTrafoMemory, lastTrafoMemory))
+//	}
+//	
+//	def void logModelStats(String scenario, int scale, CPSStats cpsStats, DeploymentStats depStats, TraceabilityStats traceStats){
+//		// Header
+//		if(GENERATE_HEADER){
+//			modelStatsLogger.info(Joiner.on(D).join("Scenario" , "Scale", "XForm", "CPSeObjects" , "CPSeReferences" + D 
+//				+ "DepeObjects" , "DepeReferences", "TraceeObjects", "TraceeReferences"+ D 
+//				+ "SUMeObjects" , "SUMeReferences"))
+//		}
+//		
+//		val sumEObjects = cpsStats.eObjects + depStats.eObjects + traceStats.eObjects
+//		val sumEReferences = cpsStats.eReferences + depStats.eReferences + traceStats.eReferences
+//
+//		// Body
+//		modelStatsLogger.info(Joiner.on(D).join(scenario, scale, xform.class.simpleName, cpsStats.CSVEValues, depStats.CSVEValues, 
+//			traceStats.CSVEValues, sumEObjects, sumEReferences
+//		))
+//		
+//	}
 
 //	def void firstModification(CPSToDeployment cps2dep, BenchmarkResult result)
 	

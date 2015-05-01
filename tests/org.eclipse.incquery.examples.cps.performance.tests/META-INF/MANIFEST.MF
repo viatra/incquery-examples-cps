@@ -19,5 +19,6 @@ Require-Bundle: com.google.guava,
  org.eclipse.core.resources;bundle-version="3.9.0",
  org.codehaus.jackson.core;bundle-version="1.6.0",
  org.codehaus.jackson.mapper;bundle-version="1.6.0",
- eu.mondo.sam.core;bundle-version="1.0.0"
+ eu.mondo.sam.core;bundle-version="1.0.0",
+ org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra;bundle-version="0.1.0"
 Import-Package: org.apache.log4j;version="1.2.15"

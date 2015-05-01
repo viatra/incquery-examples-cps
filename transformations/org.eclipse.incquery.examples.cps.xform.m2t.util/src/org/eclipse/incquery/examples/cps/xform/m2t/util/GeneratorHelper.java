@@ -183,13 +183,13 @@ public class GeneratorHelper {
 	
 	 public static IProject createProject(String name) throws CoreException {
 		 // Referring a project in the workspace by it's name
-		 IProject project = ResourcesPlugin.getWorkspace().getRoot()
-		 .getProject(name);
+		 IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
 		
 		 // If the project is not exist it will be created.
 		 IProgressMonitor monitor = new NullProgressMonitor();
-		 if (!project.exists())
-		 project.create(monitor);
+		 if (!project.exists()) {
+			project.create(monitor);
+		 }
 		
 		 // The project should be opened.
 		 project.open(IResource.BACKGROUND_REFRESH, monitor);
