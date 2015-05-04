@@ -15,7 +15,8 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 }
 
 pattern applicationInstance(applicationInstance) {
-	ApplicationInstance(applicationInstance);
+	HostInstance.applications(_,applicationInstance);
+	ApplicationType.instances(_,applicationInstance);
 }
 
 pattern appInstanceWithStateMachine(appType, appInstance, stateMachine) {

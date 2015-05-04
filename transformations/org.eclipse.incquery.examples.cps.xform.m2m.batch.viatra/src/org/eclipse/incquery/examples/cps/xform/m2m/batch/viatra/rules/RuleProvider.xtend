@@ -66,10 +66,8 @@ class RuleProvider {
 				val cpsApplicationInstance = it.applicationInstance
 				val appId = it.applicationInstance.id
 				
-				
 				val cpsHostInstance = cpsApplicationInstance.allocatedTo
 				val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsHostInstance).filter(DeploymentHost).head
-				if (depHost == null || cpsHostInstance == null) return;
 				
 				debug('''Mapping application with ID: «appId»''')
 				val deploymentApplication = createDeploymentApplication => [
