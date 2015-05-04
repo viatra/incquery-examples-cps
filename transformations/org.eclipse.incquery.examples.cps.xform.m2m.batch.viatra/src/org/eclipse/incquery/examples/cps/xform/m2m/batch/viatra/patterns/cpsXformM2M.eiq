@@ -14,13 +14,17 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 	CPS2DeplyomentTrace.deploymentElements(trace, depElement);
 }
 
-pattern applicationInstance(applicationInstance) {
-	HostInstance.applications(_,applicationInstance);
-	ApplicationType.instances(_,applicationInstance);
+pattern applicationInstance(applicationInstance, applicationType) {
+	HostInstance.applications(_, applicationInstance);
+	ApplicationType.instances(applicationType, applicationInstance);
 }
 
 pattern appInstanceWithStateMachine(appType, appInstance, stateMachine) {
-	HostInstance.applications(_, appInstance);
-	ApplicationType.instances(appType, appInstance);
+	find applicationInstance(appInstance, appType);
 	ApplicationType.behavior(appType, stateMachine);
+}
+
+pattern state(stateMachine, state, appInstance){
+	find appInstanceWithStateMachine(_, appInstance, stateMachine);
+	StateMachine.states(stateMachine, state);
 }
