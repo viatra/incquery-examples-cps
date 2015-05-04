@@ -1,6 +1,7 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.tests.mappings
 
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
+import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.CPS2DepTest
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
@@ -126,15 +127,22 @@ class ApplicationMappingTest extends CPS2DepTest {
 		cps2dep.initializeTransformation
 		executeTransformation
 		
+		cps2dep.assertApplicationMapping(instance)
+		
 		val host = cps2dep.prepareHostTypeWithId("single.cps.host2")
 		val hostInstance2 = host.prepareHostInstanceWithIP("single.cps.host2.instance", "1.1.1.2")
 		info("Reallocating application instance to host2")
 		hostInstance2.applications += instance
 		executeTransformation
 
-		val applications = cps2dep.deployment.hosts.head.applications
+		val traces = cps2dep.traces.filter[cpsElements.contains(hostInstance)]
+		val deploymentHosts = traces.head.deploymentElements.filter(DeploymentHost)
+		val applications = deploymentHosts.head.applications
 		assertTrue("Application not moved from host in deployment", applications.empty)
-		val applications2 = cps2dep.deployment.hosts.last.applications
+		
+		val traces2 = cps2dep.traces.filter[cpsElements.contains(hostInstance2)]
+		val deploymentHosts2 = traces2.head.deploymentElements.filter(DeploymentHost)
+		val applications2 = deploymentHosts2.head.applications
 		assertFalse("Application not moved to host2 in deployment", applications2.empty)
 		
 		endTest(testId)
@@ -151,6 +159,8 @@ class ApplicationMappingTest extends CPS2DepTest {
 				
 		cps2dep.initializeTransformation
 		executeTransformation
+		
+		cps2dep.assertApplicationMapping(instance)
 		
 		info("Changing host IP")
 		instance.id = "simple.cps.app.instance2"
