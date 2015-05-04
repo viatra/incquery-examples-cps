@@ -24,6 +24,8 @@ import org.eclipse.viatra.emf.runtime.modelmanipulation.SimpleModelManipulations
 import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRule
 import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRuleFactory
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable
+import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.TransitionMatcher
+import org.eclipse.incquery.examples.cps.deployment.BehaviorState
 
 class RuleProvider {
 	extension Logger logger = Logger.getLogger("cps.xform.m2m.batch.viatra")
@@ -39,6 +41,7 @@ class RuleProvider {
 	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> applicationRule
 	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateMachineRule
 	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateRule
+	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> transitionRule
 	
 	new(IncQueryEngine engine, CPSToDeployment deployment) {
 		this.mapping = deployment
@@ -69,8 +72,8 @@ class RuleProvider {
 	public def getApplicationRule() {
 		if (applicationRule == null) {
 			applicationRule = createRule(ApplicationInstanceMatcher.querySpecification)[
-				val cpsApplicationInstance = it.applicationInstance
-				val appId = it.applicationInstance.id
+				val cpsApplicationInstance = it.appInstance
+				val appId = it.appInstance.id
 				
 				val cpsHostInstance = cpsApplicationInstance.allocatedTo
 				val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsHostInstance).filter(DeploymentHost).head
@@ -151,6 +154,44 @@ class RuleProvider {
 			]
 		}
 		return stateRule
+	}
+	
+	public def getTransitionRule() {
+		if (transitionRule == null) {
+			transitionRule = createRule(TransitionMatcher.querySpecification)[
+				val cpsAppInstance = it.appInstance
+				val cpsState = it.sourceState
+				val cpsTargetState = it.targetState
+				val cpsTransition = it.transition  
+				
+				
+				val behaviorTransition = createBehaviorTransition => [
+					description = cpsTransition.id
+				]
+				
+				val appInstanceTrace = getTraceForCPSElement(cpsAppInstance)
+				val depApplication = appInstanceTrace.deploymentElements.filter(DeploymentApplication).head
+				val depBehavior = depApplication.behavior
+				depBehavior.transitions += behaviorTransition
+				
+				val trace = getTraceForCPSElement(cpsTransition)
+				if (trace == null){
+					mapping.traces += createCPS2DeplyomentTrace => [
+						cpsElements += cpsTransition
+						deploymentElements += behaviorTransition
+					]
+				} else {
+					trace.deploymentElements += behaviorTransition
+				}
+				
+				val depTargetState = depBehavior.states.filter[description == cpsTargetState.id].head
+				val depSourceState = depBehavior.states.filter[description == cpsState.id].head
+				
+				depSourceState.outgoing += behaviorTransition
+				behaviorTransition.to = depTargetState
+			]
+		}
+		return transitionRule
 	}
 	
 	def getTraceForCPSElement(Identifiable cpsElement) {
