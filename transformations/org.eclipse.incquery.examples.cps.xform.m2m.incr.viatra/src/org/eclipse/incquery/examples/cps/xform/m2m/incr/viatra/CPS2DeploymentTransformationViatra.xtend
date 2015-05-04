@@ -11,7 +11,6 @@ import org.eclipse.viatra.emf.runtime.transformation.eventdriven.EventDrivenTran
 
 import static com.google.common.base.Preconditions.*
 import java.util.concurrent.TimeUnit
-import org.eclipse.incquery.runtime.emf.EMFScope
 
 class CPS2DeploymentTransformationViatra {
 
@@ -66,7 +65,7 @@ class CPS2DeploymentTransformationViatra {
 		fixedPriorityResolver.setPriority(transitionRule.ruleSpecification, 5)
 		fixedPriorityResolver.setPriority(triggerRule.ruleSpecification, 6)
 
-		transform = EventDrivenTransformation.forScope(new EMFScope(cps2dep.eResource.resourceSet)).
+		transform = EventDrivenTransformation.forEngine(engine).
 			setConflictResolver(fixedPriorityResolver).
 			addRule(hostRule).
 			addRule(applicationRule).
