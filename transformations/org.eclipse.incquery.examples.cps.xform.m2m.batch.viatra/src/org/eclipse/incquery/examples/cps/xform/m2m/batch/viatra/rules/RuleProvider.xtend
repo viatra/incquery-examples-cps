@@ -16,6 +16,9 @@ import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRuleFactory
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.Cps2depTraceMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.CpsXformM2M
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
+import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.AppInstanceWithStateMachineMatcher
+import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
+import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace
 
 class RuleProvider {
 	extension Logger logger = Logger.getLogger("cps.xform.m2m.batch.viatra")
@@ -29,6 +32,7 @@ class RuleProvider {
 	
 	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> hostRule
 	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> applicationRule
+	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateMachineRule
 	
 	new(IncQueryEngine engine, CPSToDeployment deployment) {
 		this.mapping = deployment
@@ -62,9 +66,9 @@ class RuleProvider {
 				val cpsApplicationInstance = it.applicationInstance
 				val appId = it.applicationInstance.id
 				
-				var DeploymentHost depHost = null
+				
 				val cpsHostInstance = cpsApplicationInstance.allocatedTo
-				depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsHostInstance).filter(DeploymentHost).head
+				val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsHostInstance).filter(DeploymentHost).head
 				if (depHost == null || cpsHostInstance == null) return;
 				
 				debug('''Mapping application with ID: «appId»''')
@@ -82,5 +86,33 @@ class RuleProvider {
 			]
 		}
 		return applicationRule
+	}
+	
+	public def getStateMachineRule() {
+		if (stateMachineRule == null) {
+			stateMachineRule = createRule(AppInstanceWithStateMachineMatcher.querySpecification)[
+				val cpsApplicationInstance = it.appInstance
+				val cpsApplicationType = it.appType
+				val cpsStateMachine = it.stateMachine
+				
+				val depApplication = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsApplicationInstance).filter(DeploymentApplication).head
+				val depBehaviour = createDeploymentBehavior => [
+					description = cpsStateMachine.id
+				]
+				depApplication.behavior = depBehaviour
+				
+				val trace = engine.cps2depTrace.getAllValuesOftrace(null, cpsStateMachine, null).filter(CPS2DeplyomentTrace).head
+				if (trace == null){
+					mapping.traces += createCPS2DeplyomentTrace => [
+						cpsElements += cpsStateMachine
+						deploymentElements += depBehaviour
+					]
+				} else {
+					trace.deploymentElements += depBehaviour
+				}
+				
+			]
+		}
+		return stateMachineRule
 	}
 }

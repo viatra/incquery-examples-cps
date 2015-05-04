@@ -71,6 +71,7 @@ class CPS2DeploymentBatchViatra {
 		
 		hostRule.fireAllCurrent
 		applicationRule.fireAllCurrent
+		stateMachineRule.fireAllCurrent
 //		TODO: run cpsXformM2M
 		
 	}
