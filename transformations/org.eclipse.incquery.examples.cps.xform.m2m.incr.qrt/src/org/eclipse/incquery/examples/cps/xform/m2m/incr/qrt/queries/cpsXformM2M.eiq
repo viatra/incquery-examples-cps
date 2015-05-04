@@ -57,7 +57,10 @@ pattern applicationInstanceWithHost(appType, appInstance, host) {
 	ApplicationInstance.allocatedTo(appInstance, host);
 }
 
-pattern sendTransitionAppSignal(transition, app, signal) {
+pattern sendTransitionAppSignal(transition, app, appType, signal) {
+ 	ApplicationType.behavior(appType, stateMachine);
+	StateMachine.states(stateMachine, source);
+	State.outgoingTransitions(source, transition);
  	Transition.action(transition, action);
  	app == eval(SignalUtil.getAppId(action));
  	signal == eval(SignalUtil.getSignalId(action));
@@ -74,16 +77,22 @@ pattern waitTransitionAppSignal(transition, appType, signal) {
  	signal == eval(SignalUtil.getSignalId(action));
 }
 
-pattern triggerPair(sourceHostInstance, targetHostInstance, appInstanceTrigger, appInstanceTarget, cpsTrigger, cpsTarget) {
-	find sendTransitionAppSignal(cpsTrigger, appId, signal);
+pattern hostFromTransition(appType, appInstance, transition, hostInstance) {
+	find appInstanceTransition(appInstance, transition);
+	find applicationInstanceWithHost(appType, appInstance, hostInstance);
+}
+
+private pattern triggerPairWithoutReachability(sourceHostInstance, targetHostInstance, appInstanceTrigger, appInstanceTarget, cpsTrigger, cpsTarget) {
+	find sendTransitionAppSignal(cpsTrigger, appId, triggerApp, signal);
 	find waitTransitionAppSignal(cpsTarget, waitApp, signal);
 	ApplicationType.id(waitApp, appId);
-		
-	find appInstanceTransition(appInstanceTrigger, cpsTrigger);
-	find appInstanceTransition(appInstanceTarget, cpsTarget);
 	
-	find applicationInstanceWithHost(_, appInstanceTrigger, sourceHostInstance);
-	find applicationInstanceWithHost(_, appInstanceTarget, targetHostInstance);
+	find hostFromTransition(triggerApp, appInstanceTrigger, cpsTrigger, sourceHostInstance);	
+	find hostFromTransition(waitApp, appInstanceTarget, cpsTarget, targetHostInstance);
+}
+
+pattern triggerPair(sourceHostInstance, targetHostInstance, appInstanceTrigger, appInstanceTarget, cpsTrigger, cpsTarget) {
+	find triggerPairWithoutReachability(sourceHostInstance, targetHostInstance, appInstanceTrigger, appInstanceTarget, cpsTrigger, cpsTarget);		
 	find reachableHosts(sourceHostInstance, targetHostInstance);
 }
 

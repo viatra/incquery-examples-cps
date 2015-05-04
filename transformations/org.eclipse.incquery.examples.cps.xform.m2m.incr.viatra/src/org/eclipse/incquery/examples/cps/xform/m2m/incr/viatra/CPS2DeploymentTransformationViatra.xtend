@@ -67,16 +67,14 @@ class CPS2DeploymentTransformationViatra {
 		fixedPriorityResolver.setPriority(triggerRule.ruleSpecification, 6)
 
 		transform = EventDrivenTransformation.forScope(new EMFScope(cps2dep.eResource.resourceSet)).
-			setConflictResolver(fixedPriorityResolver).create()
-	
-		transform.executionSchema.addRule(hostRule.ruleSpecification)
-		transform.executionSchema.addRule(applicationRule.ruleSpecification)
-		transform.executionSchema.addRule(stateMachineRule.ruleSpecification)
-		transform.executionSchema.addRule(stateRule.ruleSpecification)
-		transform.executionSchema.addRule(transitionRule.ruleSpecification)
-		transform.executionSchema.addRule(triggerRule.ruleSpecification)
-			
-	
+			setConflictResolver(fixedPriorityResolver).
+			addRule(hostRule).
+			addRule(applicationRule).
+			addRule(stateMachineRule).
+			addRule(stateRule).
+			addRule(transitionRule).
+			addRule(triggerRule).			
+			create()
 	}
 
 	def dispose(){
