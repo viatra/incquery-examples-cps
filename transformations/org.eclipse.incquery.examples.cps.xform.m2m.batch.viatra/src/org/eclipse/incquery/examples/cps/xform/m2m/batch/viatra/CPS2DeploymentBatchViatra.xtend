@@ -1,24 +1,18 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra
 
 import com.google.common.base.Stopwatch
+import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.CpsXformM2M
+import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.rules.RuleProvider
+import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.viatra.emf.runtime.modelmanipulation.IModelManipulations
-import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRuleFactory
+import org.eclipse.incquery.runtime.evm.specific.RuleEngines
 import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationStatements
 import org.eclipse.viatra.emf.runtime.transformation.batch.BatchTransformation
 
 import static com.google.common.base.Preconditions.*
-import java.util.concurrent.TimeUnit
-import org.eclipse.incquery.runtime.evm.specific.RuleEngines
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.viatra.emf.runtime.modelmanipulation.SimpleModelManipulations
-import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage
-import org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage
-import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.HostInstanceMatcher
-import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.rules.RuleProvider
 
 class CPS2DeploymentBatchViatra {
 	extension Logger logger = Logger.getLogger("cps.xform.m2m.batch.viatra")
@@ -36,10 +30,10 @@ class CPS2DeploymentBatchViatra {
 	private var initialized = false;
 
 	def initialize(CPSToDeployment cps2dep, IncQueryEngine engine) {
-		checkNotNull(cps2dep, "Mapping cannot be null!")
-		checkNotNull(cps2dep.cps, "CPS not defined in mapping!")
-		checkNotNull(cps2dep.deployment, "Deployment not defined in mapping!")
-		checkNotNull(engine, "Engine cannot be null!")
+		checkArgument(cps2dep != null, "Mapping cannot be null!")
+		checkArgument(cps2dep.cps != null, "CPS not defined in mapping!")
+		checkArgument(cps2dep.deployment != null, "Deployment not defined in mapping!")
+		checkArgument(engine != null, "Engine cannot be null!")
 		
 		if (!initialized) {
 			this.mapping = cps2dep
@@ -74,7 +68,6 @@ class CPS2DeploymentBatchViatra {
 		stateMachineRule.fireAllCurrent
 		stateRule.fireAllCurrent
 		transitionRule.fireAllCurrent
-//		TODO: run cpsXformM2M
-		
+		actionRule.fireAllCurrent		
 	}
 }

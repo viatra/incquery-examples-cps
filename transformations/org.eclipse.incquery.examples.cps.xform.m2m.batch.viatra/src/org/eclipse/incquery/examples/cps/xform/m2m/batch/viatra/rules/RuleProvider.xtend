@@ -1,21 +1,20 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.rules
 
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.State
+import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
-import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
-import org.eclipse.incquery.examples.cps.deployment.DeploymentElement
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
+import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.ActionPairMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.AppInstanceWithStateMachineMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.ApplicationInstanceMatcher
-import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.Cps2depTraceMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.CpsXformM2M
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.HostInstanceMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.StateMatcher
+import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.TransitionMatcher
 import org.eclipse.incquery.runtime.api.IPatternMatch
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.api.IncQueryMatcher
@@ -23,9 +22,6 @@ import org.eclipse.viatra.emf.runtime.modelmanipulation.IModelManipulations
 import org.eclipse.viatra.emf.runtime.modelmanipulation.SimpleModelManipulations
 import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRule
 import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRuleFactory
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Identifiable
-import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.TransitionMatcher
-import org.eclipse.incquery.examples.cps.deployment.BehaviorState
 
 class RuleProvider {
 	extension Logger logger = Logger.getLogger("cps.xform.m2m.batch.viatra")
@@ -42,6 +38,7 @@ class RuleProvider {
 	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateMachineRule
 	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateRule
 	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> transitionRule
+	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> actionRule
 	
 	new(IncQueryEngine engine, CPSToDeployment deployment) {
 		this.mapping = deployment
@@ -192,6 +189,18 @@ class RuleProvider {
 			]
 		}
 		return transitionRule
+	}
+	
+	public def getActionRule() {
+		if (actionRule == null) {
+			actionRule = createRule(ActionPairMatcher.querySpecification)[
+				val sourceTransition = sourceBehaviorTransition
+				val targetTransition = targetBehaviorTransition
+				
+				sourceTransition.trigger += targetTransition
+			]
+		}
+		return actionRule
 	}
 	
 	def getTraceForCPSElement(Identifiable cpsElement) {

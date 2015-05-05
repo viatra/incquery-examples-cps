@@ -4,6 +4,8 @@ import "http://org.eclipse.incquery/model/cps"
 import "http://org.eclipse.incquery/model/deployment"
 import "http://org.eclipse.incquery/model/cps-traceability"
 
+import java org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil
+
 pattern hostInstance(hostInstance) {
 	HostInstance(hostInstance);
 }
@@ -34,4 +36,42 @@ pattern transition(appInstance, sourceState, transition, targetState) {
 	find state(appInstance, _, targetState);
 	State.outgoingTransitions(sourceState, transition);
 	Transition.targetState(transition, targetState);
+}
+
+pattern action(appInstance, transition, action, signalId) {
+	find transition(appInstance, _, transition, _);
+	Transition.action(transition, action);
+	signalId == eval(SignalUtil.getSignalId(action));
+}
+
+pattern sendAction(appInstance, transition, action, signalId, appTypeId) {
+	find action(appInstance, transition, action, signalId);
+	check(SignalUtil.isSend(action));
+	appTypeId == eval(SignalUtil.getAppId(action));
+}
+
+pattern waitAction(appInstance, transition, action, signalId) {
+	find action(appInstance, transition, action, signalId);
+	check(SignalUtil.isWait(action));
+}
+
+pattern actionPair(sourceBehaviorTransition, targetBehaviorTransition) {
+	find sendAction(sendAppInstance, sourceTransition, _, signalId, appTypeId);
+	find waitAction(waitAppInstance, targetTransition, _, signalId);
+	ApplicationInstance.type.id(waitAppInstance, appTypeId);
+	ApplicationInstance.allocatedTo(sendAppInstance, sendHostInstance);
+	ApplicationInstance.allocatedTo(waitAppInstance, waitHostInstance);
+	find reachableHosts(sendHostInstance, waitHostInstance);
+	find cps2depTrace(_, _, sourceTransition, sourceBehaviorTransition);
+	find cps2depTrace(_, _, targetTransition, targetBehaviorTransition);
+	BehaviorTransition(sourceBehaviorTransition);
+	BehaviorTransition(targetBehaviorTransition);
+}
+
+pattern reachableHosts(source, target) {
+	HostInstance.communicateWith(source, target);
+} or {
+	HostInstance(source);
+	HostInstance(target);
+	source == target;
 }
