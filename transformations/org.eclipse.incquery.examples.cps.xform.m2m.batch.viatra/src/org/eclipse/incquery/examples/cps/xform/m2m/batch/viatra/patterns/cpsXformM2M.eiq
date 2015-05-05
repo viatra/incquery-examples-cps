@@ -55,17 +55,14 @@ pattern waitAction(appInstance, transition, action, signalId) {
 	check(SignalUtil.isWait(action));
 }
 
-pattern actionPair(sourceBehaviorTransition, targetBehaviorTransition) {
-	find sendAction(sendAppInstance, sourceTransition, _, signalId, appTypeId);
-	find waitAction(waitAppInstance, targetTransition, _, signalId);
+pattern actionPair(sendTransition, sendAppInstance, waitTransition, waitAppInstance) {
+	find sendAction(sendAppInstance, sendTransition, _, signalId, appTypeId);
+	find waitAction(waitAppInstance, waitTransition, _, signalId);
 	ApplicationInstance.type.id(waitAppInstance, appTypeId);
+	
 	ApplicationInstance.allocatedTo(sendAppInstance, sendHostInstance);
 	ApplicationInstance.allocatedTo(waitAppInstance, waitHostInstance);
 	find reachableHosts(sendHostInstance, waitHostInstance);
-	find cps2depTrace(_, _, sourceTransition, sourceBehaviorTransition);
-	find cps2depTrace(_, _, targetTransition, targetBehaviorTransition);
-	BehaviorTransition(sourceBehaviorTransition);
-	BehaviorTransition(targetBehaviorTransition);
 }
 
 pattern reachableHosts(source, target) {

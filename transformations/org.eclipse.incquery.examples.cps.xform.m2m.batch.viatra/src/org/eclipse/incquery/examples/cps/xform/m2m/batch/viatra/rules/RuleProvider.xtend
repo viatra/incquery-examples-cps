@@ -22,6 +22,7 @@ import org.eclipse.viatra.emf.runtime.modelmanipulation.IModelManipulations
 import org.eclipse.viatra.emf.runtime.modelmanipulation.SimpleModelManipulations
 import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRule
 import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRuleFactory
+import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 
 class RuleProvider {
 	extension Logger logger = Logger.getLogger("cps.xform.m2m.batch.viatra")
@@ -196,10 +197,29 @@ class RuleProvider {
 	public def getActionRule() {
 		if (actionRule == null) {
 			actionRule = createRule(ActionPairMatcher.querySpecification)[
-				val sourceTransition = sourceBehaviorTransition
-				val targetTransition = targetBehaviorTransition
-				debug('''Mapping trigger between transitions: «sourceTransition.description» and «targetTransition.description»''')
-				sourceTransition.trigger += targetTransition
+				val cpsSendTransition = sendTransition
+				val cpsSendAppInstance = sendAppInstance
+				val cpsWaitTransition = waitTransition
+				val cpsWaitAppInstance = waitAppInstance
+				
+				debug('''Mapping trigger between transitions: «cpsSendTransition.id» and «cpsWaitTransition.id»''')
+				val sendTransitionTrace = getTraceForCPSElement(cpsSendTransition)
+				val sendAppInstanceTrace = getTraceForCPSElement(cpsSendAppInstance)
+				
+				val depSendApp = sendAppInstanceTrace.deploymentElements.filter(DeploymentApplication).head
+				val depSendTransition = sendTransitionTrace.deploymentElements.filter(BehaviorTransition).findFirst[
+					depSendApp.behavior.transitions.contains(it)
+				]
+				
+				val waitTransitionTrace = getTraceForCPSElement(cpsWaitTransition)
+				val waitAppInstanceTrace = getTraceForCPSElement(cpsWaitAppInstance)
+				
+				val depWaitApp = waitAppInstanceTrace.deploymentElements.filter(DeploymentApplication).head
+				val depWaitTransition = waitTransitionTrace.deploymentElements.filter(BehaviorTransition).findFirst[
+					depWaitApp.behavior.transitions.contains(it)
+				]
+				
+				depSendTransition.trigger += depWaitTransition
 			]
 		}
 		return actionRule
