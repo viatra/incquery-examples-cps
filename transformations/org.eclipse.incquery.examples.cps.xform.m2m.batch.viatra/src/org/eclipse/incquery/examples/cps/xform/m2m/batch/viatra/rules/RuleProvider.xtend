@@ -99,6 +99,7 @@ class RuleProvider {
 				val cpsStateMachine = it.stateMachine
 				
 				val depApplication = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsApplicationInstance).filter(DeploymentApplication).head
+				debug('''Mapping state machine with ID: «cpsStateMachine.id»''')
 				val depBehavior = createDeploymentBehavior => [
 					description = cpsStateMachine.id
 				]
@@ -126,6 +127,7 @@ class RuleProvider {
 				val cpsAppInstance = it.appInstance
 				val cpsState = it.state
 				
+				debug('''Mapping state with ID: «cpsState.id»''')
 				val behaviorState = createBehaviorState => [
 					description = cpsState.id
 				]
@@ -161,7 +163,7 @@ class RuleProvider {
 				val cpsTargetState = it.targetState
 				val cpsTransition = it.transition  
 				
-				
+				debug('''Mapping transition with ID: «cpsTransition.id»''')
 				val behaviorTransition = createBehaviorTransition => [
 					description = cpsTransition.id
 				]
@@ -196,7 +198,7 @@ class RuleProvider {
 			actionRule = createRule(ActionPairMatcher.querySpecification)[
 				val sourceTransition = sourceBehaviorTransition
 				val targetTransition = targetBehaviorTransition
-				
+				debug('''Mapping trigger between transitions: «sourceTransition.description» and «targetTransition.description»''')
 				sourceTransition.trigger += targetTransition
 			]
 		}
