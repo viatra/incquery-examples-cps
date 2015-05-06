@@ -57,6 +57,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 import org.eclipse.core.resources.IProject
+import com.google.common.collect.ImmutableList
 
 /**
  * Tests the whole toolchain using each transformation one-by-one
@@ -106,27 +107,13 @@ class ToolchainPerformanceTest extends CPSTestBase {
     public static def xformSizeGenerator() {
 		
         val xforms = ImmutableSet.builder
-//	        .add(TransformationType.BATCH_SIMPLE)
+	        .add(TransformationType.BATCH_SIMPLE)
 	        .add(TransformationType.BATCH_OPTIMIZED)
 	        .add(TransformationType.BATCH_INCQUERY)
 	        .add(TransformationType.INCR_QUERY_RESULT_TRACEABILITY)
 	        .add(TransformationType.INCR_EXPLICIT_TRACEABILITY)
 	        .add(TransformationType.INCR_AGGREGATED)
 	        .add(TransformationType.INCR_VIATRA)
-			.build
-
-		val sizes = ImmutableSet.builder
-//	        .add(1)
-//	        .add(2)
-//	        .add(4)
-//			.add(8)
-//			.add(16)
-        	.add(32)
-//        	.add(64)
-//        	.add(128)
-//        	.add(256)
-//        	.add(512)
-//        	.add(1024)
 			.build
 
 		val codegens = ImmutableSet.builder
@@ -139,10 +126,30 @@ class ToolchainPerformanceTest extends CPSTestBase {
 			.add(new StatisticsBasedScenario(new Random(RANDOM_SEED)))
 			.build 
 			
-		val data = Sets::cartesianProduct(xforms,sizes,codegens,scenarios)
-        data.map[
-        	#[it.get(0), it.get(1),it.get(2),it.get(3)]
-        ].map[it.toArray].toList
+        val scales = ImmutableList.builder
+	        .add(1)
+	        .add(1)
+	        .add(1)
+	        // warmup
+	        .add(1)
+	        .add(2)
+	        .add(4)
+			.add(8)
+//			.add(16)
+//        	.add(32)
+//        	.add(64)
+//        	.add(128)
+//        	.add(256)
+//        	.add(512)
+//        	.add(1024)
+			.build
+		
+		val data = Sets::cartesianProduct(xforms,codegens,scenarios)
+       	data.map[ d |
+	        scales.map[ scale |
+        		#[d.get(0), scale, d.get(1), d.get(2)]
+        	]
+        ].flatten.map[it.toArray].toList
     }
 
 	new(
