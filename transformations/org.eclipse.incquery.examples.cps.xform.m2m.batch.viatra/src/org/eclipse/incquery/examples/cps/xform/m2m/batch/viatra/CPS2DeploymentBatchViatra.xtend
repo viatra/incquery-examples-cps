@@ -39,8 +39,7 @@ class CPS2DeploymentBatchViatra {
 			this.mapping = cps2dep
 			this.engine = engine
 			
-			val ruleEngine = RuleEngines::createIncQueryRuleEngine(engine)
-			transformation = BatchTransformation::forRuleEngine(ruleEngine, AdvancedIncQueryEngine.from(engine))
+			transformation = BatchTransformation::forEngine(engine)
 			statements = new BatchTransformationStatements(transformation)
 			
 			debug("Preparing queries on engine.")
@@ -69,5 +68,14 @@ class CPS2DeploymentBatchViatra {
 		stateRule.fireAllCurrent
 		transitionRule.fireAllCurrent
 		actionRule.fireAllCurrent		
+	}
+	
+	
+	def dispose(){
+		if(transformation != null){
+			transformation.ruleEngine.dispose
+		}
+		transformation = null
+		return
 	}
 }

@@ -208,7 +208,7 @@ class RuleProvider {
 				
 				val depSendApp = sendAppInstanceTrace.deploymentElements.filter(DeploymentApplication).head
 				val depSendTransition = sendTransitionTrace.deploymentElements.filter(BehaviorTransition).findFirst[
-					depSendApp.behavior.transitions.contains(it)
+					depSendApp == it.eContainer.eContainer
 				]
 				
 				val waitTransitionTrace = getTraceForCPSElement(cpsWaitTransition)
@@ -216,7 +216,7 @@ class RuleProvider {
 				
 				val depWaitApp = waitAppInstanceTrace.deploymentElements.filter(DeploymentApplication).head
 				val depWaitTransition = waitTransitionTrace.deploymentElements.filter(BehaviorTransition).findFirst[
-					depWaitApp.behavior.transitions.contains(it)
+					depWaitApp == it.eContainer.eContainer
 				]
 				
 				depSendTransition.trigger += depWaitTransition

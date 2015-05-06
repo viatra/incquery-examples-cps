@@ -46,7 +46,7 @@ pattern transitionAction(transition, appType, action) {
 	Transition.action(transition, action);
 }
 
-pattern cpsApplicationTransition(cpsApp, cpsTransition) {
+pattern cpsApplicationTransition(cpsApp : ApplicationInstance, cpsTransition : Transition) {
 	find cps2depTrace(_, _, cpsTransition, depTransition);
 	DeploymentApplication.behavior.transitions(depApp, depTransition);
 	find cps2depTrace(_, _, cpsApp, depApp);
