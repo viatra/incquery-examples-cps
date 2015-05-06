@@ -40,6 +40,7 @@
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.simple</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.expl</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr</module>

@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><plugin>
-  <extension id="org.eclipse.incquery.examples.cps.model.derived.extension.derived.org.eclipse.incquery.examples.cps.model.derived.getAppInstances" point="org.eclipse.incquery.runtime.base.wellbehaving.derived.features">
-    <wellbehaving-derived-feature classifier-name="CyberPhysicalSystem" feature-name="appInstances" package-nsUri="http://org.eclipse.incquery/model/cps"/>
-  </extension>
-  <extension id="org.eclipse.incquery.examples.cps.model.derived.extension.derived.org.eclipse.incquery.examples.cps.model.derived.hostInstances" point="org.eclipse.incquery.runtime.base.wellbehaving.derived.features">
-    <wellbehaving-derived-feature classifier-name="CyberPhysicalSystem" feature-name="hostInstances" package-nsUri="http://org.eclipse.incquery/model/cps"/>
-  </extension>
   <extension id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSM" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSM" id="org.eclipse.incquery.examples.cps.model.viewer.CpsModelViewerSM"/>
   </extension>

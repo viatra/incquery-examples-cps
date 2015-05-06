@@ -11,6 +11,7 @@ import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.QueryResultTra
 import org.junit.runners.Parameterized.Parameters
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ViatraTransformation
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchViatra
 
 class CPS2DepTest extends CPS2DepTestWithoutParameters {
 
@@ -35,6 +36,7 @@ class CPS2DepTest extends CPS2DepTestWithoutParameters {
 			.add(new ExplicitTraceability())
 			.add(new PartialBatch())
 			.add(new ViatraTransformation())
+			.add(new BatchViatra())
 			.build
 		
 		val disabled = PropertiesUtil.getDisabledM2MTransformations
