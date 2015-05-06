@@ -1119,4 +1119,51 @@ class ActionMappingTest extends CPS2DepTest {
 		
 		endTest(testId)
 	}
+	
+	@Test
+	def multipleWaitingAppInstancesOnlyOneCanCommunicate() {
+		val testId = "multipleWaitingAppInstancesOnlyOneCanCommunicate"
+		startTest(testId)
+		
+		val cps2dep = prepareEmptyModel(testId)
+		val host = cps2dep.prepareHostTypeWithId("simple.cps.host")
+		val hostInstance = host.prepareHostInstanceWithIP("simple.cps.host.instance", "1.1.1.1")
+		val app = cps2dep.prepareApplicationTypeWithId("simple.cps.app")
+		val appInstance = app.prepareApplicationInstanceWithId("simple.cps.app.instance", hostInstance)
+		val sm = prepareStateMachine(appInstance.type, "simple.cps.sm")
+		val source = sm.prepareState("simple.cps.sm.s1")
+		val target = sm.prepareState("simple.cps.sm.s2")
+		val sendTransition = source.prepareTransition("simple.cps.sm.t", target)
+		sendTransition.action = "sendSignal(simple.cps.app2, msgId)"
+		
+		val host2 = cps2dep.prepareHostTypeWithId("simple.cps.host2")
+		val hostInstance2 = host2.prepareHostInstanceWithIP("simple.cps.host2.instance", "1.1.1.2")
+		val hostInstance3 = host2.prepareHostInstanceWithIP("simple.cps.host2.instance", "1.1.1.3")
+		val app2 = cps2dep.prepareApplicationTypeWithId("simple.cps.app2")
+		val appInstance2 = app2.prepareApplicationInstanceWithId("simple.cps.app2.instance1", hostInstance2)
+		val appInstance3 = app2.prepareApplicationInstanceWithId("simple.cps.app2.instance2", hostInstance3)
+		val sm2 = prepareStateMachine(app2, "simple.cps.sm2")
+		val source2 = sm2.prepareState("simple.cps.sm2.s1")
+		val target2 = sm2.prepareState("simple.cps.sm2.s2")
+		val waitTransition = source2.prepareTransition("simple.cps.sm2.t", target2)
+		waitTransition.action = "waitForSignal(msgId)"
+		
+		hostInstance.communicateWith += hostInstance2
+		
+		cps2dep.initializeTransformation
+		executeTransformation
+		
+		val sendTrace = cps2dep.traces.findFirst[cpsElements.contains(sendTransition)]
+		assertEquals("Send transition not transformed correctly", 1, sendTrace.deploymentElements.length)
+		assertFalse("Send transition not transformed", sendTrace.deploymentElements.empty)
+		
+		val waitTrace = cps2dep.traces.findFirst[cpsElements.contains(waitTransition)]
+		assertEquals("Wait transition not transformed correctly", 2, waitTrace.deploymentElements.length)
+		assertFalse("Wait transition not transformed", waitTrace.deploymentElements.empty)
+		
+		val depSend = sendTrace.deploymentElements.head as BehaviorTransition
+		assertEquals("Trigger incorrect", 1, depSend.trigger.length)
+		
+		endTest(testId)
+	}
 }

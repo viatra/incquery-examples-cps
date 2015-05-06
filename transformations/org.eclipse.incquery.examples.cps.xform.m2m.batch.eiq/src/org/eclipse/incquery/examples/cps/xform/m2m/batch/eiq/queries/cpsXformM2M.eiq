@@ -15,6 +15,11 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 	CPS2DeplyomentTrace.deploymentElements(trace, depElement);
 }
 
+pattern cps2depApplicationTrace(cps2dep, trace, cpsAppInstance, depApp) {
+	find cps2depTrace(cps2dep, trace, cpsAppInstance, depApp);
+	ApplicationInstance(cpsAppInstance);
+}
+
 pattern cpsBehaviorTrace(cpsBeh, trace) {
 	find cps2depTrace(_, trace, cpsBeh, _);
 	StateMachine(cpsBeh);
@@ -41,7 +46,7 @@ pattern transitionAction(transition, appType, action) {
 	Transition.action(transition, action);
 }
 
-pattern cpsApplicationTransition(cpsApp, cpsTransition) {
+pattern cpsApplicationTransition(cpsApp : ApplicationInstance, cpsTransition : Transition) {
 	find cps2depTrace(_, _, cpsTransition, depTransition);
 	DeploymentApplication.behavior.transitions(depApp, depTransition);
 	find cps2depTrace(_, _, cpsApp, depApp);
