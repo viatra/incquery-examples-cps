@@ -7,7 +7,7 @@ import org.eclipse.incquery.examples.cps.performance.tests.CPSDataToken
 import eu.mondo.sam.core.metrics.TimeMetric
 import eu.mondo.sam.core.metrics.MemoryMetric
 
-class TransformationPhase extends AtomicPhase{
+class M2MTransformationPhase extends AtomicPhase{
 	
 	new(String name) {
 		super(name)

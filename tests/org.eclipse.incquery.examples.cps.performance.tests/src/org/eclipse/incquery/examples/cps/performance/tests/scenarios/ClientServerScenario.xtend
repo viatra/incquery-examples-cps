@@ -2,6 +2,10 @@ package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
+import eu.mondo.sam.core.phases.IterationPhase
+import eu.mondo.sam.core.phases.SequencePhase
+import eu.mondo.sam.core.results.CaseDescriptor
+import eu.mondo.sam.core.scenarios.BenchmarkScenario
 import java.util.Random
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
@@ -11,14 +15,10 @@ import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import eu.mondo.sam.core.scenarios.BenchmarkScenario
-import eu.mondo.sam.core.phases.SequencePhase
-import eu.mondo.sam.core.phases.IterationPhase
-import org.eclipse.incquery.examples.cps.performance.tests.phases.TransformationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.ClientServerModificationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.GenerationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.InitializationPhase
-import eu.mondo.sam.core.results.CaseDescriptor
-import org.eclipse.incquery.examples.cps.performance.tests.phases.ClientServerModificationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.M2MTransformationPhase
 
 class ClientServerScenario extends BenchmarkScenario implements IScenario {
 	
@@ -175,7 +175,7 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 		val innerSeq = new SequencePhase
 		innerSeq.addPhases(
 			new ClientServerModificationPhase("Modification"), 
-			new TransformationPhase("Transformation")
+			new M2MTransformationPhase("Transformation")
 		)
 		
 		val iter = new IterationPhase(2)
@@ -184,7 +184,7 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 		seq.addPhases(
 			new GenerationPhase("Generation"),
 			new InitializationPhase("Initialization"),
-			new TransformationPhase("Transformation"),
+			new M2MTransformationPhase("Transformation"),
 			iter
 		)
 		rootPhase = seq
