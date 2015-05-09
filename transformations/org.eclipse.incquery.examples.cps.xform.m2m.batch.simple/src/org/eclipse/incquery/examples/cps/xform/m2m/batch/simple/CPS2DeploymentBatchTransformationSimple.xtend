@@ -49,7 +49,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	new(CPSToDeployment mapping) {
 		traceBegin("constructor")
 
-		checkNotNull(mapping != null, "Mapping cannot be null!")
+		checkNotNull(mapping, "Mapping cannot be null!")
 		checkArgument(mapping.cps != null, "CPS not defined in mapping!")
 		checkArgument(mapping.deployment != null, "Deployment not defined in mapping!")
 

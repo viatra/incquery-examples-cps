@@ -4,7 +4,11 @@ import com.google.common.base.Stopwatch
 import com.google.common.collect.ImmutableList
 import java.util.Random
 import java.util.concurrent.TimeUnit
+import org.apache.log4j.Level
+import org.apache.log4j.Logger
+import org.eclipse.incquery.examples.cps.generator.CPSPlans
 import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
+import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.CPSGeneratorBuilder
@@ -13,15 +17,11 @@ import org.eclipse.incquery.examples.cps.performance.tests.scenarios.ClientServe
 import org.eclipse.incquery.examples.cps.performance.tests.scenarios.LowSynchScenario
 import org.eclipse.incquery.examples.cps.performance.tests.scenarios.PublishSubscribeScenario
 import org.eclipse.incquery.examples.cps.performance.tests.scenarios.SimpleScalingScenario
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.junit.Test
-import org.apache.log4j.Logger
+import org.eclipse.incquery.examples.cps.performance.tests.scenarios.StatisticsBasedScenario
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
+import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.emf.EMFScope
-import org.eclipse.incquery.examples.cps.generator.CPSPlans
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.StatisticsBasedScenario
-import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
-import org.apache.log4j.Level
+import org.junit.Test
 
 class CPSModelGeneratorPerformance extends CPSTestBase{
 	val seed = 11111
