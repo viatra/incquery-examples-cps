@@ -19,6 +19,7 @@ import org.eclipse.incquery.examples.cps.performance.tests.phases.ClientServerMo
 import org.eclipse.incquery.examples.cps.performance.tests.phases.GenerationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.InitializationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.M2MTransformationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.EMFResourceInitializationPhase
 
 class ClientServerScenario extends BenchmarkScenario implements IScenario {
 	
@@ -182,6 +183,7 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 		iter.phase = innerSeq
 		
 		seq.addPhases(
+			new EMFResourceInitializationPhase("ResourceInitialization"),
 			new GenerationPhase("Generation"),
 			new InitializationPhase("Initialization"),
 			new M2MTransformationPhase("Transformation"),
