@@ -13,7 +13,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
-import org.eclipse.incquery.examples.cps.performance.tests.scenarios.LowSynchScenario
+import org.eclipse.incquery.examples.cps.performance.tests.scenarios.StatisticsBasedScenario
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.CpsXformM2M
@@ -21,9 +21,8 @@ import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.runtime.api.GenericPatternGroup
 import org.eclipse.incquery.runtime.api.IQueryGroup
 import org.eclipse.incquery.runtime.api.IQuerySpecification
-import org.junit.Test
 import org.eclipse.incquery.runtime.emf.EMFScope
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.StatisticsBasedScenario
+import org.junit.Test
 
 class QueryRegressionTest extends CPSTestBase{
 	

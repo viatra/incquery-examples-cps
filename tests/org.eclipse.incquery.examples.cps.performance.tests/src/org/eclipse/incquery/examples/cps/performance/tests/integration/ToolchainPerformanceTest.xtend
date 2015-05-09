@@ -4,24 +4,16 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import com.google.common.collect.Sets
 import eu.mondo.sam.core.BenchmarkEngine
-import eu.mondo.sam.core.phases.SequencePhase
 import eu.mondo.sam.core.results.JsonSerializer
 import eu.mondo.sam.core.scenarios.BenchmarkScenario
 import java.util.Random
 import org.apache.log4j.Logger
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.NullProgressMonitor
-import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
 import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.StatisticsBasedScenario
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.performance.tests.CPSDataToken
-import org.eclipse.incquery.examples.cps.performance.tests.phases.EMFResourceInitializationPhase
-import org.eclipse.incquery.examples.cps.performance.tests.phases.GenerationPhase
-import org.eclipse.incquery.examples.cps.performance.tests.phases.InitializationPhase
-import org.eclipse.incquery.examples.cps.performance.tests.phases.M2MTransformationPhase
-import org.eclipse.incquery.examples.cps.performance.tests.phases.M2TTransformationPhase
-import org.eclipse.incquery.examples.cps.performance.tests.phases.StatisticsBasedModificationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.scenarios.StatisticsBasedScenario
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchOptimized
@@ -54,7 +46,6 @@ class ToolchainPerformanceTest extends CPSTestBase {
 	
 	static val RANDOM_SEED = 11111
 	
-	val D = ModelStats.DELIMITER
 	val int scale
 	val IScenario scenario
 	val GeneratorType generatorType
@@ -108,7 +99,7 @@ class ToolchainPerformanceTest extends CPSTestBase {
 	        .add(1)
 	        // warmup
 	        .add(1)
-//	        .add(2)
+	        .add(2)
 //	        .add(4)
 //			.add(8)
 //			.add(16)
@@ -180,14 +171,12 @@ class ToolchainPerformanceTest extends CPSTestBase {
 	def void completeToolchainIntegrationTest() {
 		startTest
 
-
-
-		
 		// communication unit between the phases
 		val CPSDataToken token = new CPSDataToken
 		token.scenarioName = scenario.class.simpleName
 		token.constraints = scenario.getConstraintsFor(scale)
 		token.instancesDirPath = instancesDirPath
+		token.generatorType = generatorType
 		token.seed = RANDOM_SEED
 		token.size = scale
 		token.xform = xform
@@ -203,13 +192,6 @@ class ToolchainPerformanceTest extends CPSTestBase {
 		JsonSerializer::setResultPath("./results/json/")
 		
 		engine.runBenchmark(benchmarkScenario, token)
-		
-		
-		
-		
-		
-		
-		
 
 		endTest
 	}

@@ -23,6 +23,7 @@ class StatisticsBasedModificationPhase extends AtomicPhase{
 		
 		val engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cpsToken.cps2dep))
 		val changeMonitor = new DeploymentChangeMonitor(cpsToken.cps2dep.deployment, engine)
+		cpsToken.changeMonitor = changeMonitor
 		changeMonitor.startMonitoring
 
 		val appType = cpsToken.cps2dep.cps.appTypes.findFirst[it.id.contains("AC_withStateMachine")]

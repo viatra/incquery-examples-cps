@@ -38,8 +38,10 @@ class M2TTransformationPhase extends AtomicPhase {
 		} else if (cpsToken.generatorType.equals(GeneratorType.JDT_BASED)) {
 			codeGenerator = new CodeGenerator(projectName, engine);
 		}
+		cpsToken.codeGenerator = codeGenerator
 		val IProject project = GeneratorHelper.createProject(projectName)
 		val srcFolder = project.getFolder("src");
+		cpsToken.srcFolder = srcFolder
 		val monitor = new NullProgressMonitor();
 		if (!srcFolder.exists()) {
 			srcFolder.create(true, true, monitor);

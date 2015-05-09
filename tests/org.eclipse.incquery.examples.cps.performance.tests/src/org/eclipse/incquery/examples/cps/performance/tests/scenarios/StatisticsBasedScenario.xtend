@@ -1,8 +1,12 @@
-package org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios
+package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
+import eu.mondo.sam.core.phases.SequencePhase
+import eu.mondo.sam.core.results.CaseDescriptor
+import eu.mondo.sam.core.scenarios.BenchmarkScenario
 import java.util.HashMap
+import java.util.List
 import java.util.Map
 import java.util.Random
 import org.apache.log4j.Logger
@@ -13,12 +17,17 @@ import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
 import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import java.util.List
+import org.eclipse.incquery.examples.cps.performance.tests.phases.GenerationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.InitializationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.M2MTransformationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.M2TTransformationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.StatisticsBasedModificationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.EMFResourceInitializationPhase
 
 /*
  * Scenario for given model statistics
  */
-class StatisticsBasedScenario implements IScenario {
+class StatisticsBasedScenario extends BenchmarkScenario implements IScenario {
 	
 	protected extension Logger logger = Logger.getLogger("cps.generator.Tests.StatisticsBasedScenario")
 	protected extension RandomUtils randUtil = new RandomUtils;
@@ -175,6 +184,36 @@ class StatisticsBasedScenario implements IScenario {
 		}
 
 		return appClasses;
+	}
+	
+	override build() {
+		
+		val seq = new SequencePhase
+		seq.addPhases(
+			new EMFResourceInitializationPhase("EMFResourceInitialization"),
+			new GenerationPhase("Generation"),
+			new InitializationPhase("Initialization"),
+			new M2MTransformationPhase("1stM2MTransformation"),
+			new M2TTransformationPhase("1stM2TTransformation"),
+			new StatisticsBasedModificationPhase("Modification"),
+			new M2MTransformationPhase("2ndM2MTransformation"),
+			new M2TTransformationPhase("2ndM2TTransformation"),
+			new M2MTransformationPhase("Transformation")
+		)
+		rootPhase = seq
+	}
+	
+	override getCaseDescriptor() {
+		
+		val descriptor = new CaseDescriptor
+		descriptor.tool = tool
+		descriptor.caseName = caseName
+		descriptor.size = size
+		descriptor.runIndex = runIndex
+		descriptor.scenario = "StatisticsBased"
+		
+		return descriptor
+		
 	}
 
 }

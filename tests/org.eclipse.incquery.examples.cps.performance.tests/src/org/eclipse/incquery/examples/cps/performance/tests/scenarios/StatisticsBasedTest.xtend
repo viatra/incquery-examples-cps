@@ -1,7 +1,6 @@
 package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
 import java.util.Random
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.StatisticsBasedScenario
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 
 class StatisticsBasedTest extends BasicScenarioXformTest {
