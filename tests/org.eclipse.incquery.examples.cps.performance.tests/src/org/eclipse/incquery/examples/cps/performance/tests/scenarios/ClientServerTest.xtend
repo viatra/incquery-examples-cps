@@ -1,8 +1,7 @@
 package org.eclipse.incquery.examples.cps.performance.tests.scenarios
 
-import com.google.common.base.Stopwatch
 import java.util.Random
-import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
+import org.eclipse.incquery.examples.cps.performance.tests.cases.ClientServerCase
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 
 class ClientServerTest extends BasicScenarioXformTest {
@@ -12,7 +11,7 @@ class ClientServerTest extends BasicScenarioXformTest {
 	}
 	
 	override getScenario(Random rand) {
-		new ClientServerScenario(rand)
+		new ClientServerScenario(new ClientServerCase,rand)
 	}
 	
 	override getModificationLabel() {

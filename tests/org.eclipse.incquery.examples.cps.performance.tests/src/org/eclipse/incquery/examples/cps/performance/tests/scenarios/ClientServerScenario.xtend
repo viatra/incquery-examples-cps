@@ -20,6 +20,9 @@ import org.eclipse.incquery.examples.cps.performance.tests.phases.GenerationPhas
 import org.eclipse.incquery.examples.cps.performance.tests.phases.InitializationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.M2MTransformationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.EMFResourceInitializationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.cases.BenchmarkCase
+import org.eclipse.incquery.examples.cps.performance.tests.benchmark.BenchmarkResult
+import org.eclipse.incquery.examples.cps.performance.tests.cases.ClientServerCase
 
 class ClientServerScenario extends BenchmarkScenario implements IScenario {
 	
@@ -27,6 +30,7 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 	protected extension RandomUtils randUtil = new RandomUtils;
 	
 	Random rand;
+	BenchmarkCase benchmarkCase;
 	
 	Iterable<HostClass> hostClasses = ImmutableList.of();
 	HostClass serverHostClass
@@ -35,6 +39,13 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 	
 	new(Random rand){
 		this.rand = rand;
+		// TODO: set constructor to private after separating BenchmarkScenario and IScenario implementations 
+		this.benchmarkCase = new ClientServerCase()
+	}
+	
+	new(BenchmarkCase benchmarkCase, Random rand){
+		this(rand)
+		this.benchmarkCase = benchmarkCase
 	}
 	
 	override getConstraintsFor(int scale) {
@@ -175,7 +186,7 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 		val seq = new SequencePhase
 		val innerSeq = new SequencePhase
 		innerSeq.addPhases(
-			new ClientServerModificationPhase("Modification"), 
+			benchmarkCase.getModificationPhase("Modification"), 
 			new M2MTransformationPhase("Transformation")
 		)
 		
@@ -184,7 +195,7 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 		
 		seq.addPhases(
 			new EMFResourceInitializationPhase("ResourceInitialization"),
-			new GenerationPhase("Generation"),
+			benchmarkCase.getGenerationPhase("Generation"),
 			new InitializationPhase("Initialization"),
 			new M2MTransformationPhase("Transformation"),
 			iter
