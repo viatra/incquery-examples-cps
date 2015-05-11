@@ -23,6 +23,7 @@ import org.eclipse.incquery.examples.cps.performance.tests.phases.M2MTransformat
 import org.eclipse.incquery.examples.cps.performance.tests.phases.M2TTransformationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.StatisticsBasedModificationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.EMFResourceInitializationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.ChangeMonitorInitializationPhase
 
 /*
  * Scenario for given model statistics
@@ -195,6 +196,7 @@ class StatisticsBasedScenario extends BenchmarkScenario implements IScenario {
 			new InitializationPhase("Initialization"),
 			new M2MTransformationPhase("1stM2MTransformation"),
 			new M2TTransformationPhase("1stM2TTransformation"),
+			new ChangeMonitorInitializationPhase("ChangeMonitorInitialization"),
 			new StatisticsBasedModificationPhase("Modification"),
 			new M2MTransformationPhase("2ndM2MTransformation"),
 			new M2TTransformationPhase("2ndM2TTransformation"),
@@ -210,7 +212,7 @@ class StatisticsBasedScenario extends BenchmarkScenario implements IScenario {
 		descriptor.caseName = caseName
 		descriptor.size = size
 		descriptor.runIndex = runIndex
-		descriptor.scenario = "StatisticsBased"
+		descriptor.scenario = "ToolChainPerformance"
 		
 		return descriptor
 		
