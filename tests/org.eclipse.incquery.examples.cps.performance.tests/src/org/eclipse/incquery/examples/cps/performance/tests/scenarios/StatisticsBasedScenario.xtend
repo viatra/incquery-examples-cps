@@ -24,6 +24,7 @@ import org.eclipse.incquery.examples.cps.performance.tests.phases.M2TTransformat
 import org.eclipse.incquery.examples.cps.performance.tests.phases.StatisticsBasedModificationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.EMFResourceInitializationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.phases.ChangeMonitorInitializationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.phases.M2TDeltaTransformationPhase
 
 /*
  * Scenario for given model statistics
@@ -199,8 +200,7 @@ class StatisticsBasedScenario extends BenchmarkScenario implements IScenario {
 			new ChangeMonitorInitializationPhase("ChangeMonitorInitialization"),
 			new StatisticsBasedModificationPhase("Modification"),
 			new M2MTransformationPhase("2ndM2MTransformation"),
-			new M2TTransformationPhase("2ndM2TTransformation"),
-			new M2MTransformationPhase("Transformation")
+			new M2TDeltaTransformationPhase("2ndM2TTransformation")
 		)
 		rootPhase = seq
 	}
