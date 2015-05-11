@@ -251,8 +251,8 @@ abstract class BasicScenarioXformTest extends CPS2DepTest {
 		val benchmarkScenario = scenario as BenchmarkScenario
 		// these values are important for the results and reporting
 		benchmarkScenario.size = size
-		benchmarkScenario.caseName = xform.class.simpleName
-		benchmarkScenario.tool = "IncQuery"
+		benchmarkScenario.caseName = scenario.class.simpleName
+		benchmarkScenario.tool = xform.class.simpleName
 		benchmarkScenario.runIndex = 1
 		
 		val engine = new BenchmarkEngine

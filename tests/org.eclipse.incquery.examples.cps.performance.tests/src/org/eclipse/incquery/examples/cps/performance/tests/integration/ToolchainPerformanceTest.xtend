@@ -28,6 +28,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
+import org.eclipse.core.resources.IProject
+import com.google.common.collect.ImmutableList
+import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.BatchViatra
+import org.junit.AfterClass
+import org.junit.BeforeClass
 
 /**
  * Tests the whole toolchain using each transformation one-by-one
@@ -63,6 +68,7 @@ class ToolchainPerformanceTest extends CPSTestBase {
 		BATCH_SIMPLE,
 		BATCH_OPTIMIZED,
 		BATCH_INCQUERY,
+		BATCH_VIATRA,
 		INCR_QUERY_RESULT_TRACEABILITY,
 		INCR_EXPLICIT_TRACEABILITY,
 		INCR_AGGREGATED,
@@ -77,6 +83,7 @@ class ToolchainPerformanceTest extends CPSTestBase {
 	        .add(TransformationType.BATCH_SIMPLE)
 	        .add(TransformationType.BATCH_OPTIMIZED)
 	        .add(TransformationType.BATCH_INCQUERY)
+	        .add(TransformationType.BATCH_VIATRA)
 	        .add(TransformationType.INCR_QUERY_RESULT_TRACEABILITY)
 	        .add(TransformationType.INCR_EXPLICIT_TRACEABILITY)
 	        .add(TransformationType.INCR_AGGREGATED)
@@ -134,6 +141,7 @@ class ToolchainPerformanceTest extends CPSTestBase {
 			case BATCH_SIMPLE: xform = new BatchSimple
 			case BATCH_OPTIMIZED: xform = new BatchOptimized
 			case BATCH_INCQUERY: xform = new BatchIncQuery
+			case BATCH_VIATRA: xform = new BatchViatra
 			case INCR_QUERY_RESULT_TRACEABILITY: xform = new QueryResultTraceability 
 			case INCR_EXPLICIT_TRACEABILITY: xform = new ExplicitTraceability
 			case INCR_AGGREGATED: xform = new PartialBatch
@@ -150,6 +158,11 @@ class ToolchainPerformanceTest extends CPSTestBase {
     	info('''END TEST: Xform: «wrapperType», Gen: «generatorType», Scale: «scale», Scenario: «scenario.class.name»''')
     }
 	
+	@BeforeClass
+	static def callGCBefore(){
+		callGC
+	}
+	
 	@After
 	def cleanup() {
 		cleanupTransformation;
@@ -157,17 +170,20 @@ class ToolchainPerformanceTest extends CPSTestBase {
 		if(project != null && project.exists){
 			project.delete(true, true, new NullProgressMonitor)
 		}
-		
+	}
+
+	@AfterClass
+	static def callGC(){
 		(0..4).forEach[Runtime.getRuntime().gc()]
 		
 		try{
 			Thread.sleep(1000)
 		} catch (InterruptedException ex) {
-			warn("Sleep after System GC interrupted")
+			Logger.getLogger("cps.xform.CPS2DepTest").warn("Sleep after System GC interrupted")
 		}
 	}
 
-	@Test(timeout=60000)
+	@Test(timeout=600000)
 	def void completeToolchainIntegrationTest() {
 		startTest
 

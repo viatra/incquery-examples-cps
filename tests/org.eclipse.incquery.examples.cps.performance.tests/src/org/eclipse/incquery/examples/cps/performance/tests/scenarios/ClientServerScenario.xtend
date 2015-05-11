@@ -198,7 +198,7 @@ class ClientServerScenario extends BenchmarkScenario implements IScenario {
 		descriptor.caseName = caseName
 		descriptor.size = size
 		descriptor.runIndex = runIndex
-		descriptor.scenario = "ClientServer"
+		descriptor.scenario = "BasicXform"
 		
 		return descriptor
 	}
