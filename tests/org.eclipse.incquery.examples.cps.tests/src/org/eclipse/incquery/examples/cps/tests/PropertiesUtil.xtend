@@ -17,6 +17,8 @@ class PropertiesUtil {
 	public static val INCQUERY_LOGLEVEL_PROP_KEY = "org.eclipse.incquery.loglevel"
 	public static val PERSIST_RESULTS_PROP_KEY = "cps.persist.results"
 	public static val DISABLED_M2M_XFORM_PROP_KEY = "cps.xform.m2m.disabled.alternatives"
+	public static val DISABLED_GENERATOR_PROP_KEY = "cps.xform.m2t.disabled.alternatives"
+	public static val ENABLED_SCALES_PROP_KEY = "cps.generator.enabled.scales"
 	
 	public static val BENCHMARK_RESULT_LOGLEVEL = "cps.mondosam.loglevel"
 	public static val STATS_CSV_LOGLEVEL = "cps.stats.loglevel"
@@ -81,6 +83,14 @@ class PropertiesUtil {
 	def static getDisabledM2MTransformations() {
 		val disabledXform = getPropertyValue(DISABLED_M2M_XFORM_PROP_KEY, "none")
 		disabledXform.split(",").map[trim]
+	}
+	def static getDisabledGeneratorTypes() {
+		val disabledGenerators = getPropertyValue(DISABLED_GENERATOR_PROP_KEY, "none")
+		disabledGenerators.split(",").map[trim]
+	}
+	def static getEnabledScales() {
+		val enabledScales = getPropertyValue(ENABLED_SCALES_PROP_KEY, "1")
+		enabledScales.split(",").map[trim]
 	}
 	
 	def static getLogLevel(String key, String defaultLevel) {
