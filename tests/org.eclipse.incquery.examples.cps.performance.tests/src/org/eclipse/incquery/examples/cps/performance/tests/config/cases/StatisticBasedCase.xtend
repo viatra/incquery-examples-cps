@@ -12,7 +12,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.BuildableCPSConstraint
 import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
 import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
-import org.eclipse.incquery.examples.cps.performance.tests.config.phases.GenerationPhase
+import org.eclipse.incquery.examples.cps.performance.tests.config.phases.StatisticsBasedGenerationPhase
 import org.eclipse.incquery.examples.cps.performance.tests.config.phases.StatisticsBasedModificationPhase
 
 class StatisticBasedCase extends BenchmarkCase {
@@ -25,7 +25,7 @@ class StatisticBasedCase extends BenchmarkCase {
 	}
 	
 	override getGenerationPhase(String phaseName) {
-		return new GenerationPhase(phaseName, constraints)
+		return new StatisticsBasedGenerationPhase(phaseName, constraints)
 	}
 	
 	override getModificationPhase(String phaseName) {

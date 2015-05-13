@@ -29,7 +29,7 @@ class GenerationPhase extends AtomicPhase{
 		val generatorMemory = new MemoryMetric("Memory")
 
 		val CPSGeneratorInput input = new CPSGeneratorInput(cpsToken.seed, constraints, cpsToken.cps2dep.cps);
-		var plan = CPSPlanBuilder.buildDefaultPlan;
+		var plan = getPlan();
 		
 		var PlanExecutor<CPSFragment, CPSGeneratorInput> generator = new PlanExecutor();
 		
@@ -46,5 +46,9 @@ class GenerationPhase extends AtomicPhase{
 		fragment.engine.dispose
 		
 		phaseResult.addMetrics(generatorTimer, generatorMemory)
+	}
+	
+	protected def getPlan() {
+		CPSPlanBuilder.buildDefaultPlan
 	}
 }
