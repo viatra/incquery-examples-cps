@@ -9,11 +9,10 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.generator.CPSPlanBuilder
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
 import org.eclipse.incquery.examples.cps.generator.dtos.CPSGeneratorInput
-import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
 import org.eclipse.incquery.examples.cps.generator.queries.Validation
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
-import org.eclipse.incquery.examples.cps.performance.tests.scenarios.StatisticsBasedScenario
+import org.eclipse.incquery.examples.cps.performance.tests.config.cases.StatisticBasedCase
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.CpsXformM2M
@@ -26,7 +25,7 @@ import org.junit.Test
 
 class QueryRegressionTest extends CPSTestBase{
 	
-	protected static extension Logger logger = Logger.getLogger("cps.xform.QueryTest")
+	protected static extension Logger logger = Logger.getLogger("cps.performance.tests.queries.QueryRegressionTest")
     protected extension CPSModelBuilderUtil modelBuilder = new CPSModelBuilderUtil
 	
 	AdvancedIncQueryEngine incQueryEngine
@@ -52,8 +51,8 @@ class QueryRegressionTest extends CPSTestBase{
 	def executeScenarioXformForConstraints(int size) {	
 		val seed = 11111
 		val Random rand = new Random(seed)
-		val IScenario scenario = new StatisticsBasedScenario(rand)
-		val constraints = scenario.getConstraintsFor(size)
+		val StatisticBasedCase benchmarkCase = new StatisticBasedCase(size, rand)
+		val constraints = benchmarkCase.getConstraints()
 		val cps2dep = prepareEmptyModel("testModel"+System.nanoTime)
 		
 		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, cps2dep.cps)
