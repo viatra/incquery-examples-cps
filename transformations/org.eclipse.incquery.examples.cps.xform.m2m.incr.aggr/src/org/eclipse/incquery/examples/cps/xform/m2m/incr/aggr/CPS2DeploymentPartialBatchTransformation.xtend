@@ -37,8 +37,6 @@ import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.StateM
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.StatesQuerySpecification
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.TransitionsQuerySpecification
 import org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil
-import org.eclipse.incquery.examples.cps.xform.m2t.util.genericmonitor.ChangeDelta
-import org.eclipse.incquery.examples.cps.xform.m2t.util.genericmonitor.ChangeMonitor
 import org.eclipse.incquery.runtime.api.IPatternMatch
 import org.eclipse.incquery.runtime.api.IQuerySpecification
 import org.eclipse.incquery.runtime.api.IncQueryEngine
@@ -48,6 +46,15 @@ import static com.google.common.base.Preconditions.*
 
 import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingUtil.*
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.HostInstancesQuerySpecification
+import org.eclipse.viatra.emf.runtime.changemonitor.ChangeMonitor
+import org.eclipse.viatra.emf.runtime.changemonitor.ChangeDelta
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.TransitionsMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.StatesMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.StateMachinesMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.ApplicationInstanceMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.AppInstancesMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.AppTypesMatch
+import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.HostInstancesMatch
 
 class CPS2DeploymentPartialBatchTransformation {
 
@@ -127,8 +134,8 @@ class CPS2DeploymentPartialBatchTransformation {
 		
 		delta.appeared.keySet.forEach [ spec |
 			delta.appeared.get(spec).forEach [ b |
-				if (b instanceof Transition) {
-					val transition = b as Transition
+				if (b instanceof TransitionsMatch) {
+					val transition = b.transition
 					transitionMap.put(transition, transition.action)
 
 				}
@@ -519,34 +526,34 @@ class CPS2DeploymentPartialBatchTransformation {
 	private def clearModel(ChangeDelta delta) {
 
 		trace('''Executing: clearModel(ChangeDelta delta)''')
-		val Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, EObject> queue = ArrayListMultimap.
+		val Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, IPatternMatch> queue = ArrayListMultimap.
 			create();
 		queue.putAll(delta.disappeared)
 		queue.putAll(delta.updated)
 
 		queue.keySet.forEach [ spec |
 			queue.get(spec).forEach [ b |
-				if (b instanceof HostInstance) {
-					removeHostInstance(b as HostInstance)
+				if (b instanceof HostInstancesMatch) {
+					removeHostInstance(b.hostInstance)
 				}
-				if (b instanceof ApplicationType) {
-					removeAppType(b as ApplicationType)
+				if (b instanceof AppTypesMatch) {
+					removeAppType(b.appType)
 				}
-				if (b instanceof ApplicationInstance) {
-					removeAppInstance(b as ApplicationInstance)
+				if (b instanceof AppInstancesMatch) {
+					removeAppInstance(b.appInstance)
 				}
-				if (b instanceof StateMachine) {
-					removeStateMachine(b as StateMachine , true)
+				if (b instanceof StateMachinesMatch) {
+					removeStateMachine(b.stateMachine , true)
 				}
-				if (b instanceof State) {
-					val state = b as State
+				if (b instanceof StatesMatch) {
+					val state = b.state
 					state.removeState
 					engine.state2Statemachine.getAllMatches(state, null).forEach [ match |
 						match.sm.removeStateMachine(true)
 					]
 				}
-				if (b instanceof Transition) {
-					val transition = b as Transition
+				if (b instanceof TransitionsMatch) {
+					val transition = b.transition
 					val action = transitionMap.get(transition)
 					if (action != null && SignalUtil.isWait(action)) {
 						val id = SignalUtil.getSignalId(action)
