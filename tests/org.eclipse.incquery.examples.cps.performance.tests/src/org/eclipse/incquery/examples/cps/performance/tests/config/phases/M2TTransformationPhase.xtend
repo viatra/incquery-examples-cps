@@ -9,7 +9,7 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.incquery.examples.cps.performance.tests.config.CPSDataToken
 import org.eclipse.incquery.examples.cps.performance.tests.config.GeneratorType
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.api.ICPSGenerator
+import org.eclipse.incquery.examples.cps.xform.m2t.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.xform.m2t.jdt.CodeGenerator
 import org.eclipse.incquery.examples.cps.xform.m2t.util.GeneratorHelper
 import org.eclipse.incquery.examples.cps.xform.m2t.util.GeneratorUtil
@@ -17,6 +17,7 @@ import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.runtime.emf.EMFScope
 
 class M2TTransformationPhase extends AtomicPhase {
+	extension GeneratorUtil generatorUtil = new GeneratorUtil
 
 	new(String name) {
 		super(name)
@@ -48,7 +49,7 @@ class M2TTransformationPhase extends AtomicPhase {
 		}
 
 		// Source generation
-		GeneratorUtil.generateAll(cpsToken.cps2dep.deployment, codeGenerator, srcFolder)
+		generateAll(cpsToken.cps2dep.deployment, codeGenerator, srcFolder)
 		timer.stopMeasure
 		memory.measure
 

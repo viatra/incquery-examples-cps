@@ -4,10 +4,10 @@ import org.eclipse.incquery.examples.cps.deployment.Deployment
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.api.ICPSGenerator
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.exceptions.CPSGeneratorException
+import org.eclipse.incquery.examples.cps.xform.m2t.api.ICPSGenerator
+import org.eclipse.incquery.examples.cps.xform.m2t.exceptions.CPSGeneratorException
 import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.utils.FormatterUtil
+import org.eclipse.incquery.examples.cps.xform.m2t.util.FormatterUtil
 
 class CodeGenerator implements ICPSGenerator {
 	

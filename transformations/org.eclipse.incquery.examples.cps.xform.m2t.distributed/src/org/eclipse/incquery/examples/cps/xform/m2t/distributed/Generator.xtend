@@ -3,7 +3,6 @@ package org.eclipse.incquery.examples.cps.xform.m2t.distributed
 import com.google.common.base.Joiner
 import com.google.common.collect.Lists
 import java.util.HashMap
-import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.deployment.BehaviorState
 import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 import org.eclipse.incquery.examples.cps.deployment.Deployment
@@ -11,17 +10,16 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.deployment.common.WaitTransitionMatcher
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.exceptions.CPSGeneratorException
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.utils.GeneratorHelper
+import org.eclipse.incquery.examples.cps.xform.m2t.exceptions.CPSGeneratorException
+import org.eclipse.incquery.examples.cps.xform.m2t.util.GeneratorUtil
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.jdt.core.ToolFactory
 import org.eclipse.jdt.core.formatter.CodeFormatter
 
 class Generator {
 	
-	private extension Logger logger = Logger.getLogger("cps.codegenerator")
+	extension GeneratorUtil helper = new GeneratorUtil
 	
-	private extension GeneratorHelper helper = new GeneratorHelper
 	val String PROJECT_NAME
 	val IncQueryEngine engine
 	val CodeFormatter formatter
@@ -69,7 +67,7 @@ class Generator {
 		«val behavior = "Behavior"+app.id.purifyAndToUpperCamel»
 		«val appClassName = app.id.purifyAndToUpperCamel + "Application"»
 		package «PROJECT_NAME».applications;
-	
+			
 		import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.applications.BaseApplication;
 		import org.eclipse.incquery.examples.cps.m2t.proto.distributed.general.hosts.Host;
 		
@@ -84,7 +82,7 @@ class Generator {
 			public «appClassName»(Host host) {
 				super(host);
 				
-				«IF app.behavior.current != null»
+				«IF app?.behavior?.current != null»
 				// Set initial State
 				currentState = «behavior».«app.behavior.current.description.purifyAndToUpperCamel»;
 				«ENDIF»
@@ -102,7 +100,7 @@ class Generator {
 		«val app = behavior.eContainer as DeploymentApplication»
 		«val behaviorClassName = "Behavior"+app.id.purifyAndToUpperCamel»
 		package «PROJECT_NAME».hosts.statemachines;
-	
+			
 		import java.util.List;
 		
 		import org.apache.log4j.Logger;

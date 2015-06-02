@@ -4,7 +4,7 @@ import eu.mondo.sam.core.DataToken
 import org.eclipse.core.resources.IFolder
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.api.ICPSGenerator
+import org.eclipse.incquery.examples.cps.xform.m2t.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.DeploymentChangeMonitor
 import org.eclipse.xtend.lib.annotations.Accessors
 
