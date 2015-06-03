@@ -3,27 +3,24 @@ package org.eclipse.incquery.examples.cps.xform.m2t.jdt
 import com.google.common.base.Preconditions
 import com.google.common.base.Splitter
 import java.util.HashMap
-import java.util.logging.Logger
 import org.eclipse.incquery.examples.cps.deployment.BehaviorState
 import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.deployment.common.WaitTransitionMatcher
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.exceptions.CPSGeneratorException
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.utils.GeneratorHelper
+import org.eclipse.incquery.examples.cps.xform.m2t.exceptions.CPSGeneratorException
+import org.eclipse.incquery.examples.cps.xform.m2t.util.GeneratorUtil
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.jdt.core.dom.AST
 import org.eclipse.jdt.core.dom.CompilationUnit
+import org.eclipse.jdt.core.dom.InfixExpression.Operator
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword
 import org.eclipse.jdt.core.dom.Name
-import org.eclipse.jdt.core.dom.InfixExpression.Operator
 
 class Generator {
 
-	extension Logger logger = Logger.getLogger("cps.codegenerator")
-
-	extension GeneratorHelper helper = new GeneratorHelper
+	extension GeneratorUtil helper = new GeneratorUtil
 	val String PROJECT_NAME
 	val IncQueryEngine engine
 
@@ -138,7 +135,7 @@ class Generator {
 		]
 		ctorBody.statements += superCall
 
-		if(application.behavior.current != null){
+		if(application?.behavior?.current != null){
 			val currentState = ast.newAssignment => [
 				leftHandSide = ast.newSimpleName("currentState")
 				rightHandSide = ast.newQualifiedName(

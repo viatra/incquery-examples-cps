@@ -47,6 +47,7 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 	protected extension CyberPhysicalSystemFactory cpsFactory = CyberPhysicalSystemFactory.eINSTANCE
 	protected extension DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
 	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
+	protected extension GeneratorUtil generatorUtil = new GeneratorUtil
 
 	new(CPSTransformationWrapper wrapper, String wrapperType) {
 		super(wrapper, wrapperType)
@@ -111,7 +112,7 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 		}
 
 		// Initial source generation
-		GeneratorUtil.generateAll(cps2dep.deployment, codeGenerator, srcFolder)
+		generatorUtil.generateAll(cps2dep.deployment, codeGenerator, srcFolder)
 	
 		val changeMonitor = new DeploymentChangeMonitor(cps2dep.deployment, engine2)
 

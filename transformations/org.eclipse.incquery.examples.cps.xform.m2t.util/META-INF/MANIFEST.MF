@@ -16,6 +16,8 @@ Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.incquery.runtime.evm;bundle-version="[1.0.0,1.1.0)",
  org.eclipse.incquery.examples.cps.model,
  org.eclipse.incquery.examples.cps.deployment,
- org.eclipse.incquery.examples.cps.xform.m2t.distributed;bundle-version="0.1.0"
+ org.eclipse.incquery.examples.cps.xform.m2t;bundle-version="0.1.0",
+ org.eclipse.jdt.core;bundle-version="3.10.0",
+ org.eclipse.text;bundle-version="3.5.300"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j
