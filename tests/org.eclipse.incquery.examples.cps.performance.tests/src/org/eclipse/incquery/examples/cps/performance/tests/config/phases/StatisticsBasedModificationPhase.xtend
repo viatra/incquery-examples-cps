@@ -17,7 +17,7 @@ class StatisticsBasedModificationPhase extends AtomicPhase{
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
 		val cpsToken = token as CPSDataToken
-
+		
 		val appType = cpsToken.cps2dep.cps.appTypes.findFirst[it.id.contains("AC_withStateMachine")]
 		val hostInstance = cpsToken.cps2dep.cps.hostTypes.findFirst[it.id.contains("HC_appContainer")].instances.head
 		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)

@@ -11,14 +11,14 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.deployment.common.WaitTransitionMatcher
 import org.eclipse.incquery.examples.cps.xform.m2t.exceptions.CPSGeneratorException
-import org.eclipse.incquery.examples.cps.xform.m2t.util.GeneratorUtil
+import org.eclipse.incquery.examples.cps.xform.m2t.util.FormatterUtil
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.jdt.core.ToolFactory
 import org.eclipse.jdt.core.formatter.CodeFormatter
 
 class Generator {
 	
-	extension GeneratorUtil helper = new GeneratorUtil
+	extension FormatterUtil helper = new FormatterUtil
 	
 	val String PROJECT_NAME
 	val IncQueryEngine engine
