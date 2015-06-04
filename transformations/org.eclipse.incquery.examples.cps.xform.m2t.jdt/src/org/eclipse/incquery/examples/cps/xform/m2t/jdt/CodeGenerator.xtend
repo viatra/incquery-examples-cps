@@ -10,7 +10,7 @@ import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.examples.cps.xform.m2t.util.FormatterUtil
 
 class CodeGenerator implements ICPSGenerator {
-	
+	extension FormatterUtil util = new FormatterUtil
 	val Generator generator;
 	
 	new (String projectName, IncQueryEngine engine) {
@@ -18,15 +18,15 @@ class CodeGenerator implements ICPSGenerator {
 	}
 	
 	override generateHostCode(DeploymentHost host) throws CPSGeneratorException {
-		FormatterUtil.formatCode(generator.generateHostCode(host))
+		formatCode(generator.generateHostCode(host))
 	}
 	
 	override generateApplicationCode(DeploymentApplication application) throws CPSGeneratorException {
-		FormatterUtil.formatCode(generator.generateApplicationCode(application))
+		formatCode(generator.generateApplicationCode(application))
 	}
 	
 	override generateBehaviorCode(DeploymentBehavior behavior) throws CPSGeneratorException {
-		FormatterUtil.formatCode(generator.generateBehaviorCode(behavior))
+		formatCode(generator.generateBehaviorCode(behavior))
 	}
 	
 	override generateDeploymentCode(Deployment deployment) throws CPSGeneratorException {

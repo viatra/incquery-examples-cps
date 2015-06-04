@@ -52,11 +52,16 @@
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.distributed</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.jdt</module>
 		
+		<!-- Serializers -->
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.serializer</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.serializer.eclipse</module>
+		
 		<!-- Tests -->
 		<module>tests/org.eclipse.incquery.examples.cps.generator.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.xform.m2m.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.xform.m2t.tests</module>
+		<module>tests/org.eclipse.incquery.examples.cps.xform.serializer.test</module>
 
 	</modules>
 	<properties>

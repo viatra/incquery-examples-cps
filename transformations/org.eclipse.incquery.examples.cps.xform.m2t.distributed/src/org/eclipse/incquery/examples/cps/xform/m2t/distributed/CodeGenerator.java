@@ -10,7 +10,7 @@ import org.eclipse.incquery.examples.cps.xform.m2t.util.FormatterUtil;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;
 
 public class CodeGenerator implements ICPSGenerator {
-
+    FormatterUtil util = new FormatterUtil();
 	private boolean forceCodeFormatting;
 	private Generator generator;
 
@@ -22,7 +22,7 @@ public class CodeGenerator implements ICPSGenerator {
 	@Override
 	public CharSequence generateHostCode(DeploymentHost host) throws CPSGeneratorException {
 		if(forceCodeFormatting){
-			return FormatterUtil.formatCode(generator.generateHostCode(host));
+			return util.formatCode(generator.generateHostCode(host));
 		}
 		return generator.generateHostCode(host);
 	}
@@ -30,7 +30,7 @@ public class CodeGenerator implements ICPSGenerator {
 	@Override
 	public CharSequence generateApplicationCode(DeploymentApplication application) throws CPSGeneratorException {
 		if(forceCodeFormatting){
-			return FormatterUtil.formatCode(generator.generateApplicationCode(application));
+			return util.formatCode(generator.generateApplicationCode(application));
 		}
 		return generator.generateApplicationCode(application);
 	}
@@ -38,7 +38,7 @@ public class CodeGenerator implements ICPSGenerator {
 	@Override
 	public CharSequence generateBehaviorCode(DeploymentBehavior behavior) throws CPSGeneratorException {
 		if(forceCodeFormatting){
-			return FormatterUtil.formatCode(generator.generateBehaviorCode(behavior));
+			return util.formatCode(generator.generateBehaviorCode(behavior));
 		}
 		return generator.generateBehaviorCode(behavior);
 	}
@@ -46,7 +46,7 @@ public class CodeGenerator implements ICPSGenerator {
 	@Override
 	public CharSequence generateDeploymentCode(Deployment deployment) throws CPSGeneratorException {
 		if(forceCodeFormatting){
-			return FormatterUtil.formatCode(generator.generateDeploymentCode(deployment));
+			return util.formatCode(generator.generateDeploymentCode(deployment));
 		}
 		return generator.generateDeploymentCode(deployment); 
 	}

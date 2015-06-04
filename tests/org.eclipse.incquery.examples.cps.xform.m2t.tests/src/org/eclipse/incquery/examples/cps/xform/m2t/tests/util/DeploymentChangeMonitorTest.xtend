@@ -1,24 +1,25 @@
 package org.eclipse.incquery.examples.cps.xform.m2t.tests.util
 
 //import org.apache.log4j.Logger
+
 import org.apache.log4j.Logger
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.incquery.examples.cps.deployment.Deployment
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
+import org.eclipse.incquery.examples.cps.deployment.DeploymentElement
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
-import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.DeploymentChangeMonitor
-import org.eclipse.incquery.examples.cps.xform.m2t.util.monitor.IDeploymentChangeMonitor
+import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeMonitor
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
+import org.eclipse.incquery.runtime.emf.EMFScope
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.examples.cps.deployment.DeploymentElement
-import org.junit.Ignore
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.incquery.examples.cps.xform.m2t.monitor.AbstractDeploymentChangeMonitor
 
 /**
  * Test cases for the DeploymentChangeMonitor. The cases should cover every rule defined for tracing
@@ -28,7 +29,7 @@ class DeploymentChangeMonitorTest {
 
 	Deployment deployment
 	AdvancedIncQueryEngine engine
-	IDeploymentChangeMonitor monitor
+	AbstractDeploymentChangeMonitor monitor
 	extension Logger logger = Logger.getLogger("cps.DeploymentChangeMonitor")
 
 	static String ELEMENT_MISSING = "Element not found in the deltas"
@@ -155,7 +156,6 @@ class DeploymentChangeMonitorTest {
 		host2.ip = "2.2.2.4"
 		info("Updated ip for an another host")
 		assertContainments(null,host2,null,0,2,0);
-		
 		// Check stored original IP address
 		assertEquals(monitor.deltaSinceLastCheckpoint.oldNamesForDeletion.get(host2),"1.1.1.2")
 	}

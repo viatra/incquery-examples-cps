@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CPS Demonstrator serializer API
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.serializer
+Bundle-Version: 0.1.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: IncQueryLabs Ltd.
+Export-Package: org.eclipse.incquery.examples.cps.xform.serializer
+Require-Bundle: org.eclipse.incquery.examples.cps.xform.m2t;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.model;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.traceability;bundle-version="0.1.0",
+ com.google.guava
