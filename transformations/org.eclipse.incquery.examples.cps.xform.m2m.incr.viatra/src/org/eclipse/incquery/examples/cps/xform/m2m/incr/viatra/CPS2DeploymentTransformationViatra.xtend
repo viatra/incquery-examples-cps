@@ -11,6 +11,10 @@ import org.eclipse.viatra.emf.runtime.transformation.eventdriven.EventDrivenTran
 
 import static com.google.common.base.Preconditions.*
 import java.util.concurrent.TimeUnit
+import org.eclipse.viatra.emf.mwe2orchestrator.eventdriven.ISchedulerController
+import org.eclipse.viatra.emf.runtime.transformation.eventdriven.ExecutionSchemaBuilder
+import org.eclipse.viatra.emf.mwe2orchestrator.eventdriven.ControllableScheduler.ControllableSchedulerFactory
+import org.eclipse.incquery.runtime.evm.update.IQBaseCallbackUpdateCompleteProvider
 
 class CPS2DeploymentTransformationViatra {
 
@@ -21,7 +25,6 @@ class CPS2DeploymentTransformationViatra {
 	CPSToDeployment cps2dep
 	IncQueryEngine engine
 	EventDrivenTransformation transform
-	
 
 	private var initialized = false;
 
@@ -42,21 +45,44 @@ class CPS2DeploymentTransformationViatra {
 
 			info("Preparing transformation rules.")
 			watch = Stopwatch.createStarted
-			ruleProvider = new RuleProvider(engine,cps2dep)
-			registerRulesWithCustomPriorities
+			ruleProvider = new RuleProvider(engine, cps2dep)
+			createTransformation
 			info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 			initialized = true
 		}
 	}
 
-	
+	def initialize(CPSToDeployment cps2dep, IncQueryEngine engine, ISchedulerController controller) {
+		checkArgument(cps2dep != null, "Mapping cannot be null!")
+		checkArgument(cps2dep.cps != null, "CPS not defined in mapping!")
+		checkArgument(cps2dep.deployment != null, "Deployment not defined in mapping!")
+		checkArgument(engine != null, "Engine cannot be null!")
+
+		if (!initialized) {
+			this.cps2dep = cps2dep
+			this.engine = engine
+
+			debug("Preparing queries on engine.")
+			var watch = Stopwatch.createStarted
+			prepare(engine)
+			info('''Prepared queries on engine («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+
+			info("Preparing transformation rules.")
+			watch = Stopwatch.createStarted
+			ruleProvider = new RuleProvider(engine, cps2dep)
+			createControllableTransformation(controller)
+			info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
+			initialized = true
+		}
+	}
+
 	def execute() {
 		debug('''Executing transformation on: Cyber-physical system: «cps2dep.cps.id»''')
 		transform.executionSchema.startUnscheduledExecution
 
 	}
 
-	private def registerRulesWithCustomPriorities() {
+	private def createTransformation() {
 		val fixedPriorityResolver = new PerJobFixedPriorityConflictResolver
 		fixedPriorityResolver.setPriority(hostRule.ruleSpecification, 1)
 		fixedPriorityResolver.setPriority(applicationRule.ruleSpecification, 2)
@@ -65,19 +91,40 @@ class CPS2DeploymentTransformationViatra {
 		fixedPriorityResolver.setPriority(transitionRule.ruleSpecification, 5)
 		fixedPriorityResolver.setPriority(triggerRule.ruleSpecification, 6)
 
-		transform = EventDrivenTransformation.forEngine(engine).
-			setConflictResolver(fixedPriorityResolver).
-			addRule(hostRule).
-			addRule(applicationRule).
-			addRule(stateMachineRule).
-			addRule(stateRule).
-			addRule(transitionRule).
-			addRule(triggerRule).			
-			create()
+		transform = EventDrivenTransformation.forEngine(engine).setConflictResolver(fixedPriorityResolver).addRule(
+			hostRule).addRule(applicationRule).addRule(stateMachineRule).addRule(stateRule).addRule(transitionRule).
+			addRule(triggerRule).build()
 	}
 
-	def dispose(){
-		if(transform != null){
+	private def createControllableTransformation(ISchedulerController controller) {
+		val fixedPriorityResolver = new PerJobFixedPriorityConflictResolver
+		fixedPriorityResolver.setPriority(hostRule.ruleSpecification, 1)
+		fixedPriorityResolver.setPriority(applicationRule.ruleSpecification, 2)
+		fixedPriorityResolver.setPriority(stateMachineRule.ruleSpecification, 3)
+		fixedPriorityResolver.setPriority(stateRule.ruleSpecification, 4)
+		fixedPriorityResolver.setPriority(transitionRule.ruleSpecification, 5)
+		fixedPriorityResolver.setPriority(triggerRule.ruleSpecification, 6)
+		
+		val provider = new IQBaseCallbackUpdateCompleteProvider(engine.baseIndex)
+		val ExecutionSchemaBuilder builder = new ExecutionSchemaBuilder().setEngine(engine).setScheduler(
+			new ControllableSchedulerFactory(provider, controller))
+		builder.setConflictResolver(fixedPriorityResolver);
+		val schema = builder.build();
+
+		transform = EventDrivenTransformation.forEngine(engine)
+			.setSchema(schema)
+			.setConflictResolver(fixedPriorityResolver)
+			.addRule(hostRule)
+			.addRule(applicationRule)
+			.addRule(stateMachineRule)
+			.addRule(stateRule)
+			.addRule(transitionRule)
+			.addRule(triggerRule)
+			.build()
+	}
+
+	def dispose() {
+		if (transform != null) {
 			transform.executionSchema.dispose
 		}
 		transform = null
