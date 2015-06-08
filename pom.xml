@@ -55,6 +55,7 @@
 		<!-- Serializers -->
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.serializer</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.serializer.eclipse</module>
+		<module>transformations/org.eclipse.incquery.examples.cps.xform.serializer.javaio</module>
 		
 		<!-- Tests -->
 		<module>tests/org.eclipse.incquery.examples.cps.generator.tests</module>

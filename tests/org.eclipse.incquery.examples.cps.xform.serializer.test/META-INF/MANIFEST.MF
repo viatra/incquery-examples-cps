@@ -16,4 +16,5 @@ Require-Bundle: org.eclipse.incquery.examples.cps.xform.serializer;bundle-versio
  org.junit;bundle-version="4.11.0",
  org.eclipse.incquery.examples.cps.tests,
  org.apache.log4j,
- org.eclipse.incquery.examples.cps.xform.serializer.eclipse
+ org.eclipse.incquery.examples.cps.xform.serializer.eclipse,
+ org.eclipse.incquery.examples.cps.xform.serializer.javaio;bundle-version="0.1.0"
