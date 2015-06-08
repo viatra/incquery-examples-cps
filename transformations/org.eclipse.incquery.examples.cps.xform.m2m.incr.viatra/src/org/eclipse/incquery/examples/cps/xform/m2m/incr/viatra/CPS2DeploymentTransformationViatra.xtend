@@ -1,20 +1,20 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra
 
 import com.google.common.base.Stopwatch
+import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.CpsXformM2M
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.rules.RuleProvider
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.util.PerJobFixedPriorityConflictResolver
 import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.incquery.runtime.evm.specific.Schedulers
+import org.eclipse.viatra.emf.mwe2orchestrator.eventdriven.ControllableScheduler.ControllableSchedulerFactory
+import org.eclipse.viatra.emf.mwe2orchestrator.eventdriven.ISchedulerController
 import org.eclipse.viatra.emf.runtime.transformation.eventdriven.EventDrivenTransformation
+import org.eclipse.viatra.emf.runtime.transformation.eventdriven.ExecutionSchemaBuilder
 
 import static com.google.common.base.Preconditions.*
-import java.util.concurrent.TimeUnit
-import org.eclipse.viatra.emf.mwe2orchestrator.eventdriven.ISchedulerController
-import org.eclipse.viatra.emf.runtime.transformation.eventdriven.ExecutionSchemaBuilder
-import org.eclipse.viatra.emf.mwe2orchestrator.eventdriven.ControllableScheduler.ControllableSchedulerFactory
-import org.eclipse.incquery.runtime.evm.update.IQBaseCallbackUpdateCompleteProvider
 
 class CPS2DeploymentTransformationViatra {
 
@@ -25,6 +25,7 @@ class CPS2DeploymentTransformationViatra {
 	CPSToDeployment cps2dep
 	IncQueryEngine engine
 	EventDrivenTransformation transform
+	ISchedulerController controller
 
 	private var initialized = false;
 
@@ -61,7 +62,7 @@ class CPS2DeploymentTransformationViatra {
 		if (!initialized) {
 			this.cps2dep = cps2dep
 			this.engine = engine
-
+			this.controller = controller
 			debug("Preparing queries on engine.")
 			var watch = Stopwatch.createStarted
 			prepare(engine)
@@ -70,7 +71,7 @@ class CPS2DeploymentTransformationViatra {
 			info("Preparing transformation rules.")
 			watch = Stopwatch.createStarted
 			ruleProvider = new RuleProvider(engine, cps2dep)
-			createControllableTransformation(controller)
+			createControllableTransformation()
 			info('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 			initialized = true
 		}
@@ -78,8 +79,11 @@ class CPS2DeploymentTransformationViatra {
 
 	def execute() {
 		debug('''Executing transformation on: Cyber-physical system: «cps2dep.cps.id»''')
-		transform.executionSchema.startUnscheduledExecution
-
+		if(controller != null){
+			controller.schedule
+		}else{
+			transform.executionSchema.startUnscheduledExecution
+		}
 	}
 
 	private def createTransformation() {
@@ -96,7 +100,7 @@ class CPS2DeploymentTransformationViatra {
 			addRule(triggerRule).build()
 	}
 
-	private def createControllableTransformation(ISchedulerController controller) {
+	private def createControllableTransformation() {
 		val fixedPriorityResolver = new PerJobFixedPriorityConflictResolver
 		fixedPriorityResolver.setPriority(hostRule.ruleSpecification, 1)
 		fixedPriorityResolver.setPriority(applicationRule.ruleSpecification, 2)
@@ -105,15 +109,14 @@ class CPS2DeploymentTransformationViatra {
 		fixedPriorityResolver.setPriority(transitionRule.ruleSpecification, 5)
 		fixedPriorityResolver.setPriority(triggerRule.ruleSpecification, 6)
 		
-		val provider = new IQBaseCallbackUpdateCompleteProvider(engine.baseIndex)
 		val ExecutionSchemaBuilder builder = new ExecutionSchemaBuilder().setEngine(engine).setScheduler(
-			new ControllableSchedulerFactory(provider, controller))
+			new ControllableSchedulerFactory(Schedulers.getIQBaseSchedulerFactory(engine.getBaseIndex()),controller))
+			
 		builder.setConflictResolver(fixedPriorityResolver);
 		val schema = builder.build();
 
 		transform = EventDrivenTransformation.forEngine(engine)
 			.setSchema(schema)
-			.setConflictResolver(fixedPriorityResolver)
 			.addRule(hostRule)
 			.addRule(applicationRule)
 			.addRule(stateMachineRule)
