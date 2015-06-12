@@ -8,7 +8,7 @@ Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq,
  org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq.queries,
  org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq.queries.util
 Require-Bundle: org.eclipse.emf.ecore,
- org.eclipse.incquery.runtime;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.incquery.runtime;bundle-version="[1.0.0,1.1.0)",
  org.eclipse.xtext.xbase.lib,
  org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
  org.eclipse.incquery.examples.cps.model;bundle-version="0.1.0",

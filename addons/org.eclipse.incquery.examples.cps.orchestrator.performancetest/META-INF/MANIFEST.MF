@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CPS based VIATRA orchestrator based performance tests
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.orchestrator.performancetest
+Bundle-Version: 0.1.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.junit,
+ org.eclipse.emf.mwe2.runtime,
+ org.eclipse.emf.ecore,
+ org.eclipse.uml2.uml;bundle-version="5.0.2",
+ com.google.inject;bundle-version="3.0.0",
+ org.eclipse.emf.mwe2.language,
+ org.eclipse.emf.mwe2.launch,
+ org.eclipse.emf.common,
+ org.eclipse.viatra.emf.mwe2orchestrator;bundle-version="0.7.0",
+ org.eclipse.incquery.runtime;bundle-version="1.0.0",
+ org.eclipse.viatra.emf.runtime;bundle-version="0.7.0",
+ org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.xform.m2t.jdt;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.traceability,
+ org.eclipse.incquery.examples.cps.generator,
+ org.eclipse.incquery.examples.cps.xform.m2t;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.xform.m2t.distributed;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.xform.m2t.tests;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.generator.tests,
+ org.eclipse.incquery.examples.cps.xform.serializer,
+ org.eclipse.incquery.examples.cps.xform.serializer.javaio,
+ org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.model,
+ org.eclipse.incquery.runtime.evm,
+ eu.mondo.sam.core,
+ org.eclipse.incquery.examples.cps.orchestrator.example;bundle-version="0.1.0"
+Bundle-Vendor: IncQueryLabs Ltd.
+Export-Package: org.eclipse.incquery.examples.cps.orchestrator.performance

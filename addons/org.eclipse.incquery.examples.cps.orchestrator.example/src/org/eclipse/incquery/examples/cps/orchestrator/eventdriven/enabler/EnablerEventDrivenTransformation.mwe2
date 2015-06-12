@@ -1,0 +1,69 @@
+module org.eclipse.viatra.emf.mwe2orchestrator.transdemo
+
+import org.eclipse.viatra.emf.mwe2orchestrator.*
+import org.eclipse.viatra.emf.mwe2orchestrator.mwe2impl.*
+import org.eclipse.incquery.examples.cps.orchestrator.*
+import org.eclipse.incquery.examples.cps.orchestrator.events.*
+import org.eclipse.incquery.examples.cps.orchestrator.eventdriven.enabler.*
+
+var chainStartChannel = MWE2Channel {}
+var chainEndChannel = MWE2Channel {}
+
+var M2MChannel = MWE2Channel {}
+var ChangeMonitorChannel = MWE2Channel {}
+var M2TChannel = MWE2Channel {}
+var SerializerChannel = MWE2Channel {}
+var ModifierChannel = MWE2Channel {}
+
+var EnablerChannel = MWE2Channel {}
+var DisablerChannel = MWE2Channel {}
+
+
+
+Workflow {
+	component = InitializerComponent{
+		modelDir = "D:\\testproject\\model"
+		modelName = "testmodel"
+		outputProjectLocation = "D:\\testproject"
+		outputProjectName = "testproject"
+	}
+	//Comment
+	component = MWE2TransformationChain {
+		startChannel = MWE2TargetChannel{channel = chainStartChannel}
+		endChannel = MWE2ListeningChannel{channel = chainEndChannel}
+
+		transformationStep = M2MEnablerEventDrivenViatraTransformationStep {
+			disablingChannel = MWE2ListeningChannel{channel = DisablerChannel processor = DisablerEventProcessor{} priority = "1"}
+			enablingChannel = MWE2ListeningChannel{channel = EnablerChannel processor = EnablerEventProcessor{} priority = "2"}
+			
+			chainStartChannel = MWE2ListeningChannel{channel = chainStartChannel}
+			m2MChannel = MWE2ListeningChannel{channel = M2MChannel}
+			changeMonitorChannel = MWE2TargetChannel{channel = ChangeMonitorChannel}
+			
+			selfDisablerChannel = MWE2TargetChannel{channel = DisablerChannel factory = DisablerEventFactory{}}
+		}
+		
+		transformationStep = ChangeMonitorTransformationStep{
+			changeMonitorChannel = MWE2ListeningChannel{channel = ChangeMonitorChannel}
+			m2TChannel = MWE2TargetChannel{channel = M2TChannel factory = ChangeDeltaEventFactory{}}
+		}
+
+		transformationStep = M2TDistributedTransformationStep {
+			m2TChannel = MWE2ListeningChannel{channel = M2TChannel processor = ChangeDeltaEventProcessor{}}
+			serializerChannel = MWE2TargetChannel{channel = SerializerChannel factory = M2TOutputEventFactory{}}			
+		}
+		
+		transformationStep = EnablerSerializerTransformationStep{
+			serializerChannel = MWE2ListeningChannel{channel = SerializerChannel processor = M2TOutputEventProcessor{}}
+			modifierChannel = MWE2TargetChannel{channel = ModifierChannel}
+		}
+		
+		transformationStep = EnablerModelModifierStep{
+			
+			modifierChannel = MWE2ListeningChannel{channel = ModifierChannel}
+			m2MChannel = MWE2TargetChannel{channel = M2MChannel}
+			enablerChannel = MWE2TargetChannel{channel = EnablerChannel factory = EnablerEventFactory{}}
+		}
+	}
+
+}
