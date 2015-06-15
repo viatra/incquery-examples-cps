@@ -48,7 +48,6 @@
 
 		<!-- M2T Transformations -->
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.util</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.distributed</module>
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.jdt</module>
 		
