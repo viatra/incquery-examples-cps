@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CPS based VIATRA orchestrator example
-Bundle-SymbolicName: org.eclipse.incquery.examples.cps.orchestrator.example
+Bundle-Name: CPS  VIATRA MWE2 integration example
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.mwe2integration.example
 Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.emf.mwe2.runtime,
@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.emf.mwe2.runtime,
  org.eclipse.emf.mwe2.language,
  org.eclipse.emf.mwe2.launch,
  org.eclipse.emf.common,
- org.eclipse.viatra.emf.mwe2orchestrator;bundle-version="0.7.0",
+ org.eclipse.viatra.emf.mwe2integration;bundle-version="0.7.0",
  org.eclipse.incquery.runtime;bundle-version="1.0.0",
  org.eclipse.viatra.emf.runtime;bundle-version="0.7.0",
  org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra;bundle-version="0.1.0",
@@ -29,9 +29,9 @@ Require-Bundle: org.eclipse.emf.mwe2.runtime,
  org.eclipse.incquery.examples.cps.model,
  org.eclipse.incquery.runtime.evm
 Bundle-Vendor: IncQueryLabs Ltd.
-Export-Package: org.eclipse.incquery.examples.cps.orchestrator,
- org.eclipse.incquery.examples.cps.orchestrator.batch,
- org.eclipse.incquery.examples.cps.orchestrator.eventdriven.base,
- org.eclipse.incquery.examples.cps.orchestrator.eventdriven.controllable,
- org.eclipse.incquery.examples.cps.orchestrator.eventdriven.enabler,
- org.eclipse.incquery.examples.cps.orchestrator.events
+Export-Package: org.eclipse.incquery.examples.cps.integration,
+ org.eclipse.incquery.examples.cps.integration.batch,
+ org.eclipse.incquery.examples.cps.integration.eventdriven.base,
+ org.eclipse.incquery.examples.cps.integration.eventdriven.controllable,
+ org.eclipse.incquery.examples.cps.integration.eventdriven.enabler,
+ org.eclipse.incquery.examples.cps.integration.events
