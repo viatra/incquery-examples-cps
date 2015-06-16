@@ -12,7 +12,7 @@ import org.eclipse.incquery.examples.cps.performance.tests.config.phases.M2TTran
 /*
  * Scenario for given model statistics
  */
-class ToolChainPerformanceScenario extends CPSBenchmarkScenario {
+class ToolChainPerformanceIncrementalScenario extends CPSBenchmarkScenario {
 	new(BenchmarkCase benchmarkCase) {
 		super(benchmarkCase)
 	}
@@ -35,7 +35,7 @@ class ToolChainPerformanceScenario extends CPSBenchmarkScenario {
 	}
 	
 	override getName() {
-		return "ToolChainPerformance"
+		return "ToolChainPerformanceIncremental"
 	}
 
 }

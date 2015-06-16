@@ -5,6 +5,8 @@ import eu.mondo.sam.core.phases.AtomicPhase
 import eu.mondo.sam.core.results.PhaseResult
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.incquery.examples.cps.performance.tests.config.CPSDataToken
+import eu.mondo.sam.core.metrics.TimeMetric
+import eu.mondo.sam.core.metrics.MemoryMetric
 
 class StatisticsBasedModificationPhase extends AtomicPhase{
 	
@@ -17,10 +19,17 @@ class StatisticsBasedModificationPhase extends AtomicPhase{
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
 		val cpsToken = token as CPSDataToken
+		val modificationTimer = new TimeMetric("Time")
+		val modificationMemory = new MemoryMetric("Memory")
 		
+		modificationTimer.startMeasure
 		val appType = cpsToken.cps2dep.cps.appTypes.findFirst[it.id.contains("AC_withStateMachine")]
 		val hostInstance = cpsToken.cps2dep.cps.hostTypes.findFirst[it.id.contains("HC_appContainer")].instances.head
 		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
+		modificationTimer.stopMeasure
+		modificationMemory.measure
+		
+		phaseResult.addMetrics(modificationTimer, modificationMemory)
 	}
 	
 }

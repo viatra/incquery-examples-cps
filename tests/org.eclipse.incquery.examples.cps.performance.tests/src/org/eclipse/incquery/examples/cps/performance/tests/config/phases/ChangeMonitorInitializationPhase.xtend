@@ -1,6 +1,8 @@
 package org.eclipse.incquery.examples.cps.performance.tests.config.phases
 
 import eu.mondo.sam.core.DataToken
+import eu.mondo.sam.core.metrics.MemoryMetric
+import eu.mondo.sam.core.metrics.TimeMetric
 import eu.mondo.sam.core.phases.AtomicPhase
 import eu.mondo.sam.core.results.PhaseResult
 import org.eclipse.incquery.examples.cps.performance.tests.config.CPSDataToken
@@ -16,11 +18,17 @@ class ChangeMonitorInitializationPhase extends AtomicPhase {
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
 		val cpsToken = token as CPSDataToken
+		val changeMonitorInitTimer = new TimeMetric("Time")
+		val changeMonitorInitMemory = new MemoryMetric("Memory")
 		
+		changeMonitorInitTimer.startMeasure
 		val engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cpsToken.cps2dep.deployment))
 		val changeMonitor = new DeploymentChangeMonitor(cpsToken.cps2dep.deployment, engine)
 		cpsToken.changeMonitor = changeMonitor
 		changeMonitor.startMonitoring
+		changeMonitorInitTimer.stopMeasure
+		changeMonitorInitMemory.measure
+		phaseResult.addMetrics(changeMonitorInitTimer, changeMonitorInitMemory)
 	}
 	
 }

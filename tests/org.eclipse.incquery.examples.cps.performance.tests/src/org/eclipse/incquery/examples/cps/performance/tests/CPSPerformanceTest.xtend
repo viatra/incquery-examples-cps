@@ -16,6 +16,7 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.junit.Before
 
 @RunWith(Parameterized)
 abstract class CPSPerformanceTest extends CPSTestBase {
@@ -54,9 +55,16 @@ abstract class CPSPerformanceTest extends CPSTestBase {
 		callGC
 	}
 	
+	@Before
+	def cleanupBefore() {
+		callGC
+	}
+
 	@After
 	def cleanup() {
-		cleanupTransformation;
+		val oldWrapper = xform
+		oldWrapper.cleanupTransformation;
+		callGC
 	}
 
 	@AfterClass

@@ -1,6 +1,8 @@
 package org.eclipse.incquery.examples.cps.performance.tests.config.phases
 
 import eu.mondo.sam.core.DataToken
+import eu.mondo.sam.core.metrics.MemoryMetric
+import eu.mondo.sam.core.metrics.TimeMetric
 import eu.mondo.sam.core.phases.AtomicPhase
 import eu.mondo.sam.core.results.PhaseResult
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFactory
@@ -24,8 +26,15 @@ class EMFResourceInitializationPhase extends AtomicPhase{
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
 		val CPSDataToken cpsToken = token as CPSDataToken
+		val emfInitTimer = new TimeMetric("Time")
+		val emfInitMemory = new MemoryMetric("Memory")
+		
+		emfInitTimer.startMeasure
 		cpsToken.cps2dep = preparePersistedCPSModel(cpsToken.instancesDirPath + "/" + cpsToken.scenarioName,
 			cpsToken.xform.class.simpleName + cpsToken.size + "_" + System.nanoTime)
+		emfInitTimer.stopMeasure
+		emfInitMemory.measure
+		phaseResult.addMetrics(emfInitTimer, emfInitMemory)
 	}
 	
 }
