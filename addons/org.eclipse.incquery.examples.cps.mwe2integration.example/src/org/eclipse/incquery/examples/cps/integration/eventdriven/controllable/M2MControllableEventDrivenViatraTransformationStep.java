@@ -11,6 +11,7 @@ import org.eclipse.viatra.emf.mwe2integration.eventdriven.mwe2impl.MWE2Controlla
 import org.eclipse.viatra.emf.mwe2integration.mwe2impl.MWE2TransformationStep;
 
 public class M2MControllableEventDrivenViatraTransformationStep extends MWE2TransformationStep {
+    //Names of the optional user defined input and output port declarations
     private static final String chainStartname = "chainStartChannel";
     private static final String m2mname = "M2MChannel";
     private static final String changemonitorname = "ChangeMonitorChannel";
@@ -33,6 +34,7 @@ public class M2MControllableEventDrivenViatraTransformationStep extends MWE2Tran
 
     }
 
+    @Override
     public void execute() {
         processNextEvent();
 

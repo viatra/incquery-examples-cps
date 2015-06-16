@@ -14,6 +14,7 @@ import org.eclipse.viatra.emf.mwe2integration.mwe2impl.MWE2TransformationStep;
 public class ChangeMonitorTransformationStep extends MWE2TransformationStep {
     private static final String changemonitorname = "ChangeMonitorChannel";
     private static final String m2tname = "M2TChannel";
+    
     protected AdvancedIncQueryEngine engine;
     protected DeploymentChangeMonitor monitor;
 
@@ -33,6 +34,7 @@ public class ChangeMonitorTransformationStep extends MWE2TransformationStep {
         }
     }
 
+    @Override
     public void execute() {
         processNextEvent();
         DeploymentChangeDelta delta = monitor.createCheckpoint();

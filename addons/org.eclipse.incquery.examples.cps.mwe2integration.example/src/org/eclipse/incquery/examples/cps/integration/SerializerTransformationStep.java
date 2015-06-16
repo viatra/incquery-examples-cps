@@ -30,6 +30,7 @@ public class SerializerTransformationStep extends MWE2TransformationStep {
         
     }
 
+    @Override
     public void execute() {
         processNextEvent();
         
