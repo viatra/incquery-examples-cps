@@ -4,7 +4,7 @@ import java.util.Random
 import org.eclipse.incquery.examples.cps.performance.tests.config.GeneratorType
 import org.eclipse.incquery.examples.cps.performance.tests.config.TransformationType
 import org.eclipse.incquery.examples.cps.performance.tests.config.cases.BenchmarkCase
-import org.eclipse.incquery.examples.cps.performance.tests.config.scenarios.ToolChainPerformanceScenario
+import org.eclipse.incquery.examples.cps.performance.tests.config.scenarios.ToolChainPerformanceIncrementalScenario
 
 abstract class ToolchainPerformanceTest extends PropertiesBasedTest {
 	
@@ -13,7 +13,7 @@ abstract class ToolchainPerformanceTest extends PropertiesBasedTest {
 	}
 	
 	override getScenario(int scale, Random rand) {
-		return new ToolChainPerformanceScenario(getCase(scale, rand))
+		return new ToolChainPerformanceIncrementalScenario(getCase(scale, rand))
 	}
 	
 	def BenchmarkCase getCase(int scale, Random rand);
