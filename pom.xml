@@ -62,6 +62,13 @@
 		<module>tests/org.eclipse.incquery.examples.cps.xform.m2m.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.xform.m2t.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.xform.serializer.test</module>
+		<!-- Ignored because we are not able to resolve mondo-sam (no update site) -->
+		<!-- 
+		<module>tests/org.eclipse.incquery.examples.cps.performance.tests</module>
+		
+		<module>releng/org.eclipse.incquery.examples.cps.rcpapplication.headless</module>
+		<module>releng/org.eclipse.incquery.examples.cps.rcpapplication.headless.product</module>
+		-->
 
 	</modules>
 	<properties>

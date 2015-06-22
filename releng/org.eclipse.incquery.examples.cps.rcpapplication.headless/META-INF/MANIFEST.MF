@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Headless Test App
+Bundle-SymbolicName: org.eclipse.incquery.examples.cps.rcpapplication.headless;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: IncQueryLabs Inc.
+Require-Bundle: org.eclipse.core.runtime,
+ org.junit,
+ org.eclipse.incquery.examples.cps.performance.tests,
+ org.eclipse.incquery.examples.cps.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
