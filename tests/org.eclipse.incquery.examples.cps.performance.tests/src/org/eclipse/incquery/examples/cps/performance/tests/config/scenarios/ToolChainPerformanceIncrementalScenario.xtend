@@ -24,12 +24,12 @@ class ToolChainPerformanceIncrementalScenario extends CPSBenchmarkScenario {
 			new EMFResourceInitializationPhase("EMFResourceInitialization"),
 			benchmarkCase.getGenerationPhase("Generation"),
 			new InitializationPhase("Initialization"),
-			new M2MTransformationPhase("M2MTransformation"),
-			new M2TTransformationPhase("M2TTransformation"),
+			new M2MTransformationPhase("M2MTransformation1"),
+			new M2TTransformationPhase("M2TTransformation1"),
 			new ChangeMonitorInitializationPhase("ChangeMonitorInitialization"),
 			benchmarkCase.getModificationPhase("Modification"),
-			new M2MTransformationPhase("M2MTransformation"),
-			new M2TDeltaTransformationPhase("M2TTransformation")
+			new M2MTransformationPhase("M2MTransformation2"),
+			new M2TDeltaTransformationPhase("M2TTransformation2")
 		)
 		rootPhase = seq
 	}

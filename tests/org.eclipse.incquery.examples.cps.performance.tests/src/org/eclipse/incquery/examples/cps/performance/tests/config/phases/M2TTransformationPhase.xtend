@@ -35,9 +35,9 @@ class M2TTransformationPhase extends AtomicPhase {
 
 		val projectName = "integration.test.generated.code"
 		var ICPSGenerator codeGenerator = null
-		if (cpsToken.generatorType.equals(GeneratorType.DISTRIBUTED)) {
+		if (cpsToken.generatorType.equals(GeneratorType.TEMPLATE)) {
 			codeGenerator = new org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator(projectName, engine, true);
-		} else if (cpsToken.generatorType.equals(GeneratorType.JDT_BASED)) {
+		} else if (cpsToken.generatorType.equals(GeneratorType.JDT)) {
 			codeGenerator = new CodeGenerator(projectName, engine);
 		}
 		cpsToken.codeGenerator = codeGenerator

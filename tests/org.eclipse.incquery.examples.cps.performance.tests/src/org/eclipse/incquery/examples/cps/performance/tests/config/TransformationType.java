@@ -11,14 +11,15 @@ import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.QueryResultTra
 import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.ViatraTransformation;
 
 public enum TransformationType {
-    BATCH_SIMPLE {public CPSTransformationWrapper getWrapper() {return new BatchSimple();}},
-    BATCH_OPTIMIZED {public CPSTransformationWrapper getWrapper() {return new BatchOptimized();}},
-    BATCH_INCQUERY {public CPSTransformationWrapper getWrapper() {return new BatchIncQuery();}},
-    BATCH_VIATRA {public CPSTransformationWrapper getWrapper() {return new BatchViatra();}},
-    INCR_QUERY_RESULT_TRACEABILITY {public CPSTransformationWrapper getWrapper() {return new QueryResultTraceability();}},
-    INCR_EXPLICIT_TRACEABILITY {public CPSTransformationWrapper getWrapper() {return new ExplicitTraceability();}},
-    INCR_AGGREGATED {public CPSTransformationWrapper getWrapper() {return new PartialBatch();}},
-    INCR_VIATRA {public CPSTransformationWrapper getWrapper() {return new ViatraTransformation();}};
+    BATCH_SIMPLE {public CPSTransformationWrapper getWrapper() {return new BatchSimple();} public boolean isIncremental(){return false;}},
+    BATCH_OPTIMIZED {public CPSTransformationWrapper getWrapper() {return new BatchOptimized();} public boolean isIncremental(){return false;}},
+    BATCH_INCQUERY {public CPSTransformationWrapper getWrapper() {return new BatchIncQuery();} public boolean isIncremental(){return false;}},
+    BATCH_VIATRA {public CPSTransformationWrapper getWrapper() {return new BatchViatra();} public boolean isIncremental(){return false;}},
+    INCR_QUERY_RESULT_TRACEABILITY {public CPSTransformationWrapper getWrapper() {return new QueryResultTraceability();} public boolean isIncremental(){return true;}},
+    INCR_EXPLICIT_TRACEABILITY {public CPSTransformationWrapper getWrapper() {return new ExplicitTraceability();} public boolean isIncremental(){return true;}},
+    INCR_AGGREGATED {public CPSTransformationWrapper getWrapper() {return new PartialBatch();} public boolean isIncremental(){return true;}},
+    INCR_VIATRA {public CPSTransformationWrapper getWrapper() {return new ViatraTransformation();} public boolean isIncremental(){return true;}};
     
     public abstract CPSTransformationWrapper getWrapper();
+    public abstract boolean isIncremental();
 }

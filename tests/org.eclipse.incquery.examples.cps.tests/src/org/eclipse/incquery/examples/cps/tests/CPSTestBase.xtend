@@ -7,6 +7,7 @@ import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
 import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
 import org.junit.BeforeClass
+import org.apache.log4j.FileAppender
 
 class CPSTestBase {
 	
@@ -14,6 +15,7 @@ class CPSTestBase {
 	
 	val static STATS_LAYOUT = "%c{1}" + ModelStats.DELIMITER + "%m%n";
 	val static COMMON_LAYOUT = "%c{1} - %m%n";
+	val static FILE_LOG_LAYOUT_PREFIX = "[%d{MMM/dd HH:mm:ss}] ";
 	
 	@BeforeClass
 	def static setupRootLogger() {
@@ -28,11 +30,15 @@ class CPSTestBase {
 	
 	def static initLoggerForLevel(Logger logger, Level level, String patternLayout) {
 		var ConsoleAppender ca = new ConsoleAppender();
+		val logFilePath = "./results/log/log.log";
+		val fileAppender = new FileAppender(new PatternLayout(patternLayout+FILE_LOG_LAYOUT_PREFIX),logFilePath,true);
+		fileAppender.threshold = Level.DEBUG;
 		ca.setWriter(new OutputStreamWriter(System.out));
 		ca.setLayout(new PatternLayout(patternLayout));
 		logger.setAdditivity(false);
 		logger.removeAllAppenders();
 		logger.addAppender(ca);
+		logger.addAppender(fileAppender);
 		logger.setLevel(level);
 	}
 }

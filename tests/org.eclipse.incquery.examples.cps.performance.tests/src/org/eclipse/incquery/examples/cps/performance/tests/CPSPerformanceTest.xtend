@@ -29,7 +29,7 @@ abstract class CPSPerformanceTest extends CPSTestBase {
 	val int scale
 	val BenchmarkScenario scenario
 	val GeneratorType generatorType
-	val TransformationType wrapperType
+	protected val TransformationType wrapperType
 //	IProject project
 
     
@@ -80,6 +80,11 @@ abstract class CPSPerformanceTest extends CPSTestBase {
 
 	@Test(timeout=600000)
 	def void completeToolchainIntegrationTest() {
+		val jsonResultFolder="./results/json/"
+		completeToolchainIntegrationTest(jsonResultFolder)
+	}
+	
+	def void completeToolchainIntegrationTest(String jsonResultFolder) {
 		startTest
 		
 		// communication unit between the phases
@@ -92,7 +97,7 @@ abstract class CPSPerformanceTest extends CPSTestBase {
 		token.generatorType = generatorType
 		
 		val engine = new BenchmarkEngine
-		JsonSerializer::setResultPath("./results/json/")
+		JsonSerializer::setResultPath(jsonResultFolder)
 		
 		engine.runBenchmark(scenario, token)
 
