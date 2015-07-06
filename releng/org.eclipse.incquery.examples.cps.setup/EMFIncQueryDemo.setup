@@ -87,7 +87,7 @@
         versionRange="[3.0.0,4.0.0)"/>
     <requirement
         name="org.eclipse.viatra.emf.runtime.feature.feature.group"
-        versionRange="[0.7.0,0.8.0)"/>
+        versionRange="[0.8.0,0.9.0)"/>
     <repository
         url="http://download.eclipse.org/incquery/updates-extra/integration/"/>
     <repository
@@ -158,7 +158,7 @@
           versionRange="[3.0.0,4.0.0)"/>
       <requirement
           name="org.eclipse.viatra.emf.runtime.feature.feature.group"
-          versionRange="[0.7.0,0.8.0)"/>
+          versionRange="[0.8.0,0.9.0)"/>
       <repositoryList
           name="Dependencies">
         <repository

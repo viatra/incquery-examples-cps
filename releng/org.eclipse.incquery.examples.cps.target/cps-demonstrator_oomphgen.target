@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from Demo Targlet Platform" sequenceNumber="11">
+<target name="Generated from Demo Targlet Platform" sequenceNumber="13">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="com.google.inject.multibindings" version="3.0.0.v201402270930"/>
-      <unit id="org.eclipse.incquery.testing.sdk.feature.feature.group" version="1.0.0.201504241635"/>
-      <unit id="org.eclipse.incquery.tooling.ui.visualization.feature.feature.group" version="0.10.0.201504241635"/>
-      <unit id="org.eclipse.incquery.viewers.tooling.ui.feature.feature.group" version="1.0.0.201504241635"/>
-      <unit id="org.eclipse.incquery.viewers.tooling.ui.zest.feature.feature.group" version="0.10.0.201504241635"/>
+      <unit id="org.eclipse.incquery.testing.sdk.feature.feature.group" version="1.0.0.201506261635"/>
+      <unit id="org.eclipse.incquery.tooling.ui.visualization.feature.feature.group" version="0.10.0.201506261635"/>
+      <unit id="org.eclipse.incquery.viewers.tooling.ui.feature.feature.group" version="1.0.0.201506261635"/>
+      <unit id="org.eclipse.incquery.viewers.tooling.ui.zest.feature.feature.group" version="0.10.0.201506261635"/>
       <repository location="http://download.eclipse.org/incquery/updates-extra/integration/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
@@ -22,7 +22,7 @@
       <repository location="http://download.eclipse.org/releases/luna"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.gef4.geometry.feature.group" version="0.1.0.201504250204"/>
+      <unit id="org.eclipse.gef4.geometry.feature.group" version="0.1.0.201506260808"/>
       <unit id="org.eclipse.gef4.zest.sdk.feature.group" version="0.1.0.201408012303"/>
       <repository location="http://download.eclipse.org/tools/gef/gef4/updates/integration"/>
     </location>
@@ -33,11 +33,11 @@
       <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.viatra.emf.runtime.feature.feature.group" version="0.7.0.201504241632"/>
+      <unit id="org.eclipse.viatra.emf.runtime.feature.feature.group" version="0.7.0.201506261632"/>
       <repository location="http://download.eclipse.org/viatra2/emf/updates/integration"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.8.2.v201504100559"/>
+      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.8.3.v201506010551"/>
       <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
     </location>
   </locations>
