@@ -11,7 +11,7 @@ Require-Bundle: com.google.guava,
  org.eclipse.incquery.examples.cps.model;visibility:=reexport,
  org.eclipse.incquery.examples.cps.deployment;visibility:=reexport,
  org.eclipse.incquery.examples.cps.traceability;visibility:=reexport,
- org.eclipse.incquery.runtime;bundle-version="[1.0.0,1.1.0)";visibility:=reexport,
+ org.eclipse.incquery.runtime;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.junit;bundle-version="4.0.0";visibility:=reexport,
  org.eclipse.incquery.examples.cps.generator;bundle-version="0.1.0";visibility:=reexport
 Import-Package: org.apache.log4j;version="1.2.15"
