@@ -7,8 +7,12 @@ import org.eclipse.incquery.examples.cps.performance.tests.config.cases.Statisti
 
 class ToolchainPerformanceStatisticsBasedTest extends ToolchainPerformanceTest {
 	
-	new(TransformationType wrapperType, int scale, GeneratorType generatorType) {
-		super(wrapperType, scale, generatorType)
+	new(TransformationType wrapperType, int scale, GeneratorType generatorType, int runIndex) {
+		super(wrapperType, scale, generatorType, runIndex)
+	}
+	
+	new(TransformationType wrapperType,	int scale, GeneratorType generatorType) {
+    	this(wrapperType, scale, generatorType,1)
 	}
 	
 	override getCase(int scale, Random rand) {

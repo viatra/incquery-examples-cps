@@ -33,13 +33,18 @@ abstract class CPSPerformanceTest extends CPSTestBase {
 //	IProject project
 
     
-    new(TransformationType wrapperType,	int scale, GeneratorType generatorType) {
+    new(TransformationType wrapperType,	int scale, GeneratorType generatorType, int runIndex) {
 		this.wrapperType = wrapperType
 		this.scale = scale 
 		this.generatorType = generatorType
 		this.xform = wrapperType.wrapper
 		this.scenario = getScenario(scale, rand)
-		this.scenario.tool = xform.class.simpleName + "-" + generatorType.name
+		this.scenario.runIndex = runIndex
+		this.scenario.tool = wrapperType.name + "-" + generatorType.name
+    }
+    
+    new(TransformationType wrapperType,	int scale, GeneratorType generatorType) {
+    	this(wrapperType, scale, generatorType,1)
 	}
 	
 	def startTest(){

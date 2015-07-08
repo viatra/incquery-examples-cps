@@ -28,6 +28,7 @@ class Application implements IApplication {
 		val args = context.arguments.get("application.args") as String[]
 		var TransformationType trafoType
 		var int scale
+		var int runIndex
 		var GeneratorType generatorType
 		
 		try {
@@ -35,6 +36,7 @@ class Application implements IApplication {
 			trafoType = TransformationType.valueOf(args.get(0))
 			scale = Integer.parseInt(args.get(1))
 			generatorType = GeneratorType.valueOf(args.get(2))
+			runIndex = Integer.parseInt(args.get(3))
 			initLogger(trafoType, generatorType, scale)
 			
 			info('''
@@ -43,6 +45,7 @@ class Application implements IApplication {
 					XFORM:		«trafoType»
 					GENERATOR:	«generatorType»
 					SCALE:		«scale»
+					RUN INDEX:	«runIndex»
 					
 			''')
 			
@@ -57,8 +60,8 @@ class Application implements IApplication {
 				resultsFolder.mkdirs
 			}
 			
-			runTest(trafoType, 1, generatorType, warmupFolderPath)
-			runTest(trafoType, scale, generatorType, resultsFolderPath)
+			runTest(trafoType, 1, generatorType, warmupFolderPath, runIndex)
+			runTest(trafoType, scale, generatorType, resultsFolderPath, runIndex)
 			
 		} catch (Exception ex) {
 			info(ex.message)
@@ -86,14 +89,14 @@ class Application implements IApplication {
 		rootLogger.level = Level.INFO
 	}
 
-	def runTest(TransformationType trafoType, int scale, GeneratorType generatorType, String resultsFolder) {
+	def runTest(TransformationType trafoType, int scale, GeneratorType generatorType, String resultsFolder,  int runIndex) {
 		// init class
 		info("************ Start class init")
 		ToolchainPerformanceStatisticsBasedTest.callGCBefore()
 		
 		// init instance
 		info("************ Start instance init")
-		var test = new ToolchainPerformanceStatisticsBasedTest(trafoType, scale, generatorType)
+		var test = new ToolchainPerformanceStatisticsBasedTest(trafoType, scale, generatorType, runIndex)
 		test.cleanupBefore()
 		
 		// run test
