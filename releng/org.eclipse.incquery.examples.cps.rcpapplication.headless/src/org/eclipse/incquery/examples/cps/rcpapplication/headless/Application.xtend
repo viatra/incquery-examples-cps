@@ -1,17 +1,15 @@
 package org.eclipse.incquery.examples.cps.rcpapplication.headless
 
 import java.io.File
+import org.apache.log4j.FileAppender
+import org.apache.log4j.Level
+import org.apache.log4j.Logger
+import org.apache.log4j.PatternLayout
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.incquery.examples.cps.performance.tests.ToolchainPerformanceStatisticsBasedTest
 import org.eclipse.incquery.examples.cps.performance.tests.config.GeneratorType
 import org.eclipse.incquery.examples.cps.performance.tests.config.TransformationType
-import org.apache.log4j.Logger
-import org.apache.log4j.ConsoleAppender
-import org.apache.log4j.FileAppender
-import org.apache.log4j.PatternLayout
-import org.apache.log4j.Level
-import java.io.OutputStreamWriter
 
 /** 
  * This class controls all aspects of the application's execution
@@ -81,6 +79,7 @@ class Application implements IApplication {
 		val logFilePath = '''./results/log/log_«trafoType»_«generatorType»_size_«scale»_startedAt_«System.currentTimeMillis».log'''
 		val fileAppender = new FileAppender(new PatternLayout(FILE_LOG_LAYOUT_PREFIX+COMMON_LAYOUT),logFilePath,true)
 		val rootLogger = Logger.rootLogger
+		rootLogger.removeAllAppenders
 		rootLogger.addAppender(fileAppender)
 		rootLogger.additivity = false
 		rootLogger.level = Level.INFO
