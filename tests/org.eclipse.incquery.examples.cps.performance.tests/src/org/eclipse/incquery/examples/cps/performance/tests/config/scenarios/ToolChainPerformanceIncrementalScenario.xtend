@@ -35,7 +35,7 @@ class ToolChainPerformanceIncrementalScenario extends CPSBenchmarkScenario {
 	}
 	
 	override getName() {
-		return "ToolChainPerformanceIncremental"
+		return "ToolChainPerformance"
 	}
 
 }

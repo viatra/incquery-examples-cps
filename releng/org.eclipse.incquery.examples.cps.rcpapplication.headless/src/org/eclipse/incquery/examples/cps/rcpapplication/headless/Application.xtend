@@ -79,13 +79,10 @@ class Application implements IApplication {
 		Logger.getLogger("org.eclipse.incquery").level = Level.INFO
 		
 		val logFilePath = '''./results/log/log_«trafoType»_«generatorType»_size_«scale»_startedAt_«System.currentTimeMillis».log'''
-		var ConsoleAppender consoleAppender = new ConsoleAppender()
 		val fileAppender = new FileAppender(new PatternLayout(FILE_LOG_LAYOUT_PREFIX+COMMON_LAYOUT),logFilePath,true)
-		consoleAppender.setWriter(new OutputStreamWriter(System.out))
-		consoleAppender.setLayout(new PatternLayout(COMMON_LAYOUT))
 		val rootLogger = Logger.rootLogger
-		rootLogger.addAppender(consoleAppender)
 		rootLogger.addAppender(fileAppender)
+		rootLogger.additivity = false
 		rootLogger.level = Level.INFO
 	}
 
