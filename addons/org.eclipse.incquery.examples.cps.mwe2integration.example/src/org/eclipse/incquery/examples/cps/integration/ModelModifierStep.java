@@ -7,38 +7,28 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance;
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType;
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
-import org.eclipse.viatra.emf.mwe2integration.IListeningChannel;
-import org.eclipse.viatra.emf.mwe2integration.ITargetChannel;
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.MWE2TransformationStep;
+import org.eclipse.viatra.emf.mwe2integration.mwe2impl.TransformationStep;
 
-public class ModelModifierStep extends MWE2TransformationStep{
-    private static final String chainEndName = "chainEndChannel";
-    private static final String modifierName = "ModifierChannel";
-    private static final String m2mname = "M2MChannel";
-    
+public class ModelModifierStep extends TransformationStep{
     protected CPSToDeployment model;
     protected CPSModelBuilderUtil modelBuilder = new CPSModelBuilderUtil();
     
-    
     @Override
-    public void initialize(IWorkflowContext ctx) {
+    public void doInitialize(IWorkflowContext ctx) {
         model = (CPSToDeployment) ctx.get("model");  
     }
-
+    
     @Override
-    public void execute() {
-        processNextEvent();
+    public void doExecute() {
         modifyModel();
         System.out.println("Model modification executed");
-        sendEventToAllTargets();
-
+        
     }
-
+    
     @Override
     public void dispose() {
-        isRunning = false;
         System.out.println("Disposed model modifier");
-    }
+    } 
     
     private void modifyModel(){
         ApplicationType appType = null;
@@ -66,32 +56,4 @@ public class ModelModifierStep extends MWE2TransformationStep{
             modelBuilder.prepareApplicationInstanceWithId(appType,"new.app.instance", instance);
         }
     }
-    
-    public ITargetChannel getChainEndChannel() {
-        return getTargetChannel(chainEndName);
-    }
-
-    public void setChainEndChannel(ITargetChannel chainend) {
-        chainend.setName(chainEndName);
-        addTargetChannel(chainend);
-    }
-    
-    public IListeningChannel getModifierChannel() {
-        return getListeningChannel(modifierName);
-    }
-
-    public void setModifierChannel(IListeningChannel chainend) {
-        chainend.setName(modifierName);
-        addListeningChannel(chainend);
-    }
-    
-    public ITargetChannel getM2MChannel() {
-        return getTargetChannel(m2mname);
-    }
-
-    public void setM2MChannel(ITargetChannel m2tChannel) {
-        m2tChannel.setName(m2mname);
-        addTargetChannel(m2tChannel);
-    }
-
 }

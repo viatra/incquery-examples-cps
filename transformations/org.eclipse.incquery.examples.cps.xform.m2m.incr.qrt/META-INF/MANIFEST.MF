@@ -8,12 +8,12 @@ Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.util,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules
 Require-Bundle: org.eclipse.emf.ecore,
- org.eclipse.incquery.runtime;bundle-version="[1.0.0,1.1.0)",
+ org.eclipse.incquery.runtime;bundle-version="[1.0.0,1.2.0)",
  org.eclipse.incquery.examples.cps.model,
  org.eclipse.incquery.examples.cps.deployment,
  org.eclipse.incquery.examples.cps.traceability,
- org.eclipse.incquery.runtime.evm;bundle-version="[1.0.0,1.1.0)",
+ org.eclipse.incquery.runtime.evm;bundle-version="[1.0.0,1.2.0)",
  org.eclipse.incquery.examples.cps.xform.m2m.util,
- org.eclipse.xtend.lib;bundle-version="2.6.0"
+ org.eclipse.xtend.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j

@@ -6,7 +6,7 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
 Require-Bundle: com.google.guava,
- org.eclipse.xtend.lib;bundle-version="2.6.0",
+ org.eclipse.xtend.lib,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.expl,
  org.eclipse.incquery.examples.cps.xform.m2m.batch.simple,

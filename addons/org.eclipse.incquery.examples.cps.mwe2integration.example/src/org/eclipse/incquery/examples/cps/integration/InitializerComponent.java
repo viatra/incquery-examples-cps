@@ -36,7 +36,7 @@ public class InitializerComponent implements IWorkflowComponent {
     protected int modelSize;
     private int seed = 11111;
     private String modelDir;
-    private String modelName;
+    private String modelName = "MWE_TEST";
     private String outputProjectName;
     private String outputProjectLocation;
 
@@ -107,7 +107,14 @@ public class InitializerComponent implements IWorkflowComponent {
     public void invoke(IWorkflowContext ctx) {
         CPSModelBuilderUtil modelBuilderUtil = new CPSModelBuilderUtil();
         DefaultSerializer serializer = new DefaultSerializer();
-
+        
+        String locationString = (String) ctx.get("projectLocation");
+        if(locationString != null){
+            outputProjectLocation = locationString;
+        }
+        modelDir = outputProjectLocation+"\\"+outputProjectName+"\\"+"model";
+        
+        
         // //////////////////////////////////
         // //// EMF initialization phase
         // //////////////////////////////////

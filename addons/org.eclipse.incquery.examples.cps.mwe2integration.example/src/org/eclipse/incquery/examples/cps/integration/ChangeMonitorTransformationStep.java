@@ -7,23 +7,18 @@ import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeDelta
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeMonitor;
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
-import org.eclipse.viatra.emf.mwe2integration.IListeningChannel;
-import org.eclipse.viatra.emf.mwe2integration.ITargetChannel;
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.MWE2TransformationStep;
+import org.eclipse.viatra.emf.mwe2integration.IPublishTo;
+import org.eclipse.viatra.emf.mwe2integration.mwe2impl.TransformationStep;
 
-public class ChangeMonitorTransformationStep extends MWE2TransformationStep {
-    private static final String changemonitorname = "ChangeMonitorChannel";
-    private static final String m2tname = "M2TChannel";
-    
+public class ChangeMonitorTransformationStep extends TransformationStep {
     protected AdvancedIncQueryEngine engine;
     protected DeploymentChangeMonitor monitor;
-
+    protected DeploymentChangeDelta delta;
     
     @Override
-    public void initialize(IWorkflowContext ctx) {
+    public void doInitialize(IWorkflowContext ctx) {
         // create transformation
         System.out.println("Initialized change monitor");
-        this.context = ctx;
         engine = (AdvancedIncQueryEngine) ctx.get("engine");
         Deployment deployment = ((CPSToDeployment) ctx.get("model")).getDeployment();
         monitor = new DeploymentChangeMonitor(deployment, engine);
@@ -35,35 +30,20 @@ public class ChangeMonitorTransformationStep extends MWE2TransformationStep {
     }
 
     @Override
-    public void execute() {
-        processNextEvent();
-        DeploymentChangeDelta delta = monitor.createCheckpoint();
+    public void doExecute() {
+        delta = monitor.createCheckpoint();
         System.out.println("Checkpoint created");
-        sendEventToAllTargets(delta);
-    }
-
-    @Override
-    public void dispose() {
-        isRunning = false;
-        System.out.println("Disposed change monitor");
     }
     
-    public IListeningChannel getChangeMonitorChannel() {
-        return getListeningChannel(changemonitorname);
+    @Override
+    public void publishMessages() {
+        for (IPublishTo iPublishTo : publishTo) {
+            iPublishTo.publishMessage(delta);
+        }
     }
-
-    public void setChangeMonitorChannel(IListeningChannel changeMonitorChannel) {
-        changeMonitorChannel.setName(changemonitorname);
-        addListeningChannel(changeMonitorChannel);
+    
+    @Override
+    public void dispose() {
+        System.out.println("Disposed change monitor");
     }
-
-    public ITargetChannel getM2TChannel() {
-        return getTargetChannel(m2tname);
-    }
-
-    public void setM2TChannel(ITargetChannel m2tChannel) {
-        m2tChannel.setName(m2tname);
-        addTargetChannel(m2tChannel);
-    }
-
 }

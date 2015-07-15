@@ -34,6 +34,8 @@
 		<!-- Addons -->
 		<module>addons/org.eclipse.incquery.examples.cps.queries.validation</module>
 		<module>addons/org.eclipse.incquery.examples.cps.view</module>
+		<module>addons/org.eclipse.incquery.examples.cps.mwe2integration.example</module>
+		
 
 		<!-- M2M Transformations -->
 		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.util</module>
@@ -62,9 +64,11 @@
 		<module>tests/org.eclipse.incquery.examples.cps.xform.m2m.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.xform.m2t.tests</module>
 		<module>tests/org.eclipse.incquery.examples.cps.xform.serializer.test</module>
+		
 		<!-- Ignored because we are not able to resolve mondo-sam (no update site) -->
 		<!-- 
 		<module>tests/org.eclipse.incquery.examples.cps.performance.tests</module>
+		<module>tests/org.eclipse.incquery.examples.cps.mwe2integration.performancetest</module>
 		
 		<module>releng/org.eclipse.incquery.examples.cps.rcpapplication.headless</module>
 		<module>releng/org.eclipse.incquery.examples.cps.rcpapplication.headless.product</module>
