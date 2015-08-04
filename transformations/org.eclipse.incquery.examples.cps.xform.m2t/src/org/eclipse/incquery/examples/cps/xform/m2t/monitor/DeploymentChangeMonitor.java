@@ -97,7 +97,9 @@ public class DeploymentChangeMonitor extends AbstractDeploymentChangeMonitor {
 		disappearAccumulator = Sets.newHashSet();
 		deploymentBetweenCheckpointsChanged = deploymentChanged;
 		Map<DeploymentElement, String> elementsUpdatedOrDeleted = (Map<DeploymentElement, String>) executionSchema.getContext().get(ChangeMonitorJob.OUTDATED_ELEMENTS);
-
+		if(elementsUpdatedOrDeleted == null){
+		    elementsUpdatedOrDeleted = Maps.newHashMap();
+		}
 		for (DeploymentElement deploymentElement : elementsUpdatedOrDeleted.keySet()) {
 			// Refresh the list of host IP addresses and app identifiers
 			if(deploymentElement instanceof DeploymentHost){

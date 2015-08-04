@@ -1,0 +1,35 @@
+module org.eclipse.incquery.examples.cps.integration.batch
+
+import org.eclipse.viatra.emf.mwe2integration.*
+import org.eclipse.viatra.emf.mwe2integration.mwe2impl.*
+import org.eclipse.incquery.examples.cps.integration.*
+import org.eclipse.incquery.examples.cps.integration.batch.*
+import org.eclipse.incquery.examples.cps.integration.messages.*
+
+Workflow {
+	component = InitializerComponent{
+		modelSize = "4"
+		// Specifiy a correct Project Location
+		outputProjectLocation = "C:\\MWE_TEST"
+		outputProjectName = "VIATRA_BATCH"
+	}
+	
+	component = TransformationChain {
+		step = ForLoop{
+			iterations = "2"
+			
+			step = M2MBatchViatraTransformationStep {}
+			step = ChangeMonitorTransformationStep{
+				publishing = PublishTo{topicName = "M2TTopic" factory = ChangeDeltaMessageFactory{}}
+			}
+			step = M2TDistributedTransformationStep{
+				subscription = SubscribeTo{topicName = "M2TTopic" processor = ChangeDeltaMessageProcessor{}}
+				publishing = PublishTo{topicName = "SerializeTopic" factory = M2TOutputMessageFactory{}}
+			}
+			step = SerializerTransformationStep{
+				subscription = SubscribeTo{topicName = "SerializeTopic" processor = M2TOutputMessageProcessor{}}
+			}
+			step = ModelModifierStep {}
+		}
+	}
+}
