@@ -75,7 +75,7 @@
         name="org.eclipse.incquery.viewers.tooling.ui.zest.feature.feature.group"/>
     <requirement
         name="org.eclipse.xtext.sdk.feature.group"
-        versionRange="[2.8.0,2.9.0)"/>
+        versionRange="[2.9.0,2.10.0)"/>
     <requirement
         name="org.eclipse.gef4.geometry.feature.group"/>
     <requirement
@@ -98,7 +98,7 @@
     <repository
         url="http://download.eclipse.org/viatra2/emf/updates/integration"/>
     <repository
-        url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+        url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/milestones/"/>
   </setupTask>
   <setupTask
       xsi:type="setup.targlets:TargletTask">
@@ -138,7 +138,7 @@
           name="org.eclipse.sdk.feature.group"/>
       <requirement
           name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.8.0,2.9.0)"/>
+          versionRange="[2.9.0,2.10.0)"/>
       <requirement
           name="org.eclipse.emf.sdk.feature.group"
           versionRange="[2.9.0,3.0.0)"/>
@@ -174,7 +174,7 @@
         <repository
             url="http://download.eclipse.org/viatra2/emf/updates/integration"/>
         <repository
-            url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+            url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/milestones/"/>
       </repositoryList>
     </targlet>
   </setupTask>
