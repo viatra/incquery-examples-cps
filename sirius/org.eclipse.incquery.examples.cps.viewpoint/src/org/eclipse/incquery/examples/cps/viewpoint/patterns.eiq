@@ -1,0 +1,33 @@
+package org.eclipse.incquery.examples.cps.viewpoint
+
+import "http://org.eclipse.incquery/model/deployment"
+
+@Bind(deployment="self")
+@Return(result="host")
+pattern deployedHosts(deployment: Deployment, host: DeploymentHost){
+	Deployment.hosts(deployment, host);
+}
+
+@Bind(host="self")
+@Return(result="application")
+pattern hostApplication(host: DeploymentHost, application: DeploymentApplication){
+	DeploymentHost.applications(host, application);
+}
+
+@Bind(app="self")
+@Return(result="state")
+pattern applicationState(app: DeploymentApplication, state: BehaviorState){
+	DeploymentApplication.behavior.states(app, state);
+}
+
+@Bind(deployment="self")
+@Return(result="t")
+pattern transitions(deployment: Deployment, t: BehaviorTransition){
+	Deployment.hosts.applications.behavior.transitions(deployment, t);
+}
+
+@Bind(t="self")
+@Return(result="source")
+pattern transitionSource(t: BehaviorTransition, source: BehaviorState){
+	BehaviorState.outgoing(source, t);
+}
