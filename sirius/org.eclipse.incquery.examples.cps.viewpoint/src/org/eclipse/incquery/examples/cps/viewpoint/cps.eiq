@@ -1,0 +1,189 @@
+package org.eclipse.incquery.examples.cps.viewpoint
+
+import "http://org.eclipse.incquery/model/cps"
+import "http://www.eclipse.org/emf/2002/Ecore"
+
+@Bind(cps="self")
+@Return(result="host")
+pattern nodeOverloadedHostInstance(cps: CyberPhysicalSystem, host: HostInstance){
+	CyberPhysicalSystem.hostTypes.instances(cps, host);
+	find hostIsOverloaded(host);
+}
+
+@Bind(cps="self")
+@Return(result="host")
+pattern nodeNotOverloadedHostInstance(cps: CyberPhysicalSystem, host: HostInstance){
+	CyberPhysicalSystem.hostTypes.instances(cps, host);
+	neg find hostIsOverloaded(host);
+}
+
+@Bind(cps="self")
+@Return(result="request")
+pattern nodeSatisfiableRequest(cps: CyberPhysicalSystem, request: Request){
+	CyberPhysicalSystem.requests(cps, request);
+	find requestIsSatisfiable(request);
+}
+
+@Bind(cps="self")
+@Return(result="request")
+pattern nodeUnsatisfiableRequest(cps: CyberPhysicalSystem, request: Request){
+	CyberPhysicalSystem.requests(cps, request);
+	find requestIsUnsatisfiable(request);
+}
+
+pattern connectionRequestToHost(request: Request, host: HostInstance){
+	Request.requirements.applications.allocatedTo(request, host);
+}
+
+pattern requestIsSatisfiable(request: Request){
+	/* A request is satisfiable if there is no reason it could not be satisfied */
+	neg find requestIsUnsatisfiable(request);
+}
+
+pattern requestIsUnsatisfiable(request: Request){
+	/* A request is unsatisfiable, if there is at least one requirement, which cannot be satisfied */
+	Request.requirements(request, requirement);
+	find requestRequirementIsUnsatisfiable(requirement);
+}
+
+pattern requestRequirementIsUnsatisfiable(requirement: Requirement){
+	/* A requirement is unsatisfiable if it cannot be satisfied */
+	neg find requestRequirementIsSatisfiable(requirement);
+}
+
+pattern requestRequirementIsSatisfiable(requirement: Requirement){
+	/* A requirement is satisfiable if there is at least count applications that are active */
+	Requirement.^count(requirement, c);
+	activeCount == count find activeApplicationInstances(requirement, _applicationInstance);
+	check(activeCount >= c);
+}
+
+pattern activeApplicationInstances(requirement: Requirement, applicationInstance: ApplicationInstance){
+	Requirement.type(requirement, appType);
+	Requirement.applications(requirement, applicationInstance);
+	ApplicationInstance.type(applicationInstance, appType);
+	
+	/* An application instance is active if it's in running state, and has its resource requirements met by its host */
+	ApplicationInstance.state(applicationInstance, ::Running);
+	
+	/* The resource requirements of an applicationInstance is met if the hostInstance it is allocated to is not overloaded */
+	ApplicationInstance.allocatedTo(applicationInstance, hostInstance);
+	neg find hostIsOverloaded(hostInstance);
+}
+
+private pattern hostInstanceResourceRequirement(hostInstance: HostInstance, requirement: ResourceRequirement){
+	HostInstance.applications(hostInstance, applicationInstance);
+	ApplicationInstance.type(applicationInstance, applicationType);
+	ApplicationType.requirements(applicationType, requirement);
+}
+
+private pattern allocatedApplicationInstance(hostInstance : HostInstance, applicationInstance : ApplicationInstance){
+	HostInstance.applications(hostInstance, applicationInstance);
+}
+
+pattern hostIsOverloaded(hostInstance: HostInstance){
+	/* A host is overloaded if the total Ram consumption exceeds total available ram */
+	find hostEstimatedRamConsumption(hostInstance, ram);
+	HostInstance.totalRam(hostInstance, total);
+	check(total < ram);
+} or {
+	/* A host is overloaded if the total Cpu consumption exceeds total available Cpu */
+	find hostEstimatedCpuConsumption(hostInstance, cpu);
+	HostInstance.totalCpu(hostInstance, total);
+	check(total < cpu);
+} or {
+	/* A host is overloaded if the total Hdd consumption exceeds total available Hdd */
+	find hostEstimatedHddConsumption(hostInstance, hdd);
+	HostInstance.totalHdd(hostInstance, total);
+	check(total < hdd);
+}
+
+pattern hostEstimatedCpuConsumption(hostInstance: HostInstance, cpu: EInt){
+	/* Estimate total consumption by calculating an average then multiplying it with the  */
+	find hostInstanceMaxCpuConsumption(hostInstance, max);
+	find hostInstanceMinCpuConsumption(hostInstance, min);
+	c == count find allocatedApplicationInstance(hostInstance, _applications);
+	cpu == eval((max+min)*c/2);
+}
+
+pattern hostInstanceMaxCpuConsumption(hostInstance: HostInstance, cpu: EInt){
+	find hostInstanceResourceRequirement(hostInstance, requirement);
+	/* It's maximum if no greater can be found */
+	neg find hostInstanceGreaterCpuConsumption(hostInstance, requirement, _greater);
+	ResourceRequirement.requiredCpu(requirement, cpu);
+}
+
+pattern hostInstanceMinCpuConsumption(hostInstance: HostInstance, cpu: EInt){
+	find hostInstanceResourceRequirement(hostInstance, requirement);
+	/* It's minimum if no smaller can be found */
+	neg find hostInstanceGreaterCpuConsumption(hostInstance, _smaller, requirement);
+	ResourceRequirement.requiredCpu(requirement, cpu);
+}
+
+private pattern hostInstanceGreaterCpuConsumption(hostInstance: HostInstance, smaller: ResourceRequirement, greater: ResourceRequirement){
+	find hostInstanceResourceRequirement(hostInstance, smaller);
+	find hostInstanceResourceRequirement(hostInstance, greater);
+	ResourceRequirement.requiredCpu(smaller, smallCpu);
+	ResourceRequirement.requiredCpu(greater, greatCpu);
+	check(greatCpu > smallCpu);
+}
+
+pattern hostEstimatedRamConsumption(hostInstance: HostInstance, ram: EInt){
+	/* Estimate total consumption by calculating an average then multiplying it with the  */
+	find hostInstanceMaxRamConsumption(hostInstance, max);
+	find hostInstanceMinRamConsumption(hostInstance, min);
+	c == count find allocatedApplicationInstance(hostInstance, _applications);
+	ram == eval((max+min)*c/2);
+}
+
+pattern hostInstanceMaxRamConsumption(hostInstance: HostInstance, ram: EInt){
+	find hostInstanceResourceRequirement(hostInstance, requirement);
+	/* It's maximum if no greater can be found */
+	neg find hostInstanceGreaterRamConsumption(hostInstance, requirement, _greater);
+	ResourceRequirement.requiredRam(requirement, ram);
+}
+
+pattern hostInstanceMinRamConsumption(hostInstance: HostInstance, ram: EInt){
+	find hostInstanceResourceRequirement(hostInstance, requirement);
+	/* It's minimum if no smaller can be found */
+	neg find hostInstanceGreaterRamConsumption(hostInstance, _smaller, requirement);
+	ResourceRequirement.requiredRam(requirement, ram);
+}
+
+private pattern hostInstanceGreaterRamConsumption(hostInstance: HostInstance, smaller: ResourceRequirement, greater: ResourceRequirement){
+	find hostInstanceResourceRequirement(hostInstance, smaller);
+	find hostInstanceResourceRequirement(hostInstance, greater);
+	ResourceRequirement.requiredRam(smaller, smallRam);
+	ResourceRequirement.requiredRam(greater, greatRam);
+	check(greatRam > smallRam);
+}
+
+pattern hostEstimatedHddConsumption(hostInstance: HostInstance, hdd: EInt){
+	/* Estimate total consumption by calculating an average then multiplying it with the  */
+	find hostInstanceMaxHddConsumption(hostInstance, max);
+	find hostInstanceMinHddConsumption(hostInstance, min);
+	c == count find allocatedApplicationInstance(hostInstance, _applications);
+	hdd == eval((max+min)*c/2);
+}
+
+pattern hostInstanceMaxHddConsumption(hostInstance: HostInstance, hdd: EInt){
+	find hostInstanceResourceRequirement(hostInstance, requirement);
+	/* It's maximum if no greater can be found */
+	neg find hostInstanceGreaterHddConsumption(hostInstance, requirement, _greater);
+	ResourceRequirement.requiredHdd(requirement, hdd);
+}
+
+pattern hostInstanceMinHddConsumption(hostInstance: HostInstance, hdd: EInt){
+	find hostInstanceResourceRequirement(hostInstance, requirement);
+	/* It's minimum if no smaller can be found */
+	neg find hostInstanceGreaterHddConsumption(hostInstance, _smaller, requirement);
+	ResourceRequirement.requiredHdd(requirement, hdd);
+}
+
+private pattern hostInstanceGreaterHddConsumption(hostInstance: HostInstance, smaller: ResourceRequirement, greater: ResourceRequirement){
+	find hostInstanceResourceRequirement(hostInstance, smaller);
+	find hostInstanceResourceRequirement(hostInstance, greater);
+	ResourceRequirement.requiredHdd(smaller, smallHdd);
+	ResourceRequirement.requiredHdd(greater, greatHdd);
+	check(greatHdd > smallHdd);
+}

@@ -79,4 +79,25 @@
       <defaultLayer name="Default"/>
     </ownedRepresentations>
   </ownedViewpoints>
+  <ownedViewpoints name="cps-satisfaction-analysis" modelFileExtension="cyberphysicalsystem">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-satisfaction-analysis-iq" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
+      <metamodel href="http://org.eclipse.incquery/model/cps#/"/>
+      <defaultLayer name="Default">
+        <nodeMappings name="satisfied-request" semanticCandidatesExpression="@Bind(cps=&quot;self&quot;) @Return(result=&quot;request&quot;) pattern nodeSatisfiableRequest(cps: CyberPhysicalSystem, request: Request){ CyberPhysicalSystem.requests(cps, request); find requestIsSatisfiable(request); }" domainClass="cyberPhysicalSystem.Request">
+          <style xsi:type="style:LozengeNodeDescription" labelExpression="feature:id" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="unsatisfied-request" semanticCandidatesExpression="@Bind(cps=&quot;self&quot;) @Return(result=&quot;request&quot;) pattern nodeUnsatisfiableRequest(cps: CyberPhysicalSystem, request: Request){ CyberPhysicalSystem.requests(cps, request);find requestIsUnsatisfiable(request);}" domainClass="cyberPhysicalSystem.Request">
+          <style xsi:type="style:LozengeNodeDescription" labelExpression="feature:id" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+          </style>
+        </nodeMappings>
+      </defaultLayer>
+    </ownedRepresentations>
+  </ownedViewpoints>
 </description:Group>

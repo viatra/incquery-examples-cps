@@ -5,4 +5,7 @@
   <extension id="org.eclipse.incquery.examples.cps.viewpoint.Patterns" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.viewpoint.Patterns" id="org.eclipse.incquery.examples.cps.viewpoint.Patterns"/>
   </extension>
+  <extension id="org.eclipse.incquery.examples.cps.viewpoint.Cps" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.viewpoint.Cps" id="org.eclipse.incquery.examples.cps.viewpoint.Cps"/>
+  </extension>
 </plugin>
