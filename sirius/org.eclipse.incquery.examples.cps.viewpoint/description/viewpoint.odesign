@@ -83,20 +83,46 @@
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-satisfaction-analysis-iq" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
       <metamodel href="http://org.eclipse.incquery/model/cps#/"/>
       <defaultLayer name="Default">
-        <nodeMappings name="satisfied-request" semanticCandidatesExpression="iqpl: @Bind(cps=&quot;self&quot;) @Return(result=&quot;request&quot;) pattern nodeSatisfiableRequest(cps: CyberPhysicalSystem, request: Request){ CyberPhysicalSystem.requests(cps, request); find org.eclipse.incquery.examples.cps.viewpoint.requestIsSatisfiable(request); }" domainClass="cyberPhysicalSystem.Request">
-          <style xsi:type="style:LozengeNodeDescription" labelExpression="Request" labelPosition="node" resizeKind="NSEW">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
-          </style>
+        <nodeMappings name="request" semanticCandidatesExpression="iqpl: @Bind(cps=&quot;self&quot;) @Return(result=&quot;request&quot;) pattern nodeRequest(cps: CyberPhysicalSystem, request: Request){ CyberPhysicalSystem.requests(cps, request); }" domainClass="cyberPhysicalSystem.Request">
+          <conditionnalStyles predicateExpression="iqpl: @Bind(request=&quot;self&quot;) @Return(result=&quot;satisfiable&quot;) pattern styleSatisfiableRequest(request: Request, satisfiable){ satisfiable == true; find org.eclipse.incquery.examples.cps.viewpoint.requestIsSatisfiable(request); }">
+            <style xsi:type="style:LozengeNodeDescription" labelExpression="Satisfiable request" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="iqpl: @Bind(request=&quot;self&quot;) @Return(result=&quot;satisfiable&quot;) pattern styleUnSatisfiableRequest(request: Request, satisfiable){ satisfiable == true; neg find org.eclipse.incquery.examples.cps.viewpoint.requestIsSatisfiable(request); }">
+            <style xsi:type="style:LozengeNodeDescription" labelExpression="Unsatisfiable Request" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+            </style>
+          </conditionnalStyles>
         </nodeMappings>
-        <nodeMappings name="unsatisfied-request" semanticCandidatesExpression="iqpl: @Bind(cps=&quot;self&quot;) @Return(result=&quot;request&quot;) pattern nodeUnsatisfiableRequest(cps: CyberPhysicalSystem, request: Request){ CyberPhysicalSystem.requests(cps, request);find org.eclipse.incquery.examples.cps.viewpoint.requestIsUnsatisfiable(request);}" domainClass="cyberPhysicalSystem.Request">
-          <style xsi:type="style:LozengeNodeDescription" labelExpression="Request" labelPosition="node" resizeKind="NSEW">
-            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
-            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
-          </style>
+        <nodeMappings name="overloaded-host" semanticCandidatesExpression="iqpl: @Bind(cps=&quot;self&quot;) @Return(result=&quot;host&quot;) pattern nodeHostInstance(cps: CyberPhysicalSystem, host: HostInstance){ CyberPhysicalSystem.hostTypes.instances(cps, host); }" domainClass="cyberPhysicalSystem.HostInstance">
+          <conditionnalStyles predicateExpression="iqpl: @Bind(host=&quot;self&quot;) @Return(result=&quot;result&quot;) pattern styleOverloadedHostInstance(host: HostInstance, result){ result == true; find org.eclipse.incquery.examples.cps.viewpoint.hostIsOverloaded(host);}">
+            <style xsi:type="style:SquareDescription" labelExpression="feature:id" labelPosition="node" resizeKind="NSEW" width="8" height="6">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="iqpl: @Bind(host=&quot;self&quot;) @Return(result=&quot;result&quot;) pattern styleNotOverloadedHostInstance(host: HostInstance, result){ result == true; neg find org.eclipse.incquery.examples.cps.viewpoint.hostIsOverloaded(host);}">
+            <style xsi:type="style:SquareDescription" labelExpression="feature:id" labelPosition="node" resizeKind="NSEW" width="8" height="6">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
+            </style>
+          </conditionnalStyles>
         </nodeMappings>
+        <edgeMappings name="request-uses-host" sourceMapping="//@ownedViewpoints[name='cps-satisfaction-analysis']/@ownedRepresentations[name='cps-satisfaction-analysis-iq']/@defaultLayer/@nodeMappings[name='request']" targetMapping="//@ownedViewpoints[name='cps-satisfaction-analysis']/@ownedRepresentations[name='cps-satisfaction-analysis-iq']/@defaultLayer/@nodeMappings[name='overloaded-host']" targetFinderExpression="iqpl: @Bind(request=&quot;self&quot;) @Return(result=&quot;host&quot;) pattern connectionRequestToHost(request: Request, host: HostInstance){Request.requirements.applications.allocatedTo(request, host);}">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
       </defaultLayer>
     </ownedRepresentations>
   </ownedViewpoints>

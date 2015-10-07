@@ -7,14 +7,14 @@ import "http://www.eclipse.org/emf/2002/Ecore"
 @Return(result="host")
 pattern nodeOverloadedHostInstance(cps: CyberPhysicalSystem, host: HostInstance){
 	CyberPhysicalSystem.hostTypes.instances(cps, host);
-	find hostIsOverloaded(host);
+	find org.eclipse.incquery.examples.cps.viewpoint.hostIsOverloaded(host);
 }
 
 @Bind(cps="self")
 @Return(result="host")
 pattern nodeNotOverloadedHostInstance(cps: CyberPhysicalSystem, host: HostInstance){
 	CyberPhysicalSystem.hostTypes.instances(cps, host);
-	neg find hostIsOverloaded(host);
+	neg find org.eclipse.incquery.examples.cps.viewpoint.hostIsOverloaded(host);
 }
 
 @Bind(cps="self")
@@ -31,9 +31,14 @@ pattern nodeUnsatisfiableRequest(cps: CyberPhysicalSystem, request: Request){
 	find requestIsUnsatisfiable(request);
 }
 
+@Bind(request="self")
+@Return(result="host")
 pattern connectionRequestToHost(request: Request, host: HostInstance){
 	Request.requirements.applications.allocatedTo(request, host);
 }
+
+@Bind(request="self") @Return(result="satisfiable") 
+pattern styleUnSatisfiableRequest(request: Request, satisfiable){ satisfiable == true; neg find org.eclipse.incquery.examples.cps.viewpoint.requestIsSatisfiable(request); }
 
 pattern requestIsSatisfiable(request: Request){
 	/* A request is satisfiable if there is no reason it could not be satisfied */
