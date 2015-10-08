@@ -8,4 +8,7 @@
   <extension id="org.eclipse.incquery.examples.cps.viewpoint.Cps" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.viewpoint.Cps" id="org.eclipse.incquery.examples.cps.viewpoint.Cps"/>
   </extension>
+  <extension id="org.eclipse.incquery.examples.cps.viewpoint.CpsGraph" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.viewpoint.CpsGraph" id="org.eclipse.incquery.examples.cps.viewpoint.CpsGraph"/>
+  </extension>
 </plugin>

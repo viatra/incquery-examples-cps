@@ -125,5 +125,83 @@
         </edgeMappings>
       </defaultLayer>
     </ownedRepresentations>
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-graph-stats-iq" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
+      <metamodel href="http://org.eclipse.incquery/model/cps#/"/>
+      <metamodel href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+      <defaultLayer name="Default">
+        <nodeMappings name="apptype" semanticCandidatesExpression="iqpl: @Bind(cps=&quot;self&quot;) @Return(result=&quot;app&quot;) pattern appTypes(cps, app){ CyberPhysicalSystem.appTypes(cps, app);}" domainClass="cyberPhysicalSystem.ApplicationType">
+          <style xsi:type="style:GaugeCompositeStyleDescription" borderSizeComputationExpression="1" labelExpression="feature:id" sizeComputationExpression="10" resizeKind="NSEW" alignment="HORIZONTAL">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <sections maxValueExpression="iqpl: @Bind(app=&quot;self&quot;) @Return(result=&quot;num&quot;) pattern numOfStates(app, num){ ApplicationType(app); num == count find org.eclipse.incquery.examples.cps.viewpoint.states(app, _states);}" valueExpression="iqpl: @Bind(app=&quot;self&quot;) @Return(result=&quot;label&quot;) pattern labelNumOfUnreachableStates(app, label) { find org.eclipse.incquery.examples.cps.viewpoint.numOfUnreachableStates(app, label);}" label="Unreachable states">
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </sections>
+            <sections maxValueExpression="iqpl:@Bind(app=&quot;self&quot;) @Return(result=&quot;num&quot;) pattern numOfInstances(app, num){ ApplicationType(app); num == count find org.eclipse.incquery.examples.cps.viewpoint.applicationInstances(app, _);}" valueExpression="iqpl: @Bind(app=&quot;self&quot;) @Return(result=&quot;num&quot;) pattern numOfUnallocatedInstances(app, num){ ApplicationType(app); num == count find org.eclipse.incquery.examples.cps.viewpoint.unallocatedInstance(app, _); }" label="Unallocated instances">
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </sections>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="hosttype" semanticCandidatesExpression="iqpl: @Bind(cps=&quot;self&quot;) @Return(result=&quot;host&quot;) pattern hostTypes(cps, host){ CyberPhysicalSystem.hostTypes(cps, host);}" domainClass="cyberPhysicalSystem.HostType">
+          <borderedNodeMappings name="num-of-allocated-instances" semanticCandidatesExpression="[self/]" domainClass="cyberPhysicalSystem.HostType">
+            <style xsi:type="style:SquareDescription" showIcon="false" labelExpression="iqpl: @Bind(host=&quot;self&quot;) @Return(result=&quot;label&quot;) pattern maxNumOfAllocatedApplicationInstances(host, label){ find org.eclipse.incquery.examples.cps.viewpoint.maxAllocatedInstance(host, maxi); find org.eclipse.incquery.examples.cps.viewpoint.numOfAllocatedInstances(maxi, num); label == eval(Integer::toString(num));}" labelPosition="node" resizeKind="NSEW" width="6" height="3">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            </style>
+          </borderedNodeMappings>
+          <style xsi:type="style:SquareDescription" labelExpression="feature:id" labelPosition="node" resizeKind="NSEW" width="10" height="5">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="hasAllocationOn" sourceMapping="//@ownedViewpoints[name='cps-satisfaction-analysis']/@ownedRepresentations[name='cps-graph-stats-iq']/@defaultLayer/@nodeMappings[name='apptype']" targetMapping="//@ownedViewpoints[name='cps-satisfaction-analysis']/@ownedRepresentations[name='cps-graph-stats-iq']/@defaultLayer/@nodeMappings[name='hosttype']" targetFinderExpression="iqpl:@Bind(app=&quot;self&quot;) @Return(result=&quot;host&quot;) pattern hasAllocation(app, host){ ApplicationType.instances.allocatedTo(app, hostInstance); HostType.instances(host, hostInstance); }">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          </style>
+        </edgeMappings>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-graph-stats" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
+      <metamodel href="http://org.eclipse.incquery/model/cps#/"/>
+      <metamodel href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+      <defaultLayer name="Default">
+        <nodeMappings name="apptype" semanticCandidatesExpression="feature:appTypes" domainClass="cyberPhysicalSystem.ApplicationType">
+          <style xsi:type="style:GaugeCompositeStyleDescription" borderSizeComputationExpression="1" labelExpression="feature:id" sizeComputationExpression="10" resizeKind="NSEW" alignment="HORIZONTAL">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <sections maxValueExpression="aql:self.behavior.states->size()" valueExpression="[self.behavior.states->size() - (self.behavior.initial->closure(v: State | v.outgoingTransitions.targetState)->size())/]" label="Unreachable states">
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </sections>
+            <sections maxValueExpression="[self.instances->size()/]" valueExpression="[self.instances->select(a | a.allocatedTo = null)->size()/]" label="Unallocated instances">
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </sections>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="hosttype" semanticCandidatesExpression="feature:hostTypes" domainClass="cyberPhysicalSystem.HostType">
+          <borderedNodeMappings name="num-of-allocated-instances" semanticCandidatesExpression="[self/]" domainClass="cyberPhysicalSystem.HostType">
+            <style xsi:type="style:SquareDescription" showIcon="false" labelExpression="[self.instances->collect(a|a.applications->size())->max()->toString()/]" labelPosition="node" resizeKind="NSEW" width="6" height="3">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            </style>
+          </borderedNodeMappings>
+          <style xsi:type="style:SquareDescription" labelExpression="feature:id" labelPosition="node" resizeKind="NSEW" width="10" height="5">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="hasAllocationOn" sourceMapping="//@ownedViewpoints[name='cps-satisfaction-analysis']/@ownedRepresentations[name='cps-graph-stats']/@defaultLayer/@nodeMappings[name='apptype']" targetMapping="//@ownedViewpoints[name='cps-satisfaction-analysis']/@ownedRepresentations[name='cps-graph-stats']/@defaultLayer/@nodeMappings[name='hosttype']" targetFinderExpression="aql:self.instances.allocatedTo->collect(a|a.eContainer())->asSet()">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          </style>
+        </edgeMappings>
+      </defaultLayer>
+    </ownedRepresentations>
   </ownedViewpoints>
 </description:Group>

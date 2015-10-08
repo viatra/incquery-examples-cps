@@ -1,0 +1,16 @@
+[comment encoding = UTF-8 /]
+[module queries('http://org.eclipse.incquery/model/cps')]
+
+[query public stateIsReachable(initialState : State, state: State) : Boolean = 
+	reachableStates(initialState)->includes(state)
+/]
+
+[query public reachableStates(initialState : State) : OrderedSet(State) =
+	initialState->closure(v: State | v.outgoingTransitions.targetState)
+/]
+
+[query public numOfUnReachableStates(appType: ApplicationType): Integer =
+	(appType.behavior.states->size()) - (appType.behavior.initial->closure(v: State | v.outgoingTransitions.targetState)->size())
+/]
+
+[query public numOfUnreachableStates (anApplicationType : ApplicationType) : OclAny = self/]

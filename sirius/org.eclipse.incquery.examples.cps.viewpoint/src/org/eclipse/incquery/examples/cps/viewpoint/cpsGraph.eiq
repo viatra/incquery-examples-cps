@@ -1,0 +1,77 @@
+package org.eclipse.incquery.examples.cps.viewpoint
+
+import "http://org.eclipse.incquery/model/cps"
+import "http://www.eclipse.org/emf/2002/Ecore"
+
+@Bind(cps="self") @Return(result="app") pattern appTypes(cps, app){ CyberPhysicalSystem.appTypes(cps, app);}
+
+@Bind(app="self") @Return(result="label") pattern labelNumOfUnreachableStates(app, label) { find org.eclipse.incquery.examples.cps.viewpoint.numOfUnreachableStates(app, label);}
+
+@Bind(cps="self") @Return(result="host") pattern hostTypes(cps, host){ CyberPhysicalSystem.hostTypes(cps, host);}
+
+@Bind(app="self") @Return(result="num") pattern numOfStates(app, num){ ApplicationType(app); num == count find org.eclipse.incquery.examples.cps.viewpoint.states(app, _states);}
+
+@Bind(app="self") @Return(result="num") pattern numOfInstances(app, num){ ApplicationType(app); num == count find org.eclipse.incquery.examples.cps.viewpoint.applicationInstances(app, _);}
+
+@Bind(app="self") @Return(result="num") pattern numOfUnallocatedInstances(app, num){ ApplicationType(app); num == count find org.eclipse.incquery.examples.cps.viewpoint.unallocatedInstance(app, _); }
+
+@Bind(host="self") @Return(result="label") pattern maxNumOfAllocatedApplicationInstances(host, num){ find org.eclipse.incquery.examples.cps.viewpoint.maxAllocatedInstance(host, maxi); find org.eclipse.incquery.examples.cps.viewpoint.numOfAllocatedInstances(maxi, num); label == eval(Integer::toString(num));}
+
+@Bind(app="self") @Return(result="host") pattern hasAllocation(app, host){ ApplicationType.instances.allocatedTo(app, hostInstance); HostType.instances(host, hostInstance); }
+
+pattern maxAllocatedInstance(hostType: HostType, host: HostInstance){
+	HostType.instances(hostType, host);
+	neg find moreInstanceIsAllocated(hostType, host, _greater);
+}
+
+pattern moreInstanceIsAllocated(hostType: HostType, smaller: HostInstance, greater: HostInstance){
+	HostType.instances(hostType, smaller);
+	HostType.instances(hostType, greater);
+	find numOfAllocatedInstances(smaller, lower);
+	find numOfAllocatedInstances(greater, higher);
+	check(lower < higher);
+}
+
+pattern numOfAllocatedInstances(host: HostInstance, num){
+	num == count find allocatedInstance(_, host);
+}
+
+pattern applicationInstances(app: ApplicationType, appi: ApplicationInstance){
+	ApplicationType.instances(app, appi);
+}
+
+pattern allocatedInstance(appi: ApplicationInstance, host: HostInstance){
+	ApplicationInstance.allocatedTo(appi, host);
+}
+
+pattern unallocatedInstance(app: ApplicationType, appi: ApplicationInstance){
+	find applicationInstances(app, appi);
+	neg find allocatedInstance(appi, _host);
+}
+
+pattern stateTransition(from: State, to: State){
+	State.outgoingTransitions(from, transition);
+	Transition.targetState(transition, to);
+}
+
+pattern reachableState(app: ApplicationType, state: State){
+	ApplicationType.behavior(app, stateMachine);
+	StateMachine.initial(stateMachine, initial);
+	find stateTransition+(initial, state);
+} or {
+	ApplicationType.behavior(app, stateMachine);
+	StateMachine.initial(stateMachine, state);
+}
+
+pattern states(app: ApplicationType, state: State){
+	ApplicationType.behavior.states(app, state);
+}
+
+pattern unreachableState(app: ApplicationType, state: State){
+	find states(app, state);
+	neg find reachableState(app, state);
+}
+
+pattern numOfUnreachableStates(app: ApplicationType, num){
+	num == count find unreachableState(app, _state);
+}
