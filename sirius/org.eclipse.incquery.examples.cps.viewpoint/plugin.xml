@@ -11,4 +11,7 @@
   <extension id="org.eclipse.incquery.examples.cps.viewpoint.CpsGraph" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.viewpoint.CpsGraph" id="org.eclipse.incquery.examples.cps.viewpoint.CpsGraph"/>
   </extension>
+  <extension id="org.eclipse.incquery.examples.cps.viewpoint.CpsXformM2M" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.viewpoint.CpsXformM2M" id="org.eclipse.incquery.examples.cps.viewpoint.CpsXformM2M"/>
+  </extension>
 </plugin>

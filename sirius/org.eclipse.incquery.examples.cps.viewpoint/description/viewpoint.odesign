@@ -204,4 +204,45 @@
       </defaultLayer>
     </ownedRepresentations>
   </ownedViewpoints>
+  <ownedViewpoints name="cps-triggers" modelFileExtension="cyberphysicalsystem">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-triggers-iq" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
+      <metamodel href="http://org.eclipse.incquery/model/cps#/"/>
+      <defaultLayer name="Default">
+        <nodeMappings name="applicationInstance-iq" semanticCandidatesExpression="iqpl: @Bind(parent=&quot;self&quot;) @Return(result=&quot;child&quot;) pattern nodesAppInstances(parent: CyberPhysicalSystem, child: ApplicationInstance) { CyberPhysicalSystem.appTypes.instances(parent, child); }" domainClass="cyberPhysicalSystem.ApplicationInstance">
+          <style xsi:type="style:SquareDescription" labelExpression="feature:id" sizeComputationExpression="10" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="appInstance-communicating" sourceMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers-iq']/@defaultLayer/@nodeMappings[name='applicationInstance-iq']" targetMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers-iq']/@defaultLayer/@nodeMappings[name='applicationInstance-iq']" targetFinderExpression="iqpl: @Bind(parent=&quot;self&quot;) @Return(result=&quot;child&quot;) pattern connectionCommunicating(parent: ApplicationInstance, child: ApplicationInstance) { find org.eclipse.incquery.examples.cps.viewpoint.connectedCommunicatingAppInstances(parent, child); }">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-triggers" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
+      <defaultLayer name="Default">
+        <nodeMappings name="applicationInstance" semanticCandidatesExpression="[self.appTypes.instances/]" domainClass="cyberPhysicalSystem.ApplicationInstance">
+          <style xsi:type="style:SquareDescription" labelExpression="feature:id" sizeComputationExpression="10" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="appInstance-communicating" sourceMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers']/@defaultLayer/@nodeMappings[name='applicationInstance']" targetMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers']/@defaultLayer/@nodeMappings[name='applicationInstance']" targetFinderExpression="[self.type.cps.appTypes.instances->select(a : ApplicationInstance |(self.allocatedTo.communicateWith->including(self.allocatedTo) ->includes(a.allocatedTo)) and (self.type.behavior.states.outgoingTransitions.action.startsWith('sendSignal')) )/]">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+      </defaultLayer>
+    </ownedRepresentations>
+  </ownedViewpoints>
 </description:Group>

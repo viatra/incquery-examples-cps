@@ -3,6 +3,7 @@ package org.eclipse.incquery.examples.cps.viewpoint
 import "http://org.eclipse.incquery/model/cps"
 import "http://www.eclipse.org/emf/2002/Ecore"
 
+/*
 @Bind(cps="self") @Return(result="app") pattern appTypes(cps, app){ CyberPhysicalSystem.appTypes(cps, app);}
 
 @Bind(app="self") @Return(result="label") pattern labelNumOfUnreachableStates(app, label) { find org.eclipse.incquery.examples.cps.viewpoint.numOfUnreachableStates(app, label);}
@@ -18,7 +19,8 @@ import "http://www.eclipse.org/emf/2002/Ecore"
 @Bind(host="self") @Return(result="label") pattern maxNumOfAllocatedApplicationInstances(host, num){ find org.eclipse.incquery.examples.cps.viewpoint.maxAllocatedInstance(host, maxi); find org.eclipse.incquery.examples.cps.viewpoint.numOfAllocatedInstances(maxi, num); label == eval(Integer::toString(num));}
 
 @Bind(app="self") @Return(result="host") pattern hasAllocation(app, host){ ApplicationType.instances.allocatedTo(app, hostInstance); HostType.instances(host, hostInstance); }
-
+*/
+/*
 pattern maxAllocatedInstance(hostType: HostType, host: HostInstance){
 	HostType.instances(hostType, host);
 	neg find moreInstanceIsAllocated(hostType, host, _greater);
@@ -48,7 +50,7 @@ pattern unallocatedInstance(app: ApplicationType, appi: ApplicationInstance){
 	find applicationInstances(app, appi);
 	neg find allocatedInstance(appi, _host);
 }
-
+*/
 pattern stateTransition(from: State, to: State){
 	State.outgoingTransitions(from, transition);
 	Transition.targetState(transition, to);
@@ -62,6 +64,7 @@ pattern reachableState(app: ApplicationType, state: State){
 	ApplicationType.behavior(app, stateMachine);
 	StateMachine.initial(stateMachine, state);
 }
+/*
 
 pattern states(app: ApplicationType, state: State){
 	ApplicationType.behavior.states(app, state);
@@ -75,3 +78,4 @@ pattern unreachableState(app: ApplicationType, state: State){
 pattern numOfUnreachableStates(app: ApplicationType, num){
 	num == count find unreachableState(app, _state);
 }
+* */

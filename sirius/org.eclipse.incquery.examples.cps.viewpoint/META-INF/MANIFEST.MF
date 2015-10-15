@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.sirius.common.acceleo.mtl,
  org.eclipse.incquery.runtime;bundle-version="1.0.1",
  org.eclipse.incquery.examples.cps.deployment;bundle-version="0.1.0",
- org.eclipse.incquery.examples.cps.model;bundle-version="0.1.0"
+ org.eclipse.incquery.examples.cps.model;bundle-version="0.1.0",
+ org.eclipse.incquery.examples.cps.xform.m2m.util;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j
 Bundle-ActivationPolicy: lazy
