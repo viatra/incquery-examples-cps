@@ -13,5 +13,21 @@
 	(appType.behavior.states->size()) - (appType.behavior.initial->closure(v: State | v.outgoingTransitions.targetState)->size())
 /]
 
-[query public numOfUnreachableStates (anApplicationType : ApplicationType) : OclAny = self/]
+[query public connectios (anApplicationType : ApplicationType) : Collection(ApplicationType) = 
+self.cps.appTypes->select(a : ApplicationType |
+	(not self.instances->select(allocatedTo <> null).allocatedTo.communicateWith->asSet ()->intersection(a.instances->select(allocatedTo <> null).allocatedTo->asSet())->isEmpty())  
+	and 
+	(not self.behavior.states.outgoingTransitions.action->select(v:String|v <> null)->isEmpty() )
+	and
+	(not a.behavior.states.outgoingTransitions.action->select(v:String|v <> null)->isEmpty() ) 
+)
+
+/]
+
+[query public connectios_trial(anApplicationType : ApplicationType) : Collection(ApplicationType) = 
+self.cps.appTypes->select(a : ApplicationType |
+	( not a.behavior.states.outgoingTransitions.action->select(v:String|v <> null)->isEmpty() ) 
+)
+
+/]
 
