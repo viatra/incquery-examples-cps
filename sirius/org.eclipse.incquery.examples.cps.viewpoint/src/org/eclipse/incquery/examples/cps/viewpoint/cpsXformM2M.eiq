@@ -1,0 +1,105 @@
+package org.eclipse.incquery.examples.cps.viewpoint
+
+import "http://org.eclipse.incquery/model/cps"
+import java org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil
+
+@Bind(parent="self") @Return(result="child") pattern nodesAppInstances(parent: CyberPhysicalSystem, child: ApplicationInstance) { CyberPhysicalSystem.appTypes.instances(parent, child); }
+@Bind(parent="self") @Return(result="child") pattern nodesSendActions(parent: ApplicationInstance, child: Transition) { ApplicationType.instances(appType, parent); ApplicationType.behavior.states.outgoingTransitions(appType, child); find org.eclipse.incquery.examples.cps.viewpoint.sendTransitionAppSignal(child, _appId, _signal); }
+@Bind(parent="self") @Return(result="child") pattern labelSend(parent: Transition, child) { find org.eclipse.incquery.examples.cps.viewpoint.sendTransitionAppSignal(parent, _appId, child); }
+
+@Bind(parent="self") @Return(result="child") pattern nodesWaitPoints(parent: ApplicationInstance, child: Transition) { ApplicationType.instances(appType, parent); find org.eclipse.incquery.examples.cps.viewpoint.waitTransitionAppSignal(child, appType, _signal); }
+@Bind(parent="self") @Return(result="child") pattern labelWait(parent: Transition, child) { find org.eclipse.incquery.examples.cps.viewpoint.waitTransitionAppSignal(parent, _appType, child); }
+
+@Bind(parent="self") @Return(result="child") pattern connectionTriggerPair(parent: Transition, child: Transition) { find org.eclipse.incquery.examples.cps.viewpoint.triggerPair(parent, child); }
+@Bind(parent="self") @Return(result="child") pattern connectionCommunicating(parent: ApplicationType, child: ApplicationType) { ApplicationType.instances(parent, parenti); ApplicationType.instances(child, childi); find org.eclipse.incquery.examples.cps.viewpoint.connectedCommunicatingAppInstances(parenti, childi); }
+
+
+pattern hostInstances(hostInstance : HostInstance) {
+	HostType.instances(_hostType, hostInstance);
+}
+pattern appTypes(appType : ApplicationType) {
+	CyberPhysicalSystem.appTypes(_cps, appType);
+}
+
+pattern appInstances(appInstance : ApplicationInstance) {
+	ApplicationType.instances(_appType, appInstance);
+}
+pattern stateMachines(stateMachine : StateMachine) {
+	ApplicationType.behavior(_appType, stateMachine);
+}
+pattern states(state : State) {
+	StateMachine.states(_sm,state);
+}
+pattern transitions(transition : Transition) {
+	State.outgoingTransitions(_sm,transition);
+}
+
+pattern state2Statemachine(state : State, sm : StateMachine){
+	StateMachine.states(sm, state);
+}
+
+pattern transition2StateMachine(trans : Transition, sm : StateMachine){
+	StateMachine.states(sm, state);
+	State.outgoingTransitions(state, trans);
+}
+
+pattern transition2AppType(trans : Transition, appType : ApplicationType){
+	ApplicationType.behavior(appType, sm);
+	StateMachine.states(sm, state);
+	State.outgoingTransitions(state, trans);
+}
+
+//
+pattern applicationInstance(appType : ApplicationType, appInstance : ApplicationInstance, host : HostInstance) {
+	ApplicationType.instances(appType, appInstance);
+	ApplicationInstance.allocatedTo(appInstance, host);
+}
+
+pattern sendTransitionAppSignal(transition : Transition, app, signal) {
+ 	Transition.action(transition, action);
+ 	app == eval(SignalUtil.getAppId(action));
+ 	signal == eval(SignalUtil.getSignalId(action));
+}
+pattern waitTransitionAppSignal(transition : Transition, appType : ApplicationType, signal) {
+ 	ApplicationType.behavior(appType, stateMachine);
+	StateMachine.states(stateMachine, source);
+	State.outgoingTransitions(source, transition);
+ 	Transition.action(transition, action);
+ 	check(
+ 		SignalUtil.isWait(action)
+ 	);
+ 	signal == eval(SignalUtil.getSignalId(action));
+}
+//
+pattern triggerPair(cpsTrigger : Transition, cpsTarget : Transition) {
+	find sendTransitionAppSignal(cpsTrigger, appId, signal);
+	find waitTransitionAppSignal(cpsTarget, waitApp, signal);
+	ApplicationType.id(waitApp, appId);
+}
+//
+pattern communicatingAppInstances(sourceAppInstance : ApplicationInstance, targetAppInstance : ApplicationInstance) {
+	find applicationInstance(_, sourceAppInstance, sourceHostInstance);
+	find applicationInstance(_, targetAppInstance, targetHostInstance);
+	find reachableHosts(sourceHostInstance, targetHostInstance);
+}
+
+pattern connectedCommunicatingAppInstances(sourceAppInstance : ApplicationInstance, targetAppInstance : ApplicationInstance){
+	find communicatingAppInstances(sourceAppInstance, targetAppInstance);
+	ApplicationInstance.type(sourceAppInstance, sourceType);
+	ApplicationInstance.type(targetAppInstance, targetType);
+	find transition2AppType(cpsTrigger, sourceType);
+	find transition2AppType(cpsTarget, targetType);
+	find triggerPair(cpsTrigger, cpsTarget);
+}
+
+pattern hostCommunication(fromHost : HostInstance, toHost : HostInstance) {
+	HostInstance.communicateWith(fromHost, toHost);
+}
+
+pattern reachableHosts(source : HostInstance, target : HostInstance) {
+	find hostCommunication(source, target);
+} or {
+	HostInstance(source);
+	HostInstance(target);
+	source == target;
+}
