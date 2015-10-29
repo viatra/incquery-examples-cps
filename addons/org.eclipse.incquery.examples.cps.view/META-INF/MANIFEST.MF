@@ -14,6 +14,7 @@ Require-Bundle: org.eclipse.incquery.examples.cps.model,
  org.eclipse.gef4.zest.core,
  org.eclipse.gef4.zest.jface,
  org.eclipse.incquery.examples.cps.model.editor,
- org.eclipse.incquery.examples.cps.queries
+ org.eclipse.incquery.examples.cps.queries,
+ com.google.guava;bundle-version="10.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j;version="1.2.15"
