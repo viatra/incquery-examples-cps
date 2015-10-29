@@ -38,8 +38,10 @@ class CPSGeneratorBuilder {
 	def static buildAndGenerateModel(long seed,  ICPSConstraints constraints, CyberPhysicalSystem model, CPSPlans cpsplan){
 		val CPSGeneratorInput input = new CPSGeneratorInput(seed, constraints, model);
 		var plan = switch (cpsplan){
-			case CPSPlans.STATISTICS_BASED:
+			case STATISTICS_BASED:
 				CPSPlanBuilder.buildCharacteristicBasedPlan
+			case SIMPLE_ACTION:
+				CPSPlanBuilder.buildCharacteristicBasedSimplePlan
 			default:
 				CPSPlanBuilder.buildDefaultPlan
 		}

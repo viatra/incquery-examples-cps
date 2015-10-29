@@ -10,9 +10,10 @@ import org.eclipse.incquery.examples.cps.generator.phases.CPSPhasePrepare
 import org.eclipse.incquery.examples.cps.generator.phases.CPSPhaseSignalSet
 import org.eclipse.incquery.examples.cps.generator.phases.CPSPhaseTypeGeneration
 import org.eclipse.incquery.examples.cps.generator.phases.CPSPhaseTypeStatisticsBasedGeneration
+import org.eclipse.incquery.examples.cps.generator.phases.CPSPhaseActionSimpleGeneration
 
 enum CPSPlans{
-	DEFAULT, STATISTICS_BASED
+	DEFAULT, STATISTICS_BASED, SIMPLE_ACTION
 }
 
 class CPSPlanBuilder {
@@ -41,6 +42,20 @@ class CPSPlanBuilder {
 		plan.addPhase(new CPSPhaseHostCommunication());
 		plan.addPhase(new CPSPhaseApplicationAllocation());
 		plan.addPhase(new CPSPhaseActionStatisticsBasedGeneration());
+		
+		plan;
+	}
+	
+	def static buildCharacteristicBasedSimplePlan(){
+		var GeneratorPlan plan = new GeneratorPlan();
+		
+		plan.addPhase(new CPSPhasePrepare());
+		plan.addPhase(new CPSPhaseSignalSet());
+		plan.addPhase(new CPSPhaseTypeStatisticsBasedGeneration());
+		plan.addPhase(new CPSPhaseInstanceGeneration());
+		plan.addPhase(new CPSPhaseHostCommunication());
+		plan.addPhase(new CPSPhaseApplicationAllocation());
+		plan.addPhase(new CPSPhaseActionSimpleGeneration());
 		
 		plan;
 	}

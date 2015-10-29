@@ -93,7 +93,7 @@ abstract class TestBase extends CPSTestBase{
 	
 	def persistModel(CPSFragment out) {
 		var Stopwatch persistTime = Stopwatch.createStarted;
-		val filePath = "C:/output/model_"+System.nanoTime+".cyberphysicalsystem";
+		val filePath = "./output/model_"+System.nanoTime+".cyberphysicalsystem";
 		PersistenceUtil.saveCPSModelToFile(out.modelRoot, filePath);
 		info("  Generated Model is saved to \"" + filePath+"\"");
 		persistTime.stop;
