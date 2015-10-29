@@ -13,13 +13,23 @@
 	(appType.behavior.states->size()) - (appType.behavior.initial->closure(v: State | v.outgoingTransitions.targetState)->size())
 /]
 
-[query public connectios (anApplicationType : ApplicationType) : Collection(ApplicationType) = 
+[query public connectionEmpty (anApplicationType : ApplicationType) : Collection(ApplicationType) = 
 self.cps.appTypes->select(a : ApplicationType |
 	(not self.instances->select(allocatedTo <> null).allocatedTo.communicateWith->asSet ()->intersection(a.instances->select(allocatedTo <> null).allocatedTo->asSet())->isEmpty())  
 	and 
-	(not self.behavior.states.outgoingTransitions.action->select(v:String|v <> null)->isEmpty() )
+	(not self.behavior.states.outgoingTransitions.action->select(v:String|v <> null)->asSet()->isEmpty() )
 	and
-	(not a.behavior.states.outgoingTransitions.action->select(v:String|v <> null)->isEmpty() ) 
+	(not a.behavior.states.outgoingTransitions.action->select(v:String|v <> null)->asSet()->isEmpty() ) 
+)
+/]
+
+[query public connections (anApplicationType : ApplicationType) : Collection(ApplicationType) = 
+self.cps.appTypes->select(a : ApplicationType |
+	(not self.instances->select(allocatedTo <> null).allocatedTo.communicateWith->asSet ()->intersection(a.instances->select(allocatedTo <> null).allocatedTo->asSet())->isEmpty())  
+	and 
+	(self.behavior.states.outgoingTransitions.action->select(v:String|v <> null and v.startsWith('sendSignal'))->size() > 0 )
+	and
+	(a.behavior.states.outgoingTransitions.action->select(v:String|v <> null and v.startsWith('waitForSignal'))->size() > 0 ) 
 )
 
 /]

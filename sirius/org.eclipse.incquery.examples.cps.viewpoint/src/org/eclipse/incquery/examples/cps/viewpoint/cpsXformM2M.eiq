@@ -76,6 +76,20 @@ pattern triggerPair(cpsTrigger : Transition, cpsTarget : Transition) {
 	find waitTransitionAppSignal(cpsTarget, waitApp, signal);
 	ApplicationType.id(waitApp, appId);
 }
+
+pattern sendTransition(cpsTrigger : Transition) {
+	Transition.action(cpsTrigger, "sendSignal");
+// 	check(
+// 		SignalUtil.isSend(action1)
+// 	);
+}
+ 	
+pattern waitTransition(cpsTarget : Transition) {
+	Transition.action(cpsTarget, "waitForSignal");
+// 	check(
+// 		SignalUtil.isWait(action2)
+// 	);
+}
 //
 pattern communicatingAppInstances(sourceAppInstance : ApplicationInstance, targetAppInstance : ApplicationInstance) {
 	find applicationInstance(_, sourceAppInstance, sourceHostInstance);
@@ -83,7 +97,7 @@ pattern communicatingAppInstances(sourceAppInstance : ApplicationInstance, targe
 	find reachableHosts(sourceHostInstance, targetHostInstance);
 }
 
-pattern connectedCommunicatingAppInstances(sourceAppInstance : ApplicationInstance, targetAppInstance : ApplicationInstance){
+pattern connectedCommunicatingAppInstancesOriginal(sourceAppInstance : ApplicationInstance, targetAppInstance : ApplicationInstance){
 	find communicatingAppInstances(sourceAppInstance, targetAppInstance);
 	ApplicationInstance.type(sourceAppInstance, sourceType);
 	ApplicationInstance.type(targetAppInstance, targetType);
@@ -92,14 +106,53 @@ pattern connectedCommunicatingAppInstances(sourceAppInstance : ApplicationInstan
 	find triggerPair(cpsTrigger, cpsTarget);
 }
 
+pattern connectedCommunicatingAppInstances(sourceAppInstance : ApplicationInstance, targetAppInstance : ApplicationInstance){
+	find communicatingAppInstances(sourceAppInstance, targetAppInstance);
+	ApplicationInstance.type(sourceAppInstance, sourceType);
+	ApplicationInstance.type(targetAppInstance, targetType);
+	find transition2AppType(cpsTrigger, sourceType);
+	find transition2AppType(cpsTarget, targetType);
+	find sendTransition(cpsTrigger);
+	find waitTransition(cpsTarget);
+}
+
+//pattern connectedCommunicatingAppTypes(sourceType : ApplicationType, targetType : ApplicationType){
+//	find communicatingAppInstances(sourceAppInstance, targetAppInstance);
+//	ApplicationInstance.type(sourceAppInstance, sourceType);
+//	ApplicationInstance.type(targetAppInstance, targetType);
+//	find transition2AppType(cpsTrigger, sourceType);
+//	find transition2AppType(cpsTarget, targetType);
+//	find sendTransition(cpsTrigger);
+//	find waitTransition(cpsTarget);
+//}
+
+pattern connectedCommunicatingAppTypes(sourceType : ApplicationType, targetType : ApplicationType){
+	find communicatingAppInstances(sourceAppInstance, targetAppInstance);
+	find sendInAppTypeSM(sourceAppInstance, sourceType);
+	find waitInAppTypeSM(targetAppInstance, targetType);
+}
+
+pattern sendInAppTypeSM(sourceAppInstance : ApplicationInstance, sourceType : ApplicationType) {
+	ApplicationInstance.type(sourceAppInstance, sourceType);
+	find transition2AppType(cpsTrigger, sourceType);
+	find sendTransition(cpsTrigger);
+}
+
+pattern waitInAppTypeSM(targetAppInstance : ApplicationInstance, targetType : ApplicationType) {
+	ApplicationInstance.type(targetAppInstance, targetType);
+	find transition2AppType(cpsTarget, targetType);
+	find waitTransition(cpsTarget);
+}
+
+
 pattern hostCommunication(fromHost : HostInstance, toHost : HostInstance) {
 	HostInstance.communicateWith(fromHost, toHost);
 }
 
 pattern reachableHosts(source : HostInstance, target : HostInstance) {
 	find hostCommunication(source, target);
-} or {
+} /*or {
 	HostInstance(source);
 	HostInstance(target);
 	source == target;
-}
+}*/
