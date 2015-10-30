@@ -207,6 +207,7 @@
   <ownedViewpoints name="cps-triggers" modelFileExtension="cyberphysicalsystem">
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-triggers-iq" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
       <metamodel href="http://org.eclipse.incquery/model/cps#/"/>
+      <layout xsi:type="description_1:CompositeLayout" padding="10" direction="LeftToRight"/>
       <defaultLayer name="Default">
         <nodeMappings name="application-iq" semanticCandidatesExpression="iqpl: @Bind(parent=&quot;self&quot;) @Return(result=&quot;child&quot;) pattern nodesApps(parent: CyberPhysicalSystem, child: ApplicationType) { CyberPhysicalSystem.appTypes(parent, child); }" domainClass="cyberPhysicalSystem.ApplicationType">
           <style xsi:type="style:SquareDescription" labelExpression="feature:id" sizeComputationExpression="10" labelPosition="node" resizeKind="NSEW">
@@ -215,6 +216,8 @@
             <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
           </style>
         </nodeMappings>
+      </defaultLayer>
+      <additionalLayers name="edges" label="Edges">
         <edgeMappings name="appInstance-communicating" sourceMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers-iq']/@defaultLayer/@nodeMappings[name='application-iq']" targetMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers-iq']/@defaultLayer/@nodeMappings[name='application-iq']" targetFinderExpression="iqpl: @Bind(parent=&quot;self&quot;) @Return(result=&quot;child&quot;) pattern connectionCommunicating(parent: ApplicationType, child: ApplicationType) { find org.eclipse.incquery.examples.cps.viewpoint.connectedCommunicatingAppTypes(parent, child);}">
           <style sizeComputationExpression="2">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
@@ -223,9 +226,10 @@
             </centerLabelStyleDescription>
           </style>
         </edgeMappings>
-      </defaultLayer>
+      </additionalLayers>
     </ownedRepresentations>
-    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-triggers" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-triggers-mtl" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
+      <layout xsi:type="description_1:CompositeLayout" padding="10" direction="LeftToRight"/>
       <defaultLayer name="Default">
         <nodeMappings name="application" semanticCandidatesExpression="[self.appTypes/]" domainClass="cyberPhysicalSystem.ApplicationType">
           <style xsi:type="style:SquareDescription" labelExpression="feature:id" sizeComputationExpression="10" labelPosition="node" resizeKind="NSEW">
@@ -234,7 +238,9 @@
             <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
           </style>
         </nodeMappings>
-        <edgeMappings name="app-communicating" sourceMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers']/@defaultLayer/@nodeMappings[name='application']" targetMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers']/@defaultLayer/@nodeMappings[name='application']" targetFinderExpression="[self.cps.appTypes->select(a : ApplicationType |(not self.instances->select(allocatedTo &lt;> null).allocatedTo.communicateWith->asSet ()->intersection(a.instances->select(allocatedTo &lt;> null).allocatedTo->asSet())->isEmpty()) and (self.behavior.states.outgoingTransitions.action->select(v:String|v &lt;> null and v.startsWith('sendSignal'))->size() > 0 ) and (a.behavior.states.outgoingTransitions.action->select(v:String|v &lt;> null and v.startsWith('waitForSignal'))->size() > 0 )  )/]">
+      </defaultLayer>
+      <additionalLayers name="edges-mtl" label="Edges">
+        <edgeMappings name="app-communicating" sourceMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers-mtl']/@defaultLayer/@nodeMappings[name='application']" targetMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers-mtl']/@defaultLayer/@nodeMappings[name='application']" targetFinderExpression="[self.cps.appTypes->select(a : ApplicationType |(not self.instances->select(allocatedTo &lt;> null).allocatedTo.communicateWith->asSet ()->intersection(a.instances->select(allocatedTo &lt;> null).allocatedTo->asSet())->isEmpty()) and (self.behavior.states.outgoingTransitions.action->select(v:String|v &lt;> null and v.startsWith('sendSignal'))->size() > 0 ) and (a.behavior.states.outgoingTransitions.action->select(v:String|v &lt;> null and v.startsWith('waitForSignal'))->size() > 0 )  )/]">
           <style sizeComputationExpression="2">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription>
@@ -242,7 +248,29 @@
             </centerLabelStyleDescription>
           </style>
         </edgeMappings>
+      </additionalLayers>
+    </ownedRepresentations>
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="cps-triggers-aql" domainClass="cyberPhysicalSystem.CyberPhysicalSystem" enablePopupBars="true">
+      <layout xsi:type="description_1:CompositeLayout" padding="10" direction="LeftToRight"/>
+      <defaultLayer name="Default">
+        <nodeMappings name="application-aql" semanticCandidatesExpression="aql: self.appTypes " domainClass="cyberPhysicalSystem.ApplicationType">
+          <style xsi:type="style:SquareDescription" labelExpression="feature:id" sizeComputationExpression="10" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          </style>
+        </nodeMappings>
       </defaultLayer>
+      <additionalLayers name="edges-aql" label="Edges">
+        <edgeMappings name="app-communicating" sourceMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers-aql']/@defaultLayer/@nodeMappings[name='application-aql']" targetMapping="//@ownedViewpoints[name='cps-triggers']/@ownedRepresentations[name='cps-triggers-aql']/@defaultLayer/@nodeMappings[name='application-aql']" targetFinderExpression="aql:self.cps.appTypes->select(a : cps::ApplicationType | (self.instances.allocatedTo.communicateWith->intersection(a.instances.allocatedTo)->size() > 0 ) and (self.behavior.states.outgoingTransitions.action->select(ac | ac.startsWith('sendSignal'))->size() > 0 ) and (a.behavior.states.outgoingTransitions.action->select(ac | ac.startsWith('waitForSignal'))->size() > 0 ) )">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+      </additionalLayers>
     </ownedRepresentations>
   </ownedViewpoints>
 </description:Group>
