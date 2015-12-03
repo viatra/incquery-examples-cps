@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><plugin>
   <extension point="org.eclipse.ui.perspectives">
-    <perspective class="org.eclipse.incquery.examples.cps.viewers.PerspectiveFactory" icon="icon/iq.jpg" id="org.eclipse.incquery.examples.cps.viewers.perspective" name="EMF-IncQuery CPS Perspective"/>
+    <perspective class="org.eclipse.incquery.examples.cps.viewers.PerspectiveFactory" icon="icon/iq.png" id="org.eclipse.incquery.examples.cps.viewers.perspective" name="EMF-IncQuery CPS Perspective"/>
   </extension>
   <extension point="org.eclipse.ui.views">
     <category id="org.eclipse.incquery.examples.cps.viewers.category" name="EMF-IncQuery CPS Views"/>
