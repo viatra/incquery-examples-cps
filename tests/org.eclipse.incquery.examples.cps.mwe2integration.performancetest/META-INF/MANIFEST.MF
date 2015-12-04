@@ -15,7 +15,7 @@ Require-Bundle: org.junit,
  org.eclipse.incquery.examples.cps.xform.serializer.javaio,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra;bundle-version="0.1.0",
  org.eclipse.incquery.runtime.evm,
- eu.mondo.sam.core;bundle-version="1.0.0",
+ eu.mondo.sam.core,
  org.eclipse.incquery.examples.cps.mwe2integration.example;bundle-version="0.1.0"
 Bundle-Vendor: IncQueryLabs Ltd.
 Export-Package: org.eclipse.incquery.examples.cps.integration.performance

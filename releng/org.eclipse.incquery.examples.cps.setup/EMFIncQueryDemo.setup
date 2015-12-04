@@ -41,27 +41,6 @@
     <description>${scope.project.label}</description>
   </setupTask>
   <setupTask
-      xsi:type="git:GitCloneTask"
-      id="git.clone.mondosam"
-      remoteURI="FTSRG/mondo-sam">
-    <annotation
-        source="http://www.eclipse.org/oomph/setup/InducedChoices">
-      <detail
-          key="inherit">
-        <value>github.remoteURIs</value>
-      </detail>
-      <detail
-          key="label">
-        <value>MONDO-SAM Github repository</value>
-      </detail>
-      <detail
-          key="target">
-        <value>remoteURI</value>
-      </detail>
-    </annotation>
-    <description>${scope.project.label}</description>
-  </setupTask>
-  <setupTask
       xsi:type="setup.p2:P2Task"
       label="Demo">
     <requirement
@@ -148,12 +127,6 @@
           name="org.eclipse.gef4.geometry.feature.group"
           versionRange="[0.1.0.201406280202,0.1.0.201406280202]"/>
       <requirement
-          name="org.apache.commons.io"/>
-      <requirement
-          name="org.codehaus.jackson.core"/>
-      <requirement
-          name="org.codehaus.jackson.mapper"/>
-      <requirement
           name="org.eclipse.incquery.tooling.ui.visualization.feature.feature.group"/>
       <requirement
           name="com.google.inject.multibindings"
@@ -183,10 +156,14 @@
       xsi:type="projects:ProjectsImportTask">
     <sourceLocator
         rootFolder="${git.clone.cps.location}"
-        locateNestedProjects="true"/>
-    <sourceLocator
-        rootFolder="${git.clone.mondosam.location}"
-        locateNestedProjects="true"/>
+        locateNestedProjects="true">
+      <predicate
+          xsi:type="predicates:NotPredicate">
+        <operand
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/tests/.*performance.*"/>
+      </predicate>
+    </sourceLocator>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
@@ -359,6 +336,62 @@
           value="1"
           defaultValue=""/>
     </stream>
+  </project>
+  <project name="Performance testing">
+    <setupTask
+        xsi:type="setup.targlets:TargletTask">
+      <targlet
+          name="MONDO-SAM">
+        <requirement
+            name="org.apache.commons.io"/>
+        <requirement
+            name="org.codehaus.jackson.core"/>
+        <requirement
+            name="org.codehaus.jackson.mapper"/>
+        <repositoryList
+            name="Dependencies">
+          <repository
+              url="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
+        </repositoryList>
+      </targlet>
+    </setupTask>
+    <setupTask
+        xsi:type="git:GitCloneTask"
+        id="git.clone.mondosam"
+        remoteURI="FTSRG/mondo-sam"
+        pushURI="">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/InducedChoices">
+        <detail
+            key="inherit">
+          <value>github.remoteURIs</value>
+        </detail>
+        <detail
+            key="label">
+          <value>MONDO-SAM Github repository</value>
+        </detail>
+        <detail
+            key="target">
+          <value>remoteURI</value>
+        </detail>
+      </annotation>
+      <description>${scope.project.label}</description>
+    </setupTask>
+    <setupTask
+        xsi:type="projects:ProjectsImportTask">
+      <sourceLocator
+          rootFolder="${git.clone.mondosam.location}"
+          locateNestedProjects="true"/>
+      <sourceLocator
+          rootFolder="${git.clone.cps.location}"
+          locateNestedProjects="true">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/tests/.*performance.*"/>
+      </sourceLocator>
+    </setupTask>
+    <stream
+        name="0.1-maintenance"/>
   </project>
   <stream name="master"/>
   <logicalProjectContainer
