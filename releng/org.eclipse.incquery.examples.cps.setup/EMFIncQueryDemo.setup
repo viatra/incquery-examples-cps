@@ -160,8 +160,14 @@
       <predicate
           xsi:type="predicates:NotPredicate">
         <operand
-            xsi:type="predicates:LocationPredicate"
-            pattern=".*/tests/.*performance.*"/>
+            xsi:type="predicates:OrPredicate">
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/tests/.*performance.*"/>
+          <operand
+              xsi:type="predicates:LocationPredicate"
+              pattern=".*/releng/.*rcpapplication.*"/>
+        </operand>
       </predicate>
     </sourceLocator>
   </setupTask>
@@ -384,11 +390,7 @@
           locateNestedProjects="true"/>
       <sourceLocator
           rootFolder="${git.clone.cps.location}"
-          locateNestedProjects="true">
-        <predicate
-            xsi:type="predicates:LocationPredicate"
-            pattern=".*/tests/.*performance.*"/>
-      </sourceLocator>
+          locateNestedProjects="true"/>
     </setupTask>
     <stream
         name="0.1-maintenance"/>
