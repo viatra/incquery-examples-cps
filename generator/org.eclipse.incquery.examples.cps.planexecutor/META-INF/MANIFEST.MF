@@ -3,8 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CPS Demonstrator Model Generator
 Bundle-SymbolicName: org.eclipse.incquery.examples.cps.planexecutor;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Require-Bundle: org.eclipse.xtext.xbase.lib,
- org.eclipse.xtend.core;bundle-version="2.6.0"
+Require-Bundle: org.eclipse.xtend.lib;bundle-version="2.9.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.

@@ -54,7 +54,7 @@ class ApplicationTypeGenerationOperation implements IOperation<CPSFragment> {
 				val startNode = new MinMaxData(0, numberOfStates-1).randInt(fragment.random);
 				val endNode = new MinMaxData(0, numberOfStates-1).randIntExcept(startNode, fragment.random);
 				
-				states.get(startNode).prepareTransition(states.get(startNode).id + ".t"+t, states.get(endNode));
+				states.get(startNode).prepareTransition(states.get(startNode).identifier + ".t"+t, states.get(endNode));
 			}
 		}
 
