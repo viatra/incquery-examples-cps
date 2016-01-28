@@ -12,10 +12,6 @@ abstract class BasicXformTest extends PropertiesBasedTest {
 		super(wrapperType, scale, generatorType, runIndex)
 	}
 	
-	new(TransformationType wrapperType,	int scale, GeneratorType generatorType) {
-    	this(wrapperType, scale, generatorType,1)
-	}
-	
 	override getScenario(int scale, Random rand) {
 		return new BasicXformScenario(getCase(scale, rand))
 	}

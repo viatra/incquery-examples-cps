@@ -43,10 +43,6 @@ abstract class CPSPerformanceTest extends CPSTestBase {
 		this.scenario.tool = wrapperType.name + "-" + generatorType.name
     }
     
-    new(TransformationType wrapperType,	int scale, GeneratorType generatorType) {
-    	this(wrapperType, scale, generatorType,1)
-	}
-	
 	def startTest(){
     	info('''START TEST: Xform: «wrapperType», Gen: «generatorType», Scale: «scale», Scenario: «scenario.class.name»''')
     }

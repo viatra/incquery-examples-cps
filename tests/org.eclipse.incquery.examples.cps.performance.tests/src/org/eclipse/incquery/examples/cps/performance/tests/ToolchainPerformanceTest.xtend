@@ -13,10 +13,6 @@ abstract class ToolchainPerformanceTest extends PropertiesBasedTest {
 		super(wrapperType, scale, generatorType, runIndex)
 	}
 	
-	new(TransformationType wrapperType,	int scale, GeneratorType generatorType) {
-    	this(wrapperType, scale, generatorType,1)
-	}
-	
 	override getScenario(int scale, Random rand) {
 		if (wrapperType.isIncremental){
 			return new ToolChainPerformanceIncrementalScenario(getCase(scale, rand))

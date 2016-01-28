@@ -14,7 +14,7 @@ abstract class PropertiesBasedTest extends CPSPerformanceTest {
 		val data = Sets::cartesianProduct(xforms,codegens)
        	data.map[ d |
 	        scales.map[ scale |
-        		#[d.get(0), scale, d.get(1)]
+        		#[d.get(0), scale, d.get(1), 1]
         	]
         ].flatten.map[it.toArray].toList
     }

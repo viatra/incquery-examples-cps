@@ -11,10 +11,6 @@ class BasicXformClientServerTest extends BasicXformTest {
 		super(wrapperType, scale, generatorType, runIndex)
 	}
 	
-	new(TransformationType wrapperType,	int scale, GeneratorType generatorType) {
-    	this(wrapperType, scale, generatorType,1)
-	}
-	
 	override getCase(int scale, Random rand) {
 		return new ClientServerCase(scale, rand)
 	}
