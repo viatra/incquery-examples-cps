@@ -34,286 +34,286 @@ import org.eclipse.incquery.examples.cps.deployment.util.DeploymentAdapterFactor
  */
 public class DeploymentItemProviderAdapterFactory extends DeploymentAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
 	/**
-	 * This keeps track of the root adapter factory that delegates to this adapter factory.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the root adapter factory that delegates to this adapter factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected ComposedAdapterFactory parentAdapterFactory;
 
 	/**
-	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-	 * <!-- begin-user-doc -->
+     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
 	/**
-	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-	 * <!-- begin-user-doc -->
+     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
 	/**
-	 * This constructs an instance.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public DeploymentItemProviderAdapterFactory() {
-		supportedTypes.add(IEditingDomainItemProvider.class);
-		supportedTypes.add(IStructuredItemContentProvider.class);
-		supportedTypes.add(ITreeItemContentProvider.class);
-		supportedTypes.add(IItemLabelProvider.class);
-		supportedTypes.add(IItemPropertySource.class);
-	}
+        supportedTypes.add(IEditingDomainItemProvider.class);
+        supportedTypes.add(IStructuredItemContentProvider.class);
+        supportedTypes.add(ITreeItemContentProvider.class);
+        supportedTypes.add(IItemLabelProvider.class);
+        supportedTypes.add(IItemPropertySource.class);
+    }
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.DeploymentHost} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.DeploymentHost} instances.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected DeploymentHostItemProvider deploymentHostItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.DeploymentHost}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.DeploymentHost}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Adapter createDeploymentHostAdapter() {
-		if (deploymentHostItemProvider == null) {
-			deploymentHostItemProvider = new DeploymentHostItemProvider(this);
-		}
+        if (deploymentHostItemProvider == null) {
+            deploymentHostItemProvider = new DeploymentHostItemProvider(this);
+        }
 
-		return deploymentHostItemProvider;
-	}
+        return deploymentHostItemProvider;
+    }
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.DeploymentApplication} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.DeploymentApplication} instances.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected DeploymentApplicationItemProvider deploymentApplicationItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.DeploymentApplication}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.DeploymentApplication}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Adapter createDeploymentApplicationAdapter() {
-		if (deploymentApplicationItemProvider == null) {
-			deploymentApplicationItemProvider = new DeploymentApplicationItemProvider(this);
-		}
+        if (deploymentApplicationItemProvider == null) {
+            deploymentApplicationItemProvider = new DeploymentApplicationItemProvider(this);
+        }
 
-		return deploymentApplicationItemProvider;
-	}
+        return deploymentApplicationItemProvider;
+    }
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior} instances.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected DeploymentBehaviorItemProvider deploymentBehaviorItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Adapter createDeploymentBehaviorAdapter() {
-		if (deploymentBehaviorItemProvider == null) {
-			deploymentBehaviorItemProvider = new DeploymentBehaviorItemProvider(this);
-		}
+        if (deploymentBehaviorItemProvider == null) {
+            deploymentBehaviorItemProvider = new DeploymentBehaviorItemProvider(this);
+        }
 
-		return deploymentBehaviorItemProvider;
-	}
+        return deploymentBehaviorItemProvider;
+    }
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.BehaviorState} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.BehaviorState} instances.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected BehaviorStateItemProvider behaviorStateItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.BehaviorState}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.BehaviorState}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Adapter createBehaviorStateAdapter() {
-		if (behaviorStateItemProvider == null) {
-			behaviorStateItemProvider = new BehaviorStateItemProvider(this);
-		}
+        if (behaviorStateItemProvider == null) {
+            behaviorStateItemProvider = new BehaviorStateItemProvider(this);
+        }
 
-		return behaviorStateItemProvider;
-	}
+        return behaviorStateItemProvider;
+    }
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.BehaviorTransition} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.BehaviorTransition} instances.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected BehaviorTransitionItemProvider behaviorTransitionItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.BehaviorTransition}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.BehaviorTransition}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Adapter createBehaviorTransitionAdapter() {
-		if (behaviorTransitionItemProvider == null) {
-			behaviorTransitionItemProvider = new BehaviorTransitionItemProvider(this);
-		}
+        if (behaviorTransitionItemProvider == null) {
+            behaviorTransitionItemProvider = new BehaviorTransitionItemProvider(this);
+        }
 
-		return behaviorTransitionItemProvider;
-	}
+        return behaviorTransitionItemProvider;
+    }
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.Deployment} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link org.eclipse.incquery.examples.cps.deployment.Deployment} instances.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected DeploymentItemProvider deploymentItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.Deployment}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link org.eclipse.incquery.examples.cps.deployment.Deployment}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Adapter createDeploymentAdapter() {
-		if (deploymentItemProvider == null) {
-			deploymentItemProvider = new DeploymentItemProvider(this);
-		}
+        if (deploymentItemProvider == null) {
+            deploymentItemProvider = new DeploymentItemProvider(this);
+        }
 
-		return deploymentItemProvider;
-	}
+        return deploymentItemProvider;
+    }
 
 	/**
-	 * This returns the root adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
+     * This returns the root adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ComposeableAdapterFactory getRootAdapterFactory() {
-		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-	}
+        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+    }
 
 	/**
-	 * This sets the composed adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
+     * This sets the composed adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-		this.parentAdapterFactory = parentAdapterFactory;
-	}
+        this.parentAdapterFactory = parentAdapterFactory;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean isFactoryForType(Object type) {
-		return supportedTypes.contains(type) || super.isFactoryForType(type);
-	}
+        return supportedTypes.contains(type) || super.isFactoryForType(type);
+    }
 
 	/**
-	 * This implementation substitutes the factory itself as the key for the adapter.
-	 * <!-- begin-user-doc -->
+     * This implementation substitutes the factory itself as the key for the adapter.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Adapter adapt(Notifier notifier, Object type) {
-		return super.adapt(notifier, this);
-	}
+        return super.adapt(notifier, this);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type)) {
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-				return adapter;
-			}
-		}
+        if (isFactoryForType(type)) {
+            Object adapter = super.adapt(object, type);
+            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+                return adapter;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * This adds a listener.
-	 * <!-- begin-user-doc -->
+     * This adds a listener.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void addListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.addListener(notifyChangedListener);
-	}
+        changeNotifier.addListener(notifyChangedListener);
+    }
 
 	/**
-	 * This removes a listener.
-	 * <!-- begin-user-doc -->
+     * This removes a listener.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.removeListener(notifyChangedListener);
-	}
+        changeNotifier.removeListener(notifyChangedListener);
+    }
 
 	/**
-	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-	 * <!-- begin-user-doc -->
+     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void fireNotifyChanged(Notification notification) {
-		changeNotifier.fireNotifyChanged(notification);
+        changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null) {
-			parentAdapterFactory.fireNotifyChanged(notification);
-		}
-	}
+        if (parentAdapterFactory != null) {
+            parentAdapterFactory.fireNotifyChanged(notification);
+        }
+    }
 
 	/**
-	 * This disposes all of the item providers created by this factory. 
-	 * <!-- begin-user-doc -->
+     * This disposes all of the item providers created by this factory. 
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void dispose() {
-		if (deploymentHostItemProvider != null) deploymentHostItemProvider.dispose();
-		if (deploymentApplicationItemProvider != null) deploymentApplicationItemProvider.dispose();
-		if (deploymentBehaviorItemProvider != null) deploymentBehaviorItemProvider.dispose();
-		if (behaviorStateItemProvider != null) behaviorStateItemProvider.dispose();
-		if (behaviorTransitionItemProvider != null) behaviorTransitionItemProvider.dispose();
-		if (deploymentItemProvider != null) deploymentItemProvider.dispose();
-	}
+        if (deploymentHostItemProvider != null) deploymentHostItemProvider.dispose();
+        if (deploymentApplicationItemProvider != null) deploymentApplicationItemProvider.dispose();
+        if (deploymentBehaviorItemProvider != null) deploymentBehaviorItemProvider.dispose();
+        if (behaviorStateItemProvider != null) behaviorStateItemProvider.dispose();
+        if (behaviorTransitionItemProvider != null) behaviorTransitionItemProvider.dispose();
+        if (deploymentItemProvider != null) deploymentItemProvider.dispose();
+    }
 
 }

@@ -40,165 +40,165 @@ public class BehaviorTransitionItemProvider
 		IItemLabelProvider,
 		IItemPropertySource {
 	/**
-	 * This constructs an instance from a factory and a notifier.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance from a factory and a notifier.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public BehaviorTransitionItemProvider(AdapterFactory adapterFactory) {
-		super(adapterFactory);
-	}
+        super(adapterFactory);
+    }
 
 	/**
-	 * This returns the property descriptors for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the property descriptors for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
-			super.getPropertyDescriptors(object);
+        if (itemPropertyDescriptors == null) {
+            super.getPropertyDescriptors(object);
 
-			addDescriptionPropertyDescriptor(object);
-			addToPropertyDescriptor(object);
-			addTriggerPropertyDescriptor(object);
-		}
-		return itemPropertyDescriptors;
-	}
+            addDescriptionPropertyDescriptor(object);
+            addToPropertyDescriptor(object);
+            addTriggerPropertyDescriptor(object);
+        }
+        return itemPropertyDescriptors;
+    }
 
 	/**
-	 * This adds a property descriptor for the Description feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Description feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addDescriptionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_DeploymentElement_description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DeploymentElement_description_feature", "_UI_DeploymentElement_type"),
-				 DeploymentPackage.Literals.DEPLOYMENT_ELEMENT__DESCRIPTION,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_DeploymentElement_description_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_DeploymentElement_description_feature", "_UI_DeploymentElement_type"),
+                 DeploymentPackage.Literals.DEPLOYMENT_ELEMENT__DESCRIPTION,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the To feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the To feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addToPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_BehaviorTransition_to_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BehaviorTransition_to_feature", "_UI_BehaviorTransition_type"),
-				 DeploymentPackage.Literals.BEHAVIOR_TRANSITION__TO,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_BehaviorTransition_to_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BehaviorTransition_to_feature", "_UI_BehaviorTransition_type"),
+                 DeploymentPackage.Literals.BEHAVIOR_TRANSITION__TO,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Trigger feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Trigger feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addTriggerPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_BehaviorTransition_trigger_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BehaviorTransition_trigger_feature", "_UI_BehaviorTransition_type"),
-				 DeploymentPackage.Literals.BEHAVIOR_TRANSITION__TRIGGER,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_BehaviorTransition_trigger_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BehaviorTransition_trigger_feature", "_UI_BehaviorTransition_type"),
+                 DeploymentPackage.Literals.BEHAVIOR_TRANSITION__TRIGGER,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This returns BehaviorTransition.gif.
-	 * <!-- begin-user-doc -->
+     * This returns BehaviorTransition.gif.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/BehaviorTransition"));
-	}
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/BehaviorTransition"));
+    }
 
 	/**
-	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the label text for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String getText(Object object) {
-		String label = ((BehaviorTransition)object).getDescription();
-		return label == null || label.length() == 0 ?
-			getString("_UI_BehaviorTransition_type") :
-			getString("_UI_BehaviorTransition_type") + " " + label;
-	}
+        String label = ((BehaviorTransition)object).getDescription();
+        return label == null || label.length() == 0 ?
+            getString("_UI_BehaviorTransition_type") :
+            getString("_UI_BehaviorTransition_type") + " " + label;
+    }
 	
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to update any cached
-	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc -->
+     * This handles model notifications by calling {@link #updateChildren} to update any cached
+     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void notifyChanged(Notification notification) {
-		updateChildren(notification);
+        updateChildren(notification);
 
-		switch (notification.getFeatureID(BehaviorTransition.class)) {
-			case DeploymentPackage.BEHAVIOR_TRANSITION__DESCRIPTION:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
-		super.notifyChanged(notification);
-	}
+        switch (notification.getFeatureID(BehaviorTransition.class)) {
+            case DeploymentPackage.BEHAVIOR_TRANSITION__DESCRIPTION:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
+        super.notifyChanged(notification);
+    }
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-	 * that can be created under this object.
-	 * <!-- begin-user-doc -->
+     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+     * that can be created under this object.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
+        super.collectNewChildDescriptors(newChildDescriptors, object);
+    }
 
 	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return DeploymentEditPlugin.INSTANCE;
-	}
+        return DeploymentEditPlugin.INSTANCE;
+    }
 
 }

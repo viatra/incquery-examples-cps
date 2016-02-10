@@ -40,142 +40,142 @@ public class BehaviorStateItemProvider
 		IItemLabelProvider,
 		IItemPropertySource {
 	/**
-	 * This constructs an instance from a factory and a notifier.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance from a factory and a notifier.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public BehaviorStateItemProvider(AdapterFactory adapterFactory) {
-		super(adapterFactory);
-	}
+        super(adapterFactory);
+    }
 
 	/**
-	 * This returns the property descriptors for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the property descriptors for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
-			super.getPropertyDescriptors(object);
+        if (itemPropertyDescriptors == null) {
+            super.getPropertyDescriptors(object);
 
-			addDescriptionPropertyDescriptor(object);
-			addOutgoingPropertyDescriptor(object);
-		}
-		return itemPropertyDescriptors;
-	}
+            addDescriptionPropertyDescriptor(object);
+            addOutgoingPropertyDescriptor(object);
+        }
+        return itemPropertyDescriptors;
+    }
 
 	/**
-	 * This adds a property descriptor for the Description feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Description feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addDescriptionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_DeploymentElement_description_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DeploymentElement_description_feature", "_UI_DeploymentElement_type"),
-				 DeploymentPackage.Literals.DEPLOYMENT_ELEMENT__DESCRIPTION,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_DeploymentElement_description_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_DeploymentElement_description_feature", "_UI_DeploymentElement_type"),
+                 DeploymentPackage.Literals.DEPLOYMENT_ELEMENT__DESCRIPTION,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Outgoing feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Outgoing feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addOutgoingPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_BehaviorState_outgoing_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BehaviorState_outgoing_feature", "_UI_BehaviorState_type"),
-				 DeploymentPackage.Literals.BEHAVIOR_STATE__OUTGOING,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_BehaviorState_outgoing_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BehaviorState_outgoing_feature", "_UI_BehaviorState_type"),
+                 DeploymentPackage.Literals.BEHAVIOR_STATE__OUTGOING,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This returns BehaviorState.gif.
-	 * <!-- begin-user-doc -->
+     * This returns BehaviorState.gif.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/BehaviorState"));
-	}
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/BehaviorState"));
+    }
 
 	/**
-	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the label text for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String getText(Object object) {
-		String label = ((BehaviorState)object).getDescription();
-		return label == null || label.length() == 0 ?
-			getString("_UI_BehaviorState_type") :
-			getString("_UI_BehaviorState_type") + " " + label;
-	}
+        String label = ((BehaviorState)object).getDescription();
+        return label == null || label.length() == 0 ?
+            getString("_UI_BehaviorState_type") :
+            getString("_UI_BehaviorState_type") + " " + label;
+    }
 	
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to update any cached
-	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc -->
+     * This handles model notifications by calling {@link #updateChildren} to update any cached
+     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void notifyChanged(Notification notification) {
-		updateChildren(notification);
+        updateChildren(notification);
 
-		switch (notification.getFeatureID(BehaviorState.class)) {
-			case DeploymentPackage.BEHAVIOR_STATE__DESCRIPTION:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
-		super.notifyChanged(notification);
-	}
+        switch (notification.getFeatureID(BehaviorState.class)) {
+            case DeploymentPackage.BEHAVIOR_STATE__DESCRIPTION:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
+        super.notifyChanged(notification);
+    }
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-	 * that can be created under this object.
-	 * <!-- begin-user-doc -->
+     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+     * that can be created under this object.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
+        super.collectNewChildDescriptors(newChildDescriptors, object);
+    }
 
 	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return DeploymentEditPlugin.INSTANCE;
-	}
+        return DeploymentEditPlugin.INSTANCE;
+    }
 
 }
