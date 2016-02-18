@@ -20,7 +20,7 @@
       <unit id="org.eclipse.emf.sdk.feature.group" version="2.11.1.v20150806-0404"/>
       <unit id="org.eclipse.emf.transaction" version="1.9.0.201506010221"/>
       <unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.1.v20150831-1342"/>
-      <unit id="org.eclipse.sdk.feature.group" version="4.5.1.M20150904-0015"/>
+      <unit id="org.eclipse.sdk.feature.group" version="4.5.1.v20150904-0345"/>
       <repository location="http://download.eclipse.org/releases/mars"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
