@@ -5,12 +5,12 @@ import java.util.Map;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentElement;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost;
-import org.eclipse.incquery.runtime.api.IMatchProcessor;
-import org.eclipse.incquery.runtime.api.IPatternMatch;
-import org.eclipse.incquery.runtime.evm.api.Activation;
-import org.eclipse.incquery.runtime.evm.api.Context;
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum;
-import org.eclipse.incquery.runtime.evm.specific.job.StatelessJob;
+import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
+import org.eclipse.viatra.query.runtime.api.IPatternMatch;
+import org.eclipse.viatra.transformation.evm.api.Activation;
+import org.eclipse.viatra.transformation.evm.api.Context;
+import org.eclipse.viatra.transformation.evm.specific.event.IncQueryActivationStateEnum;
+import org.eclipse.viatra.transformation.evm.specific.job.StatelessJob;
 
 import com.google.common.collect.Maps;
 

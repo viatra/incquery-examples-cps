@@ -5,26 +5,23 @@ import java.util.List;
 import org.eclipse.incquery.examples.cps.integration.SerializerTransformationStep;
 import org.eclipse.incquery.examples.cps.integration.messages.M2TOutputMessage;
 import org.eclipse.incquery.examples.cps.xform.m2t.api.M2TOutputRecord;
-import org.eclipse.viatra.emf.mwe2integration.IMessage;
-import org.eclipse.viatra.emf.mwe2integration.IMessageProcessor;
-import org.eclipse.viatra.emf.mwe2integration.ITransformationStep;
 
 @SuppressWarnings("all")
-public class M2TOutputMessageProcessor implements IMessageProcessor<List<M2TOutputRecord>, M2TOutputMessage> {
-  private ITransformationStep parent;
+public class M2TOutputMessageProcessor /* implements IMessageProcessor<List<M2TOutputRecord>, M2TOutputMessage>  */{
+  private /* ITransformationStep */Object parent;
   
   @Override
-  public ITransformationStep getParent() {
+  public /* ITransformationStep */Object getParent() {
     return this.parent;
   }
   
   @Override
-  public void setParent(final ITransformationStep parent) {
+  public void setParent(final /* ITransformationStep */Object parent) {
     this.parent = parent;
   }
   
   @Override
-  public void processMessage(final IMessage<?> message) throws InvalidParameterException {
+  public void processMessage(final /* IMessage<?> */Object message) throws InvalidParameterException {
     if ((message instanceof M2TOutputMessage)) {
       M2TOutputMessage event = ((M2TOutputMessage) message);
       if ((this.parent instanceof SerializerTransformationStep)) {

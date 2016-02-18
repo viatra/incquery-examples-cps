@@ -1,15 +1,15 @@
 package org.eclipse.incquery.examples.cps.xform.m2t.monitor;
 
 import org.eclipse.incquery.examples.cps.deployment.Deployment;
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.exception.IncQueryException;
 
 public abstract class AbstractDeploymentChangeMonitor {
 
     protected Deployment deployment;
-    protected IncQueryEngine engine;
+    protected ViatraQueryEngine engine;
 
-    public AbstractDeploymentChangeMonitor(Deployment deployment, IncQueryEngine engine){
+    public AbstractDeploymentChangeMonitor(Deployment deployment, ViatraQueryEngine engine){
         this.deployment = deployment;
         this.engine = engine;
 		

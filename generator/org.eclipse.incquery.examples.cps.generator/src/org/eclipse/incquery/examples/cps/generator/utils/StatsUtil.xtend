@@ -8,20 +8,20 @@ import org.eclipse.incquery.examples.cps.generator.dtos.CPSStats
 import org.eclipse.incquery.examples.cps.generator.dtos.DeploymentStats
 import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.exception.IncQueryException
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.exception.IncQueryException
 
 class StatsUtil {
 	
-	def static generateStatsForCPS(IncQueryEngine engine, CyberPhysicalSystem model){
+	def static generateStatsForCPS(ViatraQueryEngine engine, CyberPhysicalSystem model){
 		return new CPSStats(engine, model);
 	}
 	
-	def static generateStatsForDeployment(IncQueryEngine engine, Deployment model){
+	def static generateStatsForDeployment(ViatraQueryEngine engine, Deployment model){
 		return new DeploymentStats(engine, model);
 	}
 	
-	def static generateStatsForTraceability(IncQueryEngine engine, CPSToDeployment model){
+	def static generateStatsForTraceability(ViatraQueryEngine engine, CPSToDeployment model){
 		return new TraceabilityStats(engine, model);
 	}
 	

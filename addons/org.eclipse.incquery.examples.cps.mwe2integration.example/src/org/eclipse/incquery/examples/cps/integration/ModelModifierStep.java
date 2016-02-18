@@ -7,7 +7,7 @@ import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance;
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType;
 import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.TransformationStep;
+import org.eclipse.viatra.integration.mwe2.mwe2impl.TransformationStep;
 
 public class ModelModifierStep extends TransformationStep{
     protected CPSToDeployment model;

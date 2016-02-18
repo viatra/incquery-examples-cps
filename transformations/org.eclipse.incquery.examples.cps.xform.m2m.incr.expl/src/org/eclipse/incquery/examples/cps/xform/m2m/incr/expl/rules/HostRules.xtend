@@ -3,14 +3,14 @@ package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedDeploymentHostMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredHostInstanceMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedHostInstanceMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.event.IncQueryActivationStateEnum
 
 class HostRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new HostMapping(engine).specification
 			,new HostUpdate(engine).specification
@@ -21,7 +21,7 @@ class HostRules {
 
 class HostMapping extends AbstractRule<UnmappedHostInstanceMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -53,7 +53,7 @@ class HostMapping extends AbstractRule<UnmappedHostInstanceMatch> {
 
 class HostUpdate extends AbstractRule<MonitoredHostInstanceMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -98,7 +98,7 @@ class HostUpdate extends AbstractRule<MonitoredHostInstanceMatch> {
 
 class HostRemoval extends AbstractRule<DeletedDeploymentHostMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	

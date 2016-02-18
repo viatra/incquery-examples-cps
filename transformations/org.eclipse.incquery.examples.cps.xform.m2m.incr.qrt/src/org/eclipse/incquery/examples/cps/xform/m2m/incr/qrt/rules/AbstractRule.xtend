@@ -5,8 +5,8 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.CpsXformM2M
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.util.PriorityRuleSpecification
-import org.eclipse.incquery.runtime.api.IPatternMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.viatra.query.runtime.api.IPatternMatch
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 
 import static com.google.common.base.Preconditions.*
 
@@ -16,9 +16,9 @@ abstract class AbstractRule<M extends IPatternMatch> {
 	protected extension DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
 	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
 	protected extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
-	protected IncQueryEngine engine
+	protected ViatraQueryEngine engine
 
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		this.engine = engine
 		debug('''Creating rule «this.class.simpleName»''')
 	}

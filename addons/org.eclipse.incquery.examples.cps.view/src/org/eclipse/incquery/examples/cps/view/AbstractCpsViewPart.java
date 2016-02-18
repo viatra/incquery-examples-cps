@@ -7,19 +7,19 @@ import org.eclipse.gef4.layout.LayoutAlgorithm;
 import org.eclipse.gef4.layout.algorithms.SpaceTreeLayoutAlgorithm;
 import org.eclipse.gef4.zest.core.viewers.GraphViewer;
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditor;
-import org.eclipse.incquery.runtime.api.IQuerySpecification;
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
-import org.eclipse.incquery.runtime.emf.EMFScope;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
-import org.eclipse.incquery.viewers.runtime.model.Containment;
-import org.eclipse.incquery.viewers.runtime.model.Edge;
-import org.eclipse.incquery.viewers.runtime.model.IncQueryViewerDataModel;
-import org.eclipse.incquery.viewers.runtime.model.Item;
-import org.eclipse.incquery.viewers.runtime.model.ViewerDataFilter;
-import org.eclipse.incquery.viewers.runtime.model.ViewerState;
-import org.eclipse.incquery.viewers.runtime.model.ViewerState.ViewerStateFeature;
-import org.eclipse.incquery.viewers.runtime.model.listeners.IViewerStateListener;
-import org.eclipse.incquery.viewers.runtime.zest.IncQueryGraphViewers;
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.emf.EMFScope;
+import org.eclipse.viatra.query.runtime.exception.IncQueryException;
+import org.eclipse.viatra.addon.viewers.runtime.model.Containment;
+import org.eclipse.viatra.addon.viewers.runtime.model.Edge;
+import org.eclipse.viatra.addon.viewers.runtime.model.IncQueryViewerDataModel;
+import org.eclipse.viatra.addon.viewers.runtime.model.Item;
+import org.eclipse.viatra.addon.viewers.runtime.model.ViewerDataFilter;
+import org.eclipse.viatra.addon.viewers.runtime.model.ViewerState;
+import org.eclipse.viatra.addon.viewers.runtime.model.ViewerState.ViewerStateFeature;
+import org.eclipse.viatra.addon.viewers.runtime.model.listeners.IViewerStateListener;
+import org.eclipse.viatra.addon.viewers.runtime.zest.IncQueryGraphViewers;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
@@ -35,7 +35,7 @@ import com.google.common.collect.ImmutableSet;
 public abstract class AbstractCpsViewPart extends ViewPart implements IPartListener2 {
 
 		private GraphViewer viewer;
-		private IncQueryEngine engine = null;
+		private ViatraQueryEngine engine = null;
 		protected IEditorPart activeEditor;
 		
 		public AbstractCpsViewPart() {
@@ -43,7 +43,7 @@ public abstract class AbstractCpsViewPart extends ViewPart implements IPartListe
 			workbenchPage.addPartListener(this);	
 		}
 
-		protected IncQueryEngine getEngine() {
+		protected ViatraQueryEngine getEngine() {
 			return engine;
 		}
 		

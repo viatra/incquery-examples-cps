@@ -4,14 +4,14 @@ import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedTransitionMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredTransitionMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedTransitionMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.event.IncQueryActivationStateEnum
 
 class TransitionRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new TransitionMapping(engine).specification
 			,new TransitionUpdate(engine).specification
@@ -22,7 +22,7 @@ class TransitionRules {
 
 class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -70,7 +70,7 @@ class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 
 class TransitionUpdate extends AbstractRule<MonitoredTransitionMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -133,7 +133,7 @@ class TransitionUpdate extends AbstractRule<MonitoredTransitionMatch> {
 
 class TransitionRemoval extends AbstractRule<DeletedTransitionMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	

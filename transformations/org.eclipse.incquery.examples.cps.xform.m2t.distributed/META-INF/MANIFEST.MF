@@ -3,15 +3,15 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CPS Demonstrator Proto Distribution Generator
 Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2t.distributed
 Bundle-Version: 0.1.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
+Export-Package: org.eclipse.incquery.examples.cps.xform.m2t.distributed
 Require-Bundle: org.eclipse.xtend;bundle-version="2.0.0",
  org.eclipse.xtext.xbase.lib;bundle-version="2.6.0",
  org.eclipse.incquery.examples.cps.deployment,
- org.eclipse.incquery.runtime;bundle-version="[1.0.0,2.0.0)",
  org.apache.log4j;bundle-version="1.2.15",
  org.eclipse.incquery.examples.cps.queries,
  org.eclipse.jdt.core;bundle-version="3.10.0",
  org.eclipse.text,
- org.eclipse.incquery.examples.cps.xform.m2t;bundle-version="0.1.0"
-Export-Package: org.eclipse.incquery.examples.cps.xform.m2t.distributed
+ org.eclipse.incquery.examples.cps.xform.m2t;bundle-version="0.1.0",
+ org.eclipse.viatra.query.runtime;bundle-version="[1.2.0,2.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

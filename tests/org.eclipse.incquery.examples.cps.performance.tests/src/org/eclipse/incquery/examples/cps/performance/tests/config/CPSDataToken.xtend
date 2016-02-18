@@ -7,13 +7,13 @@ import org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers.CPSTransformat
 import org.eclipse.incquery.examples.cps.xform.m2t.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeMonitor
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
 
 @Accessors
 class CPSDataToken implements DataToken{
 	
 	GeneratorType generatorType
-	AdvancedIncQueryEngine engine
+	AdvancedViatraQueryEngine engine
 	TransformationType transformationType
 	String scenarioName
 	CPSToDeployment cps2dep

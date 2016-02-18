@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.incquery.examples.cps.integration.messages.M2TOutputMessage;
 import org.eclipse.incquery.examples.cps.xform.m2t.api.M2TOutputRecord;
-import org.eclipse.viatra.emf.mwe2integration.IMessageFactory;
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.exceptions.InvalidParameterTypeException;
 
 @SuppressWarnings("all")
-public class M2TOutputMessageFactory implements IMessageFactory<List<M2TOutputRecord>, M2TOutputMessage> {
+public class M2TOutputMessageFactory /* implements IMessageFactory<List<M2TOutputRecord>, M2TOutputMessage>  */{
   @Override
   public boolean isValidParameter(final Object parameter) {
     List<M2TOutputRecord> list = ((List<M2TOutputRecord>) parameter);
@@ -22,7 +20,7 @@ public class M2TOutputMessageFactory implements IMessageFactory<List<M2TOutputRe
   }
   
   @Override
-  public M2TOutputMessage createMessage(final Object parameter) throws InvalidParameterTypeException {
+  public M2TOutputMessage createMessage(final Object parameter)/*  throws InvalidParameterTypeException */ {
     boolean _isValidParameter = this.isValidParameter(parameter);
     if (_isValidParameter) {
       return new M2TOutputMessage(((List<M2TOutputRecord>) parameter));

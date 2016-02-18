@@ -22,23 +22,23 @@ import org.eclipse.incquery.examples.cps.xform.m2t.monitor.util.HostApplications
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.util.HostIpChangeQuerySpecification;
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.util.TransitionChangeQuerySpecification;
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.util.TriggerChangeQuerySpecification;
-import org.eclipse.incquery.runtime.api.IMatchProcessor;
-import org.eclipse.incquery.runtime.api.IPatternMatch;
-import org.eclipse.incquery.runtime.api.IQuerySpecification;
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
-import org.eclipse.incquery.runtime.api.IncQueryMatcher;
-import org.eclipse.incquery.runtime.evm.api.ExecutionSchema;
-import org.eclipse.incquery.runtime.evm.api.Job;
-import org.eclipse.incquery.runtime.evm.api.RuleSpecification;
-import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas;
-import org.eclipse.incquery.runtime.evm.specific.Jobs;
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles;
-import org.eclipse.incquery.runtime.evm.specific.Rules;
-import org.eclipse.incquery.runtime.evm.specific.Schedulers;
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum;
-import org.eclipse.incquery.runtime.evm.specific.job.EnableJob;
-import org.eclipse.incquery.runtime.evm.specific.scheduler.UpdateCompleteBasedScheduler.UpdateCompleteBasedSchedulerFactory;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
+import org.eclipse.viatra.query.runtime.api.IPatternMatch;
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher;
+import org.eclipse.viatra.transformation.evm.api.ExecutionSchema;
+import org.eclipse.viatra.transformation.evm.api.Job;
+import org.eclipse.viatra.transformation.evm.api.RuleSpecification;
+import org.eclipse.viatra.transformation.evm.specific.ExecutionSchemas;
+import org.eclipse.viatra.transformation.evm.specific.Jobs;
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles;
+import org.eclipse.viatra.transformation.evm.specific.Rules;
+import org.eclipse.viatra.transformation.evm.specific.Schedulers;
+import org.eclipse.viatra.transformation.evm.specific.event.IncQueryActivationStateEnum;
+import org.eclipse.viatra.transformation.evm.specific.job.EnableJob;
+import org.eclipse.viatra.transformation.evm.specific.scheduler.UpdateCompleteBasedScheduler.UpdateCompleteBasedSchedulerFactory;
+import org.eclipse.viatra.query.runtime.exception.IncQueryException;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -58,7 +58,7 @@ public class DeploymentChangeMonitor extends AbstractDeploymentChangeMonitor {
 	private HashMap<DeploymentApplication, String> appsToIDs;
 	private HashMap<DeploymentHost, String> hostsToIPs;
 	
-	public DeploymentChangeMonitor(Deployment deployment, IncQueryEngine engine) {
+	public DeploymentChangeMonitor(Deployment deployment, ViatraQueryEngine engine) {
 		super(deployment, engine);
 		this.appearBetweenCheckpoints = Sets.newHashSet();
 		this.updateBetweenCheckpoints = Sets.newHashSet();
@@ -139,9 +139,9 @@ public class DeploymentChangeMonitor extends AbstractDeploymentChangeMonitor {
 		Set<Job<IPatternMatch>> deploymentJobs = createDeploymentJobs();
 		allJobs.addAll(deploymentJobs);
 
-		IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> deploymentHostChangeQuerySpec = (IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) DeploymentHostsChangeQuerySpecification
+		IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>> deploymentHostChangeQuerySpec = (IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>) DeploymentHostsChangeQuerySpecification
 				.instance();
-		IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> deploymentHostIpChangeQuerySpec = (IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) DeploymentHostIpChangeQuerySpecification
+		IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>> deploymentHostIpChangeQuerySpec = (IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>) DeploymentHostIpChangeQuerySpecification
 				.instance();
 
 		registerJobsForPattern(executionSchema, deploymentJobs,
@@ -149,9 +149,9 @@ public class DeploymentChangeMonitor extends AbstractDeploymentChangeMonitor {
 		registerJobsForPattern(executionSchema, deploymentJobs,
 				deploymentHostIpChangeQuerySpec);
 
-		Map<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, Set<Job<IPatternMatch>>> querySpecificationsToJobs = getDeploymentElementChangeQuerySpecifications();
+		Map<IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>, Set<Job<IPatternMatch>>> querySpecificationsToJobs = getDeploymentElementChangeQuerySpecifications();
 
-		for (IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> querySpec : querySpecificationsToJobs
+		for (IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>> querySpec : querySpecificationsToJobs
 				.keySet()) {
 			registerJobsForPattern(executionSchema,
 					querySpecificationsToJobs.get(querySpec), querySpec);
@@ -200,7 +200,7 @@ public class DeploymentChangeMonitor extends AbstractDeploymentChangeMonitor {
 	private void registerJobsForPattern(
 			ExecutionSchema executionSchema,
 			Set<Job<IPatternMatch>> deploymentElementJobs,
-			IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>> changeQuerySpecification) {
+			IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>> changeQuerySpecification) {
 		RuleSpecification<IPatternMatch> applicationRules = Rules
 				.newMatcherRuleSpecification(changeQuerySpecification,
 						Lifecycles.getDefault(true, true),
@@ -208,30 +208,30 @@ public class DeploymentChangeMonitor extends AbstractDeploymentChangeMonitor {
 		executionSchema.addRule(applicationRules);
 	}
 
-	private Map<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, Set<Job<IPatternMatch>>> getDeploymentElementChangeQuerySpecifications()
+	private Map<IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>, Set<Job<IPatternMatch>>> getDeploymentElementChangeQuerySpecifications()
 			throws IncQueryException {
-		Map<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, Set<Job<IPatternMatch>>> querySpecifications = Maps
+		Map<IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>, Set<Job<IPatternMatch>>> querySpecifications = Maps
 				.newHashMap();
 		querySpecifications
-				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) HostApplicationsChangeQuerySpecification
+				.put((IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>) HostApplicationsChangeQuerySpecification
 						.instance(), hostChangeJobs());
 		querySpecifications
-				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) HostIpChangeQuerySpecification
+				.put((IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>) HostIpChangeQuerySpecification
 						.instance(), hostChangeJobs());
 		querySpecifications
-				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) ApplicationIdChangeQuerySpecification
+				.put((IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>) ApplicationIdChangeQuerySpecification
 						.instance(), applicationChangeJobs());
 		querySpecifications
-				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) ApplicationBehaviorCurrentStateChangeQuerySpecification
+				.put((IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>) ApplicationBehaviorCurrentStateChangeQuerySpecification
 						.instance(), applicationChangeJobs());
 		querySpecifications
-				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) BehaviorChangeQuerySpecification
+				.put((IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>) BehaviorChangeQuerySpecification
 						.instance(), behaviorChangeJobs());
 		querySpecifications
-				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) TransitionChangeQuerySpecification
+				.put((IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>) TransitionChangeQuerySpecification
 						.instance(), behaviorChangeJobs());
 		querySpecifications
-				.put((IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>) TriggerChangeQuerySpecification
+				.put((IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>) TriggerChangeQuerySpecification
 						.instance(), behaviorChangeJobs());
 		return querySpecifications;
 	}

@@ -2,11 +2,9 @@ package org.eclipse.incquery.examples.cps.integration.messages;
 
 import org.eclipse.incquery.examples.cps.integration.messages.ChangeDeltaMessage;
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeDelta;
-import org.eclipse.viatra.emf.mwe2integration.IMessageFactory;
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.exceptions.InvalidParameterTypeException;
 
 @SuppressWarnings("all")
-public class ChangeDeltaMessageFactory implements IMessageFactory<DeploymentChangeDelta, ChangeDeltaMessage> {
+public class ChangeDeltaMessageFactory /* implements IMessageFactory<DeploymentChangeDelta, ChangeDeltaMessage>  */{
   @Override
   public boolean isValidParameter(final Object parameter) {
     if ((parameter instanceof DeploymentChangeDelta)) {
@@ -16,7 +14,7 @@ public class ChangeDeltaMessageFactory implements IMessageFactory<DeploymentChan
   }
   
   @Override
-  public ChangeDeltaMessage createMessage(final Object parameter) throws InvalidParameterTypeException {
+  public ChangeDeltaMessage createMessage(final Object parameter)/*  throws InvalidParameterTypeException */ {
     boolean _isValidParameter = this.isValidParameter(parameter);
     if (_isValidParameter) {
       return new ChangeDeltaMessage(((DeploymentChangeDelta) parameter));

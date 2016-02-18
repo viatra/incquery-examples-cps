@@ -12,10 +12,10 @@ import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.StateMachineR
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.StateRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.TransitionRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules.TriggerRules
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.api.ExecutionSchema
-import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas
-import org.eclipse.incquery.runtime.evm.specific.Schedulers
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.api.ExecutionSchema
+import org.eclipse.viatra.transformation.evm.specific.ExecutionSchemas
+import org.eclipse.viatra.transformation.evm.specific.Schedulers
 
 import static com.google.common.base.Preconditions.*
 
@@ -27,9 +27,9 @@ class CPS2DeploymentTransformation {
 	ExecutionSchema schema = null
 	
 	CPSToDeployment cps2dep
-	IncQueryEngine engine
+	ViatraQueryEngine engine
 	
-	def initialize(CPSToDeployment mapping, IncQueryEngine iqEngine) {
+	def initialize(CPSToDeployment mapping, ViatraQueryEngine iqEngine) {
 		checkArgument(mapping != null, "Mapping cannot be null!")
 		checkArgument(mapping.cps != null, "CPS not defined in mapping!")
 		checkArgument(mapping.deployment != null, "Deployment not defined in mapping!")

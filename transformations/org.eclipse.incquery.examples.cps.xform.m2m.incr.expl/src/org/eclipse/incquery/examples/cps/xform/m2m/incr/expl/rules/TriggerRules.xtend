@@ -1,15 +1,15 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules
 
-import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedTriggerMatch
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.transformation.evm.specific.event.IncQueryActivationStateEnum
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedTriggerMatch
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Jobs
 
 class TriggerRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new TriggerMapping(engine).specification
 			,new TriggerRemoval(engine).specification
@@ -19,7 +19,7 @@ class TriggerRules {
 
 class TriggerMapping extends AbstractRule<UnmappedTriggerMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -49,7 +49,7 @@ class TriggerMapping extends AbstractRule<UnmappedTriggerMatch> {
 
 class TriggerRemoval extends AbstractRule<DeletedTriggerMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	

@@ -1,10 +1,9 @@
 package org.eclipse.incquery.examples.cps.integration.messages;
 
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeDelta;
-import org.eclipse.viatra.emf.mwe2integration.IMessage;
 
 @SuppressWarnings("all")
-public class ChangeDeltaMessage implements IMessage<DeploymentChangeDelta> {
+public class ChangeDeltaMessage /* implements IMessage<DeploymentChangeDelta>  */{
   private DeploymentChangeDelta parameter;
   
   public ChangeDeltaMessage(final DeploymentChangeDelta parameter) {

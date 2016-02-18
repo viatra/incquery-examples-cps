@@ -3,8 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CPS Demonstrator M2M Tests
 Bundle-SymbolicName: org.eclipse.incquery.examples.cps.xform.m2m.tests;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
+Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.tests,
+ org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers
 Require-Bundle: com.google.guava,
  org.eclipse.xtend.lib,
  org.eclipse.xtext.xbase.lib,
@@ -17,6 +18,5 @@ Require-Bundle: com.google.guava,
  org.eclipse.incquery.examples.cps.tests;visibility:=reexport,
  org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra,
  org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra;bundle-version="0.1.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j;version="1.2.15"
-Export-Package: org.eclipse.incquery.examples.cps.xform.m2m.tests,
- org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers

@@ -1,9 +1,9 @@
 package org.eclipse.incquery.examples.cps.generator.utils
 
-import org.eclipse.incquery.runtime.base.api.IEClassifierProcessor.IEClassProcessor
+import org.eclipse.viatra.query.runtime.base.api.IEClassifierProcessor.IEClassProcessor
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.incquery.runtime.base.api.IEStructuralFeatureProcessor
+import org.eclipse.viatra.query.runtime.base.api.IEStructuralFeatureProcessor
 import org.eclipse.emf.ecore.EStructuralFeature
 
 class SumProcessor implements IEClassProcessor,  IEStructuralFeatureProcessor {

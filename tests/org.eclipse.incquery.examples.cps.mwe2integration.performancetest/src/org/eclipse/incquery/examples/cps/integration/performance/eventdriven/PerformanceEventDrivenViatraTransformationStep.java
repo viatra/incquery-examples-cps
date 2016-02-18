@@ -4,11 +4,11 @@ import org.eclipse.emf.mwe2.runtime.workflow.IWorkflowContext;
 import org.eclipse.incquery.examples.cps.integration.eventdriven.controllable.M2MControllableEventDrivenViatraTransformationStep;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.CPS2DeploymentTransformationViatra;
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
-import org.eclipse.incquery.runtime.emf.EMFScope;
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryEventRealm;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
-import org.eclipse.viatra.emf.mwe2integration.eventdriven.mwe2impl.MWE2ControllableExecutor;
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.emf.EMFScope;
+import org.eclipse.viatra.transformation.evm.specific.event.IncQueryEventRealm;
+import org.eclipse.viatra.query.runtime.exception.IncQueryException;
+import org.eclipse.viatra.integration.mwe2.eventdriven.mwe2impl.MWE2ControllableExecutor;
 
 import eu.mondo.sam.core.metrics.MemoryMetric;
 import eu.mondo.sam.core.metrics.TimeMetric;

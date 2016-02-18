@@ -37,17 +37,17 @@ import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.StateM
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.StatesQuerySpecification
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.TransitionsQuerySpecification
 import org.eclipse.incquery.examples.cps.xform.m2m.util.SignalUtil
-import org.eclipse.incquery.runtime.api.IPatternMatch
-import org.eclipse.incquery.runtime.api.IQuerySpecification
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.api.IncQueryMatcher
+import org.eclipse.viatra.query.runtime.api.IPatternMatch
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
 
 import static com.google.common.base.Preconditions.*
 
 import static extension org.eclipse.incquery.examples.cps.xform.m2m.util.NamingUtil.*
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.util.HostInstancesQuerySpecification
-import org.eclipse.viatra.emf.runtime.changemonitor.ChangeMonitor
-import org.eclipse.viatra.emf.runtime.changemonitor.ChangeDelta
+import org.eclipse.viatra.transformation.runtime.emf.changemonitor.ChangeMonitor
+import org.eclipse.viatra.transformation.runtime.emf.changemonitor.ChangeDelta
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.TransitionsMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.StatesMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.StateMachinesMatch
@@ -65,7 +65,7 @@ class CPS2DeploymentPartialBatchTransformation {
 	TraceabilityFactory tracFactory = TraceabilityFactory.eINSTANCE
 
 	CPSToDeployment mapping
-	IncQueryEngine engine
+	ViatraQueryEngine engine
 	ChangeMonitor monitor;
 
 	Stopwatch clearModelPerformance;
@@ -96,7 +96,7 @@ class CPS2DeploymentPartialBatchTransformation {
 	 *             If either of the input arguments are null, or the mapping
 	 *             does not contain a cps and a deployment model.
 	 */
-	new(CPSToDeployment mapping, IncQueryEngine engine) {
+	new(CPSToDeployment mapping, ViatraQueryEngine engine) {
 		checkArgument(mapping != null, "Mapping cannot be null!")
 		checkArgument(mapping.cps != null, "CPS not defined in mapping!")
 		checkArgument(mapping.deployment != null, "Deployment not defined in mapping!")
@@ -526,7 +526,7 @@ class CPS2DeploymentPartialBatchTransformation {
 	private def clearModel(ChangeDelta delta) {
 
 		trace('''Executing: clearModel(ChangeDelta delta)''')
-		val Multimap<IQuerySpecification<? extends IncQueryMatcher<IPatternMatch>>, IPatternMatch> queue = ArrayListMultimap.
+		val Multimap<IQuerySpecification<? extends ViatraQueryMatcher<IPatternMatch>>, IPatternMatch> queue = ArrayListMultimap.
 			create();
 		queue.putAll(delta.disappeared)
 		queue.putAll(delta.updated)

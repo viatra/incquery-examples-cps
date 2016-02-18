@@ -5,8 +5,8 @@ import java.util.Collection;
 import org.eclipse.incquery.examples.cps.model.viewer.util.AllHostInstancesQuerySpecification;
 import org.eclipse.incquery.examples.cps.model.viewer.util.ConnectTypesAndInstancesHostQuerySpecification;
 import org.eclipse.incquery.examples.cps.model.viewer.util.HostTypesQuerySpecification;
-import org.eclipse.incquery.runtime.api.IQuerySpecification;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
+import org.eclipse.viatra.query.runtime.exception.IncQueryException;
 
 import com.google.common.collect.ImmutableSet;
 

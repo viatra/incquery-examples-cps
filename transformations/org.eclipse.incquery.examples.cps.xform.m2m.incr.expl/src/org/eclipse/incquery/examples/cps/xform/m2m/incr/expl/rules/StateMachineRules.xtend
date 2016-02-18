@@ -4,14 +4,14 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedStateMachineMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredStateMachineMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedStateMachineMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.event.IncQueryActivationStateEnum
 
 class StateMachineRules {
-    static def getRules(IncQueryEngine engine) {
+    static def getRules(ViatraQueryEngine engine) {
 		#{
 			new StateMachineMapping(engine).specification
 			,new StateMachineUpdate(engine).specification
@@ -22,7 +22,7 @@ class StateMachineRules {
 
 class StateMachineMapping extends AbstractRule<UnmappedStateMachineMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -61,7 +61,7 @@ class StateMachineMapping extends AbstractRule<UnmappedStateMachineMatch> {
 
 class StateMachineUpdate extends AbstractRule<MonitoredStateMachineMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -105,7 +105,7 @@ class StateMachineUpdate extends AbstractRule<MonitoredStateMachineMatch> {
 
 class StateMachineRemoval extends AbstractRule<DeletedStateMachineMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	

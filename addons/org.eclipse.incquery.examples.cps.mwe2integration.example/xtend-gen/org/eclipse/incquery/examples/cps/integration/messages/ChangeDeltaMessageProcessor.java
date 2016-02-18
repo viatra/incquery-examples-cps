@@ -4,26 +4,23 @@ import java.security.InvalidParameterException;
 import org.eclipse.incquery.examples.cps.integration.M2TDistributedTransformationStep;
 import org.eclipse.incquery.examples.cps.integration.messages.ChangeDeltaMessage;
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeDelta;
-import org.eclipse.viatra.emf.mwe2integration.IMessage;
-import org.eclipse.viatra.emf.mwe2integration.IMessageProcessor;
-import org.eclipse.viatra.emf.mwe2integration.ITransformationStep;
 
 @SuppressWarnings("all")
-public class ChangeDeltaMessageProcessor implements IMessageProcessor<DeploymentChangeDelta, ChangeDeltaMessage> {
-  protected ITransformationStep parent;
+public class ChangeDeltaMessageProcessor /* implements IMessageProcessor<DeploymentChangeDelta, ChangeDeltaMessage>  */{
+  protected /* ITransformationStep */Object parent;
   
   @Override
-  public ITransformationStep getParent() {
+  public /* ITransformationStep */Object getParent() {
     return this.parent;
   }
   
   @Override
-  public void setParent(final ITransformationStep parent) {
+  public void setParent(final /* ITransformationStep */Object parent) {
     this.parent = parent;
   }
   
   @Override
-  public void processMessage(final IMessage<?> message) throws InvalidParameterException {
+  public void processMessage(final /* IMessage<?> */Object message) throws InvalidParameterException {
     if ((message instanceof ChangeDeltaMessage)) {
       ChangeDeltaMessage event = ((ChangeDeltaMessage) message);
       if ((this.parent instanceof M2TDistributedTransformationStep)) {

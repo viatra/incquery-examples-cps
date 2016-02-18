@@ -9,10 +9,10 @@ import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.CpsXformM2M
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.ApplicationRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.HostRules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.util.PerJobFixedPriorityConflictResolver
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.api.ExecutionSchema
-import org.eclipse.incquery.runtime.evm.specific.ExecutionSchemas
-import org.eclipse.incquery.runtime.evm.specific.Schedulers
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.api.ExecutionSchema
+import org.eclipse.viatra.transformation.evm.specific.ExecutionSchemas
+import org.eclipse.viatra.transformation.evm.specific.Schedulers
 
 import static com.google.common.base.Preconditions.*
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules.StateMachineRules
@@ -28,9 +28,9 @@ class CPS2DeploymentTransformationQrt {
 	ExecutionSchema schema = null
 
 	CPSToDeployment cps2dep
-	IncQueryEngine engine
+	ViatraQueryEngine engine
 
-	def initialize(CPSToDeployment cps2dep, IncQueryEngine engine) {
+	def initialize(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 		checkArgument(cps2dep != null, "Mapping cannot be null!")
 		checkArgument(cps2dep.cps != null, "CPS not defined in mapping!")
 		checkArgument(cps2dep.deployment != null, "Deployment not defined in mapping!")

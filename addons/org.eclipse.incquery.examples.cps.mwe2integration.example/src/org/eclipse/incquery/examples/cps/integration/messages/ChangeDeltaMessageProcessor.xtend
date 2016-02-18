@@ -3,9 +3,9 @@ package org.eclipse.incquery.examples.cps.integration.messages
 import java.security.InvalidParameterException
 import org.eclipse.incquery.examples.cps.integration.M2TDistributedTransformationStep
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeDelta
-import org.eclipse.viatra.emf.mwe2integration.IMessage
-import org.eclipse.viatra.emf.mwe2integration.IMessageProcessor
-import org.eclipse.viatra.emf.mwe2integration.ITransformationStep
+import org.eclipse.viatra.integration.mwe2.IMessage
+import org.eclipse.viatra.integration.mwe2.IMessageProcessor
+import org.eclipse.viatra.integration.mwe2.ITransformationStep
 
 class ChangeDeltaMessageProcessor implements IMessageProcessor<DeploymentChangeDelta, ChangeDeltaMessage> {
 	protected ITransformationStep parent

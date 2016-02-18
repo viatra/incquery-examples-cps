@@ -3,8 +3,8 @@ package org.eclipse.incquery.examples.cps.integration.messages
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.incquery.examples.cps.xform.m2t.api.M2TOutputRecord
-import org.eclipse.viatra.emf.mwe2integration.IMessageFactory
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.exceptions.InvalidParameterTypeException
+import org.eclipse.viatra.integration.mwe2.IMessageFactory
+import org.eclipse.viatra.integration.mwe2.mwe2impl.exceptions.InvalidParameterTypeException
 
 class M2TOutputMessageFactory implements IMessageFactory<List<M2TOutputRecord>, M2TOutputMessage> {
 	override boolean isValidParameter(Object parameter) {

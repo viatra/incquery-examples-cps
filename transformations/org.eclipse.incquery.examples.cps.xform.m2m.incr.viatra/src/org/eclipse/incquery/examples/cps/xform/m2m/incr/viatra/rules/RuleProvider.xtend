@@ -19,15 +19,15 @@ import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.StateMac
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.StateMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.TransitionMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.TriggerPairMatcher
-import org.eclipse.incquery.runtime.api.IPatternMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.api.IncQueryMatcher
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
-import org.eclipse.incquery.runtime.evm.specific.lifecycle.DefaultActivationLifeCycle
-import org.eclipse.viatra.emf.runtime.modelmanipulation.IModelManipulations
-import org.eclipse.viatra.emf.runtime.modelmanipulation.SimpleModelManipulations
-import org.eclipse.viatra.emf.runtime.rules.eventdriven.EventDrivenTransformationRule
-import org.eclipse.viatra.emf.runtime.rules.eventdriven.EventDrivenTransformationRuleFactory
+import org.eclipse.viatra.query.runtime.api.IPatternMatch
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
+import org.eclipse.viatra.transformation.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.transformation.evm.specific.lifecycle.DefaultActivationLifeCycle
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
+import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
 
 public class RuleProvider {
 
@@ -40,16 +40,16 @@ public class RuleProvider {
 	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
 	CPSToDeployment cps2dep
-	IncQueryEngine engine
+	ViatraQueryEngine engine
 
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> hostRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> applicationRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateMachineRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> transitionRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> triggerRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> hostRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> applicationRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> stateMachineRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> stateRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> transitionRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> triggerRule
 
-	new(IncQueryEngine engine, CPSToDeployment cps2dep) {
+	new(ViatraQueryEngine engine, CPSToDeployment cps2dep) {
 		this.engine = engine
 		this.cps2dep = cps2dep
 		manipulation = new SimpleModelManipulations(engine)

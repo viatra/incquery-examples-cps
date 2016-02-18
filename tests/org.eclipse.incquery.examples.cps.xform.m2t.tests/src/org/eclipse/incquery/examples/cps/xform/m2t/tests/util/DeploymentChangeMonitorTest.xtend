@@ -11,8 +11,8 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentElement
 import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeMonitor
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
@@ -28,7 +28,7 @@ import org.eclipse.incquery.examples.cps.xform.m2t.monitor.AbstractDeploymentCha
 class DeploymentChangeMonitorTest {
 
 	Deployment deployment
-	AdvancedIncQueryEngine engine
+	AdvancedViatraQueryEngine engine
 	AbstractDeploymentChangeMonitor monitor
 	extension Logger logger = Logger.getLogger("cps.DeploymentChangeMonitor")
 
@@ -54,7 +54,7 @@ class DeploymentChangeMonitorTest {
 
 		info("Prepared model for testing deployment change monitor")
 
-		engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(deployment))
+		engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(deployment))
 		info("Created unmanaged IncQuery engine")
  
 		monitor = new DeploymentChangeMonitor(deployment,engine)
