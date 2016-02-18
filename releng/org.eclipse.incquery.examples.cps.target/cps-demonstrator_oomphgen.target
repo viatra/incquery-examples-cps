@@ -17,7 +17,7 @@
       <unit id="org.antlr.runtime" version="3.2.0.v201101311130"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
       <unit id="org.eclipse.draw2d" version="3.9.101.201408150207"/>
-      <unit id="org.eclipse.emf.sdk.feature.group" version="2.11.1.v20150806-0404"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="2.11.1.v20150803-0846"/>
       <unit id="org.eclipse.emf.transaction" version="1.9.0.201506010221"/>
       <unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.1.v20150831-1342"/>
       <unit id="org.eclipse.sdk.feature.group" version="4.5.1.v20150904-0345"/>
