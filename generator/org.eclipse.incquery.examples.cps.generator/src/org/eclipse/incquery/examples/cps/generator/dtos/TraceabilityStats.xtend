@@ -1,12 +1,12 @@
 package org.eclipse.incquery.examples.cps.generator.dtos
 
 import org.apache.log4j.Logger
+import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.generator.utils.SumProcessor
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
-import org.eclipse.viatra.query.runtime.base.api.IncQueryBaseFactory
-import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
+import org.eclipse.viatra.query.runtime.base.api.ViatraBaseFactory
 
 class TraceabilityStats extends ModelStats {
 	
@@ -28,7 +28,7 @@ class TraceabilityStats extends ModelStats {
 	}
 	
 	new(ViatraQueryEngine engine, CPSToDeployment model){
-		val baseIndex = IncQueryBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
+		val baseIndex = ViatraBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
 		// TODO one SumProcessor
 		
 		// EClasses

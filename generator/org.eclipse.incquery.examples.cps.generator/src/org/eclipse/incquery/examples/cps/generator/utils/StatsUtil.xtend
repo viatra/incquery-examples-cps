@@ -9,7 +9,7 @@ import org.eclipse.incquery.examples.cps.generator.dtos.DeploymentStats
 import org.eclipse.incquery.examples.cps.generator.dtos.TraceabilityStats
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
-import org.eclipse.viatra.query.runtime.exception.IncQueryException
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException
 
 class StatsUtil {
 	
@@ -29,7 +29,7 @@ class StatsUtil {
 		 eobject?.eAllContents.size
 	}
 	
-	def static int countEdges(EObject model) throws IncQueryException {
+	def static int countEdges(EObject model) throws ViatraQueryException {
 		val Collection<EObject> eObjects = model.eAllContents.toList
 
 		var int countTriples = 0;

@@ -6,7 +6,7 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.generator.utils.SumProcessor
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
-import org.eclipse.viatra.query.runtime.base.api.IncQueryBaseFactory
+import org.eclipse.viatra.query.runtime.base.api.ViatraBaseFactory
 
 class DeploymentStats extends ModelStats {
 	
@@ -38,7 +38,7 @@ class DeploymentStats extends ModelStats {
 	}
 	
 	new(ViatraQueryEngine engine, Deployment model){
-		val baseIndex = IncQueryBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
+		val baseIndex = ViatraBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
 		//TODO one SumProcessor
 		
 		// EClasses

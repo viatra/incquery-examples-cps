@@ -15,12 +15,12 @@ import org.eclipse.incquery.examples.cps.generator.queries.HostInstancesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.HostTypesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.StatesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.TransitionMatcher
+import org.eclipse.incquery.examples.cps.generator.queries.TransitionWithoutActionMatcher
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.generator.utils.SumProcessor
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.base.api.IEStructuralFeatureProcessor
-import org.eclipse.viatra.query.runtime.base.api.IncQueryBaseFactory
-import org.eclipse.incquery.examples.cps.generator.queries.TransitionWithoutActionMatcher
+import org.eclipse.viatra.query.runtime.base.api.ViatraBaseFactory
 
 class CPSStats extends ModelStats {
 	
@@ -51,7 +51,7 @@ class CPSStats extends ModelStats {
 		this.eReferences = StatsUtil.countEdges(model)
 		this.emptyTransition = TransitionWithoutActionMatcher.on(engine).countMatches;
 		
-		val baseIndex = IncQueryBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
+		val baseIndex = ViatraBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
 		
 		// EFeatures
 		val sp2 = new SumProcessor

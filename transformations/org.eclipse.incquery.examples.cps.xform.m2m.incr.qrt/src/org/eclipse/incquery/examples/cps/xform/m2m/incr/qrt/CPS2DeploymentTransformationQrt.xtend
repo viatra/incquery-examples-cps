@@ -64,7 +64,7 @@ class CPS2DeploymentTransformationQrt {
 			rulesBuilder.addAll(TriggerRules.getRules(engine));
 			val rules = rulesBuilder.build
 
-			val schedulerFactory = Schedulers.getIQEngineSchedulerFactory(engine)
+			val schedulerFactory = Schedulers.getQueryEngineSchedulerFactory(engine)
 			schema = ExecutionSchemas.createIncQueryExecutionSchema(engine, schedulerFactory)
 
 			val fpr = new PerJobFixedPriorityConflictResolver

@@ -71,7 +71,7 @@ public class DeploymentChangeMonitor extends AbstractDeploymentChangeMonitor {
 
 
 		UpdateCompleteBasedSchedulerFactory schedulerFactory = Schedulers
-				.getIQEngineSchedulerFactory(engine);
+				.getQueryEngineSchedulerFactory(engine);
 		executionSchema = ExecutionSchemas
 				.createIncQueryExecutionSchema(engine, schedulerFactory);
 
