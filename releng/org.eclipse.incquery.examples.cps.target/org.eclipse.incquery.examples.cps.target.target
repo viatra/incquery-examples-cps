@@ -8,8 +8,8 @@
 		<repository location="http://download.eclipse.org/releases/luna"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<unit id="org.eclipse.emf.sdk.feature.group" version="2.10.2.v20150123-0452"/>
-		<repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.10.x/"/>
+		<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.0.v20150806-0404"/>
+		<repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.11.x/"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.xtext.sdk.feature.group" version="2.9.0.v201507170721"/>
