@@ -27,7 +27,7 @@ import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq.queries.CpsXformM2M
-import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 
 import static com.google.common.base.Preconditions.*
 
@@ -42,7 +42,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	TraceabilityFactory tracFactory = TraceabilityFactory.eINSTANCE
 
 	CPSToDeployment mapping
-	IncQueryEngine engine
+	ViatraQueryEngine engine
 
 	Stopwatch clearModelPerformance;
 	Stopwatch hostTransformationPerformance;
@@ -71,7 +71,7 @@ class CPS2DeploymentBatchTransformationEiq {
 	 *             If either of the input arguments are null, or the mapping
 	 *             does not contain a cps and a deployment model.
 	 */
-	new(CPSToDeployment mapping, IncQueryEngine engine) {
+	new(CPSToDeployment mapping, ViatraQueryEngine engine) {
 		checkArgument(mapping != null, "Mapping cannot be null!")
 		checkArgument(mapping.cps != null, "CPS not defined in mapping!")
 		checkArgument(mapping.deployment != null, "Deployment not defined in mapping!")

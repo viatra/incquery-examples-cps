@@ -14,8 +14,8 @@ import org.eclipse.incquery.examples.cps.xform.m2t.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.xform.m2t.jdt.CodeGenerator
 import org.eclipse.incquery.examples.cps.xform.serializer.DefaultSerializer
 import org.eclipse.incquery.examples.cps.xform.serializer.eclipse.EclipseBasedFileAccessor
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 
 class M2TTransformationPhase extends AtomicPhase {
 	extension DefaultSerializer serializer = new DefaultSerializer
@@ -31,7 +31,7 @@ class M2TTransformationPhase extends AtomicPhase {
 
 		timer.startMeasure
 
-		val engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cpsToken.cps2dep))
+		val engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(cpsToken.cps2dep))
 
 		val projectName = "integration.test.generated.code"
 		var ICPSGenerator codeGenerator = null

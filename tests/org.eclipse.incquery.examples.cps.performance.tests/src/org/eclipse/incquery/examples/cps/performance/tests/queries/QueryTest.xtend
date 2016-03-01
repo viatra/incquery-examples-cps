@@ -12,9 +12,9 @@ import org.eclipse.incquery.examples.cps.performance.tests.config.cases.SimpleSc
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.CpsXformM2M
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.api.IQuerySpecification
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -96,7 +96,7 @@ class QueryTest extends CPSTestBase{
 		info("Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms")
 			
 		var matcherTime = Stopwatch.createStarted
-		val engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource.resourceSet))
+		val engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource.resourceSet))
 		val matcher = engine.getMatcher(querySpec)
 		matcherTime.stop
 		info("Match set size: " + matcher.countMatches)

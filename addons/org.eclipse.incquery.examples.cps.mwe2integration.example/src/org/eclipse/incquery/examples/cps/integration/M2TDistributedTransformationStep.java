@@ -8,12 +8,12 @@ import org.eclipse.incquery.examples.cps.xform.m2t.api.ICPSGenerator;
 import org.eclipse.incquery.examples.cps.xform.m2t.api.M2TOutputRecord;
 import org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator;
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeDelta;
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
-import org.eclipse.viatra.emf.mwe2integration.IPublishTo;
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.TransformationStep;
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
+import org.eclipse.viatra.integration.mwe2.IPublishTo;
+import org.eclipse.viatra.integration.mwe2.mwe2impl.TransformationStep;
 
 public class M2TDistributedTransformationStep extends TransformationStep {
-    protected AdvancedIncQueryEngine engine;
+    protected AdvancedViatraQueryEngine engine;
     public ICPSGenerator generator;
     public String projectName;
     public String sourceFolder;
@@ -24,7 +24,7 @@ public class M2TDistributedTransformationStep extends TransformationStep {
     @Override
     public void doInitialize(IWorkflowContext ctx) {
         System.out.println("Initialized model-to-text transformation");
-        engine = (AdvancedIncQueryEngine) ctx.get("engine");
+        engine = (AdvancedViatraQueryEngine) ctx.get("engine");
         projectName = (String) ctx.get("projectname");
         sourceFolder = (String) ctx.get("folder");
         generator = new CodeGenerator(projectName,engine,true);

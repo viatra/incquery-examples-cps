@@ -3,18 +3,18 @@ package org.eclipse.incquery.examples.cps.integration.batch;
 import org.eclipse.emf.mwe2.runtime.workflow.IWorkflowContext;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.CPS2DeploymentBatchViatra;
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.TransformationStep;
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
+import org.eclipse.viatra.integration.mwe2.mwe2impl.TransformationStep;
 
 public class M2MBatchViatraTransformationStep extends TransformationStep {
-    protected AdvancedIncQueryEngine engine;
+    protected AdvancedViatraQueryEngine engine;
     protected CPS2DeploymentBatchViatra transformation;
 
     @Override
     public void doInitialize(IWorkflowContext ctx) {
         CPSToDeployment cps2dep = (CPSToDeployment) ctx.get("model");
         
-        engine = (AdvancedIncQueryEngine) ctx.get("engine");
+        engine = (AdvancedViatraQueryEngine) ctx.get("engine");
         transformation = new CPS2DeploymentBatchViatra();
         transformation.initialize(cps2dep, engine);
 

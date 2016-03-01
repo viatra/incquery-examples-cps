@@ -17,9 +17,9 @@ import org.eclipse.incquery.examples.cps.generator.queries.StatesMatcher
 import org.eclipse.incquery.examples.cps.generator.queries.TransitionMatcher
 import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
 import org.eclipse.incquery.examples.cps.generator.utils.SumProcessor
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.base.api.IEStructuralFeatureProcessor
-import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.base.api.IEStructuralFeatureProcessor
+import org.eclipse.viatra.query.runtime.base.api.ViatraBaseFactory
 import org.eclipse.incquery.examples.cps.generator.queries.TransitionWithoutActionMatcher
 
 class CPSStats extends ModelStats {
@@ -38,7 +38,7 @@ class CPSStats extends ModelStats {
 	public int waitActions = 0;
 	public int emptyTransition = 0;
 
-	new(IncQueryEngine engine, CyberPhysicalSystem model){
+	new(ViatraQueryEngine engine, CyberPhysicalSystem model){
 		this.appTypeCount = AppTypesMatcher.on(engine).countMatches;
 		this.appInstanceCount = AppInstancesMatcher.on(engine).countMatches;
 		this.hostTypeCount = HostTypesMatcher.on(engine).countMatches;
@@ -51,7 +51,7 @@ class CPSStats extends ModelStats {
 		this.eReferences = StatsUtil.countEdges(model)
 		this.emptyTransition = TransitionWithoutActionMatcher.on(engine).countMatches;
 		
-		val baseIndex = IncQueryBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
+		val baseIndex = ViatraBaseFactory.getInstance.createNavigationHelper(model.eResource.resourceSet, true, logger)
 		
 		// EFeatures
 		val sp2 = new SumProcessor

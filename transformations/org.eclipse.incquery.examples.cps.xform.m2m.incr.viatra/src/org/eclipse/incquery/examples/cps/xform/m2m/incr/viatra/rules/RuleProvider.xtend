@@ -19,15 +19,15 @@ import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.StateMac
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.StateMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.TransitionMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.TriggerPairMatcher
-import org.eclipse.incquery.runtime.api.IPatternMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.api.IncQueryMatcher
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
-import org.eclipse.incquery.runtime.evm.specific.lifecycle.DefaultActivationLifeCycle
-import org.eclipse.viatra.emf.runtime.modelmanipulation.IModelManipulations
-import org.eclipse.viatra.emf.runtime.modelmanipulation.SimpleModelManipulations
-import org.eclipse.viatra.emf.runtime.rules.eventdriven.EventDrivenTransformationRule
-import org.eclipse.viatra.emf.runtime.rules.eventdriven.EventDrivenTransformationRuleFactory
+import org.eclipse.viatra.query.runtime.api.IPatternMatch
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
+import org.eclipse.viatra.transformation.evm.specific.lifecycle.DefaultActivationLifeCycle
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRule
+import org.eclipse.viatra.transformation.runtime.emf.rules.eventdriven.EventDrivenTransformationRuleFactory
 
 public class RuleProvider {
 
@@ -40,16 +40,16 @@ public class RuleProvider {
 	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
 	extension EventDrivenTransformationRuleFactory factory = new EventDrivenTransformationRuleFactory
 	CPSToDeployment cps2dep
-	IncQueryEngine engine
+	ViatraQueryEngine engine
 
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> hostRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> applicationRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateMachineRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> transitionRule
-	EventDrivenTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> triggerRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> hostRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> applicationRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> stateMachineRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> stateRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> transitionRule
+	EventDrivenTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> triggerRule
 
-	new(IncQueryEngine engine, CPSToDeployment cps2dep) {
+	new(ViatraQueryEngine engine, CPSToDeployment cps2dep) {
 		this.engine = engine
 		this.cps2dep = cps2dep
 		manipulation = new SimpleModelManipulations(engine)
@@ -58,7 +58,7 @@ public class RuleProvider {
 	public def getHostRule() {
 		if (hostRule == null) {
 			hostRule = createRule.precondition(HostInstanceMatcher.querySpecification).action(
-				IncQueryActivationStateEnum.APPEARED) [
+				CRUDActivationStateEnum.APPEARED) [
 				val hostinstance = hostInstance
 				val nodeIp = hostInstance.nodeIp
 				debug('''Mapping host with IP: «nodeIp»''')
@@ -70,14 +70,14 @@ public class RuleProvider {
 					cpsElements += hostinstance
 					deploymentElements += host
 				]
-			].action(IncQueryActivationStateEnum.UPDATED) [
+			].action(CRUDActivationStateEnum.UPDATED) [
 				val depHost = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, hostInstance, null).depElement as DeploymentHost
 				val hostIp = depHost.ip
 				debug('''Updating mapped host with IP: «hostIp»''')
 				val nodeIp = hostInstance.nodeIp
 				depHost.set(deploymentHost_Ip, nodeIp)
 				debug('''Updated mapped host with IP: «nodeIp»''')
-			].action(IncQueryActivationStateEnum.DISAPPEARED) [
+			].action(CRUDActivationStateEnum.DISAPPEARED) [
 				val traceMatch = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, hostInstance, null)
 				val hostIp = hostInstance.nodeIp
 				logger.debug('''Removing host with IP: «hostIp»''')
@@ -94,7 +94,7 @@ public class RuleProvider {
 		if (applicationRule == null) {
 
 			applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification).action(
-				IncQueryActivationStateEnum.APPEARED) [
+				CRUDActivationStateEnum.APPEARED) [
 				val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance.allocatedTo).
 					filter(DeploymentHost).head
 				val appinstance = appInstance
@@ -109,11 +109,11 @@ public class RuleProvider {
 					deploymentElements += app
 				]
 				debug('''Mapped application with ID: «appId»''')
-			].action(IncQueryActivationStateEnum.UPDATED) [
+			].action(CRUDActivationStateEnum.UPDATED) [
 				val depApp = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, appInstance, null).depElement as DeploymentApplication
 				if (depApp.id != appInstance.id)
 					depApp.id = appInstance.id
-			].action(IncQueryActivationStateEnum.DISAPPEARED) [
+			].action(CRUDActivationStateEnum.DISAPPEARED) [
 				val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeplyomentTrace
 				val depApp = trace.deploymentElements.head as DeploymentApplication
 				engine.allocatedDeploymentApplication.getAllValuesOfdepHost(depApp).head.applications -= depApp
@@ -128,7 +128,7 @@ public class RuleProvider {
 	public def getStateMachineRule() {
 		if (stateMachineRule == null) {
 			stateMachineRule = createRule.precondition(StateMachineMatcher.querySpecification).action(
-				IncQueryActivationStateEnum.APPEARED) [
+				CRUDActivationStateEnum.APPEARED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
 					DeploymentApplication).head
 				val smId = stateMachine.id
@@ -148,7 +148,7 @@ public class RuleProvider {
 					traces.head.addTo(CPS2DeplyomentTrace_DeploymentElements, behavior)
 				}
 				debug('''Mapped state machine with ID: «smId»''')
-			].action(IncQueryActivationStateEnum.UPDATED) [
+			].action(CRUDActivationStateEnum.UPDATED) [
 				val smId = stateMachine.id
 				debug('''Updating mapped state machine with ID: «smId»''')
 				val depSMs = engine.cps2depTrace.getAllValuesOfdepElement(null, null, stateMachine).filter(
@@ -160,7 +160,7 @@ public class RuleProvider {
 					}
 				]
 				debug('''Updated mapped state machine with ID: «smId»''')
-			].action(IncQueryActivationStateEnum.DISAPPEARED) [
+			].action(CRUDActivationStateEnum.DISAPPEARED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).head as DeploymentApplication;
 				val depBehavior = depApp.behavior
 				val smId = depBehavior.description
@@ -182,7 +182,7 @@ public class RuleProvider {
 	public def getStateRule() {
 		if (stateRule == null) {
 			stateRule = createRule.precondition(StateMatcher.querySpecification).action(
-				IncQueryActivationStateEnum.APPEARED) [
+				CRUDActivationStateEnum.APPEARED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).head as DeploymentApplication
 				val depBehavior = depApp.behavior
 				val state = state
@@ -207,7 +207,7 @@ public class RuleProvider {
 					traces.head.deploymentElements += depState
 				}
 				debug('''Mapped state with ID: «stateId»''')
-			].action(IncQueryActivationStateEnum.UPDATED) [
+			].action(CRUDActivationStateEnum.UPDATED) [
 				val state = state
 				val stateId = state.id
 				debug('''Updating mapped state with ID: «stateId»''')
@@ -230,7 +230,7 @@ public class RuleProvider {
 					}
 				}
 				debug('''Updated mapped state with ID: «stateId»''')
-			].action(IncQueryActivationStateEnum.DISAPPEARED) [
+			].action(CRUDActivationStateEnum.DISAPPEARED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).head as DeploymentApplication
 				val depBehavior = depApp.behavior
 				val depState = engine.cps2depTrace.getAllValuesOfdepElement(null, null, state).filter(BehaviorState).
@@ -259,7 +259,7 @@ public class RuleProvider {
 	public def getTransitionRule() {
 		if (transitionRule == null) {
 			transitionRule = createRule.precondition(TransitionMatcher.querySpecification).action(
-				IncQueryActivationStateEnum.APPEARED) [
+				CRUDActivationStateEnum.APPEARED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
 					DeploymentApplication).head
 				val transition = transition
@@ -287,7 +287,7 @@ public class RuleProvider {
 					traces.head.deploymentElements += depTransition
 				}
 				debug('''Mapped transition with ID: «transitionId»''')
-			].action(IncQueryActivationStateEnum.UPDATED) [
+			].action(CRUDActivationStateEnum.UPDATED) [
 				val transition = transition
 				val trId = transition.id
 				debug('''Updating mapped transition with ID: «trId»''')
@@ -314,7 +314,7 @@ public class RuleProvider {
 					depTransition.to = depTarget
 				}
 				debug('''Updated mapped transition with ID: «trId»''')
-			].action(IncQueryActivationStateEnum.DISAPPEARED) [
+			].action(CRUDActivationStateEnum.DISAPPEARED) [
 				val transition = transition
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
 					DeploymentApplication).head
@@ -345,7 +345,7 @@ public class RuleProvider {
 	public def getTriggerRule() {
 		if (triggerRule == null) {
 			triggerRule = createRule.precondition(TriggerPairMatcher.querySpecification).action(
-				IncQueryActivationStateEnum.APPEARED) [
+				CRUDActivationStateEnum.APPEARED) [
 				val depAppTrigger = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstanceTrigger).
 					filter(DeploymentApplication).head
 				val depAppTarget = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstanceTarget).
@@ -360,7 +360,7 @@ public class RuleProvider {
 					sendTr.trigger += waitTr
 				}
 				debug('''Mapped trigger between «sendTr.description» and «waitTr.description»''')
-			].action(IncQueryActivationStateEnum.DISAPPEARED) [
+			].action(CRUDActivationStateEnum.DISAPPEARED) [
 				val depAppTrigger = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstanceTrigger).
 					filter(DeploymentApplication).head
 				val depAppTarget = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstanceTarget).

@@ -2,18 +2,18 @@ package org.eclipse.incquery.examples.cps.xform.m2m.tests.wrappers
 
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.CPS2DeploymentTransformationViatra
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 
 class ViatraTransformation extends CPSTransformationWrapper {
 	
 	CPS2DeploymentTransformationViatra xform 
-	AdvancedIncQueryEngine engine
+	AdvancedViatraQueryEngine engine
 	
 	
 	
 	override initializeTransformation(CPSToDeployment cps2dep) {
-		engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource.resourceSet));
+		engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource.resourceSet));
 		xform = new CPS2DeploymentTransformationViatra
 		xform.initialize(cps2dep,engine)
 

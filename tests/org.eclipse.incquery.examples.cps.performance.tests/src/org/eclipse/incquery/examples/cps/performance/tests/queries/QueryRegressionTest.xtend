@@ -16,11 +16,11 @@ import org.eclipse.incquery.examples.cps.performance.tests.config.cases.Statisti
 import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.CpsXformM2M
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.api.GenericPatternGroup
-import org.eclipse.incquery.runtime.api.IQueryGroup
-import org.eclipse.incquery.runtime.api.IQuerySpecification
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.GenericQueryGroup
+import org.eclipse.viatra.query.runtime.api.IQueryGroup
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.junit.Test
 
 class QueryRegressionTest extends CPSTestBase{
@@ -28,7 +28,7 @@ class QueryRegressionTest extends CPSTestBase{
 	protected static extension Logger logger = Logger.getLogger("cps.performance.tests.queries.QueryRegressionTest")
     protected extension CPSModelBuilderUtil modelBuilder = new CPSModelBuilderUtil
 	
-	AdvancedIncQueryEngine incQueryEngine
+	AdvancedViatraQueryEngine incQueryEngine
 	IQueryGroup queryGroup
 	Map<String, Long> results = Maps.newTreeMap()
 	
@@ -36,8 +36,8 @@ class QueryRegressionTest extends CPSTestBase{
 		info("Preparing query performance test")
 		
 		val rs = executeScenarioXformForConstraints(16)
-		incQueryEngine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(rs))
-		queryGroup = GenericPatternGroup.of(
+		incQueryEngine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(rs))
+		queryGroup = GenericQueryGroup.of(
 			CpsXformM2M.instance
 		)
 		queryGroup.prepare(incQueryEngine)
@@ -65,7 +65,7 @@ class QueryRegressionTest extends CPSTestBase{
 		generateTime.stop
 		info("Generating time: " + generateTime.elapsed(TimeUnit.MILLISECONDS) + " ms")
 		
-		val engine = AdvancedIncQueryEngine.from(fragment.engine);
+		val engine = AdvancedViatraQueryEngine.from(fragment.engine);
 		Validation.instance.prepare(engine);
 		
 		StatsUtil.generateStatsForCPS(engine, fragment.modelRoot).log

@@ -4,14 +4,14 @@ import org.eclipse.incquery.examples.cps.deployment.BehaviorState
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedStateMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredStateMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedStateMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 
 class StateRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new StateMapping(engine).specification
 			,new StateUpdate(engine).specification
@@ -22,7 +22,7 @@ class StateRules {
 
 class StateMapping extends AbstractRule<UnmappedStateMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -35,7 +35,7 @@ class StateMapping extends AbstractRule<UnmappedStateMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [UnmappedStateMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [UnmappedStateMatch match |
 			val state = match.state
 			val stateId = state.id
 			debug('''Mapping state with ID: «stateId»''')
@@ -64,7 +64,7 @@ class StateMapping extends AbstractRule<UnmappedStateMatch> {
 
 class StateUpdate extends AbstractRule<MonitoredStateMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -77,21 +77,21 @@ class StateUpdate extends AbstractRule<MonitoredStateMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MonitoredStateMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [MonitoredStateMatch match |
 			val stateId = match.state.id
 			debug('''Starting monitoring mapped state with ID: «stateId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MonitoredStateMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.DISAPPEARED, [MonitoredStateMatch match |
 			val stateId = match.state.id
 			debug('''Stopped monitoring mapped state with ID: «stateId»''')
 		])
 	}
 	
 	private def getUpdatedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MonitoredStateMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED, [MonitoredStateMatch match |
 			val state = match.state
 			val stateId = state.id
 			debug('''Updating mapped state with ID: «stateId»''')
@@ -118,7 +118,7 @@ class StateUpdate extends AbstractRule<MonitoredStateMatch> {
 
 class StateRemoval extends AbstractRule<DeletedStateMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -131,7 +131,7 @@ class StateRemoval extends AbstractRule<DeletedStateMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [DeletedStateMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [DeletedStateMatch match |
 			val depState = match.depState as BehaviorState
 			val stateId = depState.description
 			logger.debug('''Removing state with ID: «stateId»''')

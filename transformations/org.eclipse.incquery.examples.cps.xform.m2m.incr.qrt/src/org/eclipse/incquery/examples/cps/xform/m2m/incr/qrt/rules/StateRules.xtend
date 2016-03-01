@@ -3,14 +3,14 @@ package org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules
 import org.eclipse.incquery.examples.cps.deployment.BehaviorState
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.StateMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 
 class StateRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new StateMapping(engine).specification
 		}
@@ -18,7 +18,7 @@ class StateRules {
 }
 
 class StateMapping extends AbstractRule<StateMatch> {
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 
@@ -31,7 +31,7 @@ class StateMapping extends AbstractRule<StateMatch> {
 	}
 
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED,
 			[ StateMatch match |
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).head as DeploymentApplication
 				val depBehavior = depApp.behavior
@@ -61,7 +61,7 @@ class StateMapping extends AbstractRule<StateMatch> {
 	}
 
 	private def getUpdateJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED,
 			[ StateMatch match |
 				val state = match.state
 				val stateId = state.id
@@ -89,7 +89,7 @@ class StateMapping extends AbstractRule<StateMatch> {
 	}
 
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.DISAPPEARED,
 			[ StateMatch match |
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).head as DeploymentApplication
 				val depBehavior = depApp.behavior

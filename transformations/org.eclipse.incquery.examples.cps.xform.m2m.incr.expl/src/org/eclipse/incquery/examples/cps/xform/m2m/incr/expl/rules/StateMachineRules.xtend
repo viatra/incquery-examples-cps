@@ -4,14 +4,14 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedStateMachineMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredStateMachineMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedStateMachineMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 
 class StateMachineRules {
-    static def getRules(IncQueryEngine engine) {
+    static def getRules(ViatraQueryEngine engine) {
 		#{
 			new StateMachineMapping(engine).specification
 			,new StateMachineUpdate(engine).specification
@@ -22,7 +22,7 @@ class StateMachineRules {
 
 class StateMachineMapping extends AbstractRule<UnmappedStateMachineMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -35,7 +35,7 @@ class StateMachineMapping extends AbstractRule<UnmappedStateMachineMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [UnmappedStateMachineMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [UnmappedStateMachineMatch match |
 			val smId = match.stateMachine.id
 			debug('''Mapping state machine with ID: «smId»''')
 			val behavior = createDeploymentBehavior => [
@@ -61,7 +61,7 @@ class StateMachineMapping extends AbstractRule<UnmappedStateMachineMatch> {
 
 class StateMachineUpdate extends AbstractRule<MonitoredStateMachineMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -74,21 +74,21 @@ class StateMachineUpdate extends AbstractRule<MonitoredStateMachineMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MonitoredStateMachineMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [MonitoredStateMachineMatch match |
 			val smId = match.stateMachine.id
 			debug('''Starting monitoring mapped state machine with ID: «smId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MonitoredStateMachineMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.DISAPPEARED, [MonitoredStateMachineMatch match |
 			val smId = match.stateMachine.id
 			debug('''Stopped monitoring mapped state machine with ID: «smId»''')
 		])
 	}
 	
 	private def getUpdatedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MonitoredStateMachineMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED, [MonitoredStateMachineMatch match |
 			val smId = match.stateMachine.id
 			debug('''Updating mapped state machine with ID: «smId»''')
 			val depSMs = getMappedStateMachine(engine).getAllValuesOfdepBehavior(match.stateMachine, null, null)
@@ -105,7 +105,7 @@ class StateMachineUpdate extends AbstractRule<MonitoredStateMachineMatch> {
 
 class StateMachineRemoval extends AbstractRule<DeletedStateMachineMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -118,7 +118,7 @@ class StateMachineRemoval extends AbstractRule<DeletedStateMachineMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [DeletedStateMachineMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [DeletedStateMachineMatch match |
 			val depBehavior = match.depBehavior as DeploymentBehavior
 			val smId = depBehavior.description
 			logger.debug('''Removing state machine with ID: «smId»''')

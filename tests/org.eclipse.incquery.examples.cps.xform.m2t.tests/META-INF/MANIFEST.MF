@@ -15,4 +15,3 @@ Require-Bundle: org.junit;bundle-version="4.11.0",
  org.eclipse.xtend.lib.macro,
  org.eclipse.incquery.examples.cps.xform.m2t;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-

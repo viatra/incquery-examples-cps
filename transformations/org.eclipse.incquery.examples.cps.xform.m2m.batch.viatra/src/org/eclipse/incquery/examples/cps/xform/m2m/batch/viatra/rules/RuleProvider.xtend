@@ -15,13 +15,13 @@ import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.CpsXfor
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.HostInstanceMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.StateMatcher
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.TransitionMatcher
-import org.eclipse.incquery.runtime.api.IPatternMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.api.IncQueryMatcher
-import org.eclipse.viatra.emf.runtime.modelmanipulation.IModelManipulations
-import org.eclipse.viatra.emf.runtime.modelmanipulation.SimpleModelManipulations
-import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRule
-import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationRuleFactory
+import org.eclipse.viatra.query.runtime.api.IPatternMatch
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.IModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.modelmanipulation.SimpleModelManipulations
+import org.eclipse.viatra.transformation.runtime.emf.rules.batch.BatchTransformationRule
+import org.eclipse.viatra.transformation.runtime.emf.rules.batch.BatchTransformationRuleFactory
 import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 
 class RuleProvider {
@@ -32,16 +32,16 @@ class RuleProvider {
 	protected extension DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
 	protected extension TraceabilityFactory traceFactory = TraceabilityFactory.eINSTANCE
 	CPSToDeployment mapping
-	IncQueryEngine engine
+	ViatraQueryEngine engine
 	
-	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> hostRule
-	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> applicationRule
-	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateMachineRule
-	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> stateRule
-	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> transitionRule
-	BatchTransformationRule<? extends IPatternMatch, ? extends IncQueryMatcher<?>> actionRule
+	BatchTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> hostRule
+	BatchTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> applicationRule
+	BatchTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> stateMachineRule
+	BatchTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> stateRule
+	BatchTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> transitionRule
+	BatchTransformationRule<? extends IPatternMatch, ? extends ViatraQueryMatcher<?>> actionRule
 	
-	new(IncQueryEngine engine, CPSToDeployment deployment) {
+	new(ViatraQueryEngine engine, CPSToDeployment deployment) {
 		this.mapping = deployment
 		this.engine = engine
 		manipulation = new SimpleModelManipulations(engine)

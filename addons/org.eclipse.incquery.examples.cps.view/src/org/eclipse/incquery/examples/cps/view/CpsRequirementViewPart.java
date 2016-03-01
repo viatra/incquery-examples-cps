@@ -8,8 +8,8 @@ import org.eclipse.incquery.examples.cps.model.viewer.util.AppInstancesNoAllocat
 import org.eclipse.incquery.examples.cps.model.viewer.util.AppInstancesWithAllocationQuerySpecification;
 import org.eclipse.incquery.examples.cps.model.viewer.util.ConnectAppQuerySpecification;
 import org.eclipse.incquery.examples.cps.model.viewer.util.RequestsQuerySpecification;
-import org.eclipse.incquery.runtime.api.IQuerySpecification;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -21,7 +21,7 @@ public class CpsRequirementViewPart extends AbstractCpsViewPart {
 	
 	@Override
 	protected Collection<IQuerySpecification<?>> getSpecifications()
-			throws IncQueryException {
+			throws ViatraQueryException {
 		return ImmutableSet.<IQuerySpecification<?>>of(
 				AppInstancesNoAllocationQuerySpecification.instance(),
 				AppInstancesWithAllocationQuerySpecification.instance(),

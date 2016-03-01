@@ -4,7 +4,7 @@ import org.eclipse.emf.mwe2.runtime.workflow.IWorkflowContext;
 import org.eclipse.incquery.examples.cps.integration.M2TDistributedTransformationStep;
 import org.eclipse.incquery.examples.cps.xform.m2t.api.ChangeM2TOutputProvider;
 import org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator;
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
 
 import eu.mondo.sam.core.metrics.MemoryMetric;
 import eu.mondo.sam.core.metrics.TimeMetric;
@@ -17,7 +17,7 @@ public class PerformanceM2TDistributedTransformationStep extends M2TDistributedT
     public void initialize(IWorkflowContext ctx) {
         System.out.println("Initialized model-to-text transformation");
         this.context = ctx;
-        engine = (AdvancedIncQueryEngine) ctx.get("engine");
+        engine = (AdvancedViatraQueryEngine) ctx.get("engine");
         projectName = (String) ctx.get("projectname");
         sourceFolder = (String) ctx.get("folder");
         generator = new CodeGenerator(projectName,engine,true);

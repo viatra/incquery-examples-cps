@@ -16,7 +16,7 @@ import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.incquery.examples.cps.xform.serializer.DefaultSerializer;
 import org.eclipse.incquery.examples.cps.xform.serializer.javaio.JavaIOBasedFileAccessor;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 
 import eu.mondo.sam.core.metrics.MemoryMetric;
 import eu.mondo.sam.core.metrics.TimeMetric;
@@ -82,7 +82,7 @@ public class PerformanceInitializerComponent extends InitializerComponent {
             generatorResult.addMetrics(generatorTimer, generatorMemory);
             
 
-        } catch (IncQueryException e) {
+        } catch (ViatraQueryException e) {
             e.printStackTrace();
         }
 

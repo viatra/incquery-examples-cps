@@ -3,19 +3,19 @@ package org.eclipse.incquery.examples.cps.integration.eventdriven.scheduled;
 import org.eclipse.emf.mwe2.runtime.workflow.IWorkflowContext;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.CPS2DeploymentTransformationViatra;
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
-import org.eclipse.viatra.emf.mwe2integration.eventdriven.mwe2impl.MWE2BaseControllableScheduler.MWEBaseControllableSchedulerFactory;
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.TransformationStep;
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
+import org.eclipse.viatra.integration.mwe2.eventdriven.mwe2impl.MWE2BaseControllableScheduler.MWEBaseControllableSchedulerFactory;
+import org.eclipse.viatra.integration.mwe2.mwe2impl.TransformationStep;
 
 public class M2MScheduledEventDrivenViatraTransformationStep extends TransformationStep {
     protected MWEBaseControllableSchedulerFactory factory;
-    protected AdvancedIncQueryEngine engine;
+    protected AdvancedViatraQueryEngine engine;
     protected CPS2DeploymentTransformationViatra transformation;
 
     @Override
     public void doInitialize(IWorkflowContext ctx) {
         CPSToDeployment cps2dep = (CPSToDeployment) ctx.get("model");
-        engine = (AdvancedIncQueryEngine) ctx.get("engine");
+        engine = (AdvancedViatraQueryEngine) ctx.get("engine");
         factory = new MWEBaseControllableSchedulerFactory();
         transformation = new CPS2DeploymentTransformationViatra();
         transformation.setScheduler(factory);

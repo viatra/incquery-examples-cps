@@ -4,14 +4,14 @@ import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedTransitionMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredTransitionMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedTransitionMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 
 class TransitionRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new TransitionMapping(engine).specification
 			,new TransitionUpdate(engine).specification
@@ -22,7 +22,7 @@ class TransitionRules {
 
 class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -35,7 +35,7 @@ class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [UnmappedTransitionMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [UnmappedTransitionMatch match |
 			val transition = match.transition
 			val transitionId = transition.id
 			debug('''Mapping transition with ID: «transitionId»''')
@@ -70,7 +70,7 @@ class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 
 class TransitionUpdate extends AbstractRule<MonitoredTransitionMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -83,21 +83,21 @@ class TransitionUpdate extends AbstractRule<MonitoredTransitionMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MonitoredTransitionMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [MonitoredTransitionMatch match |
 			val trId = match.transition.id
 			debug('''Starting monitoring mapped transition with ID: «trId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MonitoredTransitionMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.DISAPPEARED, [MonitoredTransitionMatch match |
 			val trId = match.transition.id
 			debug('''Stopped monitoring mapped transition with ID: «trId»''')
 		])
 	}
 	
 	private def getUpdatedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MonitoredTransitionMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED, [MonitoredTransitionMatch match |
 			val transition = match.transition
 			val trId = transition.id
 			debug('''Updating mapped transition with ID: «trId»''')
@@ -133,7 +133,7 @@ class TransitionUpdate extends AbstractRule<MonitoredTransitionMatch> {
 
 class TransitionRemoval extends AbstractRule<DeletedTransitionMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -146,7 +146,7 @@ class TransitionRemoval extends AbstractRule<DeletedTransitionMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [DeletedTransitionMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [DeletedTransitionMatch match |
 			val depTransition = match.depTransition as BehaviorTransition
 			val trId = depTransition.description
 			logger.debug('''Removing transition with ID: «trId»''')

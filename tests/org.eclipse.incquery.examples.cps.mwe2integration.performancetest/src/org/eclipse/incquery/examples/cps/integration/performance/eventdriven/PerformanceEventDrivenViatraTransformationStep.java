@@ -4,11 +4,11 @@ import org.eclipse.emf.mwe2.runtime.workflow.IWorkflowContext;
 import org.eclipse.incquery.examples.cps.integration.eventdriven.controllable.M2MControllableEventDrivenViatraTransformationStep;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.CPS2DeploymentTransformationViatra;
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
-import org.eclipse.incquery.runtime.emf.EMFScope;
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryEventRealm;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
-import org.eclipse.viatra.emf.mwe2integration.eventdriven.mwe2impl.MWE2ControllableExecutor;
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.emf.EMFScope;
+import org.eclipse.viatra.transformation.evm.specific.event.ViatraQueryEventRealm;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
+import org.eclipse.viatra.integration.mwe2.eventdriven.mwe2impl.MWE2ControllableExecutor;
 
 import eu.mondo.sam.core.metrics.MemoryMetric;
 import eu.mondo.sam.core.metrics.TimeMetric;
@@ -38,7 +38,7 @@ public class PerformanceEventDrivenViatraTransformationStep extends M2MControlla
             transformation = new CPS2DeploymentTransformationViatra();
             transformation.setExecutor(executor);
             transformation.initialize(cps2dep,engine);
-        } catch (IncQueryException e) {
+        } catch (ViatraQueryException e) {
             e.printStackTrace();
         }
         initTimer.stopMeasure();

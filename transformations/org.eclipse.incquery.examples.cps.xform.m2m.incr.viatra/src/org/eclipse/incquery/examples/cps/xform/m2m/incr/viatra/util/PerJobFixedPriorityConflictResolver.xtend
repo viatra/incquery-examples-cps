@@ -1,11 +1,11 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.util
 
-import org.eclipse.incquery.runtime.evm.specific.resolver.FixedPriorityConflictResolver
-import org.eclipse.incquery.runtime.evm.specific.resolver.FixedPriorityConflictSet
+import org.eclipse.viatra.transformation.evm.specific.resolver.FixedPriorityConflictResolver
+import org.eclipse.viatra.transformation.evm.specific.resolver.FixedPriorityConflictSet
 import java.util.Map
-import org.eclipse.incquery.runtime.evm.api.RuleSpecification
-import org.eclipse.incquery.runtime.evm.api.Activation
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.transformation.evm.api.RuleSpecification
+import org.eclipse.viatra.transformation.evm.api.Activation
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -22,7 +22,7 @@ class PerJobFixedPriorityConflictResolver extends FixedPriorityConflictResolver 
 		}
 
 		override protected getRulePriority(Activation<?> activation) {
-			if (IncQueryActivationStateEnum.DISAPPEARED.equals(activation.state))
+			if (CRUDActivationStateEnum.DISAPPEARED.equals(activation.state))
 				return (-1) * super.getRulePriority(activation)
 			return super.getRulePriority(activation)
 		}

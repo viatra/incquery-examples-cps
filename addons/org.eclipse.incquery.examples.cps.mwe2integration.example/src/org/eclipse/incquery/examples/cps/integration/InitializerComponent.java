@@ -25,9 +25,9 @@ import org.eclipse.incquery.examples.cps.planexecutor.PlanExecutor;
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.incquery.examples.cps.xform.serializer.DefaultSerializer;
 import org.eclipse.incquery.examples.cps.xform.serializer.javaio.JavaIOBasedFileAccessor;
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
-import org.eclipse.incquery.runtime.emf.EMFScope;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.emf.EMFScope;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -131,7 +131,7 @@ public class InitializerComponent implements IWorkflowComponent {
             modelSize = (Integer) ctx.get("modelsize");
         }
 
-        AdvancedIncQueryEngine engine = null;
+        AdvancedViatraQueryEngine engine = null;
         try {
 
             CPSGeneratorInput input = new CPSGeneratorInput(seed, getConstraints(modelSize), cps2dep.getCps());
@@ -144,8 +144,8 @@ public class InitializerComponent implements IWorkflowComponent {
 
             fragment.getEngine().dispose();
 
-            engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource().getResourceSet()));
-        } catch (IncQueryException e) {
+            engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource().getResourceSet()));
+        } catch (ViatraQueryException e) {
             e.printStackTrace();
         }
 

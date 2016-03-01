@@ -6,14 +6,14 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.xform.m2t.api.ICPSGenerator
 import org.eclipse.incquery.examples.cps.xform.m2t.exceptions.CPSGeneratorException
-import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.incquery.examples.cps.xform.m2t.util.FormatterUtil
 
 class CodeGenerator implements ICPSGenerator {
 	extension FormatterUtil util = new FormatterUtil
 	val Generator generator;
 	
-	new (String projectName, IncQueryEngine engine) {
+	new (String projectName, ViatraQueryEngine engine) {
 		generator = new Generator(projectName, engine);
 	}
 	

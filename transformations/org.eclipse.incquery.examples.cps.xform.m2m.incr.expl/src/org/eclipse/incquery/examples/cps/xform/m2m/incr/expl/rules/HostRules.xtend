@@ -3,14 +3,14 @@ package org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.rules
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.DeletedDeploymentHostMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.MonitoredHostInstanceMatch
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.expl.queries.UnmappedHostInstanceMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 
 class HostRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new HostMapping(engine).specification
 			,new HostUpdate(engine).specification
@@ -21,7 +21,7 @@ class HostRules {
 
 class HostMapping extends AbstractRule<UnmappedHostInstanceMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -34,7 +34,7 @@ class HostMapping extends AbstractRule<UnmappedHostInstanceMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [UnmappedHostInstanceMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [UnmappedHostInstanceMatch match |
 			val nodeIp = match.hostInstance.nodeIp
 			debug('''Mapping host with IP: «nodeIp»''')
 			val host = createDeploymentHost => [
@@ -53,7 +53,7 @@ class HostMapping extends AbstractRule<UnmappedHostInstanceMatch> {
 
 class HostUpdate extends AbstractRule<MonitoredHostInstanceMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -66,21 +66,21 @@ class HostUpdate extends AbstractRule<MonitoredHostInstanceMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [MonitoredHostInstanceMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [MonitoredHostInstanceMatch match |
 			val hostIp = match.hostInstance.nodeIp
 			debug('''Starting monitoring mapped host with IP: «hostIp»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED, [MonitoredHostInstanceMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.DISAPPEARED, [MonitoredHostInstanceMatch match |
 			val hostIp = match.hostInstance.nodeIp
 			debug('''Stopped monitoring mapped host with IP: «hostIp»''')
 		])
 	}
 	
 	private def getUpdatedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED, [MonitoredHostInstanceMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED, [MonitoredHostInstanceMatch match |
 			val hostIp = match.hostInstance.nodeIp
 			debug('''Updating mapped host with IP: «hostIp»''')
 			val depHosts = getMappedHostInstance(engine).getAllValuesOfdepHost(match.hostInstance)
@@ -98,7 +98,7 @@ class HostUpdate extends AbstractRule<MonitoredHostInstanceMatch> {
 
 class HostRemoval extends AbstractRule<DeletedDeploymentHostMatch> {
 	
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 	
@@ -111,7 +111,7 @@ class HostRemoval extends AbstractRule<DeletedDeploymentHostMatch> {
 	}
 	
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED, [DeletedDeploymentHostMatch match |
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED, [DeletedDeploymentHostMatch match |
 			val depHost = match.depHost
 			val hostIp = depHost.ip
 			logger.debug('''Removing host with IP: «hostIp»''')

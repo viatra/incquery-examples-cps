@@ -8,7 +8,7 @@ import org.eclipse.incquery.examples.cps.xform.m2t.api.IM2TOutputProvider;
 import org.eclipse.incquery.examples.cps.xform.m2t.api.M2TOutputRecord;
 import org.eclipse.incquery.examples.cps.xform.serializer.DefaultSerializer;
 import org.eclipse.incquery.examples.cps.xform.serializer.javaio.JavaIOBasedFileAccessor;
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.TransformationStep;
+import org.eclipse.viatra.integration.mwe2.mwe2impl.TransformationStep;
 
 public class SerializerTransformationStep extends TransformationStep {
     public DefaultSerializer serializer;

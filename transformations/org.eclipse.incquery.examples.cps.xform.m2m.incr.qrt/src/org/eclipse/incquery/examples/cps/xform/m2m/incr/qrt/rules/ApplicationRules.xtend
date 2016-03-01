@@ -4,14 +4,14 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentHost
 import org.eclipse.incquery.examples.cps.traceability.CPS2DeplyomentTrace
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.ApplicationInstanceMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 
 class ApplicationRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new ApplicationMapping(engine).specification
 		}
@@ -20,7 +20,7 @@ class ApplicationRules {
 
 class ApplicationMapping extends AbstractRule<ApplicationInstanceMatch> {
 
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 
@@ -33,7 +33,7 @@ class ApplicationMapping extends AbstractRule<ApplicationInstanceMatch> {
 	}
 
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED,
 			[ ApplicationInstanceMatch match |
 				val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance.allocatedTo).filter(DeploymentHost).head
 				val appId = match.appInstance.id
@@ -51,7 +51,7 @@ class ApplicationMapping extends AbstractRule<ApplicationInstanceMatch> {
 	}
 
 	private def getUpdateJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED,
 			[ ApplicationInstanceMatch match |
 				val depApp = engine.cps2depTrace.getOneArbitraryMatch(rootMapping, null, match.appInstance, null).
 					depElement as DeploymentApplication
@@ -61,7 +61,7 @@ class ApplicationMapping extends AbstractRule<ApplicationInstanceMatch> {
 	}
 
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.DISAPPEARED,
 			[ ApplicationInstanceMatch match |
 				val trace = engine.cps2depTrace.getAllValuesOftrace(null, match.appInstance, null).filter(CPS2DeplyomentTrace).head
 				val depApp = trace.deploymentElements.head as DeploymentApplication

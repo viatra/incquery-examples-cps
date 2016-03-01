@@ -1,17 +1,17 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules
 
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.StateMachineMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
 
 class StateMachineRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new StateMachineMapping(engine).specification
 		}
@@ -19,7 +19,7 @@ class StateMachineRules {
 }
 
 class StateMachineMapping extends AbstractRule<StateMachineMatch> {
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 
@@ -32,7 +32,7 @@ class StateMachineMapping extends AbstractRule<StateMachineMatch> {
 	}
 
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED,
 			[ StateMachineMatch match |
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).filter(
 					DeploymentApplication).head
@@ -58,7 +58,7 @@ class StateMachineMapping extends AbstractRule<StateMachineMatch> {
 	}
 
 	private def getUpdateJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.UPDATED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED,
 			[ StateMachineMatch match |
 				val smId = match.stateMachine.id
 				debug('''Updating mapped state machine with ID: «smId»''')
@@ -75,7 +75,7 @@ class StateMachineMapping extends AbstractRule<StateMachineMatch> {
 	}
 
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.DISAPPEARED,
 			[ StateMachineMatch match |
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).head as DeploymentApplication;
 				val depBehavior = depApp.behavior

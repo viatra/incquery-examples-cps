@@ -4,9 +4,9 @@ import java.security.InvalidParameterException
 import java.util.List
 import org.eclipse.incquery.examples.cps.integration.SerializerTransformationStep
 import org.eclipse.incquery.examples.cps.xform.m2t.api.M2TOutputRecord
-import org.eclipse.viatra.emf.mwe2integration.IMessage
-import org.eclipse.viatra.emf.mwe2integration.IMessageProcessor
-import org.eclipse.viatra.emf.mwe2integration.ITransformationStep
+import org.eclipse.viatra.integration.mwe2.IMessage
+import org.eclipse.viatra.integration.mwe2.IMessageProcessor
+import org.eclipse.viatra.integration.mwe2.ITransformationStep
 
 class M2TOutputMessageProcessor implements IMessageProcessor<List<M2TOutputRecord>, M2TOutputMessage> {
 	ITransformationStep parent

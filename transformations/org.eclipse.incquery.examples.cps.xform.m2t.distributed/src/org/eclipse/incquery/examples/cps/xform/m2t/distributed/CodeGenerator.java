@@ -7,14 +7,14 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentHost;
 import org.eclipse.incquery.examples.cps.xform.m2t.api.ICPSGenerator;
 import org.eclipse.incquery.examples.cps.xform.m2t.exceptions.CPSGeneratorException;
 import org.eclipse.incquery.examples.cps.xform.m2t.util.FormatterUtil;
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
 
 public class CodeGenerator implements ICPSGenerator {
     FormatterUtil util = new FormatterUtil();
 	private boolean forceCodeFormatting;
 	private Generator generator;
 
-	public CodeGenerator(String projectName, IncQueryEngine engine, boolean forceCodeFormatting) {
+	public CodeGenerator(String projectName, ViatraQueryEngine engine, boolean forceCodeFormatting) {
 		this.forceCodeFormatting = forceCodeFormatting;
 		generator = new Generator(projectName, engine);
 	}

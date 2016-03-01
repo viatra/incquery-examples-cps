@@ -1,16 +1,16 @@
 package org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.rules
 
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt.queries.TriggerPairMatch
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.Jobs
-import org.eclipse.incquery.runtime.evm.specific.Lifecycles
-import org.eclipse.incquery.runtime.evm.specific.Rules
-import org.eclipse.incquery.runtime.evm.specific.event.IncQueryActivationStateEnum
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.Jobs
+import org.eclipse.viatra.transformation.evm.specific.Lifecycles
+import org.eclipse.viatra.transformation.evm.specific.Rules
+import org.eclipse.viatra.transformation.evm.specific.crud.CRUDActivationStateEnum
 import org.eclipse.incquery.examples.cps.deployment.DeploymentApplication
 import org.eclipse.incquery.examples.cps.deployment.BehaviorTransition
 
 class TriggerRules {
-	static def getRules(IncQueryEngine engine) {
+	static def getRules(ViatraQueryEngine engine) {
 		#{
 			new TriggerMapping(engine).specification
 		}
@@ -18,7 +18,7 @@ class TriggerRules {
 }
 
 class TriggerMapping extends AbstractRule<TriggerPairMatch> {
-	new(IncQueryEngine engine) {
+	new(ViatraQueryEngine engine) {
 		super(engine)
 	}
 
@@ -31,7 +31,7 @@ class TriggerMapping extends AbstractRule<TriggerPairMatch> {
 	}
 
 	private def getAppearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.APPEARED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.APPEARED,
 			[ TriggerPairMatch match |
 				val depAppTrigger = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstanceTrigger).
 					filter(DeploymentApplication).head
@@ -51,7 +51,7 @@ class TriggerMapping extends AbstractRule<TriggerPairMatch> {
 	}
 
 	private def getDisappearedJob() {
-		Jobs.newStatelessJob(IncQueryActivationStateEnum.DISAPPEARED,
+		Jobs.newStatelessJob(CRUDActivationStateEnum.DISAPPEARED,
 			[ TriggerPairMatch match |
 				val depAppTrigger = engine.cps2depTrace.getAllValuesOfdepElement(null, null,
 					match.appInstanceTrigger).filter(DeploymentApplication).head

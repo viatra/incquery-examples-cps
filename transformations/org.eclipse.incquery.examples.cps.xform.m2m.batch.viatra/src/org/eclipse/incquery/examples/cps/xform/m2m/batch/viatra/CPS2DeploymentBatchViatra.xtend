@@ -6,11 +6,11 @@ import org.apache.log4j.Logger
 import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.patterns.CpsXformM2M
 import org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra.rules.RuleProvider
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.specific.RuleEngines
-import org.eclipse.viatra.emf.runtime.rules.batch.BatchTransformationStatements
-import org.eclipse.viatra.emf.runtime.transformation.batch.BatchTransformation
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.specific.RuleEngines
+import org.eclipse.viatra.transformation.runtime.emf.rules.batch.BatchTransformationStatements
+import org.eclipse.viatra.transformation.runtime.emf.transformation.batch.BatchTransformation
 
 import static com.google.common.base.Preconditions.*
 
@@ -25,11 +25,11 @@ class CPS2DeploymentBatchViatra {
 	extension BatchTransformationStatements statements
 	
 	CPSToDeployment mapping
-	IncQueryEngine engine
+	ViatraQueryEngine engine
 	
 	private var initialized = false;
 
-	def initialize(CPSToDeployment cps2dep, IncQueryEngine engine) {
+	def initialize(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 		checkArgument(cps2dep != null, "Mapping cannot be null!")
 		checkArgument(cps2dep.cps != null, "CPS not defined in mapping!")
 		checkArgument(cps2dep.deployment != null, "Deployment not defined in mapping!")

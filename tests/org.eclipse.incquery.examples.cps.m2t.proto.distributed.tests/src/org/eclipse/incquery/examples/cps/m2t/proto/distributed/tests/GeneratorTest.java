@@ -19,13 +19,13 @@ import org.eclipse.incquery.examples.cps.deployment.DeploymentHost;
 import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage;
 import org.eclipse.incquery.examples.cps.deployment.common.DeploymentQueries;
 import org.eclipse.incquery.examples.cps.tests.CPSTestBase;
-import org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator;
 import org.eclipse.incquery.examples.cps.xform.m2t.api.ICPSGenerator;
+import org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator;
 import org.eclipse.incquery.examples.cps.xform.m2t.exceptions.CPSGeneratorException;
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine;
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
-import org.eclipse.incquery.runtime.emf.EMFScope;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.emf.EMFScope;
+import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class GeneratorTest extends CPSTestBase {
 	
 //	@Ignore
 	@Test
-	public void testSmall() throws IncQueryException{
+	public void testSmall() throws ViatraQueryException{
 		logger.info("Start Generating...");
 		
 		Deployment model = loadModel("C:\\Eclipses\\CPSDemonstrator\\git\\incquery-examples-cps\\models\\org.eclipse.incquery.examples.cps.instances\\example.deployment");
@@ -49,7 +49,7 @@ public class GeneratorTest extends CPSTestBase {
 	
 	@Ignore
 	@Test
-	public void test64ClientServer() throws IncQueryException{
+	public void test64ClientServer() throws ViatraQueryException{
 		logger.info("Start Generating...");
 		
 		Logger.getLogger("cps.proto.generator").setLevel(Level.OFF);
@@ -65,8 +65,8 @@ public class GeneratorTest extends CPSTestBase {
 		assertTrue(true);
 	}
 
-	private void generateCode(Deployment model) throws IncQueryException {
-		IncQueryEngine engine = AdvancedIncQueryEngine.on(new EMFScope(model));
+	private void generateCode(Deployment model) throws ViatraQueryException {
+		ViatraQueryEngine engine = AdvancedViatraQueryEngine.on(new EMFScope(model));
 		DeploymentQueries.instance().prepare(engine);
 		
 		ICPSGenerator generator = new CodeGenerator("org.alma", engine, false);

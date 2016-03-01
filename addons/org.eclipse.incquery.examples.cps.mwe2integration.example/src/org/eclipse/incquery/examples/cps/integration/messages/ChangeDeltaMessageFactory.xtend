@@ -1,8 +1,8 @@
 package org.eclipse.incquery.examples.cps.integration.messages
 
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeDelta
-import org.eclipse.viatra.emf.mwe2integration.IMessageFactory
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.exceptions.InvalidParameterTypeException
+import org.eclipse.viatra.integration.mwe2.IMessageFactory
+import org.eclipse.viatra.integration.mwe2.mwe2impl.exceptions.InvalidParameterTypeException
 
 class ChangeDeltaMessageFactory implements IMessageFactory<DeploymentChangeDelta, ChangeDeltaMessage> {
 	override boolean isValidParameter(Object parameter) {

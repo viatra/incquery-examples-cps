@@ -7,8 +7,8 @@ import eu.mondo.sam.core.phases.AtomicPhase
 import eu.mondo.sam.core.results.PhaseResult
 import org.eclipse.incquery.examples.cps.performance.tests.config.CPSDataToken
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeMonitor
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 
 class ChangeMonitorInitializationPhase extends AtomicPhase {
 	
@@ -22,7 +22,7 @@ class ChangeMonitorInitializationPhase extends AtomicPhase {
 		val changeMonitorInitMemory = new MemoryMetric("Memory")
 		
 		changeMonitorInitTimer.startMeasure
-		val engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cpsToken.cps2dep.deployment))
+		val engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(cpsToken.cps2dep.deployment))
 		val changeMonitor = new DeploymentChangeMonitor(cpsToken.cps2dep.deployment, engine)
 		cpsToken.changeMonitor = changeMonitor
 		changeMonitor.startMonitoring

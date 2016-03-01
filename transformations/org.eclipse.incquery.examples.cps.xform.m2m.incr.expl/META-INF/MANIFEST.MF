@@ -11,9 +11,9 @@ Require-Bundle: org.eclipse.incquery.examples.cps.traceability,
  org.eclipse.incquery.examples.cps.deployment,
  org.eclipse.incquery.examples.cps.model,
  org.eclipse.emf.ecore,
- org.eclipse.incquery.runtime;bundle-version="[1.0.0,1.3.0)",
  org.eclipse.xtext.xbase.lib,
- org.eclipse.incquery.runtime.evm;bundle-version="[1.0.0,1.3.0)",
- org.eclipse.incquery.examples.cps.xform.m2m.util
+ org.eclipse.incquery.examples.cps.xform.m2m.util,
+ org.eclipse.viatra.query.runtime;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.viatra.transformation.evm;bundle-version="[1.2.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.log4j

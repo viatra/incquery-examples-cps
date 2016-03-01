@@ -22,9 +22,9 @@ import org.eclipse.incquery.examples.cps.xform.m2t.distributed.CodeGenerator
 import org.eclipse.incquery.examples.cps.xform.m2t.monitor.DeploymentChangeMonitor
 import org.eclipse.incquery.examples.cps.xform.serializer.DefaultSerializer
 import org.eclipse.incquery.examples.cps.xform.serializer.eclipse.EclipseBasedFileAccessor
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -85,7 +85,7 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 		// Generating
 		var fragment = generator.process(plan, input);
 
-		val engine = AdvancedIncQueryEngine.from(fragment.engine);
+		val engine = AdvancedViatraQueryEngine.from(fragment.engine);
 		
 		Validation.instance.prepare(engine);
 
@@ -94,7 +94,7 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 
 		executeTransformation
 
-		val engine2 = IncQueryEngine.on(new EMFScope(cps2dep))
+		val engine2 = ViatraQueryEngine.on(new EMFScope(cps2dep))
 
 		val projectName = "integration.test.generated.code"
 		val codeGenerator = new CodeGenerator(projectName, engine2, true);

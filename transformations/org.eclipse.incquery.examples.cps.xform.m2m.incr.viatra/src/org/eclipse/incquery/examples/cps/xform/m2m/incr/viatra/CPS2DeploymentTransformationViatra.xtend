@@ -7,11 +7,11 @@ import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.patterns.CpsXformM2M
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.rules.RuleProvider
 import org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra.util.PerJobFixedPriorityConflictResolver
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.evm.api.Executor
-import org.eclipse.incquery.runtime.evm.api.Scheduler.ISchedulerFactory
-import org.eclipse.viatra.emf.runtime.transformation.eventdriven.EventDrivenTransformation
-import org.eclipse.viatra.emf.runtime.transformation.eventdriven.ExecutionSchemaBuilder
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.transformation.evm.api.Executor
+import org.eclipse.viatra.transformation.evm.api.Scheduler.ISchedulerFactory
+import org.eclipse.viatra.transformation.runtime.emf.transformation.eventdriven.EventDrivenTransformation
+import org.eclipse.viatra.transformation.runtime.emf.transformation.eventdriven.ExecutionSchemaBuilder
 
 import static com.google.common.base.Preconditions.*
 
@@ -22,14 +22,14 @@ class CPS2DeploymentTransformationViatra {
 	extension RuleProvider ruleProvider
 
 	CPSToDeployment cps2dep
-	IncQueryEngine engine
+	ViatraQueryEngine engine
 	EventDrivenTransformation transform
 	ISchedulerFactory factory;
 	Executor executor;
 
 	private var initialized = false;
 
-	def initialize(CPSToDeployment cps2dep, IncQueryEngine engine) {
+	def initialize(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 		checkArgument(cps2dep != null, "Mapping cannot be null!")
 		checkArgument(cps2dep.cps != null, "CPS not defined in mapping!")
 		checkArgument(cps2dep.deployment != null, "Deployment not defined in mapping!")
