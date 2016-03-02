@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><plugin>
-  <extension id="org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.CpsXformM2M" point="org.eclipse.viatra.query.runtime.queryspecification">
-    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.CpsXformM2M" id="org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr.queries.CpsXformM2M"/>
-  </extension>
-</plugin>
