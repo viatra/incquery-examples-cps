@@ -13,7 +13,7 @@
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
     xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore"
-    name="emf.incquery.demo"
+    name="viatra.cps.demo"
     label="VIATRA CPS Demo">
   <setupTask
       xsi:type="jdt:JRETask"
@@ -70,7 +70,7 @@
         name="org.eclipse.viatra.integration.mwe2.feature.feature.group"
         versionRange="[0.12.0,0.13.0)"/>
     <repository
-        url="http://download.eclipse.org/incquery/updates-extra/integration/"/>
+        url="http://download.eclipse.org/viatra/dependency"/>
     <repository
         url="https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/"/>
   </setupTask>
@@ -164,8 +164,8 @@
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
-      option="-Doomph.redirection.incquery.cps.demo.setup"
-      value="=https://raw.githubusercontent.com/IncQueryLabs/incquery-examples-cps/master/releng/org.eclipse.viatra.examples.cps.setup/EMFIncQueryDemo.setup->${git.clone.cps.location|uri}/releng/org.eclipse.viatra.examples.cps.setup/EMFIncQueryDemo.setup"
+      option="-Doomph.redirection.viatra.cps.demo.setup"
+      value="=https://raw.githubusercontent.com/IncQueryLabs/incquery-examples-cps/master/releng/org.eclipse.viatra.examples.cps.setup/CPSExample.setup->${git.clone.cps.location|uri}/releng/org.eclipse.viatra.examples.cps.setup/CPSExample.setup"
       vm="true"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
@@ -390,5 +390,5 @@
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
-  <description>VIATRA CPS Demo provides a full example set for many extensions and use cases of the EMF-IncQuery framework.</description>
+  <description>VIATRA CPS Demo provides a full example set for many extensions and use cases of the VIATRA framework.</description>
 </setup:Project>
