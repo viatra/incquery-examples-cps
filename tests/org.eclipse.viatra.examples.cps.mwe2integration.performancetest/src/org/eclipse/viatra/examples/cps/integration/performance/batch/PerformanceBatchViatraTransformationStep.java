@@ -31,7 +31,7 @@ public class PerformanceBatchViatraTransformationStep extends M2MBatchViatraTran
         
         initTimer.startMeasure();
         try {
-            engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource().getResourceSet()));
+            engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource().getResourceSet()));
             transformation = new CPS2DeploymentBatchViatra();
             transformation.initialize(cps2dep,engine);
         } catch (ViatraQueryException e) {

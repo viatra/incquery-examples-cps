@@ -1,7 +1,7 @@
 module org.eclipse.viatra.examples.cps.integration.performance.eventdriven
 
-import org.eclipse.viatra.emf.mwe2integration.*
-import org.eclipse.viatra.emf.mwe2integration.mwe2impl.*
+import org.eclipse.viatra.integration.mwe2.*
+import org.eclipse.viatra.integration.mwe2.mwe2impl.*
 import org.eclipse.viatra.examples.cps.integration.performance.*
 import org.eclipse.viatra.examples.cps.integration.performance.batch.*
 import org.eclipse.viatra.examples.cps.integration.performance.eventdriven.*
