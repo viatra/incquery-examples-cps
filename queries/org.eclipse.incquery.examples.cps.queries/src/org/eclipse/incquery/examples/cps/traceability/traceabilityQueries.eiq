@@ -1,9 +1,0 @@
-package org.eclipse.incquery.examples.cps.traceability
-
-import "http://org.eclipse.incquery/model/cps-traceability"
-
-@Edge(source = identifiable, target = element, label = "cps2depl")
-pattern identifiableToDeplymentElement(trace, identifiable, element) {
-	CPS2DeplyomentTrace.cpsElements(trace, identifiable);
-	CPS2DeplyomentTrace.deploymentElements(trace, element);
-}

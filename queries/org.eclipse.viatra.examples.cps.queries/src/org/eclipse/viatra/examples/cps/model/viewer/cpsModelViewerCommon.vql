@@ -1,0 +1,28 @@
+package org.eclipse.viatra.examples.cps.model.viewer
+
+import "http://org.eclipse.viatra/model/cps"
+
+@Item(item = host, label = "$host.id$")
+@Format(color = "#CC6600", textColor = "#000000")
+pattern allHostInstances(host) {
+	HostInstance(host);
+}
+
+@Item(item = app, label = "$app.id$")
+@Format(color = "#996600", textColor = "#000000")
+pattern appInstancesWithAllocation(app) {
+	ApplicationInstance(app);
+	ApplicationInstance.allocatedTo(app, _);
+}
+
+@Item(item = app, label = "$app.id$")
+@Format(color = "#FF0000", textColor = "#000000")
+pattern appInstancesNoAllocation(app) {
+	ApplicationInstance(app);
+	neg find appInstancesWithAllocation(app);
+}
+
+@Edge(source = host, target = app, label = "$app.id$ - $host.id$")
+pattern connectAppAndHost(app, host) {
+	ApplicationInstance.allocatedTo(app, host);
+}

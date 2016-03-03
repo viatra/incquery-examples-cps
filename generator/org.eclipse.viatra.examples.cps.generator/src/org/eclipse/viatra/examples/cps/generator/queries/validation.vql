@@ -1,0 +1,37 @@
+package org.eclipse.viatra.examples.cps.generator.queries
+
+import "http://org.eclipse.viatra/model/cps"
+import org.eclipse.viatra.examples.cps.generator.queries.Transitions
+
+
+pattern AppTypes(appType : ApplicationType) {
+	ApplicationType(appType);
+}
+
+pattern AppInstances(A : ApplicationInstance) {
+	ApplicationInstance(A);
+}
+
+pattern HostTypes(hostType : HostType) {
+	HostType(hostType);
+}
+
+pattern HostInstances(hostInstance : HostInstance) {
+	HostInstance(hostInstance);
+}
+
+pattern States(s : State) {
+	State(s);
+}
+
+pattern Transition(t : Transition) {
+	find Transitions(t, _);
+}
+
+pattern AllocatedAppInstances(A : ApplicationInstance, HI : HostInstance) {
+	ApplicationInstance.allocatedTo(A, HI);
+}
+
+pattern ConnectedHosts(H : HostInstance, Trg : HostInstance) {
+	HostInstance.communicateWith(H, Trg);
+}
