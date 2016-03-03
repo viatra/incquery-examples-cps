@@ -2,12 +2,17 @@ package org.eclipse.viatra.examples.cps.tests
 
 import java.io.OutputStreamWriter
 import org.apache.log4j.ConsoleAppender
+import org.apache.log4j.FileAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage
+import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage
 import org.eclipse.viatra.examples.cps.generator.dtos.ModelStats
+import org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage
 import org.junit.BeforeClass
-import org.apache.log4j.FileAppender
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 
 class CPSTestBase {
 	
@@ -19,6 +24,12 @@ class CPSTestBase {
 	
 	@BeforeClass
 	def static setupRootLogger() {
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+		
+		CyberPhysicalSystemPackage.eINSTANCE.eClass
+		DeploymentPackage.eINSTANCE.eClass
+		TraceabilityPackage.eINSTANCE.eClass
+		
 		Logger.getLogger("cps.xform").level = PropertiesUtil.getCPSXformLogLevel
 		Logger.getLogger("cps.generator").initLoggerForLevel(PropertiesUtil.getCPSGeneratorLogLevel, COMMON_LAYOUT)
 		Logger.getLogger("cps.performance.generator.Tests").initLoggerForLevel(PropertiesUtil.getCPSGeneratorLogLevel, COMMON_LAYOUT)

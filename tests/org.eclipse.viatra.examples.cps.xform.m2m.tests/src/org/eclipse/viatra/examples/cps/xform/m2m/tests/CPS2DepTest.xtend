@@ -5,13 +5,13 @@ import org.eclipse.viatra.examples.cps.tests.PropertiesUtil
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.BatchOptimized
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.BatchSimple
+import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.BatchViatra
+import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.ExplicitTraceability
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.PartialBatch
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.QueryResultTraceability
-import org.junit.runners.Parameterized.Parameters
-import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.ViatraTransformation
-import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.BatchViatra
+import org.junit.runners.Parameterized.Parameters
 
 class CPS2DepTest extends CPS2DepTestWithoutParameters {
 
