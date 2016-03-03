@@ -44,14 +44,12 @@
       xsi:type="setup.p2:P2Task"
       label="Demo">
     <requirement
-        name="org.eclipse.incquery.sdk.feature.source.feature.group"
-        versionRange="[1.0.0,2.0.0)"/>
+        name="org.eclipse.viatra.query.sdk.feature.source.feature.group"
+        versionRange="[1.2.0,2.0.0)"/>
     <requirement
-        name="org.eclipse.incquery.testing.sdk.feature.feature.group"/>
+        name="org.eclipse.viatra.query.testing.sdk.feature.feature.group"/>
     <requirement
-        name="org.eclipse.incquery.viewers.tooling.ui.feature.feature.group"/>
-    <requirement
-        name="org.eclipse.incquery.viewers.tooling.ui.zest.feature.feature.group"/>
+        name="org.eclipse.viatra.addon.viewers.tooling.zest.feature.feature.group"/>
     <requirement
         name="org.eclipse.xtext.sdk.feature.group"
         versionRange="[2.9.0,2.10.0)"/>
@@ -61,22 +59,20 @@
         name="org.eclipse.gef4.zest.sdk.feature.group"
         filter=""/>
     <requirement
-        name="org.eclipse.incquery.tooling.ui.visualization.feature.feature.group"/>
+        name="org.eclipse.viatra.query.tooling.ui.visualization.feature.feature.group"/>
     <requirement
         name="com.google.inject.multibindings"
         versionRange="[3.0.0,4.0.0)"/>
     <requirement
-        name="org.eclipse.viatra.emf.runtime.feature.feature.group"
-        versionRange="[0.9.0,0.10.0)"/>
+        name="org.eclipse.viatra.transformation.runtime.emf.feature.feature.group"
+        versionRange="[1.2.0,2.0.0)"/>
     <requirement
-        name="org.eclipse.viatra.emf.mwe2integration.feature.feature.group"
-        versionRange="[0.9.0,0.10.0)"/>
+        name="org.eclipse.viatra.integration.mwe2.feature.feature.group"
+        versionRange="[0.12.0,0.13.0)"/>
     <repository
         url="http://download.eclipse.org/incquery/updates-extra/integration/"/>
     <repository
-        url="http://download.eclipse.org/viatra2/emf/updates/integration"/>
-    <repository
-        url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+        url="https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/"/>
   </setupTask>
   <setupTask
       xsi:type="setup.targlets:TargletTask">
@@ -102,15 +98,6 @@
         </detail>
       </annotation>
       <requirement
-          name="org.eclipse.incquery.sdk.feature.source.feature.group"
-          versionRange="[1.0.0,2.0.0)"/>
-      <requirement
-          name="org.eclipse.incquery.testing.sdk.feature.feature.group"/>
-      <requirement
-          name="org.eclipse.incquery.viewers.tooling.ui.feature.feature.group"/>
-      <requirement
-          name="org.eclipse.incquery.viewers.tooling.ui.zest.feature.feature.group"/>
-      <requirement
           name="org.eclipse.equinox.sdk.feature.group"/>
       <requirement
           name="org.eclipse.sdk.feature.group"/>
@@ -124,31 +111,35 @@
           name="org.eclipse.gef4.zest.sdk.feature.group"
           versionRange="[0.1.0.201406280202,0.1.0.201406280202]"/>
       <requirement
-          name="org.eclipse.gef4.geometry.feature.group"
-          versionRange="[0.1.0.201406280202,0.1.0.201406280202]"/>
-      <requirement
-          name="org.eclipse.incquery.tooling.ui.visualization.feature.feature.group"/>
+          name="org.eclipse.gef4.geometry.feature.group"/>
       <requirement
           name="com.google.inject.multibindings"
           versionRange="[3.0.0,4.0.0)"/>
       <requirement
-          name="org.eclipse.viatra.emf.runtime.feature.feature.group"
-          versionRange="[0.9.0,0.10.0)"/>
+          name="org.eclipse.viatra.transformation.runtime.emf.feature.feature.group"
+          versionRange="[1.2.0,2.0.0)"/>
       <requirement
-          name="org.eclipse.viatra.emf.mwe2integration.feature.feature.group"
-          versionRange="[0.9.0,0.10.0)"/>
+          name="org.eclipse.viatra.integration.mwe2.feature.feature.group"
+          versionRange="[0.12.0,0.13.0)"/>
+      <requirement
+          name="org.eclipse.viatra.query.sdk.feature.source.feature.group"
+          versionRange="[1.2.0,2.0.0)"/>
+      <requirement
+          name="org.eclipse.viatra.query.testing.sdk.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.viatra.addon.viewers.tooling.zest.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.viatra.query.tooling.ui.visualization.feature.feature.group"/>
       <repositoryList
           name="Dependencies">
-        <repository
-            url="http://download.eclipse.org/incquery/updates-extra/integration/"/>
         <repository
             url="http://download.eclipse.org/releases/mars"/>
         <repository
             url="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
         <repository
-            url="http://download.eclipse.org/viatra2/emf/updates/integration"/>
-        <repository
             url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+        <repository
+            url="https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/"/>
       </repositoryList>
     </targlet>
   </setupTask>

@@ -1,42 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from Demo Targlet Platform" sequenceNumber="17">
+<target name="Generated from Demo Targlet Platform" sequenceNumber="18">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="com.google.inject.multibindings" version="3.0.0.v201402270930"/>
-      <unit id="org.eclipse.gef4.geometry.feature.group" version="0.1.0.201406280202"/>
-      <unit id="org.eclipse.gef4.zest.sdk.feature.group" version="0.1.0.201406280202"/>
-      <unit id="org.eclipse.incquery.testing.sdk.feature.feature.group" version="1.1.0.201509111636"/>
-      <unit id="org.eclipse.incquery.tooling.ui.visualization.feature.feature.group" version="0.11.0.201509111636"/>
-      <unit id="org.eclipse.incquery.viewers.tooling.ui.feature.feature.group" version="1.1.0.201509111636"/>
-      <unit id="org.eclipse.incquery.viewers.tooling.ui.zest.feature.feature.group" version="0.11.0.201509111636"/>
-      <repository location="http://download.eclipse.org/incquery/updates-extra/integration/"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="2.11.2.v20160208-0841"/>
+      <unit id="org.eclipse.emf.transaction.feature.group" version="1.9.0.201506010221"/>
+      <unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.2.v20160202-2102"/>
+      <unit id="org.eclipse.gef4.geometry.feature.group" version="0.1.0.201506081138"/>
+      <unit id="org.eclipse.sdk.feature.group" version="4.5.2.v20160212-1500"/>
+      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.9.1.v201512180746"/>
+      <repository location="http://download.eclipse.org/releases/mars"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="com.google.guava" version="15.0.0.v201403281430"/>
-      <unit id="org.antlr.runtime" version="3.2.0.v201101311130"/>
-      <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
-      <unit id="org.eclipse.draw2d" version="3.9.101.201408150207"/>
-      <unit id="org.eclipse.emf.sdk.feature.group" version="2.10.2.v20150123-0452"/>
-      <unit id="org.eclipse.emf.transaction" version="1.8.0.201405281451"/>
-      <unit id="org.eclipse.equinox.sdk.feature.group" version="3.10.2.v20150204-1316"/>
-      <unit id="org.eclipse.sdk.feature.group" version="4.4.2.v20150204-1700"/>
-      <repository location="http://download.eclipse.org/releases/luna"/>
-    </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.apache.commons.io" version="2.2.0.v201405211200"/>
-      <unit id="org.codehaus.jackson.mapper" version="1.6.0.v20101005-0925"/>
-      <unit id="org.slf4j.impl.log4j12" version="1.7.2.v20131105-2200"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
-    </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.viatra.emf.mwe2integration.feature.feature.group" version="0.8.0.201509041632"/>
-      <unit id="org.eclipse.viatra.emf.runtime.feature.feature.group" version="0.8.0.201509041632"/>
-      <repository location="http://download.eclipse.org/viatra2/emf/updates/integration"/>
-    </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.9.0.v201507170721"/>
-      <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/milestones/"/>
+      <unit id="org.eclipse.viatra.addon.viewers.tooling.zest.feature.feature.group" version="0.12.0.201603011305"/>
+      <unit id="org.eclipse.viatra.integration.mwe2.feature.feature.group" version="0.12.0.201603011305"/>
+      <unit id="org.eclipse.viatra.query.testing.sdk.feature.feature.group" version="1.2.0.201603011305"/>
+      <unit id="org.eclipse.viatra.query.tooling.ui.visualization.feature.feature.group" version="0.12.0.201603011305"/>
+      <repository location="https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/"/>
     </location>
   </locations>
 </target>
