@@ -11,6 +11,8 @@ import org.eclipse.viatra.examples.cps.generator.dtos.HostClass
 import org.eclipse.viatra.examples.cps.generator.dtos.MinMaxData
 import org.eclipse.viatra.examples.cps.generator.dtos.Percentage
 import org.eclipse.viatra.examples.cps.generator.utils.RandomUtils
+import org.eclipse.viatra.examples.cps.performance.tests.config.phases.ClientServerModificationPhase
+import org.eclipse.viatra.examples.cps.performance.tests.config.phases.GenerationPhase
 
 class AdvancedClientServerCase extends BenchmarkCase {
 	protected extension Logger logger = Logger.getLogger("cps.performance.tests.config.cases.AdvancedClientServerCase")
@@ -29,11 +31,11 @@ class AdvancedClientServerCase extends BenchmarkCase {
 	}
 	
 	override getGenerationPhase(String phaseName) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		return new GenerationPhase(phaseName, constraints)
 	}
 	
 	override getModificationPhase(String phaseName) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		return new ClientServerModificationPhase(phaseName)
 	}
 	
 	def getConstraints() {

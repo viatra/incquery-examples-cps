@@ -21,6 +21,7 @@ class CPSDataToken implements DataToken{
 	DeploymentChangeMonitor changeMonitor
 	ICPSGenerator codeGenerator 
 	IFolder srcFolder
+	String folderPath
 	int seed
 	int size
 	int modificationIndex

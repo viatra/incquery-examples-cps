@@ -14,8 +14,12 @@ import org.eclipse.viatra.examples.cps.xform.m2t.api.ICPSGenerator
 import org.eclipse.viatra.examples.cps.xform.m2t.jdt.CodeGenerator
 import org.eclipse.viatra.examples.cps.xform.serializer.DefaultSerializer
 import org.eclipse.viatra.examples.cps.xform.serializer.eclipse.EclipseBasedFileAccessor
+import org.eclipse.viatra.examples.cps.xform.serializer.javaio.JavaIOBasedFileAccessor
 import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
+import org.eclipse.core.runtime.Platform
+import org.eclipse.viatra.examples.cps.xform.serializer.IFileAccessor
+import java.io.File
 
 class M2TTransformationPhase extends AtomicPhase {
 	extension DefaultSerializer serializer = new DefaultSerializer
@@ -41,23 +45,47 @@ class M2TTransformationPhase extends AtomicPhase {
 			codeGenerator = new CodeGenerator(projectName, engine);
 		}
 		cpsToken.codeGenerator = codeGenerator
-		createProject("",projectName,new EclipseBasedFileAccessor)
+		
+		var String folderString = null
+		if(Platform.isRunning){
+			prepareEclipseBasedSerialization(projectName, cpsToken)
+		} else {
+			val fileAccessor = new JavaIOBasedFileAccessor
+			val projectPath = "results/temp/"
+			createProject(projectPath ,projectName, fileAccessor)
+			folderString = projectPath + projectName + "/src"
+			val srcFolder = new File(folderString)
+			srcFolder.listFiles.forEach[delete]
+			cpsToken.folderPath = folderString
+			performSerialization(cpsToken, folderString, fileAccessor)
+		}
+
+		timer.stopMeasure
+		memory.measure
+		
+		phaseResult.addMetrics(timer, memory)
+	}
+
+	private def performSerialization(CPSDataToken cpsToken, String folderString, IFileAccessor fileAccessor) {
+		// Source generation
+		val provider = new DefaultM2TOutputProvider(cpsToken.cps2dep.deployment, cpsToken.codeGenerator,folderString)
+		serialize(folderString, provider, fileAccessor)
+	}
+	
+	private def prepareEclipseBasedSerialization(String projectName, CPSDataToken cpsToken) {
+		val fileAccessor = new EclipseBasedFileAccessor
+		createProject("",projectName, fileAccessor)
 		val project = ResourcesPlugin.workspace.root.getProject(projectName)
 		val srcFolder = project.getFolder("src");
+		srcFolder.members.forEach[delete(true, null)]
 		val folderString = srcFolder.location.toOSString
 		cpsToken.srcFolder = srcFolder
 		val monitor = new NullProgressMonitor();
 		if (!srcFolder.exists()) {
 			srcFolder.create(true, true, monitor);
 		}
-
-		// Source generation
-		val provider = new DefaultM2TOutputProvider(cpsToken.cps2dep.deployment, codeGenerator,folderString)
-		serialize(folderString,provider,new EclipseBasedFileAccessor)
-		timer.stopMeasure
-		memory.measure
-
-		phaseResult.addMetrics(timer, memory)
+		
+		performSerialization(cpsToken, folderString, fileAccessor)
 	}
-
+	
 }
