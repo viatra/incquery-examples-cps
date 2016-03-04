@@ -28,6 +28,12 @@ import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.eclipse.core.runtime.Platform
+import org.eclipse.viatra.examples.cps.xform.serializer.IFileAccessor
+import org.eclipse.viatra.examples.cps.deployment.Deployment
+import org.eclipse.viatra.examples.cps.xform.m2t.api.ICPSGenerator
+import org.eclipse.viatra.examples.cps.xform.serializer.javaio.JavaIOBasedFileAccessor
+import java.io.File
 
 /**
  * Tests the whole toolchain using each transformation one-by-one
@@ -36,7 +42,7 @@ import org.junit.runners.Parameterized
 class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 
 	val seed = 11111
-	val scale = 64
+	val scale = 8
 
 	protected extension CyberPhysicalSystemFactory cpsFactory = CyberPhysicalSystemFactory.eINSTANCE
 	protected extension DeploymentFactory depFactory = DeploymentFactory.eINSTANCE
@@ -98,18 +104,33 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 
 		val projectName = "integration.test.generated.code"
 		val codeGenerator = new CodeGenerator(projectName, engine2, true);
-		createProject(" ", projectName, new EclipseBasedFileAccessor)
-		val project = ResourcesPlugin.workspace.root.getProject(projectName)
-		val srcFolder = project.getFolder("src");
-		val folderString = srcFolder.location.toOSString
-		val monitor = new NullProgressMonitor();
-		if (!srcFolder.exists()) {
-			srcFolder.create(true, true, monitor);
+		
+		var String folderString = null
+		var IFileAccessor fileAccessor = null
+		if(Platform.isRunning){
+			fileAccessor = new EclipseBasedFileAccessor
+			createProject("",projectName, fileAccessor)
+			val project = ResourcesPlugin.workspace.root.getProject(projectName)
+			val srcFolder = project.getFolder("src");
+			srcFolder.members.forEach[delete(true, null)]
+			folderString = srcFolder.location.toOSString
+			val monitor = new NullProgressMonitor();
+			if (!srcFolder.exists()) {
+				srcFolder.create(true, true, monitor);
+			}
+		} else {
+			fileAccessor = new JavaIOBasedFileAccessor
+			val projectPath = "results/temp/"
+			createProject(projectPath ,projectName, fileAccessor)
+			folderString = projectPath + projectName + "/src"
+			val srcFolder = new File(folderString)
+			srcFolder.listFiles.forEach[delete]
 		}
+		
 
 		// Initial source generation
 		val provider = new DefaultM2TOutputProvider(cps2dep.deployment, codeGenerator,folderString)
-		serialize(folderString,provider,new EclipseBasedFileAccessor)
+		serialize(folderString,provider, fileAccessor)
 	
 		val changeMonitor = new DeploymentChangeMonitor(cps2dep.deployment, engine2)
 
@@ -122,7 +143,8 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 
 		executeTransformation
 		val changeprovider = new ChangeM2TOutputProvider(changeMonitor.deltaSinceLastCheckpoint, codeGenerator, folderString)
-		folderString.serialize(changeprovider,new EclipseBasedFileAccessor)
+		folderString.serialize(changeprovider, fileAccessor)
 	}
 
+	
 }

@@ -7,12 +7,12 @@ import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage
 import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage
 import org.eclipse.viatra.examples.cps.generator.dtos.ModelStats
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage
 import org.junit.BeforeClass
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 
 class CPSTestBase {
 	
@@ -24,11 +24,7 @@ class CPSTestBase {
 	
 	@BeforeClass
 	def static setupRootLogger() {
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
-		
-		CyberPhysicalSystemPackage.eINSTANCE.eClass
-		DeploymentPackage.eINSTANCE.eClass
-		TraceabilityPackage.eINSTANCE.eClass
+		doStandaloneEMFSetup()
 		
 		Logger.getLogger("cps.xform").level = PropertiesUtil.getCPSXformLogLevel
 		Logger.getLogger("cps.generator").initLoggerForLevel(PropertiesUtil.getCPSGeneratorLogLevel, COMMON_LAYOUT)
@@ -37,6 +33,14 @@ class CPSTestBase {
 		Logger.getLogger("cps.mondosam").initLoggerForLevel(PropertiesUtil.getBenchmarkLogLevel, COMMON_LAYOUT)
 		Logger.getLogger("cps.stats").initLoggerForLevel(PropertiesUtil.getStatsLogLevel, STATS_LAYOUT)
 		Logger.getLogger("cps.proto").initLoggerForLevel(PropertiesUtil.getCPSGeneratorLogLevel, COMMON_LAYOUT)
+	}
+	
+	def static doStandaloneEMFSetup() {
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+		
+		CyberPhysicalSystemPackage.eINSTANCE.eClass
+		DeploymentPackage.eINSTANCE.eClass
+		TraceabilityPackage.eINSTANCE.eClass
 	}
 	
 	def static initLoggerForLevel(Logger logger, Level level, String patternLayout) {

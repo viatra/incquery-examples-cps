@@ -22,7 +22,7 @@ import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 
 @RunWith(Parameterized)
-class QueryTest extends CPSTestBase{
+class QueryTest extends CPSTestBase {
 	
 	protected extension Logger logger = Logger.getLogger("cps.performance.tests.queries.QueryTest")
     protected extension CPSModelBuilderUtil modelBuilder
@@ -31,6 +31,7 @@ class QueryTest extends CPSTestBase{
 	
 	@Parameters(name = "{index}: {1}")
     public static def transformations() {
+    	doStandaloneEMFSetup
         #[
         	#[CpsXformM2M.instance.trigger, "Trigger"].toArray
         ]
