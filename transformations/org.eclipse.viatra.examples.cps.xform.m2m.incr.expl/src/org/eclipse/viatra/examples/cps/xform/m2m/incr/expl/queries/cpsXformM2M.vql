@@ -5,7 +5,7 @@ import "http://org.eclipse.viatra/model/deployment"
 import "http://org.eclipse.viatra/model/cps-traceability"
 import java org.eclipse.viatra.examples.cps.xform.m2m.util.SignalUtil
 
-pattern mappedCPS(cps2dep, cps, deployment) {
+pattern mappedCPS(cps2dep : CPSToDeployment, cps : CyberPhysicalSystem, deployment : Deployment) {
 	CPSToDeployment.cps(cps2dep, cps);
 	CPSToDeployment.deployment(cps2dep, deployment);
 }
