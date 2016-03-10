@@ -14,7 +14,7 @@ class PropertiesUtil {
 	public static val GIT_CLONE_LOCATION_PROP_KEY = "git.clone.location"
 	public static val CPS_XFORM_LOGLEVEL_PROP_KEY = "cps.xform.loglevel"
 	public static val CPS_GENERATOR_LOGLEVEL_PROP_KEY = "cps.generator.loglevel"
-	public static val INCQUERY_LOGLEVEL_PROP_KEY = "org.eclipse.incquery.loglevel"
+	public static val INCQUERY_LOGLEVEL_PROP_KEY = "org.eclipse.viatra.query.loglevel"
 	public static val PERSIST_RESULTS_PROP_KEY = "cps.persist.results"
 	public static val DISABLED_M2M_XFORM_PROP_KEY = "cps.xform.m2m.disabled.alternatives"
 	public static val DISABLED_GENERATOR_PROP_KEY = "cps.xform.m2t.disabled.alternatives"
