@@ -3,67 +3,67 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.eclipse.incquery.examples.cps</groupId>
-	<artifactId>org.eclipse.incquery.examples.cps.parent</artifactId>
+	<groupId>org.eclipse.viatra.examples.cps</groupId>
+	<artifactId>org.eclipse.viatra.examples.cps.parent</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<name>CPS Demonstrator</name>
 	<url></url>
 	<packaging>pom</packaging>
 	<modules>
 		<!-- Target platform -->
-		<module>releng/org.eclipse.incquery.examples.cps.target</module>
+		<module>releng/org.eclipse.viatra.examples.cps.target</module>
 
 		<!-- Domains -->
-		<module>domains/org.eclipse.incquery.examples.cps.deployment</module>
-		<module>domains/org.eclipse.incquery.examples.cps.deployment.edit</module>
-		<module>domains/org.eclipse.incquery.examples.cps.deployment.editor</module>
-		<module>domains/org.eclipse.incquery.examples.cps.model</module>
-		<module>domains/org.eclipse.incquery.examples.cps.model.edit</module>
-		<module>domains/org.eclipse.incquery.examples.cps.model.editor</module>
-		<module>domains/org.eclipse.incquery.examples.cps.traceability</module>
-		<module>domains/org.eclipse.incquery.examples.cps.traceability.edit</module>
-		<module>domains/org.eclipse.incquery.examples.cps.traceability.editor</module>
+		<module>domains/org.eclipse.viatra.examples.cps.deployment</module>
+		<module>domains/org.eclipse.viatra.examples.cps.deployment.edit</module>
+		<module>domains/org.eclipse.viatra.examples.cps.deployment.editor</module>
+		<module>domains/org.eclipse.viatra.examples.cps.model</module>
+		<module>domains/org.eclipse.viatra.examples.cps.model.edit</module>
+		<module>domains/org.eclipse.viatra.examples.cps.model.editor</module>
+		<module>domains/org.eclipse.viatra.examples.cps.traceability</module>
+		<module>domains/org.eclipse.viatra.examples.cps.traceability.edit</module>
+		<module>domains/org.eclipse.viatra.examples.cps.traceability.editor</module>
 
 		<!-- Generator -->
-		<module>generator/org.eclipse.incquery.examples.cps.generator</module>
-		<module>generator/org.eclipse.incquery.examples.cps.planexecutor</module>
+		<module>generator/org.eclipse.viatra.examples.cps.generator</module>
+		<module>generator/org.eclipse.viatra.examples.cps.planexecutor</module>
 
 		<!-- Queries -->
-		<module>queries/org.eclipse.incquery.examples.cps.queries</module>
+		<module>queries/org.eclipse.viatra.examples.cps.queries</module>
 
 		<!-- Addons -->
-		<module>addons/org.eclipse.incquery.examples.cps.queries.validation</module>
-		<module>addons/org.eclipse.incquery.examples.cps.view</module>
-		<module>addons/org.eclipse.incquery.examples.cps.mwe2integration.example</module>
+		<module>addons/org.eclipse.viatra.examples.cps.queries.validation</module>
+		<module>addons/org.eclipse.viatra.examples.cps.view</module>
+		<module>addons/org.eclipse.viatra.examples.cps.mwe2integration.example</module>
 		
 
 		<!-- M2M Transformations -->
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.util</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.simple</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.optimized</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.eiq</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.batch.viatra</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.expl</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.qrt</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.viatra</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2m.util</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2m.batch.simple</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2m.batch.optimized</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2m.batch.eiq</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2m.batch.viatra</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2m.incr.expl</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2m.incr.qrt</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2m.incr.aggr</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2m.incr.viatra</module>
 
 		<!-- M2T Transformations -->
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.distributed</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.m2t.jdt</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2t</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2t.distributed</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.m2t.jdt</module>
 		
 		<!-- Serializers -->
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.serializer</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.serializer.eclipse</module>
-		<module>transformations/org.eclipse.incquery.examples.cps.xform.serializer.javaio</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.serializer</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.serializer.eclipse</module>
+		<module>transformations/org.eclipse.viatra.examples.cps.xform.serializer.javaio</module>
 		
 		<!-- Tests -->
-		<module>tests/org.eclipse.incquery.examples.cps.generator.tests</module>
-		<module>tests/org.eclipse.incquery.examples.cps.tests</module>
-		<module>tests/org.eclipse.incquery.examples.cps.xform.m2m.tests</module>
-		<module>tests/org.eclipse.incquery.examples.cps.xform.m2t.tests</module>
-		<module>tests/org.eclipse.incquery.examples.cps.xform.serializer.test</module>
+		<module>tests/org.eclipse.viatra.examples.cps.generator.tests</module>
+		<module>tests/org.eclipse.viatra.examples.cps.tests</module>
+		<module>tests/org.eclipse.viatra.examples.cps.xform.m2m.tests</module>
+		<module>tests/org.eclipse.viatra.examples.cps.xform.m2t.tests</module>
+		<module>tests/org.eclipse.viatra.examples.cps.xform.serializer.test</module>
 		
 		<!-- Ignored because we are not able to resolve mondo-sam (no update site) -->
 		<!-- 
@@ -76,13 +76,11 @@
 
 	</modules>
 	<properties>
-		<tycho.version>0.22.0</tycho.version>
-		<xtend.compiler.version>2.8.3</xtend.compiler.version>
-		<incquery.repository.url>http://download.eclipse.org/incquery/updates-extra/integration</incquery.repository.url>
-		<viatra.repository.url>http://download.eclipse.org/viatra2/emf/updates/integration</viatra.repository.url>
-		<incquery.compiler.version>1.0.0-SNAPSHOT</incquery.compiler.version>
+		<tycho.version>0.24.0</tycho.version>
+		<xtend.compiler.version>2.9.1</xtend.compiler.version>
+		<viatra.repository.url>https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/</viatra.repository.url>
+		<viatra.compiler.version>1.2.0-SNAPSHOT</viatra.compiler.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sonar.skippedModules></sonar.skippedModules>
 	</properties>
 	<build>
 		<plugins>
@@ -107,10 +105,10 @@
 				<configuration>
 					<target>
 						<artifact>
-							<groupId>org.eclipse.incquery.examples.cps</groupId>
-							<artifactId>org.eclipse.incquery.examples.cps.target</artifactId>
+							<groupId>org.eclipse.viatra.examples.cps</groupId>
+							<artifactId>org.eclipse.viatra.examples.cps.target</artifactId>
 							<version>${project.version}</version>
-							<relativePath>releng/org.eclipse.incquery.examples.cps.target/pom.xml</relativePath>
+							<relativePath>releng/org.eclipse.viatra.examples.cps.target/pom.xml</relativePath>
 						</artifact>
 					</target>
 					<environments>
@@ -192,11 +190,6 @@
 	</build>
 	<repositories>
 		<repository>
-			<id>incquery.update</id>
-			<layout>p2</layout>
-			<url>${incquery.repository.url}</url>
-		</repository>
-		<repository>
 			<id>viatra.update</id>
 			<layout>p2</layout>
 			<url>${viatra.repository.url}</url>
@@ -204,11 +197,11 @@
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
-			<id>incquery-snapshots</id>
+			<id>viatra-snapshots</id>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-			<url>https://repo.eclipse.org/content/repositories/emf-incquery-snapshots/</url>
+			<url>https://repo.eclipse.org/content/repositories/viatra-snapshots/</url>
 		</pluginRepository>
 	</pluginRepositories>
 </project>
