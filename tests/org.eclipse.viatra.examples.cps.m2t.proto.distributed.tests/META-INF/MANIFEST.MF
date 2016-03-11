@@ -13,4 +13,4 @@ Require-Bundle: org.eclipse.viatra.examples.cps.m2t.proto.distributed;bundle-ver
  org.eclipse.viatra.examples.cps.xform.m2t;bundle-version="0.1.0",
  org.eclipse.viatra.examples.cps.xform.m2t.distributed;bundle-version="0.1.0",
  com.google.guava;bundle-version="15.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

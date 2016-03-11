@@ -12,4 +12,4 @@ Require-Bundle: org.eclipse.viatra.examples.cps.queries,
  org.eclipse.viatra.query.runtime,
  org.eclipse.viatra.addon.validation.core,
  org.eclipse.viatra.addon.validation.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
