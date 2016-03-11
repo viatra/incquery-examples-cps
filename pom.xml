@@ -73,7 +73,10 @@
 		<module>releng/org.eclipse.incquery.examples.cps.rcpapplication.headless</module>
 		<module>releng/org.eclipse.incquery.examples.cps.rcpapplication.headless.product</module>
 		-->
-
+	
+		<!--  p2 repository -->
+		<module>releng/org.eclipse.viatra.examples.cps.metamodel.feature</module>
+		<module>releng/org.eclipse.viatra.examples.cps.update</module>
 	</modules>
 	<properties>
 		<tycho.version>0.24.0</tycho.version>
