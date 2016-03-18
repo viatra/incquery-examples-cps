@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CPS Demonstrator Model Generator
-Bundle-SymbolicName: org.eclipse.incquery.examples.cps.planexecutor;singleton:=true
+Bundle-SymbolicName: org.eclipse.viatra.examples.cps.planexecutor;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Require-Bundle: org.eclipse.xtend.lib;bundle-version="2.9.0"
 Import-Package: org.apache.log4j
