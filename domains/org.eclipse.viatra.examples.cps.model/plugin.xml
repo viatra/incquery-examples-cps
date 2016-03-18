@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated model -->
       <package
-            uri="http://org.eclipse.incquery/model/cps"
+            uri="http://org.eclipse.viatra/model/cps"
             class="org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage"
             genModel="model/model.genmodel"/>
    </extension>

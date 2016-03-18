@@ -7,9 +7,9 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.incquery.examples.cps.deployment,
- org.eclipse.incquery.examples.cps.deployment.impl,
- org.eclipse.incquery.examples.cps.deployment.util
+Export-Package: org.eclipse.viatra.examples.cps.deployment,
+ org.eclipse.viatra.examples.cps.deployment.impl,
+ org.eclipse.viatra.examples.cps.deployment.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy

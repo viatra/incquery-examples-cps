@@ -9,8 +9,8 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated deployment -->
       <factory
-            uri="http://org.eclipse.incquery/model/deployment"
-            class="org.eclipse.incquery.examples.cps.deployment.provider.DeploymentItemProviderAdapterFactory"
+            uri="http://org.eclipse.viatra/model/deployment"
+            class="org.eclipse.viatra.examples.cps.deployment.provider.DeploymentItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider

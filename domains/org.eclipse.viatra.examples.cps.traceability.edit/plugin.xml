@@ -9,8 +9,8 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated traceability -->
       <factory
-            uri="http://org.eclipse.incquery/model/cps-traceability"
-            class="org.eclipse.incquery.examples.cps.traceability.provider.TraceabilityItemProviderAdapterFactory"
+            uri="http://org.eclipse.viatra/model/cps-traceability"
+            class="org.eclipse.viatra.examples.cps.traceability.provider.TraceabilityItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider

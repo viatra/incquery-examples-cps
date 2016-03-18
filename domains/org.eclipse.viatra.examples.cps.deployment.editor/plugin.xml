@@ -12,9 +12,9 @@
             id="org.eclipse.emf.ecore.Wizard.category.ID"
             name="%_UI_Wizard_category"/>
       <wizard
-            id="org.eclipse.incquery.examples.cps.deployment.presentation.DeploymentModelWizardID"
+            id="org.eclipse.viatra.examples.cps.deployment.presentation.DeploymentModelWizardID"
             name="%_UI_DeploymentModelWizard_label"
-            class="org.eclipse.incquery.examples.cps.deployment.presentation.DeploymentModelWizard"
+            class="org.eclipse.viatra.examples.cps.deployment.presentation.DeploymentModelWizard"
             category="org.eclipse.emf.ecore.Wizard.category.ID"
             icon="icons/full/obj16/DeploymentModelFile.gif">
          <description>%_UI_DeploymentModelWizard_description</description>
@@ -25,13 +25,12 @@
    <extension point="org.eclipse.ui.editors">
       <!-- @generated deployment -->
       <editor
-            id="org.eclipse.incquery.examples.cps.deployment.presentation.DeploymentEditorID"
+            id="org.eclipse.viatra.examples.cps.deployment.presentation.DeploymentEditorID"
             name="%_UI_DeploymentEditor_label"
             icon="icons/full/obj16/DeploymentModelFile.gif"
             extensions="deployment"
-            class="org.eclipse.incquery.examples.cps.deployment.presentation.DeploymentEditor"
-            contributorClass="org.eclipse.incquery.examples.cps.deployment.presentation.DeploymentActionBarContributor">
+            class="org.eclipse.viatra.examples.cps.deployment.presentation.DeploymentEditor"
+            contributorClass="org.eclipse.viatra.examples.cps.deployment.presentation.DeploymentActionBarContributor">
       </editor>
    </extension>
-
 </plugin>

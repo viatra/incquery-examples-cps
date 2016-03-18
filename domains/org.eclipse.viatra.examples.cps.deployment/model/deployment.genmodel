@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.incquery.examples.cps.deployment/src"
-    modelPluginID="org.eclipse.incquery.examples.cps.deployment" modelName="Deployment"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.viatra.examples.cps.deployment/src"
+    modelPluginID="org.eclipse.viatra.examples.cps.deployment" modelName="Deployment"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="6.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
   <foreignModel>deployment.ecore</foreignModel>
-  <genPackages prefix="Deployment" basePackage="org.eclipse.incquery.examples.cps"
+  <genPackages prefix="Deployment" basePackage="org.eclipse.viatra.examples.cps"
       disposableProviderFactory="true" ecorePackage="deployment.ecore#/">
     <genClasses ecoreClass="deployment.ecore#//DeploymentHost" labelFeature="#//deployment/DeploymentHost/ip">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference deployment.ecore#//DeploymentHost/applications"/>

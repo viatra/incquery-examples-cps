@@ -12,7 +12,7 @@
       <genEnumLiterals ecoreEnumLiteral="model.ecore#//AppState/Stopped"/>
     </genEnums>
     <genClasses ecoreClass="model.ecore#//Identifiable">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Identifiable/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Identifiable/identifier"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//CyberPhysicalSystem">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//CyberPhysicalSystem/dbUrl"/>

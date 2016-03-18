@@ -9,8 +9,8 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated deployment -->
       <package
-            uri="http://org.eclipse.incquery/model/deployment"
-            class="org.eclipse.incquery.examples.cps.deployment.DeploymentPackage"
+            uri="http://org.eclipse.viatra/model/deployment"
+            class="org.eclipse.viatra.examples.cps.deployment.DeploymentPackage"
             genModel="model/deployment.genmodel"/>
    </extension>
 

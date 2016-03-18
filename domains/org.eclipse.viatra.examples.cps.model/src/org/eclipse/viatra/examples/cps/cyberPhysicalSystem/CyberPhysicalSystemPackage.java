@@ -40,7 +40,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://org.eclipse.incquery/model/cps";
+	String eNS_URI = "http://org.eclipse.viatra/model/cps";
 
 	/**
 	 * The package namespace name.
