@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated model -->
       <factory
-            uri="http://org.eclipse.incquery/model/cps"
+            uri="http://org.eclipse.viatra/model/cps"
             class="org.eclipse.viatra.examples.cps.cyberPhysicalSystem.provider.CyberPhysicalSystemItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider

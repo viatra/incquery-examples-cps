@@ -3,10 +3,10 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.viatra.examples.cps.deployment/src"
     modelPluginID="org.eclipse.viatra.examples.cps.deployment" modelName="Deployment"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="6.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+    complianceLevel="7.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
   <foreignModel>deployment.ecore</foreignModel>
-  <genPackages prefix="Deployment" basePackage="org.eclipse.viatra.examples.cps"
-      disposableProviderFactory="true" ecorePackage="deployment.ecore#/">
+  <genPackages prefix="Deployment" basePackage="org.eclipse.viatra.examples.cps" disposableProviderFactory="true"
+      ecorePackage="deployment.ecore#/">
     <genClasses ecoreClass="deployment.ecore#//DeploymentHost" labelFeature="#//deployment/DeploymentHost/ip">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference deployment.ecore#//DeploymentHost/applications"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute deployment.ecore#//DeploymentHost/ip"/>
