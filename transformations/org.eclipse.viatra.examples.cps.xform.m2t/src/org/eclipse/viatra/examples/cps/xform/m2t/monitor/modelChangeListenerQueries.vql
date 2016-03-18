@@ -1,0 +1,48 @@
+package org.eclipse.viatra.examples.cps.xform.m2t.monitor
+
+import "http://org.eclipse.viatra/model/deployment" 
+
+pattern deploymentHostsChange(deployment : Deployment, host) {
+	Deployment.hosts(deployment, host);
+}
+
+pattern deploymentHostIpChange(deployment : Deployment) {
+	Deployment.hosts.ip(deployment, _);
+}
+
+
+
+pattern hostApplicationsChange(deploymentHost : DeploymentHost) {
+	DeploymentHost.applications(deploymentHost, _);
+}
+
+pattern hostIpChange(deploymentHost : DeploymentHost) {
+	DeploymentHost.ip(deploymentHost, _);
+}
+
+
+
+pattern applicationIdChange(app : DeploymentApplication) {
+	DeploymentApplication.id(app, _);
+}
+
+pattern
+applicationBehaviorCurrentStateChange(app : DeploymentApplication, beh) {
+	DeploymentApplication.behavior(app, beh);
+	DeploymentBehavior.current(beh, _);
+}
+
+
+
+pattern behaviorChange(behavior : DeploymentBehavior) {
+	DeploymentBehavior.states(behavior, _);
+}
+
+pattern transitionChange(behavior : DeploymentBehavior) {
+	DeploymentBehavior.transitions(behavior, _);
+}
+
+pattern triggerChange(behavior : DeploymentBehavior,transition) {
+	DeploymentBehavior.transitions(behavior,transition);
+	BehaviorTransition.trigger(transition,_);
+}

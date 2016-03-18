@@ -1,0 +1,19 @@
+package org.eclipse.viatra.examples.cps.model.viewer
+
+import "http://org.eclipse.viatra/model/cps"
+
+@Item(item = host, label = "$host.id$")
+@Format(color = "#0033CC", textColor = "#FFFFFF")
+pattern hostTypes(host) {
+	HostType(host);
+}
+
+@ContainsItem(container = type, item = instance)
+pattern connectTypesAndInstancesHost(type, instance) {
+	HostType.instances(type,instance);
+}
+
+@Edge(source = i1, target = i2, label = "comm")
+pattern communications(i1, i2) {
+	HostInstance.communicateWith(i1,i2);
+}

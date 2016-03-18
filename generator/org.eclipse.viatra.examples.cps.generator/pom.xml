@@ -4,12 +4,12 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>org.eclipse.incquery.examples.cps.parent</artifactId>
-		<groupId>org.eclipse.incquery.examples.cps</groupId>
+		<artifactId>org.eclipse.viatra.examples.cps.parent</artifactId>
+		<groupId>org.eclipse.viatra.examples.cps</groupId>
 		<version>0.1.0-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
-	<artifactId>org.eclipse.incquery.examples.cps.generator</artifactId>
+	<artifactId>org.eclipse.viatra.examples.cps.generator</artifactId>
 	<packaging>eclipse-plugin</packaging>
 	<build>
 		<plugins>
@@ -43,9 +43,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.eclipse.incquery</groupId>
-				<artifactId>incquery-maven-plugin</artifactId>
-				<version>${incquery.compiler.version}</version>
+				<groupId>org.eclipse.viatra</groupId>
+				<artifactId>viatra-maven-plugin</artifactId>
+				<version>${viatra.compiler.version}</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -58,36 +58,41 @@
 					<outputDirectory>src-gen</outputDirectory>
 					<metamodels>
 						<metamodel>
-							<packageClass>org.eclipse.incquery.examples.cps.deployment.DeploymentPackage</packageClass>
+							<packageClass>org.eclipse.viatra.examples.cps.deployment.DeploymentPackage</packageClass>
 						</metamodel>
 						<metamodel>
-							<packageClass>org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage</packageClass>
+							<packageClass>org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage</packageClass>
 						</metamodel>
 						<metamodel>
-							<packageClass>org.eclipse.incquery.examples.cps.traceability.TraceabilityPackage</packageClass>
+							<packageClass>org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage</packageClass>
 						</metamodel>
 					</metamodels>
 				</configuration>
 				<dependencies>
 					<dependency>
-						<groupId>org.eclipse.incquery.examples.cps</groupId>
-						<artifactId>org.eclipse.incquery.examples.cps.model</artifactId>
+						<groupId>org.eclipse.viatra.examples.cps</groupId>
+						<artifactId>org.eclipse.viatra.examples.cps.model</artifactId>
 						<version>${project.version}</version>
 					</dependency>
 					<dependency>
-						<groupId>org.eclipse.incquery.examples.cps</groupId>
-						<artifactId>org.eclipse.incquery.examples.cps.deployment</artifactId>
+						<groupId>org.eclipse.viatra.examples.cps</groupId>
+						<artifactId>org.eclipse.viatra.examples.cps.deployment</artifactId>
 						<version>${project.version}</version>
 					</dependency>
 					<dependency>
-						<groupId>org.eclipse.incquery.examples.cps</groupId>
-						<artifactId>org.eclipse.incquery.examples.cps.traceability</artifactId>
+						<groupId>org.eclipse.viatra.examples.cps</groupId>
+						<artifactId>org.eclipse.viatra.examples.cps.traceability</artifactId>
 						<version>${project.version}</version>
 					</dependency>
 					<dependency>
-						<groupId>org.eclipse.incquery.examples.cps</groupId>
-						<artifactId>org.eclipse.incquery.examples.cps.xform.m2m.util</artifactId>
+						<groupId>org.eclipse.viatra.examples.cps</groupId>
+						<artifactId>org.eclipse.viatra.examples.cps.xform.m2m.util</artifactId>
 						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.google.guava</groupId>
+						<artifactId>guava</artifactId>
+						<version>15.0</version>
 					</dependency>
 				</dependencies>
 			</plugin>

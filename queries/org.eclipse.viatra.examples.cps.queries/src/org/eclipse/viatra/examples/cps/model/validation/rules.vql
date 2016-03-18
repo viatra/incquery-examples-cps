@@ -1,0 +1,174 @@
+package org.eclipse.viatra.examples.cps.model.validation
+
+import "http://org.eclipse.viatra/model/cps"
+
+@Constraint(
+	location = app,
+	message = "$app.id$ is not allocated but it is running",
+	severity = "error"
+)
+pattern notAllocatedButRunning(app : ApplicationInstance) {
+	ApplicationInstance.state(app, ::Running);
+	neg find allocatedApplication(app);
+}
+
+private pattern allocatedApplication(app : ApplicationInstance) {
+	ApplicationInstance.allocatedTo(app, _);
+}
+
+@Constraint(
+	location = host,
+	message = "The available CPU ($host.availableCpu$) of $host.id$ is greater than the total ($host.totalCpu$)",
+	severity = "error"
+)
+pattern availableGreaterThanTotalCpu(host : HostInstance) {
+	HostInstance.availableCpu(host, aCpu);
+	HostInstance.totalCpu(host, tCpu);
+
+	check(aCpu > tCpu);
+}
+
+@Constraint(
+	location = host,
+	message = "The available HDD ($host.availableHdd$) of $host.id$ is greater than the total ($host.totalHdd$)",
+	severity = "error"
+)
+pattern availableGreaterThanTotalHdd(host : HostInstance) {
+	HostInstance.availableHdd(host, aHdd);
+	HostInstance.totalHdd(host, tHdd);
+
+	check(aHdd > tHdd);
+}
+
+@Constraint(
+	location = host,
+	message = "The available RAM ($host.availableRam$) of $host.id$ is greater than the total ($host.totalRam$)",
+	severity = "error"
+)
+pattern availableGreaterThanTotalRam(host : HostInstance) {
+	HostInstance.availableRam(host, aRam);
+	HostInstance.totalRam(host, tRam);
+
+	check(aRam > tRam);
+}
+
+@Constraint(
+	location = host,
+	message = "The IP address $host.nodeIp$ of $host.id$ is not unique",
+	severity = "error"
+)
+pattern nodeIpIsNotUnique(host){
+	find nodeIpOfHost(host, ip);
+	find nodeIpOfHost(otherHost, ip);
+	host != otherHost;
+}
+
+private pattern nodeIpOfHost(host, ip){
+	HostInstance.nodeIp(host, ip);
+}
+
+@Constraint(
+	location = identifiable,
+	message = "The ID of $identifiable.id$ is not unique",
+	severity = "error"
+)
+pattern idIsNotUnique(identifiable) {
+	find identifiableId(identifiable, id);
+	find identifiableId(otherIdentifiable, id);
+	identifiable != otherIdentifiable; 
+}
+
+private pattern identifiableId(identifiable, id) {
+	Identifiable.id(identifiable, id);
+}
+
+@Constraint(
+	location = statemachine,
+	message = "The initial state $state.id$ of $statemachine.id$ is not included in its states",
+	severity = "error"
+)
+pattern initialStateNotContainedByStateMachine(statemachine, state) {
+	StateMachine.initial(statemachine, state);
+	neg find statemachineState(statemachine, state);
+}
+
+private pattern statemachineState(statemachine, state) {
+	StateMachine.states(statemachine, state);
+}
+
+@Constraint(
+	location = transition,
+	message = "No target state set for $transition.id$",
+	severity = "error"
+)
+pattern transitionWithoutTargetState(transition) {
+	State.outgoingTransitions(source, transition);
+	neg find stateTransition(source, transition, _);
+}
+
+private pattern stateTransition(source, transition, target) {
+	State.outgoingTransitions(source, transition);
+	Transition.targetState(transition, target);
+}
+
+@Constraint(
+	location = transition,
+	message = "The target state $target.id$ of $transition.id$ is not in the same state machine",
+	severity = "error"
+)
+pattern targetStateNotContainedBySameStateMachine(transition, target) {
+	find stateTransition(source, transition, target);
+	find statemachineState(statemachine, source);
+	neg find statemachineState(statemachine, target);
+}
+
+@Constraint(
+	location = state,
+	message = "Multiple outgoing transitions of $state.id$ define the same action ($action$)",
+	severity = "error"
+)
+pattern multipleTransitionsWithSameAction(state, action) {
+	State.outgoingTransitions(state, transition);
+	State.outgoingTransitions(state, otherTransition);
+	find actionOfTransition(transition, action);
+	find actionOfTransition(otherTransition, action);
+	transition != otherTransition;
+}
+
+private pattern actionOfTransition(transition, action) {
+	Transition.action(transition, action);
+}
+
+@Constraint(
+	location = sourceHostInstance,
+	message = "Multiple instances of $app.id$ are reachable from $sourceHostInstance.id$",
+	severity = "error"
+)
+pattern multipleApplicationInstanceInCommunicationGroup(sourceHostInstance, app) {
+	find reachableAppInstance(sourceHostInstance, app, appInstance);
+	find reachableAppInstance(sourceHostInstance, app, otherAppInstance);
+	appInstance != otherAppInstance;
+}
+
+pattern appTypeInstanceAndHost(app, appInstance, hostInstance) {
+	ApplicationInstance.type(appInstance, app);
+	ApplicationInstance.allocatedTo(appInstance, hostInstance);
+}
+
+pattern hostCommunication(fromHost, toHost) {
+	HostInstance.communicateWith(fromHost, toHost);
+}
+
+pattern reachableHosts(source, target) {
+	find hostCommunication+(source, target);
+} or {
+	HostInstance(source);
+	HostInstance(target);
+	source == target;
+}
+
+pattern reachableAppInstance(sourceHostInstance, app, appInstance) {
+	find appTypeInstanceAndHost(app, appInstance, targetHostInstance);
+	// there is a source hostInstance that could communicate with either hostInstance
+	find reachableHosts(sourceHostInstance, targetHostInstance);
+}
