@@ -954,7 +954,7 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 		  (this, 
 		   source, 
 		   new String[] {
-			 "settingDelegates", "org.eclipse.incquery.querybasedfeature"
+			 "settingDelegates", "org.eclipse.viatra.query.querybasedfeature"
 		   });
 	}
 
