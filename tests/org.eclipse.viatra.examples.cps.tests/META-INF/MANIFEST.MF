@@ -13,5 +13,5 @@ Require-Bundle: org.eclipse.xtend.lib,
  org.junit;bundle-version="4.0.0";visibility:=reexport,
  org.eclipse.viatra.examples.cps.generator;bundle-version="0.1.0";visibility:=reexport
 Import-Package: org.apache.log4j;version="1.2.15"
-Export-Package: org.eclipse.incquery.examples.cps.tests
+Export-Package: org.eclipse.viatra.examples.cps.tests
 

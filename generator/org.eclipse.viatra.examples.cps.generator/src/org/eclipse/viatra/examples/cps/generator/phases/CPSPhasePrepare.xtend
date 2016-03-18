@@ -1,10 +1,10 @@
-package org.eclipse.incquery.examples.cps.generator.phases
+package org.eclipse.viatra.examples.cps.generator.phases
 
 import com.google.common.collect.ImmutableList
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.queries.Queries
-import org.eclipse.incquery.examples.cps.planexecutor.api.IOperation
-import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.queries.Queries
+import org.eclipse.viatra.examples.cps.planexecutor.api.IOperation
+import org.eclipse.viatra.examples.cps.planexecutor.api.IPhase
 
 class CPSPhasePrepare implements IPhase<CPSFragment> {
 	

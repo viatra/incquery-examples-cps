@@ -1,8 +1,8 @@
-package org.eclipse.incquery.examples.cps.generator.dtos
+package org.eclipse.viatra.examples.cps.generator.dtos
 
-import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.incquery.examples.cps.generator.interfaces.IConstraints
+import org.eclipse.viatra.examples.cps.generator.dtos.bases.GeneratorInput
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.viatra.examples.cps.generator.interfaces.IConstraints
 
 class CPSGeneratorInput extends GeneratorInput<CyberPhysicalSystem> {
 	

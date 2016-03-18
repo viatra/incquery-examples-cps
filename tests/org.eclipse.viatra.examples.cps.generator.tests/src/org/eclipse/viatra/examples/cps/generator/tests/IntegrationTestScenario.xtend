@@ -1,7 +1,7 @@
-package org.eclipse.incquery.examples.cps.generator.tests
+package org.eclipse.viatra.examples.cps.generator.tests
 
 import java.util.Random
-import org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios.BasicScenario
+import org.eclipse.viatra.examples.cps.generator.tests.constraints.scenarios.BasicScenario
 import org.junit.Test
 import org.junit.Ignore
 

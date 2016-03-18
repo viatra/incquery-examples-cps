@@ -1,10 +1,10 @@
-package org.eclipse.incquery.examples.cps.planexecutor
+package org.eclipse.viatra.examples.cps.planexecutor
 
 import com.google.common.base.Stopwatch
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.planexecutor.api.IPlan
-import org.eclipse.incquery.examples.cps.planexecutor.api.Initializer
+import org.eclipse.viatra.examples.cps.planexecutor.api.IPlan
+import org.eclipse.viatra.examples.cps.planexecutor.api.Initializer
 
 class PlanExecutor<FragmentType, InputType extends Initializer<FragmentType>> {
 	

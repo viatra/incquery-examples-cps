@@ -1,7 +1,7 @@
-package org.eclipse.incquery.examples.cps.generator.queries
+package org.eclipse.viatra.examples.cps.generator.queries
 
-import "http://org.eclipse.incquery/model/cps"
-import org.eclipse.incquery.examples.cps.generator.queries.Transitions
+import "http://org.eclipse.viatra/model/cps"
+import org.eclipse.viatra.examples.cps.generator.queries.Transitions
 
 
 pattern AppTypes(appType : ApplicationType) {

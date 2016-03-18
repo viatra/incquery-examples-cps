@@ -1,11 +1,11 @@
-package org.eclipse.incquery.examples.cps.generator.operations
+package org.eclipse.viatra.examples.cps.generator.operations
 
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
-import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.planexecutor.api.IOperation
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostType
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.dtos.HostClass
+import org.eclipse.viatra.examples.cps.generator.utils.CPSModelBuilderUtil
+import org.eclipse.viatra.examples.cps.generator.utils.RandomUtils
+import org.eclipse.viatra.examples.cps.planexecutor.api.IOperation
 import org.apache.log4j.Logger
 
 class HostInstanceGenerationOperation implements IOperation<CPSFragment> {

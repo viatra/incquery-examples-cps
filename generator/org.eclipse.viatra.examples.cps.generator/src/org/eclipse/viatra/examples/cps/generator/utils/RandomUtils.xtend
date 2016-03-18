@@ -1,11 +1,11 @@
-package org.eclipse.incquery.examples.cps.generator.utils
+package org.eclipse.viatra.examples.cps.generator.utils
 
 import java.util.Collection
 import java.util.List
 import java.util.Random
-import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
-import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
-import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
+import org.eclipse.viatra.examples.cps.generator.dtos.MinMaxData
+import org.eclipse.viatra.examples.cps.generator.dtos.Percentage
+import org.eclipse.viatra.examples.cps.generator.exceptions.ModelGeneratorException
 
 class RandomUtils {
 	/**

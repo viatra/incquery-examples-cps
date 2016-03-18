@@ -1,13 +1,13 @@
-package org.eclipse.incquery.examples.cps.generator.dtos
+package org.eclipse.viatra.examples.cps.generator.dtos
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
-import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorFragment
-import org.eclipse.incquery.examples.cps.generator.dtos.bases.GeneratorInput
-import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostType
+import org.eclipse.viatra.examples.cps.generator.dtos.bases.GeneratorFragment
+import org.eclipse.viatra.examples.cps.generator.dtos.bases.GeneratorInput
+import org.eclipse.viatra.examples.cps.generator.exceptions.ModelGeneratorException
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.runtime.emf.EMFScope
 

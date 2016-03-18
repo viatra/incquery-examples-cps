@@ -1,15 +1,15 @@
-package org.eclipse.incquery.examples.cps.generator.phases
+package org.eclipse.viatra.examples.cps.generator.phases
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.operations.ActionGenerationOperation
-import org.eclipse.incquery.examples.cps.generator.queries.ReachableAppTypesMatcher
-import org.eclipse.incquery.examples.cps.generator.queries.TransitionsMatcher
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.operations.ActionGenerationOperation
+import org.eclipse.viatra.examples.cps.generator.queries.ReachableAppTypesMatcher
+import org.eclipse.viatra.examples.cps.generator.queries.TransitionsMatcher
+import org.eclipse.viatra.examples.cps.generator.utils.RandomUtils
+import org.eclipse.viatra.examples.cps.planexecutor.api.IPhase
 
 class CPSPhaseActionGeneration implements IPhase<CPSFragment>{
 	

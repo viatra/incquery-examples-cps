@@ -1,10 +1,10 @@
-package org.eclipse.incquery.examples.cps.generator.dtos
+package org.eclipse.viatra.examples.cps.generator.dtos
 
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.deployment.Deployment
-import org.eclipse.incquery.examples.cps.deployment.DeploymentPackage
-import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
-import org.eclipse.incquery.examples.cps.generator.utils.SumProcessor
+import org.eclipse.viatra.examples.cps.deployment.Deployment
+import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage
+import org.eclipse.viatra.examples.cps.generator.utils.StatsUtil
+import org.eclipse.viatra.examples.cps.generator.utils.SumProcessor
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.base.api.IncQueryBaseFactory
 

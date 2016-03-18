@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.tests.constraints.scenarios
+package org.eclipse.viatra.examples.cps.generator.tests.constraints.scenarios
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Lists
@@ -6,13 +6,13 @@ import java.util.HashMap
 import java.util.Map
 import java.util.Random
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
-import org.eclipse.incquery.examples.cps.generator.dtos.BuildableCPSConstraint
-import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
-import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
-import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
-import org.eclipse.incquery.examples.cps.generator.dtos.scenario.IScenario
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
+import org.eclipse.viatra.examples.cps.generator.dtos.AppClass
+import org.eclipse.viatra.examples.cps.generator.dtos.BuildableCPSConstraint
+import org.eclipse.viatra.examples.cps.generator.dtos.HostClass
+import org.eclipse.viatra.examples.cps.generator.dtos.MinMaxData
+import org.eclipse.viatra.examples.cps.generator.dtos.Percentage
+import org.eclipse.viatra.examples.cps.generator.dtos.scenario.IScenario
+import org.eclipse.viatra.examples.cps.generator.utils.RandomUtils
 
 /**
  * |HC| &#8776; |AC|</br>

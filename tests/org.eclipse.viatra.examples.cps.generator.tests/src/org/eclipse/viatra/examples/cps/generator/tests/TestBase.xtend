@@ -1,18 +1,18 @@
-package org.eclipse.incquery.examples.cps.generator.tests
+package org.eclipse.viatra.examples.cps.generator.tests
 
 import com.google.common.base.Stopwatch
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.generator.CPSPlans
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
-import org.eclipse.incquery.examples.cps.generator.queries.AppTypesMatcher
-import org.eclipse.incquery.examples.cps.generator.queries.HostTypesMatcher
-import org.eclipse.incquery.examples.cps.generator.queries.Validation
-import org.eclipse.incquery.examples.cps.generator.utils.CPSGeneratorBuilder
-import org.eclipse.incquery.examples.cps.generator.utils.PersistenceUtil
-import org.eclipse.incquery.examples.cps.generator.utils.StatsUtil
-import org.eclipse.incquery.examples.cps.tests.CPSTestBase
+import org.eclipse.viatra.examples.cps.generator.CPSPlans
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.interfaces.ICPSConstraints
+import org.eclipse.viatra.examples.cps.generator.queries.AppTypesMatcher
+import org.eclipse.viatra.examples.cps.generator.queries.HostTypesMatcher
+import org.eclipse.viatra.examples.cps.generator.queries.Validation
+import org.eclipse.viatra.examples.cps.generator.utils.CPSGeneratorBuilder
+import org.eclipse.viatra.examples.cps.generator.utils.PersistenceUtil
+import org.eclipse.viatra.examples.cps.generator.utils.StatsUtil
+import org.eclipse.viatra.examples.cps.tests.CPSTestBase
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.emf.EMFScope
 

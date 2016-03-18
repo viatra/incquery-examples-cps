@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.dtos
+package org.eclipse.viatra.examples.cps.generator.dtos
 
 class ModelStats {
 	public static String DELIMITER = ";"

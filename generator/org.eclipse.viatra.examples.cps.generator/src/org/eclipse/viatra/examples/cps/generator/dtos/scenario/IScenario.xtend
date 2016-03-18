@@ -1,6 +1,6 @@
-package org.eclipse.incquery.examples.cps.generator.dtos.scenario
+package org.eclipse.viatra.examples.cps.generator.dtos.scenario
 
-import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
+import org.eclipse.viatra.examples.cps.generator.interfaces.ICPSConstraints
 
 /**
  * &sum; <sub>Element count of CPS model</sub> &#8776; |HC| * F<sub>H</sub> + |AC| * F<sub>A</sub> * 

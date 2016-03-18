@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.dtos
+package org.eclipse.viatra.examples.cps.generator.dtos
 
 import java.util.Map
 //import org.eclipse.xtend.lib.annotations.Data

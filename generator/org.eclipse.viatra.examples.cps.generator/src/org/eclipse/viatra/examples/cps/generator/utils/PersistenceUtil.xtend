@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.utils
+package org.eclipse.viatra.examples.cps.generator.utils
 
 import java.io.IOException
 import java.util.Collections
@@ -6,8 +6,8 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage
 
 class PersistenceUtil {
 	

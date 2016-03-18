@@ -1,21 +1,21 @@
-package org.eclipse.incquery.examples.cps.generator.utils
+package org.eclipse.viatra.examples.cps.generator.utils
 
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFactory
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostType
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.State
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.StateMachine
-import org.eclipse.incquery.examples.cps.deployment.DeploymentFactory
-import org.eclipse.incquery.examples.cps.traceability.CPSToDeployment
-import org.eclipse.incquery.examples.cps.traceability.TraceabilityFactory
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFactory
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostType
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.State
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.StateMachine
+import org.eclipse.viatra.examples.cps.deployment.DeploymentFactory
+import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment
+import org.eclipse.viatra.examples.cps.traceability.TraceabilityFactory
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import com.google.common.collect.HashMultimap
-import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.dtos.HostClass
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
 
 class CPSModelBuilderUtil {
 	

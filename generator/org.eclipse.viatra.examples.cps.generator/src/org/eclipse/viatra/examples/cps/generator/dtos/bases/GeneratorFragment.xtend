@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.dtos.bases
+package org.eclipse.viatra.examples.cps.generator.dtos.bases
 
 import java.util.Random
 import org.eclipse.emf.ecore.EObject

@@ -1,10 +1,10 @@
-package org.eclipse.incquery.examples.cps.generator.phases
+package org.eclipse.viatra.examples.cps.generator.phases
 
 import com.google.common.collect.Lists
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.operations.ApplicationInstanceGenerationOperation
-import org.eclipse.incquery.examples.cps.generator.operations.HostInstanceGenerationOperation
-import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.operations.ApplicationInstanceGenerationOperation
+import org.eclipse.viatra.examples.cps.generator.operations.HostInstanceGenerationOperation
+import org.eclipse.viatra.examples.cps.planexecutor.api.IPhase
 import org.apache.log4j.Logger
 
 class CPSPhaseInstanceGeneration implements IPhase<CPSFragment>{

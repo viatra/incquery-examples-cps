@@ -1,6 +1,6 @@
-package org.eclipse.incquery.examples.cps.generator.dtos
+package org.eclipse.viatra.examples.cps.generator.dtos
 
-import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
+import org.eclipse.viatra.examples.cps.generator.exceptions.ModelGeneratorException
 
 class Percentage {
 	

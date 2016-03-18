@@ -1,17 +1,17 @@
-package org.eclipse.incquery.examples.cps.tests
+package org.eclipse.viatra.examples.cps.tests
 
 import java.io.OutputStreamWriter
 import org.apache.log4j.ConsoleAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
-import org.eclipse.incquery.examples.cps.generator.dtos.ModelStats
+import org.eclipse.viatra.examples.cps.generator.dtos.ModelStats
 import org.junit.BeforeClass
 import org.apache.log4j.FileAppender
 
 class CPSTestBase {
 	
-	protected val instancesDirPath = "file://" + PropertiesUtil.getGitCloneLocation + "/models/org.eclipse.incquery.examples.cps.instances/"
+	protected val instancesDirPath = "file://" + PropertiesUtil.getGitCloneLocation + "/models/org.eclipse.viatra.examples.cps.instances/"
 	
 	val static STATS_LAYOUT = "%c{1}" + ModelStats.DELIMITER + "%m%n";
 	val static COMMON_LAYOUT = "%c{1} - %m%n";

@@ -1,14 +1,14 @@
-package org.eclipse.incquery.examples.cps.generator.operations
+package org.eclipse.viatra.examples.cps.generator.operations
 
 import com.google.common.collect.Lists
 import java.util.List
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.State
-import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
-import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.planexecutor.api.IOperation
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.State
+import org.eclipse.viatra.examples.cps.generator.dtos.AppClass
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.dtos.MinMaxData
+import org.eclipse.viatra.examples.cps.generator.utils.CPSModelBuilderUtil
+import org.eclipse.viatra.examples.cps.generator.utils.RandomUtils
+import org.eclipse.viatra.examples.cps.planexecutor.api.IOperation
 
 class ApplicationTypeGenerationOperation implements IOperation<CPSFragment> {
 	val AppClass applicationClass;

@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.utils;
+package org.eclipse.viatra.examples.cps.generator.utils;
 
 import java.util.Comparator;
 import java.util.Map;

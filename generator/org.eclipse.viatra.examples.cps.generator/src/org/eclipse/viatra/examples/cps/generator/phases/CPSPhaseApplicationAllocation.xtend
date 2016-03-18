@@ -1,22 +1,22 @@
-package org.eclipse.incquery.examples.cps.generator.phases
+package org.eclipse.viatra.examples.cps.generator.phases
 
 import com.google.common.collect.Lists
 import java.util.HashMap
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationInstance
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
-import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
-import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
-import org.eclipse.incquery.examples.cps.generator.exceptions.ModelGeneratorException
-import org.eclipse.incquery.examples.cps.generator.operations.ApplicationInstanceAllocationOperation
-import org.eclipse.incquery.examples.cps.generator.utils.MapUtil
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationInstance
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType
+import org.eclipse.viatra.examples.cps.generator.dtos.AppClass
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.dtos.HostClass
+import org.eclipse.viatra.examples.cps.generator.dtos.Percentage
+import org.eclipse.viatra.examples.cps.generator.exceptions.ModelGeneratorException
+import org.eclipse.viatra.examples.cps.generator.operations.ApplicationInstanceAllocationOperation
+import org.eclipse.viatra.examples.cps.generator.utils.MapUtil
+import org.eclipse.viatra.examples.cps.generator.utils.RandomUtils
+import org.eclipse.viatra.examples.cps.planexecutor.api.IPhase
 import com.google.common.collect.HashMultimap
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
-import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance
+import org.eclipse.viatra.examples.cps.generator.utils.CPSModelBuilderUtil
 
 class CPSPhaseApplicationAllocation implements IPhase<CPSFragment>{
 	

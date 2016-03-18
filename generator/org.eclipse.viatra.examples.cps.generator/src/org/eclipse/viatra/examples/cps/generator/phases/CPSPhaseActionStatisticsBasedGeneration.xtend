@@ -1,19 +1,19 @@
-package org.eclipse.incquery.examples.cps.generator.phases
+package org.eclipse.viatra.examples.cps.generator.phases
 
 import com.google.common.collect.Lists
 import com.google.common.collect.Sets
 import org.apache.log4j.Logger
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.ApplicationType
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.StateMachine
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.Transition
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.operations.ActionGenerationOperation
-import org.eclipse.incquery.examples.cps.generator.queries.PossibleReceiverTypeMatcher
-import org.eclipse.incquery.examples.cps.generator.queries.ReachableAppTypesMatcher
-import org.eclipse.incquery.examples.cps.generator.queries.ReceiverTransitionMatcher
-import org.eclipse.incquery.examples.cps.generator.queries.TransitionsMatcher
-import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
-import org.eclipse.incquery.examples.cps.generator.operations.DeleteTransitionWithoutAction
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.StateMachine
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Transition
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.operations.ActionGenerationOperation
+import org.eclipse.viatra.examples.cps.generator.queries.PossibleReceiverTypeMatcher
+import org.eclipse.viatra.examples.cps.generator.queries.ReachableAppTypesMatcher
+import org.eclipse.viatra.examples.cps.generator.queries.ReceiverTransitionMatcher
+import org.eclipse.viatra.examples.cps.generator.queries.TransitionsMatcher
+import org.eclipse.viatra.examples.cps.planexecutor.api.IPhase
+import org.eclipse.viatra.examples.cps.generator.operations.DeleteTransitionWithoutAction
 
 class CPSPhaseActionStatisticsBasedGeneration implements IPhase<CPSFragment>{
 	

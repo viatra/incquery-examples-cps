@@ -1,4 +1,4 @@
-package org.eclipse.incquery.examples.cps.generator.interfaces
+package org.eclipse.viatra.examples.cps.generator.interfaces
 
 
 interface IConstraints {

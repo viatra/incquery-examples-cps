@@ -1,9 +1,9 @@
-package org.eclipse.incquery.examples.cps.generator.dtos.bases
+package org.eclipse.viatra.examples.cps.generator.dtos.bases
 
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.incquery.examples.cps.generator.interfaces.IConstraints
-import org.eclipse.incquery.examples.cps.planexecutor.api.Initializer
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.interfaces.IConstraints
+import org.eclipse.viatra.examples.cps.planexecutor.api.Initializer
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
 
 @Data
 abstract class GeneratorInput<ModelType extends EObject> extends GeneratorConfiguration<ModelType> implements Initializer<CPSFragment> {

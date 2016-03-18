@@ -1,6 +1,6 @@
-package org.eclipse.incquery.examples.cps.generator.queries
+package org.eclipse.viatra.examples.cps.generator.queries
 
-import "http://org.eclipse.incquery/model/cps"
+import "http://org.eclipse.viatra/model/cps"
 
 pattern Transitions(t : Transition, SM : StateMachine) {
 	StateMachine.states.outgoingTransitions(SM, t);

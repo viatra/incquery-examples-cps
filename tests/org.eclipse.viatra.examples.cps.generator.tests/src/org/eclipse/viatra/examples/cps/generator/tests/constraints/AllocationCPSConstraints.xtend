@@ -1,11 +1,11 @@
-package org.eclipse.incquery.examples.cps.generator.tests.constraints
+package org.eclipse.viatra.examples.cps.generator.tests.constraints
 
 import java.util.HashMap
-import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
-import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
-import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
-import org.eclipse.incquery.examples.cps.generator.dtos.Percentage
-import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
+import org.eclipse.viatra.examples.cps.generator.dtos.AppClass
+import org.eclipse.viatra.examples.cps.generator.dtos.HostClass
+import org.eclipse.viatra.examples.cps.generator.dtos.MinMaxData
+import org.eclipse.viatra.examples.cps.generator.dtos.Percentage
+import org.eclipse.viatra.examples.cps.generator.interfaces.ICPSConstraints
 
 class AllocationCPSConstraints implements ICPSConstraints {
 	

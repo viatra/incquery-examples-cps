@@ -1,15 +1,15 @@
-package org.eclipse.incquery.examples.cps.generator.phases
+package org.eclipse.viatra.examples.cps.generator.phases
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Lists
 import java.util.List
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
-import org.eclipse.incquery.examples.cps.generator.operations.HostInstanceCommunicatesWithOperation
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.planexecutor.api.IPhase
-import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.dtos.HostClass
+import org.eclipse.viatra.examples.cps.generator.operations.HostInstanceCommunicatesWithOperation
+import org.eclipse.viatra.examples.cps.generator.utils.RandomUtils
+import org.eclipse.viatra.examples.cps.planexecutor.api.IPhase
+import org.eclipse.viatra.examples.cps.generator.utils.CPSModelBuilderUtil
 
 class CPSPhaseHostCommunication implements IPhase<CPSFragment>{
 	

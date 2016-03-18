@@ -1,9 +1,9 @@
-package org.eclipse.incquery.examples.cps.generator.dtos
+package org.eclipse.viatra.examples.cps.generator.dtos
 
-import org.eclipse.incquery.examples.cps.generator.interfaces.ICPSConstraints
-import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
-import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
-import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
+import org.eclipse.viatra.examples.cps.generator.interfaces.ICPSConstraints
+import org.eclipse.viatra.examples.cps.generator.dtos.MinMaxData
+import org.eclipse.viatra.examples.cps.generator.dtos.AppClass
+import org.eclipse.viatra.examples.cps.generator.dtos.HostClass
 
 /**
  * Simple implementation of {@link ICPSConstraints}. Every data shall be passed to the constructor. 

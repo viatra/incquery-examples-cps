@@ -1,8 +1,8 @@
-package org.eclipse.incquery.examples.cps.generator.interfaces
+package org.eclipse.viatra.examples.cps.generator.interfaces
 
-import org.eclipse.incquery.examples.cps.generator.dtos.AppClass
-import org.eclipse.incquery.examples.cps.generator.dtos.HostClass
-import org.eclipse.incquery.examples.cps.generator.dtos.MinMaxData
+import org.eclipse.viatra.examples.cps.generator.dtos.AppClass
+import org.eclipse.viatra.examples.cps.generator.dtos.HostClass
+import org.eclipse.viatra.examples.cps.generator.dtos.MinMaxData
 
 interface ICPSConstraints extends IConstraints {
 	def MinMaxData<Integer> getNumberOfSignals();

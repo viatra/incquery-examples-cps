@@ -7,5 +7,5 @@ Require-Bundle: org.eclipse.xtend.lib;bundle-version="2.9.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: IncQueryLabs Ltd.
-Export-Package: org.eclipse.incquery.examples.cps.planexecutor,
- org.eclipse.incquery.examples.cps.planexecutor.api
+Export-Package: org.eclipse.viatra.examples.cps.planexecutor,
+ org.eclipse.viatra.examples.cps.planexecutor.api

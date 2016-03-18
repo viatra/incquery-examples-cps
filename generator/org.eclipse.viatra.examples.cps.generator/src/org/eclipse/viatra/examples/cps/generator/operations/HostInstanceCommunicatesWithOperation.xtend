@@ -1,10 +1,10 @@
-package org.eclipse.incquery.examples.cps.generator.operations
+package org.eclipse.viatra.examples.cps.generator.operations
 
-import org.eclipse.incquery.examples.cps.cyberPhysicalSystem.HostInstance
-import org.eclipse.incquery.examples.cps.generator.dtos.CPSFragment
-import org.eclipse.incquery.examples.cps.generator.utils.CPSModelBuilderUtil
-import org.eclipse.incquery.examples.cps.generator.utils.RandomUtils
-import org.eclipse.incquery.examples.cps.planexecutor.api.IOperation
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance
+import org.eclipse.viatra.examples.cps.generator.dtos.CPSFragment
+import org.eclipse.viatra.examples.cps.generator.utils.CPSModelBuilderUtil
+import org.eclipse.viatra.examples.cps.generator.utils.RandomUtils
+import org.eclipse.viatra.examples.cps.planexecutor.api.IOperation
 
 class HostInstanceCommunicatesWithOperation implements IOperation<CPSFragment> {
 	val HostInstance sourceHost;
