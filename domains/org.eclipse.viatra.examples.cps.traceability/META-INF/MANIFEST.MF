@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.viatra.examples.cps.model;bundle-version="0.1.0";visibility:=reexport,
  org.eclipse.viatra.examples.cps.deployment;bundle-version="0.1.0";visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.eclipse.viatra.examples.cps.traceability,
  org.eclipse.viatra.examples.cps.traceability.impl,
  org.eclipse.viatra.examples.cps.traceability.util
