@@ -8,19 +8,19 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostType
 import org.eclipse.viatra.examples.cps.generator.dtos.bases.GeneratorFragment
 import org.eclipse.viatra.examples.cps.generator.dtos.bases.GeneratorInput
 import org.eclipse.viatra.examples.cps.generator.exceptions.ModelGeneratorException
-import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 
 class CPSFragment extends GeneratorFragment<CyberPhysicalSystem>{
 	int numberOfSignals;
 	Multimap<HostClass, HostType> hostTypes = HashMultimap.create;
 	Multimap<AppClass, ApplicationType> applicationTypes = HashMultimap.create;
-	AdvancedIncQueryEngine engine;
+	AdvancedViatraQueryEngine engine;
 	
 	new(GeneratorInput<CyberPhysicalSystem> input) throws ModelGeneratorException {
 		super(input)
 		if(modelRoot != null){
-			engine = AdvancedIncQueryEngine.createUnmanagedEngine(new EMFScope(modelRoot));
+			engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(modelRoot));
 		}else{
 			throw new ModelGeneratorException("Cannot initialize IncQueryEngine on a null model.");
 		}

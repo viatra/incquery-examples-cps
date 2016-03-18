@@ -13,15 +13,15 @@ import org.eclipse.viatra.examples.cps.generator.utils.CPSGeneratorBuilder
 import org.eclipse.viatra.examples.cps.generator.utils.PersistenceUtil
 import org.eclipse.viatra.examples.cps.generator.utils.StatsUtil
 import org.eclipse.viatra.examples.cps.tests.CPSTestBase
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 
 import static org.junit.Assert.*
 
 abstract class TestBase extends CPSTestBase{
 	protected extension Logger logger = Logger.getLogger("cps.generator.Tests")
 	
-	def assertInRangeAppTypes(ICPSConstraints constraints, IncQueryEngine engine) {
+	def assertInRangeAppTypes(ICPSConstraints constraints, ViatraQueryEngine engine) {
 		val appTypesMatcher = AppTypesMatcher.on(engine);
 		var int minApp = 0;
 		var int maxApp = 0;
@@ -33,7 +33,7 @@ abstract class TestBase extends CPSTestBase{
 		assertInRange("AppTypeCount", appTypesMatcher.countMatches, minApp, maxApp)
 	}
 	
-	protected def assertInRangeHostTypes(ICPSConstraints constraints, IncQueryEngine engine) {
+	protected def assertInRangeHostTypes(ICPSConstraints constraints, ViatraQueryEngine engine) {
 		val hostTypesMatcher = HostTypesMatcher.on(engine);
 		var int minHost = 0;
 		var int maxHost = 0;
@@ -66,10 +66,10 @@ abstract class TestBase extends CPSTestBase{
 
 		assertInRange("NumberOfSignals", out.numberOfSignals, constraints.numberOfSignals.minValue, constraints.numberOfSignals.maxValue);
 		
-		val IncQueryEngine engine = IncQueryEngine.on(new EMFScope(out.modelRoot));
+		val ViatraQueryEngine engine = ViatraQueryEngine.on(new EMFScope(out.modelRoot));
 		Validation.instance.prepare(engine);
 		
-		assertNotNull("IncQueryEngine is null", engine);
+		assertNotNull("ViatraQueryEngine is null", engine);
 		
 		//Show stats
 		var Stopwatch statTime = Stopwatch.createStarted;

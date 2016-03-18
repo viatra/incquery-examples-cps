@@ -18,12 +18,12 @@ import org.eclipse.viatra.examples.cps.generator.tests.constraints.DemoCPSConstr
 import org.eclipse.viatra.examples.cps.generator.tests.constraints.SimpleCPSConstraints
 import org.eclipse.viatra.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.viatra.examples.cps.generator.utils.StatsUtil
-import org.eclipse.incquery.runtime.api.IncQueryEngine
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.junit.Ignore
 import org.junit.Test
 
 import static org.junit.Assert.*
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.emf.EMFScope
 
 class GeneratorTest extends TestBase {
 	
@@ -168,7 +168,7 @@ class GeneratorTest extends TestBase {
 		val constraints = new AllocationCPSConstraints()
 		val out = runGeneratorOn(constraints, SEED);
 		
-		val engine = IncQueryEngine.on(new EMFScope(out.modelRoot))
+		val engine = ViatraQueryEngine.on(new EMFScope(out.modelRoot))
 		val stats = StatsUtil.generateStatsForCPS(engine, out.modelRoot)
 		
 //		persistModel(out);
