@@ -12,12 +12,5 @@
       <unit id="org.eclipse.xtext.sdk.feature.group" version="2.9.1.v201512180746"/>
       <repository location="http://download.eclipse.org/releases/mars"/>
     </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.viatra.addon.viewers.tooling.zest.feature.feature.group" version="0.12.0.201603031451"/>
-      <unit id="org.eclipse.viatra.integration.mwe2.feature.feature.group" version="0.12.0.201603031451"/>
-      <unit id="org.eclipse.viatra.query.testing.sdk.feature.feature.group" version="1.2.0.201603031451"/>
-      <unit id="org.eclipse.viatra.query.tooling.ui.visualization.feature.feature.group" version="0.12.0.201603031451"/>
-      <repository location="https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/"/>
-    </location>
   </locations>
 </target>
