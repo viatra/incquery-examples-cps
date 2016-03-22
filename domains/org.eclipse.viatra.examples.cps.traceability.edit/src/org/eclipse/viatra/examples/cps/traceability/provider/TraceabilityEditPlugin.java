@@ -3,8 +3,11 @@
 package org.eclipse.viatra.examples.cps.traceability.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.provider.ModelEditPlugin;
+
 import org.eclipse.viatra.examples.cps.deployment.provider.DeploymentEditPlugin;
 
 /**

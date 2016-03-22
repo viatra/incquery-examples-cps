@@ -26,7 +26,7 @@ public class NotAllocatedButRunningConstraint0 implements IConstraintSpecificati
 
     @Override
     public String getMessageFormat() {
-        return "$app.id$ is not allocated but it is running";
+        return "$app.identifier$ is not allocated but it is running";
     }
 
 

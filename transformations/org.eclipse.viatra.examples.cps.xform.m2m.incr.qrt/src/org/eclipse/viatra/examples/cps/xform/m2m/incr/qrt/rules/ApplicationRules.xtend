@@ -36,7 +36,7 @@ class ApplicationMapping extends AbstractRule<ApplicationInstanceMatch> {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED,
 			[ ApplicationInstanceMatch match |
 				val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance.allocatedTo).filter(DeploymentHost).head
-				val appId = match.appInstance.id
+				val appId = match.appInstance.identifier
 				debug('''Mapping application with ID: «appId»''')
 				val app = createDeploymentApplication => [
 					id = appId
@@ -55,8 +55,8 @@ class ApplicationMapping extends AbstractRule<ApplicationInstanceMatch> {
 			[ ApplicationInstanceMatch match |
 				val depApp = engine.cps2depTrace.getOneArbitraryMatch(rootMapping, null, match.appInstance, null).
 					depElement as DeploymentApplication
-				if (depApp.id != match.appInstance.id)
-					depApp.id = match.appInstance.id
+				if (depApp.id != match.appInstance.identifier)
+					depApp.id = match.appInstance.identifier
 			])
 	}
 

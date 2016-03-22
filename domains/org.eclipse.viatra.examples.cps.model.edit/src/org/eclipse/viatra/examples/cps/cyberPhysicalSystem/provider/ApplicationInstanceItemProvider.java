@@ -60,7 +60,7 @@ public class ApplicationInstanceItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
+			addIdentifierPropertyDescriptor(object);
 			addStatePropertyDescriptor(object);
 			addDbUserPropertyDescriptor(object);
 			addDbPasswordPropertyDescriptor(object);
@@ -72,19 +72,19 @@ public class ApplicationInstanceItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature.
+	 * This adds a property descriptor for the Identifier feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addIdentifierPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Identifiable_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_id_feature", "_UI_Identifiable_type"),
-				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__ID,
+				 getString("_UI_Identifiable_identifier_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_identifier_feature", "_UI_Identifiable_type"),
+				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__IDENTIFIER,
 				 true,
 				 false,
 				 false,
@@ -244,7 +244,7 @@ public class ApplicationInstanceItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ApplicationInstance)object).getId();
+		String label = ((ApplicationInstance)object).getIdentifier();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ApplicationInstance_type") :
 			getString("_UI_ApplicationInstance_type") + " " + label;
@@ -263,7 +263,7 @@ public class ApplicationInstanceItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(ApplicationInstance.class)) {
-			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__ID:
+			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__IDENTIFIER:
 			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__STATE:
 			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__DB_USER:
 			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__DB_PASSWORD:

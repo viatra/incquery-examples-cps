@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.State;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Transition;
@@ -21,7 +22,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Transition;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.TransitionImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.TransitionImpl#getIdentifier <em>Identifier</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.TransitionImpl#getTargetState <em>Target State</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.TransitionImpl#getAction <em>Action</em>}</li>
  * </ul>
@@ -30,24 +31,24 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Transition;
  */
 public class TransitionImpl extends MinimalEObjectImpl.Container implements Transition {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getIdentifier()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ID_EDEFAULT = null;
+	protected static final String IDENTIFIER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getIdentifier()
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = ID_EDEFAULT;
+	protected String identifier = IDENTIFIER_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTargetState() <em>Target State</em>}' reference.
@@ -103,8 +104,8 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
+	public String getIdentifier() {
+		return identifier;
 	}
 
 	/**
@@ -112,11 +113,11 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void setIdentifier(String newIdentifier) {
+		String oldIdentifier = identifier;
+		identifier = newIdentifier;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.TRANSITION__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.TRANSITION__IDENTIFIER, oldIdentifier, identifier));
 	}
 
 	/**
@@ -186,8 +187,8 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.TRANSITION__ID:
-				return getId();
+			case CyberPhysicalSystemPackage.TRANSITION__IDENTIFIER:
+				return getIdentifier();
 			case CyberPhysicalSystemPackage.TRANSITION__TARGET_STATE:
 				if (resolve) return getTargetState();
 				return basicGetTargetState();
@@ -205,8 +206,8 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.TRANSITION__ID:
-				setId((String)newValue);
+			case CyberPhysicalSystemPackage.TRANSITION__IDENTIFIER:
+				setIdentifier((String)newValue);
 				return;
 			case CyberPhysicalSystemPackage.TRANSITION__TARGET_STATE:
 				setTargetState((State)newValue);
@@ -226,8 +227,8 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.TRANSITION__ID:
-				setId(ID_EDEFAULT);
+			case CyberPhysicalSystemPackage.TRANSITION__IDENTIFIER:
+				setIdentifier(IDENTIFIER_EDEFAULT);
 				return;
 			case CyberPhysicalSystemPackage.TRANSITION__TARGET_STATE:
 				setTargetState((State)null);
@@ -247,8 +248,8 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.TRANSITION__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case CyberPhysicalSystemPackage.TRANSITION__IDENTIFIER:
+				return IDENTIFIER_EDEFAULT == null ? identifier != null : !IDENTIFIER_EDEFAULT.equals(identifier);
 			case CyberPhysicalSystemPackage.TRANSITION__TARGET_STATE:
 				return targetState != null;
 			case CyberPhysicalSystemPackage.TRANSITION__ACTION:
@@ -267,8 +268,8 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
+		result.append(" (identifier: ");
+		result.append(identifier);
 		result.append(", action: ");
 		result.append(action);
 		result.append(')');

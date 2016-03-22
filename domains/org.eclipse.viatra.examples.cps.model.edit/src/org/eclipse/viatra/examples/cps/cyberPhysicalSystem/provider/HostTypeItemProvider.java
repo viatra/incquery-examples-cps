@@ -63,7 +63,7 @@ public class HostTypeItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
+			addIdentifierPropertyDescriptor(object);
 			addDefaultCpuPropertyDescriptor(object);
 			addDefaultRamPropertyDescriptor(object);
 			addDefaultHddPropertyDescriptor(object);
@@ -74,19 +74,19 @@ public class HostTypeItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature.
+	 * This adds a property descriptor for the Identifier feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addIdentifierPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Identifiable_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_id_feature", "_UI_Identifiable_type"),
-				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__ID,
+				 getString("_UI_Identifiable_identifier_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_identifier_feature", "_UI_Identifiable_type"),
+				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__IDENTIFIER,
 				 true,
 				 false,
 				 false,
@@ -254,7 +254,7 @@ public class HostTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((HostType)object).getId();
+		String label = ((HostType)object).getIdentifier();
 		return label == null || label.length() == 0 ?
 			getString("_UI_HostType_type") :
 			getString("_UI_HostType_type") + " " + label;
@@ -273,7 +273,7 @@ public class HostTypeItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(HostType.class)) {
-			case CyberPhysicalSystemPackage.HOST_TYPE__ID:
+			case CyberPhysicalSystemPackage.HOST_TYPE__IDENTIFIER:
 			case CyberPhysicalSystemPackage.HOST_TYPE__DEFAULT_CPU:
 			case CyberPhysicalSystemPackage.HOST_TYPE__DEFAULT_RAM:
 			case CyberPhysicalSystemPackage.HOST_TYPE__DEFAULT_HDD:

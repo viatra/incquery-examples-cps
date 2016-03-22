@@ -26,7 +26,7 @@ public class IdIsNotUniqueConstraint0 implements IConstraintSpecification {
 
     @Override
     public String getMessageFormat() {
-        return "The ID of $identifiable.id$ is not unique";
+        return "The ID of $identifiable.identifier$ is not unique";
     }
 
 

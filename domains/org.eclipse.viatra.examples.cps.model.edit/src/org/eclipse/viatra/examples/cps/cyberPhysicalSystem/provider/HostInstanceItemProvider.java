@@ -60,7 +60,7 @@ public class HostInstanceItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
+			addIdentifierPropertyDescriptor(object);
 			addNodeIpPropertyDescriptor(object);
 			addAvailableCpuPropertyDescriptor(object);
 			addAvailableRamPropertyDescriptor(object);
@@ -75,19 +75,19 @@ public class HostInstanceItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature.
+	 * This adds a property descriptor for the Identifier feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addIdentifierPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Identifiable_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_id_feature", "_UI_Identifiable_type"),
-				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__ID,
+				 getString("_UI_Identifiable_identifier_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_identifier_feature", "_UI_Identifiable_type"),
+				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__IDENTIFIER,
 				 true,
 				 false,
 				 false,
@@ -313,7 +313,7 @@ public class HostInstanceItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((HostInstance)object).getId();
+		String label = ((HostInstance)object).getIdentifier();
 		return label == null || label.length() == 0 ?
 			getString("_UI_HostInstance_type") :
 			getString("_UI_HostInstance_type") + " " + label;
@@ -332,7 +332,7 @@ public class HostInstanceItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(HostInstance.class)) {
-			case CyberPhysicalSystemPackage.HOST_INSTANCE__ID:
+			case CyberPhysicalSystemPackage.HOST_INSTANCE__IDENTIFIER:
 			case CyberPhysicalSystemPackage.HOST_INSTANCE__NODE_IP:
 			case CyberPhysicalSystemPackage.HOST_INSTANCE__AVAILABLE_CPU:
 			case CyberPhysicalSystemPackage.HOST_INSTANCE__AVAILABLE_RAM:

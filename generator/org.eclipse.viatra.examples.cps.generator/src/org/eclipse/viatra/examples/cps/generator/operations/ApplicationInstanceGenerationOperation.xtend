@@ -26,9 +26,9 @@ class ApplicationInstanceGenerationOperation implements IOperation<CPSFragment> 
 	override execute(CPSFragment fragment) {
 		// Generate ApplicationInstances
 		val numberOfAppInstances = applicationClass.numberOfAppInstances.randInt(fragment.random);
-		debug("--> AppInstances of " + appType.id + " = " +numberOfAppInstances)
+		debug("--> AppInstances of " + appType.identifier + " = " +numberOfAppInstances)
 		for(i : 0 ..< numberOfAppInstances){
-			appType.prepareApplicationInstanceWithId(appType.id + ".inst" + i);
+			appType.prepareApplicationInstanceWithId(appType.identifier + ".inst" + i);
 		}
 
 		true;

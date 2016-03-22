@@ -26,7 +26,7 @@ public class TargetStateNotContainedBySameStateMachineConstraint0 implements ICo
 
     @Override
     public String getMessageFormat() {
-        return "The target state $target.id$ of $transition.id$ is not in the same state machine";
+        return "The target state $target.identifier$ of $transition.identifier$ is not in the same state machine";
     }
 
 

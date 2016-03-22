@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.*;
 
 /**
@@ -95,6 +96,7 @@ public class CyberPhysicalSystemSwitch<T> extends Switch<T> {
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT: {
 				ResourceRequirement resourceRequirement = (ResourceRequirement)theEObject;
 				T result = caseResourceRequirement(resourceRequirement);
+				if (result == null) result = caseIdentifiable(resourceRequirement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -115,12 +117,14 @@ public class CyberPhysicalSystemSwitch<T> extends Switch<T> {
 			case CyberPhysicalSystemPackage.REQUEST: {
 				Request request = (Request)theEObject;
 				T result = caseRequest(request);
+				if (result == null) result = caseIdentifiable(request);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case CyberPhysicalSystemPackage.REQUIREMENT: {
 				Requirement requirement = (Requirement)theEObject;
 				T result = caseRequirement(requirement);
+				if (result == null) result = caseIdentifiable(requirement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

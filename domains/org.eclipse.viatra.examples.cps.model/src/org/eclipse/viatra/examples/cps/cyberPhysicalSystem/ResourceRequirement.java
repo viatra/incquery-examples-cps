@@ -2,7 +2,6 @@
  */
 package org.eclipse.viatra.examples.cps.cyberPhysicalSystem;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ResourceRequirement extends EObject {
+public interface ResourceRequirement extends Identifiable {
 	/**
 	 * Returns the value of the '<em><b>Required Cpu</b></em>' attribute.
 	 * <!-- begin-user-doc -->

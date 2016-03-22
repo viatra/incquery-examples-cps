@@ -36,7 +36,7 @@ class StateMachineMapping extends AbstractRule<UnmappedStateMachineMatch> {
 	
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED, [UnmappedStateMachineMatch match |
-			val smId = match.stateMachine.id
+			val smId = match.stateMachine.identifier
 			debug('''Mapping state machine with ID: «smId»''')
 			val behavior = createDeploymentBehavior => [
 				description = smId
@@ -75,21 +75,21 @@ class StateMachineUpdate extends AbstractRule<MonitoredStateMachineMatch> {
 	
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED, [MonitoredStateMachineMatch match |
-			val smId = match.stateMachine.id
+			val smId = match.stateMachine.identifier
 			debug('''Starting monitoring mapped state machine with ID: «smId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.DELETED, [MonitoredStateMachineMatch match |
-			val smId = match.stateMachine.id
+			val smId = match.stateMachine.identifier
 			debug('''Stopped monitoring mapped state machine with ID: «smId»''')
 		])
 	}
 	
 	private def getUpdatedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED, [MonitoredStateMachineMatch match |
-			val smId = match.stateMachine.id
+			val smId = match.stateMachine.identifier
 			debug('''Updating mapped state machine with ID: «smId»''')
 			val depSMs = getMappedStateMachine(engine).getAllValuesOfdepBehavior(match.stateMachine, null, null)
 			depSMs.forEach[

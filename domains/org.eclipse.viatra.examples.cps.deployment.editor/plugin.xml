@@ -33,5 +33,4 @@
             contributorClass="org.eclipse.viatra.examples.cps.deployment.presentation.DeploymentActionBarContributor">
       </editor>
    </extension>
-
 </plugin>

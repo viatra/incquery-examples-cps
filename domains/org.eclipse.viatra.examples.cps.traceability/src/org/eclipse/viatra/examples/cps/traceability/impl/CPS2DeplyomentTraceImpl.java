@@ -3,12 +3,19 @@
 package org.eclipse.viatra.examples.cps.traceability.impl;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable;
+
 import org.eclipse.viatra.examples.cps.deployment.DeploymentElement;
+
 import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace;
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage;
 

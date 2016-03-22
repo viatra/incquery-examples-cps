@@ -31,7 +31,7 @@ class CPSModelBuilderUtil {
 		val trcRes = rs.createResource(URI.createURI("dummyTraceabilityUri"))
 		
 		val cps = createCyberPhysicalSystem => [
-			id = cpsId
+			identifier = cpsId
 		]
 		cpsRes.contents += cps
 		
@@ -72,7 +72,7 @@ class CPSModelBuilderUtil {
 		val trcRes = rs.createResource(URI.createURI(dirUri + "/" + modelName + ".traceability"))
 		
 		val cps = createCyberPhysicalSystem => [
-			id = modelName
+			identifier = modelName
 		]
 		cpsRes.contents += cps
 		
@@ -94,16 +94,16 @@ class CPSModelBuilderUtil {
 	def prepareHostTypeWithId(CyberPhysicalSystem cps, String hostId) {
 		debug('''Adding host type (ID: «hostId») to model''')
 		val host = createHostType => [
-			id = hostId
+			identifier = hostId
 		]
 		cps.hostTypes += host
 		host
 	}
 	
 	def prepareHostInstanceWithIP(HostType host, String instanceId, String ip) {
-		debug('''Adding host instance (IP: «ip») to host type «host.id»''')
+		debug('''Adding host instance (IP: «ip») to host type «host.identifier»''')
 		val instance = createHostInstance => [
-			id = instanceId
+			identifier = instanceId
 			nodeIp = ip
 		]
 		host.instances += instance
@@ -124,16 +124,16 @@ class CPSModelBuilderUtil {
 	def prepareApplicationTypeWithId(CyberPhysicalSystem cps, String appId) {
 		debug('''Adding application type (ID: «appId») to model''')
 		val appType = createApplicationType => [
-			id = appId
+			identifier = appId
 		]
 		cps.appTypes += appType
 		appType
 	}
 	
 	def prepareApplicationInstanceWithId(ApplicationType app, String appId, HostInstance host) {
-		debug('''Adding application instance (ID: «appId») to «app.id»''')
+		debug('''Adding application instance (ID: «appId») to «app.identifier»''')
 		val instance = createApplicationInstance => [
-			id = appId
+			identifier = appId
 			allocatedTo = host
 		]
 		app.instances += instance
@@ -141,9 +141,9 @@ class CPSModelBuilderUtil {
 	}
 	
 	def prepareApplicationInstanceWithId(ApplicationType app, String appId) {
-		debug('''Adding application instance (ID: «appId») to «app.id»''')
+		debug('''Adding application instance (ID: «appId») to «app.identifier»''')
 		val instance = createApplicationInstance => [
-			id = appId
+			identifier = appId
 		]
 		app.instances += instance
 		instance
@@ -156,25 +156,25 @@ class CPSModelBuilderUtil {
 	}
 	
 	def prepareStateMachine(ApplicationType app, String smId) {
-		debug('''Adding state machine (ID: «smId») to «app.id»''')
+		debug('''Adding state machine (ID: «smId») to «app.identifier»''')
 		val instance = createStateMachine => [
-			id = smId
+			identifier = smId
 		]
 		app.behavior = instance
 		instance
 	}
 	
 	def prepareState(StateMachine sm, String stateId) {
-		debug('''Adding state (ID: «stateId») to «sm.id»''')
+		debug('''Adding state (ID: «stateId») to «sm.identifier»''')
 		val state = createState => [
-			id = stateId
+			identifier = stateId
 		]
 		sm.states += state
 		state
 	}
 	
 	def prepareTransition(State source, String trID, State target) {
-		debug('''Adding transition (ID: «trID») between «source.id» and «target.id»''')
+		debug('''Adding transition (ID: «trID») between «source.identifier» and «target.identifier»''')
 		val transition = source.prepareTransition(trID)
 		transition.targetState = target
 		transition
@@ -182,14 +182,14 @@ class CPSModelBuilderUtil {
 	
 	def prepareTransition(State source, String trID) {
 		val transition = createTransition => [
-			id = trID
+			identifier = trID
 		]
 		source.outgoingTransitions += transition
 		transition
 	}
 	
 	def prepareCommunication(HostInstance srcHost, HostInstance trgHost) {
-		debug('''Create connection from «srcHost.id» to «trgHost.id»''')
+		debug('''Create connection from «srcHost.identifier» to «trgHost.identifier»''')
 		srcHost.communicateWith.add(trgHost);
 	}
 	

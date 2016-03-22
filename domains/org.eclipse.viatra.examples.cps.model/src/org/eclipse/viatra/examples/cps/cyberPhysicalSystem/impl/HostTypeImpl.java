@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance;
@@ -31,7 +32,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostType;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.HostTypeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.HostTypeImpl#getIdentifier <em>Identifier</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.HostTypeImpl#getDefaultCpu <em>Default Cpu</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.HostTypeImpl#getDefaultRam <em>Default Ram</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.HostTypeImpl#getDefaultHdd <em>Default Hdd</em>}</li>
@@ -43,24 +44,24 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostType;
  */
 public class HostTypeImpl extends MinimalEObjectImpl.Container implements HostType {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getIdentifier()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ID_EDEFAULT = null;
+	protected static final String IDENTIFIER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getIdentifier()
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = ID_EDEFAULT;
+	protected String identifier = IDENTIFIER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDefaultCpu() <em>Default Cpu</em>}' attribute.
@@ -156,8 +157,8 @@ public class HostTypeImpl extends MinimalEObjectImpl.Container implements HostTy
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
+	public String getIdentifier() {
+		return identifier;
 	}
 
 	/**
@@ -165,11 +166,11 @@ public class HostTypeImpl extends MinimalEObjectImpl.Container implements HostTy
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void setIdentifier(String newIdentifier) {
+		String oldIdentifier = identifier;
+		identifier = newIdentifier;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.HOST_TYPE__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.HOST_TYPE__IDENTIFIER, oldIdentifier, identifier));
 	}
 
 	/**
@@ -342,8 +343,8 @@ public class HostTypeImpl extends MinimalEObjectImpl.Container implements HostTy
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.HOST_TYPE__ID:
-				return getId();
+			case CyberPhysicalSystemPackage.HOST_TYPE__IDENTIFIER:
+				return getIdentifier();
 			case CyberPhysicalSystemPackage.HOST_TYPE__DEFAULT_CPU:
 				return getDefaultCpu();
 			case CyberPhysicalSystemPackage.HOST_TYPE__DEFAULT_RAM:
@@ -367,8 +368,8 @@ public class HostTypeImpl extends MinimalEObjectImpl.Container implements HostTy
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.HOST_TYPE__ID:
-				setId((String)newValue);
+			case CyberPhysicalSystemPackage.HOST_TYPE__IDENTIFIER:
+				setIdentifier((String)newValue);
 				return;
 			case CyberPhysicalSystemPackage.HOST_TYPE__DEFAULT_CPU:
 				setDefaultCpu((Integer)newValue);
@@ -398,8 +399,8 @@ public class HostTypeImpl extends MinimalEObjectImpl.Container implements HostTy
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.HOST_TYPE__ID:
-				setId(ID_EDEFAULT);
+			case CyberPhysicalSystemPackage.HOST_TYPE__IDENTIFIER:
+				setIdentifier(IDENTIFIER_EDEFAULT);
 				return;
 			case CyberPhysicalSystemPackage.HOST_TYPE__DEFAULT_CPU:
 				setDefaultCpu(DEFAULT_CPU_EDEFAULT);
@@ -428,8 +429,8 @@ public class HostTypeImpl extends MinimalEObjectImpl.Container implements HostTy
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.HOST_TYPE__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case CyberPhysicalSystemPackage.HOST_TYPE__IDENTIFIER:
+				return IDENTIFIER_EDEFAULT == null ? identifier != null : !IDENTIFIER_EDEFAULT.equals(identifier);
 			case CyberPhysicalSystemPackage.HOST_TYPE__DEFAULT_CPU:
 				return defaultCpu != DEFAULT_CPU_EDEFAULT;
 			case CyberPhysicalSystemPackage.HOST_TYPE__DEFAULT_RAM:
@@ -454,8 +455,8 @@ public class HostTypeImpl extends MinimalEObjectImpl.Container implements HostTy
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
+		result.append(" (identifier: ");
+		result.append(identifier);
 		result.append(", defaultCpu: ");
 		result.append(defaultCpu);
 		result.append(", defaultRam: ");

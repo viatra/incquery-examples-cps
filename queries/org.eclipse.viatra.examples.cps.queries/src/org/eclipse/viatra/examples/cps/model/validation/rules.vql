@@ -4,7 +4,7 @@ import "http://org.eclipse.viatra/model/cps"
 
 @Constraint(
 	location = app,
-	message = "$app.id$ is not allocated but it is running",
+	message = "$app.identifier$ is not allocated but it is running",
 	severity = "error"
 )
 pattern notAllocatedButRunning(app : ApplicationInstance) {
@@ -18,7 +18,7 @@ private pattern allocatedApplication(app : ApplicationInstance) {
 
 @Constraint(
 	location = host,
-	message = "The available CPU ($host.availableCpu$) of $host.id$ is greater than the total ($host.totalCpu$)",
+	message = "The available CPU ($host.availableCpu$) of $host.identifier$ is greater than the total ($host.totalCpu$)",
 	severity = "error"
 )
 pattern availableGreaterThanTotalCpu(host : HostInstance) {
@@ -30,7 +30,7 @@ pattern availableGreaterThanTotalCpu(host : HostInstance) {
 
 @Constraint(
 	location = host,
-	message = "The available HDD ($host.availableHdd$) of $host.id$ is greater than the total ($host.totalHdd$)",
+	message = "The available HDD ($host.availableHdd$) of $host.identifier$ is greater than the total ($host.totalHdd$)",
 	severity = "error"
 )
 pattern availableGreaterThanTotalHdd(host : HostInstance) {
@@ -42,7 +42,7 @@ pattern availableGreaterThanTotalHdd(host : HostInstance) {
 
 @Constraint(
 	location = host,
-	message = "The available RAM ($host.availableRam$) of $host.id$ is greater than the total ($host.totalRam$)",
+	message = "The available RAM ($host.availableRam$) of $host.identifier$ is greater than the total ($host.totalRam$)",
 	severity = "error"
 )
 pattern availableGreaterThanTotalRam(host : HostInstance) {
@@ -54,7 +54,7 @@ pattern availableGreaterThanTotalRam(host : HostInstance) {
 
 @Constraint(
 	location = host,
-	message = "The IP address $host.nodeIp$ of $host.id$ is not unique",
+	message = "The IP address $host.nodeIp$ of $host.identifier$ is not unique",
 	severity = "error"
 )
 pattern nodeIpIsNotUnique(host){
@@ -69,7 +69,7 @@ private pattern nodeIpOfHost(host, ip){
 
 @Constraint(
 	location = identifiable,
-	message = "The ID of $identifiable.id$ is not unique",
+	message = "The ID of $identifiable.identifier$ is not unique",
 	severity = "error"
 )
 pattern idIsNotUnique(identifiable) {
@@ -79,12 +79,12 @@ pattern idIsNotUnique(identifiable) {
 }
 
 private pattern identifiableId(identifiable, id) {
-	Identifiable.id(identifiable, id);
+	Identifiable.identifier(identifiable, id);
 }
 
 @Constraint(
 	location = statemachine,
-	message = "The initial state $state.id$ of $statemachine.id$ is not included in its states",
+	message = "The initial state $state.identifier$ of $statemachine.identifier$ is not included in its states",
 	severity = "error"
 )
 pattern initialStateNotContainedByStateMachine(statemachine, state) {
@@ -98,7 +98,7 @@ private pattern statemachineState(statemachine, state) {
 
 @Constraint(
 	location = transition,
-	message = "No target state set for $transition.id$",
+	message = "No target state set for $transition.identifier$",
 	severity = "error"
 )
 pattern transitionWithoutTargetState(transition) {
@@ -113,7 +113,7 @@ private pattern stateTransition(source, transition, target) {
 
 @Constraint(
 	location = transition,
-	message = "The target state $target.id$ of $transition.id$ is not in the same state machine",
+	message = "The target state $target.identifier$ of $transition.identifier$ is not in the same state machine",
 	severity = "error"
 )
 pattern targetStateNotContainedBySameStateMachine(transition, target) {
@@ -124,7 +124,7 @@ pattern targetStateNotContainedBySameStateMachine(transition, target) {
 
 @Constraint(
 	location = state,
-	message = "Multiple outgoing transitions of $state.id$ define the same action ($action$)",
+	message = "Multiple outgoing transitions of $state.identifier$ define the same action ($action$)",
 	severity = "error"
 )
 pattern multipleTransitionsWithSameAction(state, action) {
@@ -141,7 +141,7 @@ private pattern actionOfTransition(transition, action) {
 
 @Constraint(
 	location = sourceHostInstance,
-	message = "Multiple instances of $app.id$ are reachable from $sourceHostInstance.id$",
+	message = "Multiple instances of $app.identifier$ are reachable from $sourceHostInstance.identifier$",
 	severity = "error"
 )
 pattern multipleApplicationInstanceInCommunicationGroup(sourceHostInstance, app) {

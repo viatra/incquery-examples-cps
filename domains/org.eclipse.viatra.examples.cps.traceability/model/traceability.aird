@@ -2,11 +2,11 @@
 <viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style" xmi:id="_HNkKsGBKEeSUjfhCvxcEXA" selectedViews="_HQbRcGBKEeSUjfhCvxcEXA" version="8.1.1">
   <models xmi:type="ecore:EPackage" href="traceability.ecore#/"/>
   <models xmi:type="genmodel:GenModel" href="traceability.genmodel#/"/>
-  <models xmi:type="ecore:EPackage" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#/"/>
+  <models xmi:type="ecore:EPackage" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#/"/>
   <models xmi:type="ecore:EPackage" href="http://www.eclipse.org/emf/2002/Ecore#/"/>
-  <models xmi:type="ecore:EPackage" href="platform:/resource/org.eclipse.viatra.examples.cps.deployment/model/deployment.ecore#/"/>
-  <models xmi:type="genmodel:GenModel" href="platform:/resource/org.eclipse.viatra.examples.cps.deployment/model/deployment.genmodel#/"/>
-  <models xmi:type="genmodel:GenModel" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.genmodel#/"/>
+  <models xmi:type="ecore:EPackage" href="platform:/resource/org.eclipse.incquery.examples.cps.deployment/model/deployment.ecore#/"/>
+  <models xmi:type="genmodel:GenModel" href="platform:/resource/org.eclipse.incquery.examples.cps.deployment/model/deployment.genmodel#/"/>
+  <models xmi:type="genmodel:GenModel" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.genmodel#/"/>
   <ownedViews xmi:type="viewpoint:DRepresentationContainer" xmi:id="_HQbRcGBKEeSUjfhCvxcEXA" initialized="true">
     <ownedRepresentations xmi:type="diagram:DSemanticDiagram" xmi:id="_HdWTIGBKEeSUjfhCvxcEXA" name="traceability class diagram">
       <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_Hd9-MGBKEeSUjfhCvxcEXA" source="GMF_DIAGRAMS">
@@ -210,8 +210,8 @@
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_AlM6IGBLEeSUjfhCvxcEXA" name="CyberPhysicalSystem" tooltipText="" outgoingEdges="_j5rUYGBLEeSUjfhCvxcEXA" incomingEdges="_EVsJMGBLEeSUjfhCvxcEXA" width="12" height="10">
-        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//CyberPhysicalSystem"/>
-        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//CyberPhysicalSystem"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//CyberPhysicalSystem"/>
+        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//CyberPhysicalSystem"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_AlqNIGBLEeSUjfhCvxcEXA">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -227,8 +227,8 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
         <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_AllUoGBLEeSUjfhCvxcEXA" name="dbUrl : EString" tooltipText="">
-          <target xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//CyberPhysicalSystem/dbUrl"/>
-          <semanticElements xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//CyberPhysicalSystem/dbUrl"/>
+          <target xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//CyberPhysicalSystem/dbUrl"/>
+          <semanticElements xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//CyberPhysicalSystem/dbUrl"/>
           <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_AloX8GBLEeSUjfhCvxcEXA" labelAlignment="LEFT">
             <labelColor xmi:type="viewpoint:RGBValues" xmi:id="_AloX8WBLEeSUjfhCvxcEXA"/>
             <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
@@ -239,8 +239,8 @@
         </ownedElements>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_CYakMGBLEeSUjfhCvxcEXA" name="Deployment" tooltipText="" incomingEdges="_GtuXkGBLEeSUjfhCvxcEXA" width="12" height="10">
-        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.viatra.examples.cps.deployment/model/deployment.ecore#//Deployment"/>
-        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.viatra.examples.cps.deployment/model/deployment.ecore#//Deployment"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.incquery.examples.cps.deployment/model/deployment.ecore#//Deployment"/>
+        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.incquery.examples.cps.deployment/model/deployment.ecore#//Deployment"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_CYn_kGBLEeSUjfhCvxcEXA">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -322,8 +322,8 @@
         <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC_EReference']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_j5dR8GBLEeSUjfhCvxcEXA" name="Identifiable" tooltipText="" incomingEdges="_j5rUYGBLEeSUjfhCvxcEXA _o1SSwGBLEeSUjfhCvxcEXA" width="12" height="10">
-        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//Identifiable"/>
-        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//Identifiable"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//Identifiable"/>
+        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//Identifiable"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_j5oREGBLEeSUjfhCvxcEXA">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -339,8 +339,8 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
         <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_j5mb4GBLEeSUjfhCvxcEXA" name="id : EString" tooltipText="">
-          <target xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//Identifiable/id"/>
-          <semanticElements xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//Identifiable/id"/>
+          <target xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//Identifiable/id"/>
+          <semanticElements xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//Identifiable/id"/>
           <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_j5nC8GBLEeSUjfhCvxcEXA" labelAlignment="LEFT">
             <labelColor xmi:type="viewpoint:RGBValues" xmi:id="_j5nC8WBLEeSUjfhCvxcEXA"/>
             <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
@@ -351,8 +351,8 @@
         </ownedElements>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_j5rUYGBLEeSUjfhCvxcEXA" visible="false" sourceNode="_AlM6IGBLEeSUjfhCvxcEXA" targetNode="_j5dR8GBLEeSUjfhCvxcEXA">
-        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//CyberPhysicalSystem"/>
-        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/org.eclipse.viatra.examples.cps.model/model/model.ecore#//CyberPhysicalSystem/@eGenericSuperTypes.0"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//CyberPhysicalSystem"/>
+        <semanticElements xmi:type="ecore:EGenericType" href="platform:/resource/org.eclipse.incquery.examples.cps.model/model/model.ecore#//CyberPhysicalSystem/@eGenericSuperTypes.0"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_o1OBUGBLEeSUjfhCvxcEXA">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -388,8 +388,8 @@
         <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@edgeMappings[name='EC_EReference']"/>
       </ownedDiagramElements>
       <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_AJupoGBMEeSUjfhCvxcEXA" name="DeploymentElement" tooltipText="" incomingEdges="_FR6EYGBMEeSUjfhCvxcEXA" width="12" height="10">
-        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.viatra.examples.cps.deployment/model/deployment.ecore#//DeploymentElement"/>
-        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.viatra.examples.cps.deployment/model/deployment.ecore#//DeploymentElement"/>
+        <target xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.incquery.examples.cps.deployment/model/deployment.ecore#//DeploymentElement"/>
+        <semanticElements xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.incquery.examples.cps.deployment/model/deployment.ecore#//DeploymentElement"/>
         <decorations xmi:type="viewpoint:Decoration" xmi:id="_AJ4aoGBMEeSUjfhCvxcEXA">
           <description xmi:type="description:SemanticBasedDecoration" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@decorationDescriptionsSet/@decorationDescriptions[name='External']"/>
         </decorations>
@@ -405,8 +405,8 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
         <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_gK3AIGZoEeSSjYj4UUE38g" name="description : EString" tooltipText="">
-          <target xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.viatra.examples.cps.deployment/model/deployment.ecore#//DeploymentElement/description"/>
-          <semanticElements xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.viatra.examples.cps.deployment/model/deployment.ecore#//DeploymentElement/description"/>
+          <target xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.incquery.examples.cps.deployment/model/deployment.ecore#//DeploymentElement/description"/>
+          <semanticElements xmi:type="ecore:EAttribute" href="platform:/resource/org.eclipse.incquery.examples.cps.deployment/model/deployment.ecore#//DeploymentElement/description"/>
           <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_gK4OQGZoEeSSjYj4UUE38g" labelAlignment="LEFT">
             <labelColor xmi:type="viewpoint:RGBValues" xmi:id="_gK4OQWZoEeSSjYj4UUE38g"/>
             <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>

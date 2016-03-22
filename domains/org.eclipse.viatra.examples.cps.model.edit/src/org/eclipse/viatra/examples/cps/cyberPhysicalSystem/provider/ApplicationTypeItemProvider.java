@@ -63,7 +63,7 @@ public class ApplicationTypeItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
+			addIdentifierPropertyDescriptor(object);
 			addExeFileLocationPropertyDescriptor(object);
 			addExeTypePropertyDescriptor(object);
 			addZipFileUrlPropertyDescriptor(object);
@@ -75,19 +75,19 @@ public class ApplicationTypeItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature.
+	 * This adds a property descriptor for the Identifier feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addIdentifierPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Identifiable_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_id_feature", "_UI_Identifiable_type"),
-				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__ID,
+				 getString("_UI_Identifiable_identifier_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_identifier_feature", "_UI_Identifiable_type"),
+				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__IDENTIFIER,
 				 true,
 				 false,
 				 false,
@@ -279,7 +279,7 @@ public class ApplicationTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ApplicationType)object).getId();
+		String label = ((ApplicationType)object).getIdentifier();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ApplicationType_type") :
 			getString("_UI_ApplicationType_type") + " " + label;
@@ -298,7 +298,7 @@ public class ApplicationTypeItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(ApplicationType.class)) {
-			case CyberPhysicalSystemPackage.APPLICATION_TYPE__ID:
+			case CyberPhysicalSystemPackage.APPLICATION_TYPE__IDENTIFIER:
 			case CyberPhysicalSystemPackage.APPLICATION_TYPE__EXE_FILE_LOCATION:
 			case CyberPhysicalSystemPackage.APPLICATION_TYPE__EXE_TYPE:
 			case CyberPhysicalSystemPackage.APPLICATION_TYPE__ZIP_FILE_URL:

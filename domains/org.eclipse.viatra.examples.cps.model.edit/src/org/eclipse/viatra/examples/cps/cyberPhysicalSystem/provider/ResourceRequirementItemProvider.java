@@ -60,12 +60,35 @@ public class ResourceRequirementItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addIdentifierPropertyDescriptor(object);
 			addRequiredCpuPropertyDescriptor(object);
 			addRequiredRamPropertyDescriptor(object);
 			addRequiredHddPropertyDescriptor(object);
 			addTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Identifier feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIdentifierPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Identifiable_identifier_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_identifier_feature", "_UI_Identifiable_type"),
+				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__IDENTIFIER,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -175,8 +198,10 @@ public class ResourceRequirementItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		ResourceRequirement resourceRequirement = (ResourceRequirement)object;
-		return getString("_UI_ResourceRequirement_type") + " " + resourceRequirement.getRequiredCpu();
+		String label = ((ResourceRequirement)object).getIdentifier();
+		return label == null || label.length() == 0 ?
+			getString("_UI_ResourceRequirement_type") :
+			getString("_UI_ResourceRequirement_type") + " " + label;
 	}
 	
 
@@ -192,6 +217,7 @@ public class ResourceRequirementItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(ResourceRequirement.class)) {
+			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__IDENTIFIER:
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__REQUIRED_CPU:
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__REQUIRED_RAM:
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__REQUIRED_HDD:

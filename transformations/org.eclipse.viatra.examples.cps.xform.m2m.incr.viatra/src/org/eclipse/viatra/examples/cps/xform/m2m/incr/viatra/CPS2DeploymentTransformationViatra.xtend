@@ -54,7 +54,7 @@ class CPS2DeploymentTransformationViatra {
 	}
 
 	def execute() {
-		debug('''Executing transformation on: Cyber-physical system: «cps2dep.cps.id»''')
+		debug('''Executing transformation on: Cyber-physical system: «cps2dep.cps.identifier»''')
 		if(executor == null && factory ==null){
 			transform.executionSchema.startUnscheduledExecution
 		}

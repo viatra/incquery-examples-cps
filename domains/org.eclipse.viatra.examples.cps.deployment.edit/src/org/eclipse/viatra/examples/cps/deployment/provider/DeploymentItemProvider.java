@@ -21,6 +21,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+
 import org.eclipse.viatra.examples.cps.deployment.Deployment;
 import org.eclipse.viatra.examples.cps.deployment.DeploymentFactory;
 import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage;

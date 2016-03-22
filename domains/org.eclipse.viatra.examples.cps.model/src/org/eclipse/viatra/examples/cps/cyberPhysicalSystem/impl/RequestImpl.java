@@ -4,6 +4,7 @@ package org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -11,10 +12,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Request;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Requirement;
@@ -27,12 +30,33 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Requirement;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.RequestImpl#getIdentifier <em>Identifier</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.RequestImpl#getRequirements <em>Requirements</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class RequestImpl extends MinimalEObjectImpl.Container implements Request {
+	/**
+	 * The default value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIdentifier()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IDENTIFIER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIdentifier()
+	 * @generated
+	 * @ordered
+	 */
+	protected String identifier = IDENTIFIER_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getRequirements() <em>Requirements</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -60,6 +84,27 @@ public class RequestImpl extends MinimalEObjectImpl.Container implements Request
 	@Override
 	protected EClass eStaticClass() {
 		return CyberPhysicalSystemPackage.Literals.REQUEST;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIdentifier(String newIdentifier) {
+		String oldIdentifier = identifier;
+		identifier = newIdentifier;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.REQUEST__IDENTIFIER, oldIdentifier, identifier));
 	}
 
 	/**
@@ -111,6 +156,8 @@ public class RequestImpl extends MinimalEObjectImpl.Container implements Request
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.REQUEST__IDENTIFIER:
+				return getIdentifier();
 			case CyberPhysicalSystemPackage.REQUEST__REQUIREMENTS:
 				return getRequirements();
 		}
@@ -126,6 +173,9 @@ public class RequestImpl extends MinimalEObjectImpl.Container implements Request
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.REQUEST__IDENTIFIER:
+				setIdentifier((String)newValue);
+				return;
 			case CyberPhysicalSystemPackage.REQUEST__REQUIREMENTS:
 				getRequirements().clear();
 				getRequirements().addAll((Collection<? extends Requirement>)newValue);
@@ -142,6 +192,9 @@ public class RequestImpl extends MinimalEObjectImpl.Container implements Request
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.REQUEST__IDENTIFIER:
+				setIdentifier(IDENTIFIER_EDEFAULT);
+				return;
 			case CyberPhysicalSystemPackage.REQUEST__REQUIREMENTS:
 				getRequirements().clear();
 				return;
@@ -157,10 +210,28 @@ public class RequestImpl extends MinimalEObjectImpl.Container implements Request
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.REQUEST__IDENTIFIER:
+				return IDENTIFIER_EDEFAULT == null ? identifier != null : !IDENTIFIER_EDEFAULT.equals(identifier);
 			case CyberPhysicalSystemPackage.REQUEST__REQUIREMENTS:
 				return requirements != null && !requirements.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (identifier: ");
+		result.append(identifier);
+		result.append(')');
+		return result.toString();
 	}
 
 } //RequestImpl

@@ -3,8 +3,11 @@
 package org.eclipse.viatra.examples.cps.traceability;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem;
+
 import org.eclipse.viatra.examples.cps.deployment.Deployment;
 
 /**

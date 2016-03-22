@@ -4,8 +4,6 @@ package org.eclipse.viatra.examples.cps.cyberPhysicalSystem;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Request</b></em>'.
@@ -22,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Request extends EObject {
+public interface Request extends Identifiable {
 	/**
 	 * Returns the value of the '<em><b>Requirements</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Requirement}.

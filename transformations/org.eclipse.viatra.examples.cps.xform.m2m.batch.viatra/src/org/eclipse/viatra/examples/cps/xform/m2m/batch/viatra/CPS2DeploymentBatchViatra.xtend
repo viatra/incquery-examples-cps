@@ -6,9 +6,7 @@ import org.apache.log4j.Logger
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment
 import org.eclipse.viatra.examples.cps.xform.m2m.batch.viatra.patterns.CpsXformM2M
 import org.eclipse.viatra.examples.cps.xform.m2m.batch.viatra.rules.RuleProvider
-import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
-import org.eclipse.viatra.transformation.evm.specific.RuleEngines
 import org.eclipse.viatra.transformation.runtime.emf.rules.batch.BatchTransformationStatements
 import org.eclipse.viatra.transformation.runtime.emf.transformation.batch.BatchTransformation
 
@@ -58,7 +56,7 @@ class CPS2DeploymentBatchViatra {
 	}
 	
 	def execute(){
-		debug('''Executing transformation on: Cyber-physical system: «mapping.cps.id»''')
+		debug('''Executing transformation on: Cyber-physical system: «mapping.cps.identifier»''')
 		mapping.traces.clear
 		mapping.deployment.hosts.clear
 		

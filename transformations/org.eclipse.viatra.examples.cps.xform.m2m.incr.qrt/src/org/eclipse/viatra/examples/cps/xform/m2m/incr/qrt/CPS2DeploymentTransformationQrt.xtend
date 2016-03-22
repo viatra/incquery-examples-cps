@@ -50,7 +50,7 @@ class CPS2DeploymentTransformationQrt {
 			info(
 				'''
 				Executing transformation on:
-					Cyber-physical system: «cps2dep.cps.id»''')
+					Cyber-physical system: «cps2dep.cps.identifier»''')
 
 			debug("Preparing transformation rules.")
 			val watch = Stopwatch.createStarted

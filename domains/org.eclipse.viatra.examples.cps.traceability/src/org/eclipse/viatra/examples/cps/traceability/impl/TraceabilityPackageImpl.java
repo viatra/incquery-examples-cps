@@ -5,9 +5,13 @@ package org.eclipse.viatra.examples.cps.traceability.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage;
+
 import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage;
+
 import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace;
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityFactory;

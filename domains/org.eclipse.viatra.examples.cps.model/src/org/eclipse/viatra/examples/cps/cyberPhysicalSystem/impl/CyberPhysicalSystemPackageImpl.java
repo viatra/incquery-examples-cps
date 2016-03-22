@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.AppState;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationInstance;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType;
@@ -198,7 +199,7 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getIdentifiable_Id() {
+	public EAttribute getIdentifiable_Identifier() {
 		return (EAttribute)identifiableEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -744,7 +745,7 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 
 		// Create classes and their features
 		identifiableEClass = createEClass(IDENTIFIABLE);
-		createEAttribute(identifiableEClass, IDENTIFIABLE__ID);
+		createEAttribute(identifiableEClass, IDENTIFIABLE__IDENTIFIER);
 
 		cyberPhysicalSystemEClass = createEClass(CYBER_PHYSICAL_SYSTEM);
 		createEAttribute(cyberPhysicalSystemEClass, CYBER_PHYSICAL_SYSTEM__DB_URL);
@@ -848,15 +849,18 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 		cyberPhysicalSystemEClass.getESuperTypes().add(this.getIdentifiable());
 		applicationTypeEClass.getESuperTypes().add(this.getIdentifiable());
 		hostTypeEClass.getESuperTypes().add(this.getIdentifiable());
+		resourceRequirementEClass.getESuperTypes().add(this.getIdentifiable());
 		hostInstanceEClass.getESuperTypes().add(this.getIdentifiable());
 		applicationInstanceEClass.getESuperTypes().add(this.getIdentifiable());
+		requestEClass.getESuperTypes().add(this.getIdentifiable());
+		requirementEClass.getESuperTypes().add(this.getIdentifiable());
 		stateMachineEClass.getESuperTypes().add(this.getIdentifiable());
 		stateEClass.getESuperTypes().add(this.getIdentifiable());
 		transitionEClass.getESuperTypes().add(this.getIdentifiable());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(identifiableEClass, Identifiable.class, "Identifiable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getIdentifiable_Id(), ecorePackage.getEString(), "id", null, 0, 1, Identifiable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getIdentifiable_Identifier(), ecorePackage.getEString(), "identifier", null, 0, 1, Identifiable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cyberPhysicalSystemEClass, CyberPhysicalSystem.class, "CyberPhysicalSystem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCyberPhysicalSystem_DbUrl(), ecorePackage.getEString(), "dbUrl", null, 0, 1, CyberPhysicalSystem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -932,6 +936,26 @@ public class CyberPhysicalSystemPackageImpl extends EPackageImpl implements Cybe
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore";	
+		addAnnotation
+		  (this, 
+		   source, 
+		   new String[] {
+			 "settingDelegates", "org.eclipse.viatra.query.querybasedfeature"
+		   });
 	}
 
 } //CyberPhysicalSystemPackageImpl

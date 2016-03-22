@@ -33,5 +33,4 @@
             contributorClass="org.eclipse.viatra.examples.cps.traceability.presentation.TraceabilityActionBarContributor">
       </editor>
    </extension>
-
 </plugin>

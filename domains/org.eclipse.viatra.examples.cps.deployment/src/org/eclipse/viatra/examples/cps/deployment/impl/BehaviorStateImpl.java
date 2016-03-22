@@ -5,6 +5,7 @@ package org.eclipse.viatra.examples.cps.deployment.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -13,6 +14,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+
 import org.eclipse.viatra.examples.cps.deployment.BehaviorState;
 import org.eclipse.viatra.examples.cps.deployment.BehaviorTransition;
 import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage;
@@ -41,6 +43,7 @@ public class BehaviorStateImpl extends MinimalEObjectImpl.Container implements B
 	 * @ordered
 	 */
 	protected static final String DESCRIPTION_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -50,6 +53,7 @@ public class BehaviorStateImpl extends MinimalEObjectImpl.Container implements B
 	 * @ordered
 	 */
 	protected String description = DESCRIPTION_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getOutgoing() <em>Outgoing</em>}' reference list.
 	 * <!-- begin-user-doc -->

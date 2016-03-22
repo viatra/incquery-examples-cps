@@ -30,7 +30,7 @@ class HostInstanceGenerationOperation implements IOperation<CPSFragment> {
 		debug(" --> HostInstances of " + hostClass.name + " = " +numberOfHostInstances)
 		for(i : 0 ..< numberOfHostInstances){
 			// TODO generate valid IP addresses 
-			hostType.prepareHostInstanceWithIP(hostType.id + ".inst"+i, hostType.id + ".inst"+i);
+			hostType.prepareHostInstanceWithIP(hostType.identifier + ".inst"+i, hostType.identifier + ".inst"+i);
 		}
 
 		true;

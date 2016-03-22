@@ -63,26 +63,26 @@ public class StateMachineItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
+			addIdentifierPropertyDescriptor(object);
 			addInitialPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature.
+	 * This adds a property descriptor for the Identifier feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addIdentifierPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Identifiable_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_id_feature", "_UI_Identifiable_type"),
-				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__ID,
+				 getString("_UI_Identifiable_identifier_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_identifier_feature", "_UI_Identifiable_type"),
+				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__IDENTIFIER,
 				 true,
 				 false,
 				 false,
@@ -162,7 +162,7 @@ public class StateMachineItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((StateMachine)object).getId();
+		String label = ((StateMachine)object).getIdentifier();
 		return label == null || label.length() == 0 ?
 			getString("_UI_StateMachine_type") :
 			getString("_UI_StateMachine_type") + " " + label;
@@ -181,7 +181,7 @@ public class StateMachineItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(StateMachine.class)) {
-			case CyberPhysicalSystemPackage.STATE_MACHINE__ID:
+			case CyberPhysicalSystemPackage.STATE_MACHINE__IDENTIFIER:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case CyberPhysicalSystemPackage.STATE_MACHINE__STATES:

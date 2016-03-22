@@ -68,9 +68,12 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
+
 import org.eclipse.viatra.examples.cps.deployment.DeploymentFactory;
 import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage;
 import org.eclipse.viatra.examples.cps.deployment.provider.DeploymentEditPlugin;
+
+
 import org.eclipse.core.runtime.Path;
 
 import org.eclipse.jface.viewers.ISelection;
@@ -392,7 +395,8 @@ public class DeploymentModelWizard extends Wizard implements INewWizard {
 		 * @generated
 		 */
 		public void createControl(Composite parent) {
-			Composite composite = new Composite(parent, SWT.NONE); {
+			Composite composite = new Composite(parent, SWT.NONE);
+			{
 				GridLayout layout = new GridLayout();
 				layout.numColumns = 1;
 				layout.verticalSpacing = 12;

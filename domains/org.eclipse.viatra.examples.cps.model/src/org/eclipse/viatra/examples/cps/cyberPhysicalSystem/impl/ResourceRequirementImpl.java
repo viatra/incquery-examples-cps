@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostType;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ResourceRequirement;
@@ -21,6 +22,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ResourceRequirement;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.ResourceRequirementImpl#getIdentifier <em>Identifier</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.ResourceRequirementImpl#getRequiredCpu <em>Required Cpu</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.ResourceRequirementImpl#getRequiredRam <em>Required Ram</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.ResourceRequirementImpl#getRequiredHdd <em>Required Hdd</em>}</li>
@@ -30,6 +32,26 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ResourceRequirement;
  * @generated
  */
 public class ResourceRequirementImpl extends MinimalEObjectImpl.Container implements ResourceRequirement {
+	/**
+	 * The default value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIdentifier()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IDENTIFIER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIdentifier()
+	 * @generated
+	 * @ordered
+	 */
+	protected String identifier = IDENTIFIER_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getRequiredCpu() <em>Required Cpu</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -117,6 +139,27 @@ public class ResourceRequirementImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	protected EClass eStaticClass() {
 		return CyberPhysicalSystemPackage.Literals.RESOURCE_REQUIREMENT;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIdentifier(String newIdentifier) {
+		String oldIdentifier = identifier;
+		identifier = newIdentifier;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__IDENTIFIER, oldIdentifier, identifier));
 	}
 
 	/**
@@ -228,6 +271,8 @@ public class ResourceRequirementImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__IDENTIFIER:
+				return getIdentifier();
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__REQUIRED_CPU:
 				return getRequiredCpu();
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__REQUIRED_RAM:
@@ -249,6 +294,9 @@ public class ResourceRequirementImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__IDENTIFIER:
+				setIdentifier((String)newValue);
+				return;
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__REQUIRED_CPU:
 				setRequiredCpu((Integer)newValue);
 				return;
@@ -273,6 +321,9 @@ public class ResourceRequirementImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__IDENTIFIER:
+				setIdentifier(IDENTIFIER_EDEFAULT);
+				return;
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__REQUIRED_CPU:
 				setRequiredCpu(REQUIRED_CPU_EDEFAULT);
 				return;
@@ -297,6 +348,8 @@ public class ResourceRequirementImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__IDENTIFIER:
+				return IDENTIFIER_EDEFAULT == null ? identifier != null : !IDENTIFIER_EDEFAULT.equals(identifier);
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__REQUIRED_CPU:
 				return requiredCpu != REQUIRED_CPU_EDEFAULT;
 			case CyberPhysicalSystemPackage.RESOURCE_REQUIREMENT__REQUIRED_RAM:
@@ -319,7 +372,9 @@ public class ResourceRequirementImpl extends MinimalEObjectImpl.Container implem
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (requiredCpu: ");
+		result.append(" (identifier: ");
+		result.append(identifier);
+		result.append(", requiredCpu: ");
 		result.append(requiredCpu);
 		result.append(", requiredRam: ");
 		result.append(requiredRam);

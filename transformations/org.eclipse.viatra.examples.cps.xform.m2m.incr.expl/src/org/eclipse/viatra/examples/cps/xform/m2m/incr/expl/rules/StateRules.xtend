@@ -37,7 +37,7 @@ class StateMapping extends AbstractRule<UnmappedStateMatch> {
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED, [UnmappedStateMatch match |
 			val state = match.state
-			val stateId = state.id
+			val stateId = state.identifier
 			debug('''Mapping state with ID: «stateId»''')
 			val depState = createBehaviorState => [
 				description = stateId
@@ -78,14 +78,14 @@ class StateUpdate extends AbstractRule<MonitoredStateMatch> {
 	
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED, [MonitoredStateMatch match |
-			val stateId = match.state.id
+			val stateId = match.state.identifier
 			debug('''Starting monitoring mapped state with ID: «stateId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.DELETED, [MonitoredStateMatch match |
-			val stateId = match.state.id
+			val stateId = match.state.identifier
 			debug('''Stopped monitoring mapped state with ID: «stateId»''')
 		])
 	}
@@ -93,7 +93,7 @@ class StateUpdate extends AbstractRule<MonitoredStateMatch> {
 	private def getUpdatedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED, [MonitoredStateMatch match |
 			val state = match.state
-			val stateId = state.id
+			val stateId = state.identifier
 			debug('''Updating mapped state with ID: «stateId»''')
 			val depStateMatches = getMappedState(engine).getAllMatches(state, null, null, null)
 			depStateMatches.forEach[

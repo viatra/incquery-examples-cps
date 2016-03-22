@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable#getIdentifier <em>Identifier</em>}</li>
  * </ul>
  *
  * @see org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage#getIdentifiable()
@@ -22,29 +22,29 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Identifiable extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
+	 * Returns the value of the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Identifier</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage#getIdentifiable_Id()
-	 * @model
+	 * @return the value of the '<em>Identifier</em>' attribute.
+	 * @see #setIdentifier(String)
+	 * @see org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage#getIdentifiable_Identifier()
+	 * @model id="true"
 	 * @generated
 	 */
-	String getId();
+	String getIdentifier();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable#getId <em>Id</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable#getIdentifier <em>Identifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
+	 * @param value the new value of the '<em>Identifier</em>' attribute.
+	 * @see #getIdentifier()
 	 * @generated
 	 */
-	void setId(String value);
+	void setIdentifier(String value);
 
 } // Identifiable

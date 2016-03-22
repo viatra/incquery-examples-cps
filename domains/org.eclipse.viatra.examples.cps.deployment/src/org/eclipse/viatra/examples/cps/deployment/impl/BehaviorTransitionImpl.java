@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+
 import org.eclipse.viatra.examples.cps.deployment.BehaviorState;
 import org.eclipse.viatra.examples.cps.deployment.BehaviorTransition;
 import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage;

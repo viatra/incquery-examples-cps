@@ -1,7 +1,6 @@
 package org.eclipse.viatra.examples.cps.xform.m2m.batch.simple
 
 import com.google.common.collect.ImmutableList
-import com.google.common.collect.Lists
 import java.util.ArrayList
 import org.apache.log4j.Logger
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationInstance
@@ -24,9 +23,6 @@ import org.eclipse.viatra.examples.cps.traceability.TraceabilityFactory
 import static com.google.common.base.Preconditions.*
 import static extension org.eclipse.viatra.examples.cps.xform.m2m.util.SignalUtil.*
 import static extension org.eclipse.viatra.examples.cps.xform.m2m.util.NamingUtil.*
-import org.eclipse.emf.common.util.EList
-import java.util.HashSet
-import com.google.common.collect.Maps
 
 class CPS2DeploymentBatchTransformationSimple {
 
@@ -67,7 +63,7 @@ class CPS2DeploymentBatchTransformationSimple {
 		info(
 			'''
 			Executing transformation on:
-				Cyber-physical system: «mapping.cps.id»''')
+				Cyber-physical system: «mapping.cps.identifier»''')
 		
 		
 		mapping.traces.clear
@@ -142,7 +138,7 @@ class CPS2DeploymentBatchTransformationSimple {
 
 				val appInstance = mapping.traces.findFirst[deploymentElements.head == receiverDeploymentApp].cpsElements.
 					head as ApplicationInstance
-				val appTypeId = appInstance.type.id
+				val appTypeId = appInstance.type.identifier
 				var senderTransition = senderTrace.cpsElements.head as Transition
 				val appId1 = getAppId(senderTransition.action)
 				if (appTypeId == appId1 && getSignalId((senderTrace.cpsElements.head as Transition).action) ==
@@ -270,7 +266,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	private def DeploymentApplication transform(ApplicationInstance appInstance) {
 		traceBegin('''transform(«appInstance.name»)''')
 		var deploymentApp = DeploymentFactory.eINSTANCE.createDeploymentApplication()
-		deploymentApp.id = appInstance.id
+		deploymentApp.id = appInstance.identifier
 
 		appInstance.createOrAddTrace(deploymentApp)
 
@@ -289,7 +285,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	private def DeploymentBehavior transform(StateMachine stateMachine) {
 		traceBegin('''transform(«stateMachine.name»)''')
 		val behavior = DeploymentFactory.eINSTANCE.createDeploymentBehavior
-		behavior.description = stateMachine.id
+		behavior.description = stateMachine.identifier
 
 		stateMachine.createOrAddTrace(behavior)
 
@@ -324,7 +320,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	private def BehaviorState transform(State state) {
 		traceBegin('''transform(«state.name»)''')
 		val behaviorState = DeploymentFactory.eINSTANCE.createBehaviorState
-		behaviorState.description = state.id
+		behaviorState.description = state.identifier
 
 		state.createOrAddTrace(behaviorState)
 
@@ -347,7 +343,7 @@ class CPS2DeploymentBatchTransformationSimple {
 		val targetBehaviorState = dep.head as BehaviorState
 		behaviorTransition.to = targetBehaviorState
 		behaviorState.outgoing += behaviorTransition
-		behaviorTransition.description = transition.id
+		behaviorTransition.description = transition.identifier
 
 		transition.createOrAddTrace(behaviorTransition)
 
@@ -387,7 +383,7 @@ class CPS2DeploymentBatchTransformationSimple {
 			trace.head.deploymentElements += deploymentElement
 		} else {
 			throw new IllegalStateException(
-				'''More than one mapping was created to state machine wit Id '«identifiable.id»'.''')
+				'''More than one mapping was created to state machine wit Id '«identifiable.identifier»'.''')
 		}
 
 		traceEnd('''createOrAddTrace(«identifiable.name», «deploymentElement.name»)''')

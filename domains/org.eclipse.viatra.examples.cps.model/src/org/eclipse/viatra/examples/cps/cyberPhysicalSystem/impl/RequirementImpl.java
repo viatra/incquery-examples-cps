@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationInstance;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage;
@@ -31,6 +32,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Requirement;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.RequirementImpl#getIdentifier <em>Identifier</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.RequirementImpl#getCount <em>Count</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.RequirementImpl#getRequest <em>Request</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.RequirementImpl#getType <em>Type</em>}</li>
@@ -40,6 +42,26 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Requirement;
  * @generated
  */
 public class RequirementImpl extends MinimalEObjectImpl.Container implements Requirement {
+	/**
+	 * The default value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIdentifier()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IDENTIFIER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIdentifier()
+	 * @generated
+	 * @ordered
+	 */
+	protected String identifier = IDENTIFIER_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getCount() <em>Count</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -97,6 +119,27 @@ public class RequirementImpl extends MinimalEObjectImpl.Container implements Req
 	@Override
 	protected EClass eStaticClass() {
 		return CyberPhysicalSystemPackage.Literals.REQUIREMENT;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIdentifier(String newIdentifier) {
+		String oldIdentifier = identifier;
+		identifier = newIdentifier;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.REQUIREMENT__IDENTIFIER, oldIdentifier, identifier));
 	}
 
 	/**
@@ -263,6 +306,8 @@ public class RequirementImpl extends MinimalEObjectImpl.Container implements Req
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.REQUIREMENT__IDENTIFIER:
+				return getIdentifier();
 			case CyberPhysicalSystemPackage.REQUIREMENT__COUNT:
 				return getCount();
 			case CyberPhysicalSystemPackage.REQUIREMENT__REQUEST:
@@ -285,6 +330,9 @@ public class RequirementImpl extends MinimalEObjectImpl.Container implements Req
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.REQUIREMENT__IDENTIFIER:
+				setIdentifier((String)newValue);
+				return;
 			case CyberPhysicalSystemPackage.REQUIREMENT__COUNT:
 				setCount((Integer)newValue);
 				return;
@@ -310,6 +358,9 @@ public class RequirementImpl extends MinimalEObjectImpl.Container implements Req
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.REQUIREMENT__IDENTIFIER:
+				setIdentifier(IDENTIFIER_EDEFAULT);
+				return;
 			case CyberPhysicalSystemPackage.REQUIREMENT__COUNT:
 				setCount(COUNT_EDEFAULT);
 				return;
@@ -334,6 +385,8 @@ public class RequirementImpl extends MinimalEObjectImpl.Container implements Req
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case CyberPhysicalSystemPackage.REQUIREMENT__IDENTIFIER:
+				return IDENTIFIER_EDEFAULT == null ? identifier != null : !IDENTIFIER_EDEFAULT.equals(identifier);
 			case CyberPhysicalSystemPackage.REQUIREMENT__COUNT:
 				return count != COUNT_EDEFAULT;
 			case CyberPhysicalSystemPackage.REQUIREMENT__REQUEST:
@@ -356,7 +409,9 @@ public class RequirementImpl extends MinimalEObjectImpl.Container implements Req
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (count: ");
+		result.append(" (identifier: ");
+		result.append(identifier);
+		result.append(", count: ");
 		result.append(count);
 		result.append(')');
 		return result.toString();

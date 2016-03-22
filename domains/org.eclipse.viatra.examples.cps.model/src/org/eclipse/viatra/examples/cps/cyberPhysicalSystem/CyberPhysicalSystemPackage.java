@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFactory
  * @model kind="package"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore settingDelegates='org.eclipse.viatra.query.querybasedfeature'"
  * @generated
  */
 public interface CyberPhysicalSystemPackage extends EPackage {
@@ -68,13 +69,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int IDENTIFIABLE = 0;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIABLE__ID = 0;
+	int IDENTIFIABLE__IDENTIFIER = 0;
 
 	/**
 	 * The number of structural features of the '<em>Identifiable</em>' class.
@@ -105,13 +106,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int CYBER_PHYSICAL_SYSTEM = 1;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CYBER_PHYSICAL_SYSTEM__ID = IDENTIFIABLE__ID;
+	int CYBER_PHYSICAL_SYSTEM__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Db Url</b></em>' attribute.
@@ -178,13 +179,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int APPLICATION_TYPE = 2;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int APPLICATION_TYPE__ID = IDENTIFIABLE__ID;
+	int APPLICATION_TYPE__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Exe File Location</b></em>' attribute.
@@ -278,13 +279,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int HOST_TYPE = 3;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HOST_TYPE__ID = IDENTIFIABLE__ID;
+	int HOST_TYPE__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Default Cpu</b></em>' attribute.
@@ -360,13 +361,22 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int RESOURCE_REQUIREMENT = 4;
 
 	/**
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESOURCE_REQUIREMENT__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
+
+	/**
 	 * The feature id for the '<em><b>Required Cpu</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_REQUIREMENT__REQUIRED_CPU = 0;
+	int RESOURCE_REQUIREMENT__REQUIRED_CPU = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Required Ram</b></em>' attribute.
@@ -375,7 +385,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_REQUIREMENT__REQUIRED_RAM = 1;
+	int RESOURCE_REQUIREMENT__REQUIRED_RAM = IDENTIFIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Required Hdd</b></em>' attribute.
@@ -384,7 +394,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_REQUIREMENT__REQUIRED_HDD = 2;
+	int RESOURCE_REQUIREMENT__REQUIRED_HDD = IDENTIFIABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -393,7 +403,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_REQUIREMENT__TYPE = 3;
+	int RESOURCE_REQUIREMENT__TYPE = IDENTIFIABLE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Resource Requirement</em>' class.
@@ -402,7 +412,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_REQUIREMENT_FEATURE_COUNT = 4;
+	int RESOURCE_REQUIREMENT_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Resource Requirement</em>' class.
@@ -411,7 +421,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RESOURCE_REQUIREMENT_OPERATION_COUNT = 0;
+	int RESOURCE_REQUIREMENT_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.HostInstanceImpl <em>Host Instance</em>}' class.
@@ -424,13 +434,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int HOST_INSTANCE = 5;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HOST_INSTANCE__ID = IDENTIFIABLE__ID;
+	int HOST_INSTANCE__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Node Ip</b></em>' attribute.
@@ -542,13 +552,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int APPLICATION_INSTANCE = 6;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int APPLICATION_INSTANCE__ID = IDENTIFIABLE__ID;
+	int APPLICATION_INSTANCE__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>State</b></em>' attribute.
@@ -633,13 +643,22 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int REQUEST = 7;
 
 	/**
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUEST__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
+
+	/**
 	 * The feature id for the '<em><b>Requirements</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REQUEST__REQUIREMENTS = 0;
+	int REQUEST__REQUIREMENTS = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Request</em>' class.
@@ -648,7 +667,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REQUEST_FEATURE_COUNT = 1;
+	int REQUEST_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Request</em>' class.
@@ -657,7 +676,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REQUEST_OPERATION_COUNT = 0;
+	int REQUEST_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.RequirementImpl <em>Requirement</em>}' class.
@@ -670,13 +689,22 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int REQUIREMENT = 8;
 
 	/**
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIREMENT__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
+
+	/**
 	 * The feature id for the '<em><b>Count</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REQUIREMENT__COUNT = 0;
+	int REQUIREMENT__COUNT = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Request</b></em>' container reference.
@@ -685,7 +713,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REQUIREMENT__REQUEST = 1;
+	int REQUIREMENT__REQUEST = IDENTIFIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -694,7 +722,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REQUIREMENT__TYPE = 2;
+	int REQUIREMENT__TYPE = IDENTIFIABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Applications</b></em>' reference list.
@@ -703,7 +731,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REQUIREMENT__APPLICATIONS = 3;
+	int REQUIREMENT__APPLICATIONS = IDENTIFIABLE_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Requirement</em>' class.
@@ -712,7 +740,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REQUIREMENT_FEATURE_COUNT = 4;
+	int REQUIREMENT_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Requirement</em>' class.
@@ -721,7 +749,7 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REQUIREMENT_OPERATION_COUNT = 0;
+	int REQUIREMENT_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.StateMachineImpl <em>State Machine</em>}' class.
@@ -734,13 +762,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int STATE_MACHINE = 9;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATE_MACHINE__ID = IDENTIFIABLE__ID;
+	int STATE_MACHINE__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -789,13 +817,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int STATE = 10;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATE__ID = IDENTIFIABLE__ID;
+	int STATE__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
@@ -835,13 +863,13 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	int TRANSITION = 11;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Identifier</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSITION__ID = IDENTIFIABLE__ID;
+	int TRANSITION__IDENTIFIER = IDENTIFIABLE__IDENTIFIER;
 
 	/**
 	 * The feature id for the '<em><b>Target State</b></em>' reference.
@@ -901,15 +929,15 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 	EClass getIdentifiable();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable#getIdentifier <em>Identifier</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable#getId()
+	 * @return the meta object for the attribute '<em>Identifier</em>'.
+	 * @see org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable#getIdentifier()
 	 * @see #getIdentifiable()
 	 * @generated
 	 */
-	EAttribute getIdentifiable_Id();
+	EAttribute getIdentifiable_Identifier();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem <em>Cyber Physical System</em>}'.
@@ -1560,12 +1588,12 @@ public interface CyberPhysicalSystemPackage extends EPackage {
 		EClass IDENTIFIABLE = eINSTANCE.getIdentifiable();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Identifier</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_Id();
+		EAttribute IDENTIFIABLE__IDENTIFIER = eINSTANCE.getIdentifiable_Identifier();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl <em>Cyber Physical System</em>}' class.

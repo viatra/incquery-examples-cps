@@ -4,8 +4,6 @@ package org.eclipse.viatra.examples.cps.cyberPhysicalSystem;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Requirement</b></em>'.
@@ -25,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Requirement extends EObject {
+public interface Requirement extends Identifiable {
 	/**
 	 * Returns the value of the '<em><b>Count</b></em>' attribute.
 	 * <!-- begin-user-doc -->

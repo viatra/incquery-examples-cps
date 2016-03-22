@@ -42,7 +42,7 @@ class TransitionMapping extends AbstractRule<TransitionMatch> {
 			val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).filter(
 				DeploymentApplication).head
 			val transition = match.transition
-			val transitionId = transition.id
+			val transitionId = transition.identifier
 			debug('''Mapping transition with ID: «transitionId»''')
 			val depTransition = createBehaviorTransition => [
 				description = transitionId
@@ -75,7 +75,7 @@ class TransitionMapping extends AbstractRule<TransitionMatch> {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED,
 			[ TransitionMatch match |
 				val transition = match.transition
-				val trId = transition.id
+				val trId = transition.identifier
 				debug('''Updating mapped transition with ID: «trId»''')
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).filter(
 					DeploymentApplication).head

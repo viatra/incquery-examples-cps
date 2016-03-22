@@ -103,7 +103,7 @@ pattern waitTransitionAppSignal(transition, appType, signal) {
 pattern triggerPair(cpsTrigger, cpsTarget) {
 	find sendTransitionAppSignal(cpsTrigger, appId, signal);
 	find waitTransitionAppSignal(cpsTarget, waitApp, signal);
-	ApplicationType.id(waitApp, appId);
+	ApplicationType.identifier(waitApp, appId);
 }
 //
 pattern communicatingAppInstances(sourceAppInstance, targetAppInstance) {

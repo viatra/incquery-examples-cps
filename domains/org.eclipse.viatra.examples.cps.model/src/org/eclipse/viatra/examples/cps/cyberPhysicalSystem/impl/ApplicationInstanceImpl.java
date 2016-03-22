@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.AppState;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationInstance;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType;
@@ -31,7 +32,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.ApplicationInstanceImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.ApplicationInstanceImpl#getIdentifier <em>Identifier</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.ApplicationInstanceImpl#getState <em>State</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.ApplicationInstanceImpl#getDbUser <em>Db User</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.ApplicationInstanceImpl#getDbPassword <em>Db Password</em>}</li>
@@ -44,24 +45,24 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance;
  */
 public class ApplicationInstanceImpl extends MinimalEObjectImpl.Container implements ApplicationInstance {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getIdentifier()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ID_EDEFAULT = null;
+	protected static final String IDENTIFIER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getIdentifier()
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = ID_EDEFAULT;
+	protected String identifier = IDENTIFIER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getState() <em>State</em>}' attribute.
@@ -167,8 +168,8 @@ public class ApplicationInstanceImpl extends MinimalEObjectImpl.Container implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
+	public String getIdentifier() {
+		return identifier;
 	}
 
 	/**
@@ -176,11 +177,11 @@ public class ApplicationInstanceImpl extends MinimalEObjectImpl.Container implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void setIdentifier(String newIdentifier) {
+		String oldIdentifier = identifier;
+		identifier = newIdentifier;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.APPLICATION_INSTANCE__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.APPLICATION_INSTANCE__IDENTIFIER, oldIdentifier, identifier));
 	}
 
 	/**
@@ -417,8 +418,8 @@ public class ApplicationInstanceImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__ID:
-				return getId();
+			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__IDENTIFIER:
+				return getIdentifier();
 			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__STATE:
 				return getState();
 			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__DB_USER:
@@ -445,8 +446,8 @@ public class ApplicationInstanceImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__ID:
-				setId((String)newValue);
+			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__IDENTIFIER:
+				setIdentifier((String)newValue);
 				return;
 			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__STATE:
 				setState((AppState)newValue);
@@ -479,8 +480,8 @@ public class ApplicationInstanceImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__ID:
-				setId(ID_EDEFAULT);
+			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__IDENTIFIER:
+				setIdentifier(IDENTIFIER_EDEFAULT);
 				return;
 			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__STATE:
 				setState(STATE_EDEFAULT);
@@ -512,8 +513,8 @@ public class ApplicationInstanceImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__IDENTIFIER:
+				return IDENTIFIER_EDEFAULT == null ? identifier != null : !IDENTIFIER_EDEFAULT.equals(identifier);
 			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__STATE:
 				return state != STATE_EDEFAULT;
 			case CyberPhysicalSystemPackage.APPLICATION_INSTANCE__DB_USER:
@@ -540,8 +541,8 @@ public class ApplicationInstanceImpl extends MinimalEObjectImpl.Container implem
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
+		result.append(" (identifier: ");
+		result.append(identifier);
 		result.append(", state: ");
 		result.append(state);
 		result.append(", dbUser: ");

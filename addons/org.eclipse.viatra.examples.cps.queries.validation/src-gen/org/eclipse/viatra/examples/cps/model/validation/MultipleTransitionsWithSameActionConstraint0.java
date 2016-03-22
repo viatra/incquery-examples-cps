@@ -26,7 +26,7 @@ public class MultipleTransitionsWithSameActionConstraint0 implements IConstraint
 
     @Override
     public String getMessageFormat() {
-        return "Multiple outgoing transitions of $state.id$ define the same action ($action$)";
+        return "Multiple outgoing transitions of $state.identifier$ define the same action ($action$)";
     }
 
 

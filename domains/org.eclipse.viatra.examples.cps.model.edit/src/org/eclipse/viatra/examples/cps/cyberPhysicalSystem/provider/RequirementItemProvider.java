@@ -60,12 +60,35 @@ public class RequirementItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addIdentifierPropertyDescriptor(object);
 			addCountPropertyDescriptor(object);
 			addRequestPropertyDescriptor(object);
 			addTypePropertyDescriptor(object);
 			addApplicationsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Identifier feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIdentifierPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Identifiable_identifier_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_identifier_feature", "_UI_Identifiable_type"),
+				 CyberPhysicalSystemPackage.Literals.IDENTIFIABLE__IDENTIFIER,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -175,8 +198,10 @@ public class RequirementItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		Requirement requirement = (Requirement)object;
-		return getString("_UI_Requirement_type") + " " + requirement.getCount();
+		String label = ((Requirement)object).getIdentifier();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Requirement_type") :
+			getString("_UI_Requirement_type") + " " + label;
 	}
 	
 
@@ -192,6 +217,7 @@ public class RequirementItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Requirement.class)) {
+			case CyberPhysicalSystemPackage.REQUIREMENT__IDENTIFIER:
 			case CyberPhysicalSystemPackage.REQUIREMENT__COUNT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

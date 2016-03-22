@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import org.eclipse.viatra.examples.cps.deployment.BehaviorState;
 import org.eclipse.viatra.examples.cps.deployment.BehaviorTransition;
 import org.eclipse.viatra.examples.cps.deployment.Deployment;

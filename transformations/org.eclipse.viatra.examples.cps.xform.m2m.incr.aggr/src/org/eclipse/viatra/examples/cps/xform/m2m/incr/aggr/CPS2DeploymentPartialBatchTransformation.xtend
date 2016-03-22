@@ -11,7 +11,6 @@ import java.util.List
 import java.util.Map
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationInstance
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
@@ -51,7 +50,6 @@ import org.eclipse.viatra.transformation.runtime.emf.changemonitor.ChangeDelta
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.aggr.queries.TransitionsMatch
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.aggr.queries.StatesMatch
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.aggr.queries.StateMachinesMatch
-import org.eclipse.viatra.examples.cps.xform.m2m.incr.aggr.queries.ApplicationInstanceMatch
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.aggr.queries.AppInstancesMatch
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.aggr.queries.AppTypesMatch
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.aggr.queries.HostInstancesMatch
@@ -149,7 +147,7 @@ class CPS2DeploymentPartialBatchTransformation {
 		info(
 			'''
 			Executing transformation on:
-				Cyber-physical system: «mapping.cps.id»''')
+				Cyber-physical system: «mapping.cps.identifier»''')
 
 		stateTable = HashBasedTable.create
 		traceTable = Maps.newHashMap
@@ -464,7 +462,7 @@ class CPS2DeploymentPartialBatchTransformation {
 		trace('''Executing: createDepApplication(cpsAppInstance = «cpsAppInstance.name»)''')
 		val depApp = depFactory.createDeploymentApplication
 
-		depApp.id = cpsAppInstance.id
+		depApp.id = cpsAppInstance.identifier
 		trace('''Execution: createDepApplication''')
 		depApp
 	}
@@ -481,7 +479,7 @@ class CPS2DeploymentPartialBatchTransformation {
 		trace('''Executing: createDepBehavior(cpsBehavior = «cpsBehavior.name»)''')
 		val depBehavior = depFactory.createDeploymentBehavior
 
-		depBehavior.description = cpsBehavior.id
+		depBehavior.description = cpsBehavior.identifier
 		trace('''Execution ended: createDepBehavior''')
 		depBehavior
 	}
@@ -498,7 +496,7 @@ class CPS2DeploymentPartialBatchTransformation {
 		trace('''Executing: createDepState(cpsState = «cpsState.name»)''')
 		val depState = depFactory.createBehaviorState
 
-		depState.description = cpsState.id
+		depState.description = cpsState.identifier
 		trace('''Execution ended: createDepState''')
 		depState
 	}
@@ -515,7 +513,7 @@ class CPS2DeploymentPartialBatchTransformation {
 		trace('''Executing: createDepTransition(cpsTransition = «cpsTransition.name»)''')
 		val depTransition = depFactory.createBehaviorTransition
 
-		depTransition.description = cpsTransition.id
+		depTransition.description = cpsTransition.identifier
 		trace('''Execution ended: createDepTransition''')
 		depTransition
 	}

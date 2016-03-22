@@ -43,7 +43,7 @@ class ApplicationMappingTest extends CPS2DepTest {
 		val lastTrace = traces.last
 		assertEquals("Trace is not complete (cpsElements)", #[instance], lastTrace.cpsElements)
 		assertEquals("Trace is not complete (depElements)", applications, lastTrace.deploymentElements)
-		assertEquals("ID not copied", instance.id, applications.head.id)
+		assertEquals("ID not copied", instance.identifier, applications.head.id)
 	}
 	
 	@Test
@@ -163,11 +163,11 @@ class ApplicationMappingTest extends CPS2DepTest {
 		cps2dep.assertApplicationMapping(instance)
 		
 		info("Changing host IP")
-		instance.id = "simple.cps.app.instance2"
+		instance.identifier = "simple.cps.app.instance2"
 		executeTransformation
 
 		val applications = cps2dep.deployment.hosts.head.applications
-		assertEquals("Application ID not changed in deployment", instance.id, applications.head.id)
+		assertEquals("Application ID not changed in deployment", instance.identifier, applications.head.id)
 		
 		endTest(testId)
 	}

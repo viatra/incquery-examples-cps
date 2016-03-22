@@ -26,7 +26,7 @@ public class InitialStateNotContainedByStateMachineConstraint0 implements IConst
 
     @Override
     public String getMessageFormat() {
-        return "The initial state $state.id$ of $statemachine.id$ is not included in its states";
+        return "The initial state $state.identifier$ of $statemachine.identifier$ is not included in its states";
     }
 
 

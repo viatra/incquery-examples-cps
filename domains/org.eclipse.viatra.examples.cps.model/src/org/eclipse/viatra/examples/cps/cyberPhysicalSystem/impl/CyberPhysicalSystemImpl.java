@@ -3,16 +3,22 @@
 package org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem;
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPackage;
@@ -27,7 +33,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Request;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getIdentifier <em>Identifier</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getDbUrl <em>Db Url</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getAppTypes <em>App Types</em>}</li>
  *   <li>{@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.impl.CyberPhysicalSystemImpl#getRequests <em>Requests</em>}</li>
@@ -38,24 +44,24 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Request;
  */
 public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implements CyberPhysicalSystem {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getIdentifier()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ID_EDEFAULT = null;
+	protected static final String IDENTIFIER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #getIdentifier() <em>Identifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getIdentifier()
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = ID_EDEFAULT;
+	protected String identifier = IDENTIFIER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDbUrl() <em>Db Url</em>}' attribute.
@@ -131,8 +137,8 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
+	public String getIdentifier() {
+		return identifier;
 	}
 
 	/**
@@ -140,11 +146,11 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void setIdentifier(String newIdentifier) {
+		String oldIdentifier = identifier;
+		identifier = newIdentifier;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__IDENTIFIER, oldIdentifier, identifier));
 	}
 
 	/**
@@ -247,8 +253,8 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__ID:
-				return getId();
+			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__IDENTIFIER:
+				return getIdentifier();
 			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__DB_URL:
 				return getDbUrl();
 			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__APP_TYPES:
@@ -270,8 +276,8 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__ID:
-				setId((String)newValue);
+			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__IDENTIFIER:
+				setIdentifier((String)newValue);
 				return;
 			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__DB_URL:
 				setDbUrl((String)newValue);
@@ -300,8 +306,8 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__ID:
-				setId(ID_EDEFAULT);
+			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__IDENTIFIER:
+				setIdentifier(IDENTIFIER_EDEFAULT);
 				return;
 			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__DB_URL:
 				setDbUrl(DB_URL_EDEFAULT);
@@ -327,8 +333,8 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__IDENTIFIER:
+				return IDENTIFIER_EDEFAULT == null ? identifier != null : !IDENTIFIER_EDEFAULT.equals(identifier);
 			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__DB_URL:
 				return DB_URL_EDEFAULT == null ? dbUrl != null : !DB_URL_EDEFAULT.equals(dbUrl);
 			case CyberPhysicalSystemPackage.CYBER_PHYSICAL_SYSTEM__APP_TYPES:
@@ -351,8 +357,8 @@ public class CyberPhysicalSystemImpl extends MinimalEObjectImpl.Container implem
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
+		result.append(" (identifier: ");
+		result.append(identifier);
 		result.append(", dbUrl: ");
 		result.append(dbUrl);
 		result.append(')');

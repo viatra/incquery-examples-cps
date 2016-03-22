@@ -15,7 +15,7 @@ pattern AppTypesOfTransition(T : Transition, P : ApplicationType) {
 }
 
 pattern ReceiverTransition(AppTypeId, Transition : Transition, SM : StateMachine){
-	ApplicationType.id(AppType, AppTypeId);
+	ApplicationType.identifier(AppType, AppTypeId);
 	ApplicationType.behavior(AppType, SM);
 	StateMachine.states.outgoingTransitions(SM, Transition);
 	neg find TransitionWithAction(Transition);
@@ -33,7 +33,7 @@ pattern TransitionOnAHost(H : HostInstance, T : Transition, AppTypeId){
 	StateMachine.states.outgoingTransitions(SM,T);
 	HostInstance.applications(H,App);
 	ApplicationInstance.type(App,AppType);
-	ApplicationType.id(AppType,AppTypeId);
+	ApplicationType.identifier(AppType,AppTypeId);
 	ApplicationType.behavior(AppType,SM);
 	StateMachine.states.outgoingTransitions(SM,T);
 }

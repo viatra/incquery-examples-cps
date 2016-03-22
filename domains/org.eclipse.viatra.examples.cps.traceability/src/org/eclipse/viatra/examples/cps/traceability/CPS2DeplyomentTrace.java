@@ -3,8 +3,11 @@
 package org.eclipse.viatra.examples.cps.traceability;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable;
+
 import org.eclipse.viatra.examples.cps.deployment.DeploymentElement;
 
 /**
@@ -46,7 +49,7 @@ public interface CPS2DeplyomentTrace extends EObject {
 	 * The list contents are of type {@link org.eclipse.viatra.examples.cps.deployment.DeploymentElement}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Deployment Elements</em>' reference isn't clear,
+	 * If the meaning of the '<em>Deployment Elements</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->

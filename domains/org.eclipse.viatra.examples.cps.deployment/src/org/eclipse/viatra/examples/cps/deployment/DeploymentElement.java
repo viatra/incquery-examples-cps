@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface DeploymentElement extends EObject {
-
 	/**
 	 * Returns the value of the '<em><b>Description</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -47,4 +46,5 @@ public interface DeploymentElement extends EObject {
 	 * @generated
 	 */
 	void setDescription(String value);
+
 } // DeploymentElement

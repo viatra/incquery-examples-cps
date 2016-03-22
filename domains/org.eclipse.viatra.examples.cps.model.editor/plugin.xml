@@ -33,5 +33,4 @@
             contributorClass="org.eclipse.viatra.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemActionBarContributor">
       </editor>
    </extension>
-
 </plugin>
