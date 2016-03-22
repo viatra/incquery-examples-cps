@@ -46,7 +46,7 @@ class StateMappingTest extends CPS2DepTest {
 		assertNotNull("Trace not created", trace)
 		assertEquals("Trace is not complete (cpsElements)", #[state], trace.cpsElements)
 		assertEquals("Trace is not complete (depElements)", #[depState], trace.deploymentElements)
-		assertEquals("ID not copied", state.id, depState.description)
+		assertEquals("ID not copied", state.identifier, depState.description)
 	}
 	
 	@Test
@@ -135,13 +135,13 @@ class StateMappingTest extends CPS2DepTest {
 		executeTransformation
 
 		info("Changing state  ID.")
-		state.id = "simple.cps.sm.s2"
+		state.identifier = "simple.cps.sm.s2"
 		executeTransformation
 		
 		val behavior = cps2dep.deployment.hosts.head.applications.head.behavior
 		val depState = behavior.states.head
 		assertNotNull("State not transformed", depState)
-		assertEquals("Id not changed in deployment", state.id, depState.description)
+		assertEquals("Id not changed in deployment", state.identifier, depState.description)
 		
 		endTest(testId)
 	}

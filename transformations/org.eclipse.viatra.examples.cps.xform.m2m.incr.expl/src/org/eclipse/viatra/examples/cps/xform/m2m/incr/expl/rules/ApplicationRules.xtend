@@ -36,7 +36,7 @@ class ApplicationMapping extends AbstractRule<UnmappedApplicationInstanceMatch> 
 	
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED, [UnmappedApplicationInstanceMatch match |
-			val appId = match.appInstance.id
+			val appId = match.appInstance.identifier
 			debug('''Mapping application with ID: «appId»''')
 			val app = createDeploymentApplication => [
 				id = appId
@@ -67,14 +67,14 @@ class ApplicationUpdate extends AbstractRule<MonitoredApplicationInstanceMatch> 
 	
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED, [MonitoredApplicationInstanceMatch match |
-			val appId = match.appInstance.id
+			val appId = match.appInstance.identifier
 			debug('''Starting monitoring mapped application with ID: «appId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.DELETED, [MonitoredApplicationInstanceMatch match |
-			val appId = match.appInstance.id
+			val appId = match.appInstance.identifier
 			debug('''Stopped monitoring mapped application with ID: «appId»''')
 		])
 	}
@@ -82,7 +82,7 @@ class ApplicationUpdate extends AbstractRule<MonitoredApplicationInstanceMatch> 
 	private def getUpdatedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED, [MonitoredApplicationInstanceMatch match |
 			val app = match.appInstance
-			val appId = app.id
+			val appId = app.identifier
 			debug('''Updating application with ID: «appId»''')
 			val depAppMatches = getMappedApplicationInstance(engine).getAllMatches(app, null, null, null)
 			depAppMatches.forEach[

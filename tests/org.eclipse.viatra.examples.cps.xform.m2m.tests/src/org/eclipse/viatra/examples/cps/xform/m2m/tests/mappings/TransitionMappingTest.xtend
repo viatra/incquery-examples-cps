@@ -50,8 +50,8 @@ class TransitionMappingTest extends CPS2DepTest {
 		assertFalse("Transition not transformed", behavior.transitions.empty)
 		
 		val depTransition = behavior.transitions.head
-		val depSource = behavior.states.findFirst[description == source.id]
-		val depTarget = behavior.states.findFirst[description == transition.targetState.id]
+		val depSource = behavior.states.findFirst[description == source.identifier]
+		val depTarget = behavior.states.findFirst[description == transition.targetState.identifier]
 		assertEquals("Transition not set as outgoing in source state", #[depTransition], depSource.outgoing)
 		assertEquals("Transition to not set to target state", depTarget, depTransition.to)
 		
@@ -59,7 +59,7 @@ class TransitionMappingTest extends CPS2DepTest {
 		assertNotNull("Trace not created", trace)
 		assertEquals("Trace is not complete (cpsElements)", #[transition], trace.cpsElements)
 		assertEquals("Trace is not complete (depElements)", #[depTransition], trace.deploymentElements)
-		assertEquals("ID not copied", transition.id, depTransition.description)
+		assertEquals("ID not copied", transition.identifier, depTransition.description)
 	}
 	
 	@Test
@@ -129,13 +129,13 @@ class TransitionMappingTest extends CPS2DepTest {
 		executeTransformation
 
 		info("Changing transition ID")
-		transition.id = "simple.cps.sm.t2"
+		transition.identifier = "simple.cps.sm.t2"
 		executeTransformation
 
 		val behavior = cps2dep.deployment.hosts.head.applications.head.behavior
 		val depTrans = behavior.transitions.head
 		assertNotNull("Transition not transformed", depTrans)
-		assertEquals("Id not changed in deployment", transition.id, depTrans.description)
+		assertEquals("Id not changed in deployment", transition.identifier, depTrans.description)
 				
 		endTest(testId)
 	}
@@ -164,7 +164,7 @@ class TransitionMappingTest extends CPS2DepTest {
 		val behavior = cps2dep.deployment.hosts.head.applications.head.behavior
 		val depTrans = behavior.transitions.head
 		assertNotNull("Transition not transformed", depTrans)
-		val depTarget2 = behavior.states.findFirst[description == target2.id]
+		val depTarget2 = behavior.states.findFirst[description == target2.identifier]
 		assertEquals("Target state not changed in deployment", depTarget2, depTrans.to)
 				
 		endTest(testId)
@@ -289,7 +289,7 @@ class TransitionMappingTest extends CPS2DepTest {
 		assertNotNull("Trace not created", trace)
 		val depTrans = trace.deploymentElements.head as BehaviorTransition
 		assertEquals("Trace incorrect", #[depTrans], trace.deploymentElements)
-		val depSource2 = behavior.states.findFirst[description == source2.id]
+		val depSource2 = behavior.states.findFirst[description == source2.identifier]
 		assertNotNull("Second source not found", depSource2)
 		assertEquals("Source state not changed", #[depTrans], depSource2.outgoing)
 		

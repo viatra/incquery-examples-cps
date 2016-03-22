@@ -289,7 +289,7 @@ pattern waitTransitionAppSignal(transition, appType, signal) {
 pattern triggerPair(trigger, target) {
 	find sendTransitionAppSignal(trigger, appId, signal);
 	find waitTransitionAppSignal(target, waitApp, signal);
-	ApplicationType.id(waitApp, appId);
+	ApplicationType.identifier(waitApp, appId);
 }
 
 pattern deploymentTrigger(depSendTransition, depWaitTransition) {

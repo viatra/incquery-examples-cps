@@ -100,7 +100,7 @@ class CPS2DeploymentBatchTransformationEiq {
 		info(
 			'''
 			Executing transformation on:
-				Cyber-physical system: «mapping.cps.id»''')
+				Cyber-physical system: «mapping.cps.identifier»''')
 
 		stateTable = HashBasedTable.create
 		traceTable = Maps.newHashMap
@@ -386,7 +386,7 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Executing: createDepApplication(cpsAppInstance = «cpsAppInstance.name»)''')
 		val depApp = depFactory.createDeploymentApplication
 
-		depApp.id = cpsAppInstance.id
+		depApp.id = cpsAppInstance.identifier
 		trace('''Execution: createDepApplication''')
 		depApp
 	}
@@ -403,7 +403,7 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Executing: createDepBehavior(cpsBehavior = «cpsBehavior.name»)''')
 		val depBehavior = depFactory.createDeploymentBehavior
 
-		depBehavior.description = cpsBehavior.id
+		depBehavior.description = cpsBehavior.identifier
 		trace('''Execution ended: createDepBehavior''')
 		depBehavior
 	}
@@ -420,7 +420,7 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Executing: createDepState(cpsState = «cpsState.name»)''')
 		val depState = depFactory.createBehaviorState
 
-		depState.description = cpsState.id
+		depState.description = cpsState.identifier
 		trace('''Execution ended: createDepState''')
 		depState
 	}
@@ -437,7 +437,7 @@ class CPS2DeploymentBatchTransformationEiq {
 		trace('''Executing: createDepTransition(cpsTransition = «cpsTransition.name»)''')
 		val depTransition = depFactory.createBehaviorTransition
 
-		depTransition.description = cpsTransition.id
+		depTransition.description = cpsTransition.identifier
 		trace('''Execution ended: createDepTransition''')
 		depTransition
 	}

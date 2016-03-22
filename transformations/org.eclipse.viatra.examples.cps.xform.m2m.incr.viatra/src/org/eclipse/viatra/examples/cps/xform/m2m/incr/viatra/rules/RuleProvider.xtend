@@ -88,18 +88,18 @@ public class RuleProvider {
 				CRUDActivationStateEnum.CREATED) [
 				val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance.allocatedTo).
 					filter(DeploymentHost).head
-				debug('''Mapping application with ID: «appInstance.id»''')
+				debug('''Mapping application with ID: «appInstance.identifier»''')
 				val deploymentApplication = depHost.createChild(deploymentHost_Applications, deploymentApplication)
-				deploymentApplication.set(deploymentApplication_Id, appInstance.id)
+				deploymentApplication.set(deploymentApplication_Id, appInstance.identifier)
 				
 				val hostTrace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace)
 				hostTrace.addTo(CPS2DeplyomentTrace_CpsElements, appInstance)
 				hostTrace.addTo(CPS2DeplyomentTrace_DeploymentElements, deploymentApplication)
-				debug('''Mapped application with ID: «appInstance.id»''')
+				debug('''Mapped application with ID: «appInstance.identifier»''')
 			].action(CRUDActivationStateEnum.UPDATED) [
 				val depApp = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, appInstance, null).depElement as DeploymentApplication
-				if (depApp.id != appInstance.id)
-					depApp.set(deploymentApplication_Id, appInstance.id)
+				if (depApp.id != appInstance.identifier)
+					depApp.set(deploymentApplication_Id, appInstance.identifier)
 			].action(CRUDActivationStateEnum.DELETED) [
 				val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeplyomentTrace
 				val depApp = trace.deploymentElements.head as DeploymentApplication
@@ -117,9 +117,9 @@ public class RuleProvider {
 				CRUDActivationStateEnum.CREATED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
 					DeploymentApplication).head
-				debug('''Mapping state machine with ID: «stateMachine.id»''')
+				debug('''Mapping state machine with ID: «stateMachine.identifier»''')
 				val behavior = depApp.createChild(deploymentApplication_Behavior, deploymentBehavior) as DeploymentBehavior
-				behavior.set(deploymentElement_Description, stateMachine.id)
+				behavior.set(deploymentElement_Description, stateMachine.identifier)
 				depApp.set(deploymentApplication_Behavior, behavior)
 				val traces = engine.cps2depTrace.getAllValuesOftrace(null, stateMachine, null)
 				if (traces.empty) {
@@ -132,9 +132,9 @@ public class RuleProvider {
 					trace('''Adding new behavior to existing trace''')
 					traces.head.addTo(CPS2DeplyomentTrace_DeploymentElements, behavior)
 				}
-				debug('''Mapped state machine with ID: «stateMachine.id»''')
+				debug('''Mapped state machine with ID: «stateMachine.identifier»''')
 			].action(CRUDActivationStateEnum.UPDATED) [
-				val smId = stateMachine.id
+				val smId = stateMachine.identifier
 				debug('''Updating mapped state machine with ID: «smId»''')
 				val depSMs = engine.cps2depTrace.getAllValuesOfdepElement(null, null, stateMachine).filter(
 					DeploymentBehavior)
@@ -171,9 +171,9 @@ public class RuleProvider {
 			stateRule = createRule.precondition(StateMatcher.querySpecification).action(
 				CRUDActivationStateEnum.CREATED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).head as DeploymentApplication
-				debug('''Mapping state with ID: «state.id»''')
+				debug('''Mapping state with ID: «state.identifier»''')
 				val depState = depApp.behavior.createChild(deploymentBehavior_States, behaviorState)
-				depState.set(deploymentElement_Description, state.id)
+				depState.set(deploymentElement_Description, state.identifier)
 				if (stateMachine.initial == state) {
 					depApp.behavior.set(deploymentBehavior_Current, depState)
 				}
@@ -188,27 +188,27 @@ public class RuleProvider {
 					trace('''Adding new state to existing trace''')
 					traces.head.addTo(CPS2DeplyomentTrace_DeploymentElements, depState)
 				}
-				debug('''Mapped state with ID: «state.id»''')
+				debug('''Mapped state with ID: «state.identifier»''')
 			].action(CRUDActivationStateEnum.UPDATED) [
-				debug('''Updating mapped state with ID: «state.id»''')
+				debug('''Updating mapped state with ID: «state.identifier»''')
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
 					DeploymentApplication).head
 				val depState = engine.cps2depTrace.getAllValuesOfdepElement(null, null, state).filter(BehaviorState).
 					findFirst[depApp.behavior.states.contains(it)]	
 				val depBehavior = depApp.behavior
 				
-				if (depState.description != state.id) {
-					trace('''ID changed to «state.id»''')
-					depState.set(deploymentElement_Description, state.id)
+				if (depState.description != state.identifier) {
+					trace('''ID changed to «state.identifier»''')
+					depState.set(deploymentElement_Description, state.identifier)
 				}
 				
 				if (state == stateMachine.initial) {
 					if (depBehavior.current != depState) {
-						trace('''Current state changed to «state.id»''')
+						trace('''Current state changed to «state.identifier»''')
 						depBehavior.set(deploymentBehavior_Current, depState)
 					}
 				}
-				debug('''Updated mapped state with ID: «state.id»''')
+				debug('''Updated mapped state with ID: «state.identifier»''')
 			].action(CRUDActivationStateEnum.DELETED) [
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).head as DeploymentApplication
 				val depBehavior = depApp.behavior
@@ -243,7 +243,7 @@ public class RuleProvider {
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(
 					DeploymentApplication).head
 				val transition = transition
-				val transitionId = transition.id
+				val transitionId = transition.identifier
 				
 				debug('''Mapping transition with ID: «transitionId»''')
 				val depTransition = depApp.behavior.createChild(deploymentBehavior_Transitions, behaviorTransition)
@@ -270,7 +270,7 @@ public class RuleProvider {
 				debug('''Mapped transition with ID: «transitionId»''')
 			].action(CRUDActivationStateEnum.UPDATED) [
 				val transition = transition
-				val trId = transition.id
+				val trId = transition.identifier
 				debug('''Updating mapped transition with ID: «trId»''')
 				
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance).filter(

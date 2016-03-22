@@ -36,7 +36,7 @@ class StateMapping extends AbstractRule<StateMatch> {
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).head as DeploymentApplication
 				val depBehavior = depApp.behavior
 				val state = match.state
-				val stateId = state.id
+				val stateId = state.identifier
 				debug('''Mapping state with ID: «stateId»''')
 				val depState = createBehaviorState => [
 					description = stateId
@@ -64,7 +64,7 @@ class StateMapping extends AbstractRule<StateMatch> {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED,
 			[ StateMatch match |
 				val state = match.state
-				val stateId = state.id
+				val stateId = state.identifier
 				debug('''Updating mapped state with ID: «stateId»''')
 				val depApp = engine.cps2depTrace.getAllValuesOfdepElement(null, null, match.appInstance).filter(
 					DeploymentApplication).head

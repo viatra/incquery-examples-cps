@@ -26,7 +26,7 @@ public class NodeIpIsNotUniqueConstraint0 implements IConstraintSpecification {
 
     @Override
     public String getMessageFormat() {
-        return "The IP address $host.nodeIp$ of $host.id$ is not unique";
+        return "The IP address $host.nodeIp$ of $host.identifier$ is not unique";
     }
 
 

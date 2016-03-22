@@ -26,7 +26,7 @@ public class MultipleApplicationInstanceInCommunicationGroupConstraint0 implemen
 
     @Override
     public String getMessageFormat() {
-        return "Multiple instances of $app.id$ are reachable from $sourceHostInstance.id$";
+        return "Multiple instances of $app.identifier$ are reachable from $sourceHostInstance.identifier$";
     }
 
 

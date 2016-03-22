@@ -85,7 +85,7 @@ pattern hostFromTransition(appType, appInstance, transition, hostInstance) {
 private pattern triggerPairWithoutReachability(sourceHostInstance, targetHostInstance, appInstanceTrigger, appInstanceTarget, cpsTrigger, cpsTarget) {
 	find sendTransitionAppSignal(cpsTrigger, appId, triggerApp, signal);
 	find waitTransitionAppSignal(cpsTarget, waitApp, signal);
-	ApplicationType.id(waitApp, appId);
+	ApplicationType.identifier(waitApp, appId);
 	
 	find hostFromTransition(triggerApp, appInstanceTrigger, cpsTrigger, sourceHostInstance);	
 	find hostFromTransition(waitApp, appInstanceTarget, cpsTarget, targetHostInstance);

@@ -31,7 +31,7 @@ class IllegalTraceRemoval extends AbstractRule<IllegalTraceMatch> {
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED, [IllegalTraceMatch match |
 			val cpsElements = match.trace.cpsElements
-			debug('''Removing illegal trace for CPS elements: «FOR e : cpsElements SEPARATOR ", "»«e.id»«ENDFOR»''')
+			debug('''Removing illegal trace for CPS elements: «FOR e : cpsElements SEPARATOR ", "»«e.identifier»«ENDFOR»''')
 			rootMapping.traces -= match.trace
 			debug('''Removed illegal trace''')
 		])

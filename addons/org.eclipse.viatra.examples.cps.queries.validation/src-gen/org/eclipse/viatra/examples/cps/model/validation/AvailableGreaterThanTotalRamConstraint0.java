@@ -26,7 +26,7 @@ public class AvailableGreaterThanTotalRamConstraint0 implements IConstraintSpeci
 
     @Override
     public String getMessageFormat() {
-        return "The available RAM ($host.availableRam$) of $host.id$ is greater than the total ($host.totalRam$)";
+        return "The available RAM ($host.availableRam$) of $host.identifier$ is greater than the total ($host.totalRam$)";
     }
 
 

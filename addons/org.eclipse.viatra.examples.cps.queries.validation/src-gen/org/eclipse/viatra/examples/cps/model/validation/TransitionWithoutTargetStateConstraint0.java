@@ -26,7 +26,7 @@ public class TransitionWithoutTargetStateConstraint0 implements IConstraintSpeci
 
     @Override
     public String getMessageFormat() {
-        return "No target state set for $transition.id$";
+        return "No target state set for $transition.identifier$";
     }
 
 

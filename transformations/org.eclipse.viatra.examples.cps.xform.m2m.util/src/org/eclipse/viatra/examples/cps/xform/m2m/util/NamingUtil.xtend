@@ -14,7 +14,7 @@ class NamingUtil {
 	}
 
 	static dispatch def name(Identifiable cpsIdentifiable) {
-		cpsIdentifiable.id
+		cpsIdentifiable.identifier
 	}
 
 	static dispatch def name(DeploymentHost depHost) {

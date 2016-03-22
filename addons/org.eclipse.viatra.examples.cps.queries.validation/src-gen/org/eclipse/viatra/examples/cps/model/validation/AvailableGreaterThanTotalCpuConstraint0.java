@@ -26,7 +26,7 @@ public class AvailableGreaterThanTotalCpuConstraint0 implements IConstraintSpeci
 
     @Override
     public String getMessageFormat() {
-        return "The available CPU ($host.availableCpu$) of $host.id$ is greater than the total ($host.totalCpu$)";
+        return "The available CPU ($host.availableCpu$) of $host.identifier$ is greater than the total ($host.totalCpu$)";
     }
 
 

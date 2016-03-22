@@ -37,7 +37,7 @@ class TransitionMapping extends AbstractRule<UnmappedTransitionMatch> {
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED, [UnmappedTransitionMatch match |
 			val transition = match.transition
-			val transitionId = transition.id
+			val transitionId = transition.identifier
 			debug('''Mapping transition with ID: «transitionId»''')
 			val depTransition = createBehaviorTransition => [
 				description = transitionId
@@ -84,14 +84,14 @@ class TransitionUpdate extends AbstractRule<MonitoredTransitionMatch> {
 	
 	private def getAppearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.CREATED, [MonitoredTransitionMatch match |
-			val trId = match.transition.id
+			val trId = match.transition.identifier
 			debug('''Starting monitoring mapped transition with ID: «trId»''')
 		])
 	}
 	
 	private def getDisappearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.DELETED, [MonitoredTransitionMatch match |
-			val trId = match.transition.id
+			val trId = match.transition.identifier
 			debug('''Stopped monitoring mapped transition with ID: «trId»''')
 		])
 	}
@@ -99,7 +99,7 @@ class TransitionUpdate extends AbstractRule<MonitoredTransitionMatch> {
 	private def getUpdatedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.UPDATED, [MonitoredTransitionMatch match |
 			val transition = match.transition
-			val trId = transition.id
+			val trId = transition.identifier
 			debug('''Updating mapped transition with ID: «trId»''')
 			val depTransitionMatches = getMappedTransition(engine).getAllMatches(transition, null, null)
 			depTransitionMatches.forEach[

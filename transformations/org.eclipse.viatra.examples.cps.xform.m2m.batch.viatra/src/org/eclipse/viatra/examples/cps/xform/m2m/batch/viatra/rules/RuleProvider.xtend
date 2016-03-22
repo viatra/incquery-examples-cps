@@ -71,7 +71,7 @@ class RuleProvider {
 		if (applicationRule == null) {
 			applicationRule = createRule(ApplicationInstanceMatcher.querySpecification)[
 				val cpsApplicationInstance = it.appInstance
-				val appId = it.appInstance.id
+				val appId = it.appInstance.identifier
 				
 				val cpsHostInstance = cpsApplicationInstance.allocatedTo
 				val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsHostInstance).filter(DeploymentHost).head
@@ -100,9 +100,9 @@ class RuleProvider {
 				val cpsStateMachine = it.stateMachine
 				
 				val depApplication = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsApplicationInstance).filter(DeploymentApplication).head
-				debug('''Mapping state machine with ID: «cpsStateMachine.id»''')
+				debug('''Mapping state machine with ID: «cpsStateMachine.identifier»''')
 				val depBehavior = createDeploymentBehavior => [
-					description = cpsStateMachine.id
+					description = cpsStateMachine.identifier
 				]
 				depApplication.behavior = depBehavior
 				
@@ -128,9 +128,9 @@ class RuleProvider {
 				val cpsAppInstance = it.appInstance
 				val cpsState = it.state
 				
-				debug('''Mapping state with ID: «cpsState.id»''')
+				debug('''Mapping state with ID: «cpsState.identifier»''')
 				val behaviorState = createBehaviorState => [
-					description = cpsState.id
+					description = cpsState.identifier
 				]
 				
 				val appInstanceTrace = getTraceForCPSElement(cpsAppInstance)
@@ -164,9 +164,9 @@ class RuleProvider {
 				val cpsTargetState = it.targetState
 				val cpsTransition = it.transition  
 				
-				debug('''Mapping transition with ID: «cpsTransition.id»''')
+				debug('''Mapping transition with ID: «cpsTransition.identifier»''')
 				val behaviorTransition = createBehaviorTransition => [
-					description = cpsTransition.id
+					description = cpsTransition.identifier
 				]
 				
 				val appInstanceTrace = getTraceForCPSElement(cpsAppInstance)
@@ -184,8 +184,8 @@ class RuleProvider {
 					trace.deploymentElements += behaviorTransition
 				}
 				
-				val depTargetState = depBehavior.states.filter[description == cpsTargetState.id].head
-				val depSourceState = depBehavior.states.filter[description == cpsState.id].head
+				val depTargetState = depBehavior.states.filter[description == cpsTargetState.identifier].head
+				val depSourceState = depBehavior.states.filter[description == cpsState.identifier].head
 				
 				depSourceState.outgoing += behaviorTransition
 				behaviorTransition.to = depTargetState
@@ -202,7 +202,7 @@ class RuleProvider {
 				val cpsWaitTransition = waitTransition
 				val cpsWaitAppInstance = waitAppInstance
 				
-				debug('''Mapping trigger between transitions: «cpsSendTransition.id» and «cpsWaitTransition.id»''')
+				debug('''Mapping trigger between transitions: «cpsSendTransition.identifier» and «cpsWaitTransition.identifier»''')
 				val sendTransitionTrace = getTraceForCPSElement(cpsSendTransition)
 				val sendAppInstanceTrace = getTraceForCPSElement(cpsSendAppInstance)
 				

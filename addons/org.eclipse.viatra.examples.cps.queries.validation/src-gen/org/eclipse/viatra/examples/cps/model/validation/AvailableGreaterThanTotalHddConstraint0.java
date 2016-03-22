@@ -26,7 +26,7 @@ public class AvailableGreaterThanTotalHddConstraint0 implements IConstraintSpeci
 
     @Override
     public String getMessageFormat() {
-        return "The available HDD ($host.availableHdd$) of $host.id$ is greater than the total ($host.totalHdd$)";
+        return "The available HDD ($host.availableHdd$) of $host.identifier$ is greater than the total ($host.totalHdd$)";
     }
 
 

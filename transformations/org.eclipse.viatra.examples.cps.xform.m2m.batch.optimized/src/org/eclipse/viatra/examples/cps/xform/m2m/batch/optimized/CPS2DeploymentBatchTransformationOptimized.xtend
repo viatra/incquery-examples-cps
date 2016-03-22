@@ -1,7 +1,6 @@
 package org.eclipse.viatra.examples.cps.xform.m2m.batch.optimized
 
 import com.google.common.base.Stopwatch
-import com.google.common.collect.Lists
 import com.google.common.collect.Maps
 import java.util.ArrayList
 import java.util.Map
@@ -118,7 +117,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		info(
 			'''
 			Executing transformation on:
-				Cyber-physical system: «mapping.cps.id»''')
+				Cyber-physical system: «mapping.cps.identifier»''')
 		
 		// Clear the caches and traces, restart everything from scratch
 		clearModelPerformance.start
@@ -192,7 +191,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 			val deploymentHost = deploymentApp.eContainer as DeploymentHost
 			val hostInstance = reverseMappingCache.get(deploymentHost) as HostInstance
 			val appInstance = reverseMappingCache.get(deploymentApp) as ApplicationInstance
-			val appTypeId = appInstance.type.id
+			val appTypeId = appInstance.type.identifier
 
 			transitionToAppId.put(behaviorTransition, appTypeId)
 			transitionToActionId.put(behaviorTransition, actionId)
@@ -368,7 +367,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		traceBegin('''transform(«appInstance.name»)''')
 		appTransformationPerformance.start
 		var deploymentApp = DeploymentFactory.eINSTANCE.createDeploymentApplication()
-		deploymentApp.id = appInstance.id
+		deploymentApp.id = appInstance.identifier
 
 		appInstance.createOrAddTrace(deploymentApp)
 
@@ -389,7 +388,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		traceBegin('''transform(«stateMachine.name»)''')
 		stateMachineTransformationPerformance.start
 		val behavior = DeploymentFactory.eINSTANCE.createDeploymentBehavior
-		behavior.description = stateMachine.id
+		behavior.description = stateMachine.identifier
 
 		stateMachine.createOrAddTrace(behavior)
 
@@ -430,7 +429,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		traceBegin('''transform(«state.name»)''')
 		stateTransformationPerformance.start
 		val behaviorState = DeploymentFactory.eINSTANCE.createBehaviorState
-		behaviorState.description = state.id
+		behaviorState.description = state.identifier
 
 		state.createOrAddTrace(behaviorState)
 
@@ -453,7 +452,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 		val targetBehaviorState = dep.head as BehaviorState
 		behaviorTransition.to = targetBehaviorState
 		behaviorState.outgoing += behaviorTransition
-		behaviorTransition.description = transition.id
+		behaviorTransition.description = transition.identifier
 
 		transition.createOrAddTrace(behaviorTransition)
 
@@ -495,7 +494,7 @@ class CPS2DeploymentBatchTransformationOptimized {
 			reverseMappingCache.put(deploymentElement,identifiable)
 			if(!trace.tail.empty){
 				throw new IllegalStateException(
-					'''More than one mapping was created to state machine wit Id '«identifiable.id»'.''')
+					'''More than one mapping was created to state machine wit Id '«identifiable.identifier»'.''')
 			}
 		}
 

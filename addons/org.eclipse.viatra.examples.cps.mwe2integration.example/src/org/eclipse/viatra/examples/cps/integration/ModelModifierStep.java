@@ -37,7 +37,7 @@ public class ModelModifierStep extends TransformationStep{
 //            appType = appTypes.get(0);
 //        }
         for (ApplicationType applicationType : appTypes) {
-            if(applicationType.getId().contains("AC_withStateMachine")){
+            if(applicationType.getIdentifier().contains("AC_withStateMachine")){
                 appType = applicationType;
             }
         }
@@ -48,7 +48,7 @@ public class ModelModifierStep extends TransformationStep{
 //            instance = hostTypes.get(0).getInstances().get(0);
 //        }
         for (HostType type : hostTypes) {
-            if(type.getId().contains("HC_appContainer")){
+            if(type.getIdentifier().contains("HC_appContainer")){
                 instance = type.getInstances().get(0);
             }
         }       

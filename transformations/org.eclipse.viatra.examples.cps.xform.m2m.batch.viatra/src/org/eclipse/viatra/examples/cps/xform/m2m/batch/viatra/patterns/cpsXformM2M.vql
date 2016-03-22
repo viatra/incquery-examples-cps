@@ -58,7 +58,7 @@ pattern waitAction(appInstance, transition, action, signalId) {
 pattern actionPair(sendTransition, sendAppInstance, waitTransition, waitAppInstance) {
 	find sendAction(sendAppInstance, sendTransition, _, signalId, appTypeId);
 	find waitAction(waitAppInstance, waitTransition, _, signalId);
-	ApplicationInstance.type.id(waitAppInstance, appTypeId);
+	ApplicationInstance.type.identifier(waitAppInstance, appTypeId);
 	
 	ApplicationInstance.allocatedTo(sendAppInstance, sendHostInstance);
 	ApplicationInstance.allocatedTo(waitAppInstance, waitHostInstance);
