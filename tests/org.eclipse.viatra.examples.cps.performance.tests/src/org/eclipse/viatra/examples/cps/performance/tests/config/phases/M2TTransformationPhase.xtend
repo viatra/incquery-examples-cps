@@ -77,13 +77,13 @@ class M2TTransformationPhase extends AtomicPhase {
 		createProject("",projectName, fileAccessor)
 		val project = ResourcesPlugin.workspace.root.getProject(projectName)
 		val srcFolder = project.getFolder("src");
-		srcFolder.members.forEach[delete(true, null)]
 		val folderString = srcFolder.location.toOSString
 		cpsToken.srcFolder = srcFolder
 		val monitor = new NullProgressMonitor();
 		if (!srcFolder.exists()) {
 			srcFolder.create(true, true, monitor);
 		}
+		srcFolder.members.forEach[delete(true, null)]
 		
 		performSerialization(cpsToken, folderString, fileAccessor)
 	}

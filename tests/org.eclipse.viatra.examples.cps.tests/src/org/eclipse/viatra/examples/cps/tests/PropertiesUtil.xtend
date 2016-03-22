@@ -29,7 +29,7 @@ class PropertiesUtil {
         var InputStream inputStream = null
     	try {
     		//load a properties file
-            inputStream = PropertiesUtil.classLoader.getResourceAsStream("cps2dep.properties")
+            inputStream = PropertiesUtil.classLoader.getResourceAsStream(configPath)
             if(inputStream != null){
 	            properties.load(inputStream);
             } else {

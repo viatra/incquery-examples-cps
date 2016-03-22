@@ -112,12 +112,12 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 			createProject("",projectName, fileAccessor)
 			val project = ResourcesPlugin.workspace.root.getProject(projectName)
 			val srcFolder = project.getFolder("src");
-			srcFolder.members.forEach[delete(true, null)]
 			folderString = srcFolder.location.toOSString
 			val monitor = new NullProgressMonitor();
 			if (!srcFolder.exists()) {
 				srcFolder.create(true, true, monitor);
 			}
+			srcFolder.members.forEach[delete(true, null)]
 		} else {
 			fileAccessor = new JavaIOBasedFileAccessor
 			val projectPath = "results/temp/"
