@@ -2,7 +2,7 @@ package org.eclipse.viatra.examples.cps.model.viewer
 
 import "http://org.eclipse.viatra/model/cps"
 
-@Item(item = machine, label = "$machine.id$")
+@Item(item = machine, label = "$machine.identifier$")
 pattern statemachines(machine) {
 	StateMachine(machine);
 }
@@ -18,13 +18,13 @@ pattern cpsStatemachineStateEdge(machine, state) {
 }
 
 @Format(color = "#2DF618", textColor = "#000000")
-@Item(item = state, label = "$machine.id$ $state.id$")
+@Item(item = state, label = "$machine.identifier$ $state.identifier$")
 pattern initialState(machine, state) {
 	StateMachine.initial(machine, state);
 }
 
 @Format(color = "#00F8EF", textColor = "#000000")
-@Item(item = state, label = "$machine.id$ $state.id$")
+@Item(item = state, label = "$machine.identifier$ $state.identifier$")
 pattern states(machine, state) {
 	StateMachine.states(machine, state);
 	neg find initialState(machine, state);

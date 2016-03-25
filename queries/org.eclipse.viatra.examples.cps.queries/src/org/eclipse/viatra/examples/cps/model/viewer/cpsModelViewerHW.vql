@@ -2,7 +2,7 @@ package org.eclipse.viatra.examples.cps.model.viewer
 
 import "http://org.eclipse.viatra/model/cps"
 
-@Item(item = host, label = "$host.id$")
+@Item(item = host, label = "$host.identifier$")
 @Format(color = "#0033CC", textColor = "#FFFFFF")
 pattern hostTypes(host) {
 	HostType(host);

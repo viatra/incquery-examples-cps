@@ -2,7 +2,7 @@ package org.eclipse.viatra.examples.cps.model.viewer
 
 import "http://org.eclipse.viatra/model/cps"
 
-@Item(item = app, label = "$app.id$")
+@Item(item = app, label = "$app.identifier$")
 @Format(color = "#800000", textColor = "#FFFFFF")
 pattern applicationTypes(app) {
 	ApplicationType(app);
