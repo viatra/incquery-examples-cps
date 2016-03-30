@@ -8,20 +8,12 @@ import org.eclipse.viatra.examples.cps.xform.m2m.incr.viatra.patterns.CpsXformM2
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.viatra.rules.RuleProvider
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.viatra.util.PerJobFixedPriorityConflictResolver
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
-import org.eclipse.viatra.transformation.debug.breakpoints.impl.TransformationBreakpoint
-import org.eclipse.viatra.transformation.debug.configuration.TransformationDebuggerConfiguration
 import org.eclipse.viatra.transformation.evm.api.Executor
 import org.eclipse.viatra.transformation.evm.api.Scheduler.ISchedulerFactory
 import org.eclipse.viatra.transformation.runtime.emf.transformation.eventdriven.EventDrivenTransformation
+import org.eclipse.viatra.transformation.runtime.emf.transformation.eventdriven.ExecutionSchemaBuilder
 
 import static com.google.common.base.Preconditions.*
-import org.eclipse.emf.common.util.URI
-import org.eclipse.viatra.transformation.tracer.tracecoder.TraceCoder
-import org.eclipse.viatra.transformation.debug.ManualConflictResolver
-import org.eclipse.viatra.transformation.debug.controller.impl.ConsoleDebugger
-import org.eclipse.viatra.transformation.tracer.traceexecutor.TraceExecutor
-import org.eclipse.viatra.transformation.debug.ui.impl.ViewersDebugger
-import org.eclipse.viatra.examples.cps.xform.m2m.incr.viatra.patterns.ViewersPatterns
 
 class CPS2DeploymentTransformationViatra {
 
@@ -85,21 +77,27 @@ class CPS2DeploymentTransformationViatra {
 		fixedPriorityResolver.setPriority(transitionRule.ruleSpecification, 5)
 		fixedPriorityResolver.setPriority(triggerRule.ruleSpecification, 6)
 
+		val ExecutionSchemaBuilder builder= new ExecutionSchemaBuilder()
+		.setEngine(engine)
+		if(executor!=null){
+			builder.executor = executor
+		}
+		if(factory != null){
+			builder.scheduler = factory
+		}	
+		builder.setConflictResolver(fixedPriorityResolver)
+		val schema = builder.build()
+
 		transform = EventDrivenTransformation.forEngine(engine)
-		     .setConflictResolver(fixedPriorityResolver)
-			 .addRule(hostRule)
-			 .addRule(applicationRule)
-			 .addRule(stateMachineRule)
-			 .addRule(stateRule)
-			 .addRule(transitionRule)
-			 .addRule(triggerRule)
-//			 .addAdapterConfiguration(new TransformationDebuggerConfiguration(new TransformationBreakpoint(hostRule.ruleSpecification)))
-//			 .addAdapterConfiguration(new TransformationDebuggerConfiguration(new ViewersDebugger(engine, ViewersPatterns.instance.specifications), new TransformationBreakpoint(hostRule.ruleSpecification)))
-			 .addListener(new TraceCoder(URI.createURI("transformationtrace/trace.transformationtrace")))
-//			 .addAdapter(new ManualConflictResolver(new ConsoleDebugger))
-//			 .addAdapter(new TraceExecutor(URI.createURI("transformationtrace/trace.transformationtrace")))
-			 .build	
-	   }
+			.setSchema(schema)
+			.addRule(hostRule)
+			.addRule(applicationRule)
+			.addRule(stateMachineRule)
+			.addRule(stateRule)
+			.addRule(transitionRule)
+			.addRule(triggerRule)
+			.build()
+	}
 
 	def dispose() {
 		if (transform != null) {

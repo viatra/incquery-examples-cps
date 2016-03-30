@@ -3,21 +3,12 @@ package org.eclipse.viatra.examples.cps.xform.m2m.batch.viatra
 import com.google.common.base.Stopwatch
 import java.util.concurrent.TimeUnit
 import org.apache.log4j.Logger
-import org.eclipse.emf.common.util.URI
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment
 import org.eclipse.viatra.examples.cps.xform.m2m.batch.viatra.patterns.CpsXformM2M
-import org.eclipse.viatra.examples.cps.xform.m2m.batch.viatra.patterns.ViewersPatterns
 import org.eclipse.viatra.examples.cps.xform.m2m.batch.viatra.rules.RuleProvider
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
-import org.eclipse.viatra.transformation.debug.ManualConflictResolver
-import org.eclipse.viatra.transformation.debug.breakpoints.impl.TransformationBreakpoint
-import org.eclipse.viatra.transformation.debug.configuration.TransformationDebuggerConfiguration
-import org.eclipse.viatra.transformation.debug.controller.impl.ConsoleDebugger
-import org.eclipse.viatra.transformation.debug.ui.impl.ViewersDebugger
+import org.eclipse.viatra.transformation.runtime.emf.rules.batch.BatchTransformationStatements
 import org.eclipse.viatra.transformation.runtime.emf.transformation.batch.BatchTransformation
-import org.eclipse.viatra.transformation.runtime.emf.transformation.batch.BatchTransformationStatements
-import org.eclipse.viatra.transformation.tracer.tracecoder.TraceCoder
-import org.eclipse.viatra.transformation.tracer.traceexecutor.TraceExecutor
 
 import static com.google.common.base.Preconditions.*
 
@@ -45,17 +36,10 @@ class CPS2DeploymentBatchViatra {
 		if (!initialized) {
 			this.mapping = cps2dep
 			this.engine = engine
-			ruleProvider = new RuleProvider(engine, cps2dep)
 			
-			transformation = BatchTransformation.forEngine(engine)
-//                .addAdapterConfiguration(new TransformationDebuggerConfiguration(new TransformationBreakpoint(hostRule.ruleSpecification)))
-//                .addAdapterConfiguration(new TransformationDebuggerConfiguration(new ViewersDebugger(engine, ViewersPatterns.instance.specifications), new TransformationBreakpoint(hostRule.ruleSpecification)))
-                .addListener(new TraceCoder(URI.createURI("transformationtrace/trace.transformationtrace")))
-//                .addAdapter(new ManualConflictResolver(new ConsoleDebugger))
-//                .addAdapter(new TraceExecutor(URI.createURI("transformationtrace/trace.transformationtrace")))
-			    .build
-			statements = transformation.transformationStatements
-            
+			transformation = BatchTransformation::forEngine(engine)
+			statements = new BatchTransformationStatements(transformation)
+			
 			debug("Preparing queries on engine.")
 			var watch = Stopwatch.createStarted
 			prepare(engine)
@@ -63,6 +47,7 @@ class CPS2DeploymentBatchViatra {
 			
 			debug('''Preparing transformation rules.''')
 			watch = Stopwatch.createStarted
+			ruleProvider = new RuleProvider(engine, cps2dep)
 			
 			debug('''Prepared transformation rules («watch.elapsed(TimeUnit.MILLISECONDS)» ms)''')
 			initialized = true
@@ -74,13 +59,13 @@ class CPS2DeploymentBatchViatra {
 		debug('''Executing transformation on: Cyber-physical system: «mapping.cps.identifier»''')
 		mapping.traces.clear
 		mapping.deployment.hosts.clear
-	
+		
 		hostRule.fireAllCurrent
-        applicationRule.fireAllCurrent
-        stateMachineRule.fireAllCurrent
-        stateRule.fireAllCurrent
-        transitionRule.fireAllCurrent
-        actionRule.fireAllCurrent	
+		applicationRule.fireAllCurrent
+		stateMachineRule.fireAllCurrent
+		stateRule.fireAllCurrent
+		transitionRule.fireAllCurrent
+		actionRule.fireAllCurrent		
 	}
 	
 	
