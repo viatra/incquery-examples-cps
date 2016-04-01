@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ASCII"?>
+<vqSnapshot:QuerySnapshot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:vqSnapshot="http://www.eclipse.org/viatra/query/snapshot" inputSpecification="ResourceSet">
+  <matchSetRecords patternQualifiedName="org.eclipse.viatra.examples.cps.queries.applicationTypeWithHostedInstances">
+    <filter/>
+  </matchSetRecords>
+  <matchSetRecords patternQualifiedName="org.eclipse.viatra.examples.cps.queries.hostInstancesWithZeroTotalRam">
+    <filter/>
+  </matchSetRecords>
+  <matchSetRecords patternQualifiedName="org.eclipse.viatra.examples.cps.queries.inTheCommunicationChains">
+    <filter/>
+  </matchSetRecords>
+  <matchSetRecords patternQualifiedName="org.eclipse.viatra.examples.cps.queries.hasTheMostHostedApplications">
+    <filter/>
+  </matchSetRecords>
+  <modelRoots href="../../org.eclipse.viatra.examples.cps.instances/demo.cyberphysicalsystem#testModel6504822858552"/>
+</vqSnapshot:QuerySnapshot>

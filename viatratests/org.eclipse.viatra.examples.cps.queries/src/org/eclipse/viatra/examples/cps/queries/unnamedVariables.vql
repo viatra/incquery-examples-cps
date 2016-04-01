@@ -1,0 +1,21 @@
+package org.eclipse.viatra.examples.cps.queries
+// This tests the 398745 bug
+
+import "http://org.eclipse.viatra/model/cps"
+
+pattern hostInstancesTypeWithDefaultRam(
+	HI : HostInstance,
+	HT : HostType,
+	DR
+) {
+	HostType.instances(HT, HI);
+	HostType.defaultRam(HT, DR);
+}
+
+pattern allVariablesNamed(HI : HostInstance) {
+	find hostInstancesTypeWithDefaultRam(HI, _HT, _DR);
+}
+
+pattern anonymousVariables(HI : HostInstance) {
+	find hostInstancesTypeWithDefaultRam(HI, _, _);
+}
