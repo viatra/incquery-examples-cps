@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><plugin>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.availableGreaterThanTotalCpu" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.AvailableGreaterThanTotalCpuConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.availableGreaterThanTotalCpu"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.nodeIpIsNotUnique" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.NodeIpIsNotUniqueConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.nodeIpIsNotUnique"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.availableGreaterThanTotalHdd" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.AvailableGreaterThanTotalHddConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.availableGreaterThanTotalHdd"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.notAllocatedButRunning" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.NotAllocatedButRunningConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.notAllocatedButRunning"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.transitionWithoutTargetState" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.TransitionWithoutTargetStateConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.transitionWithoutTargetState"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.idIsNotUnique" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.IdIsNotUniqueConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.idIsNotUnique"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.targetStateNotContainedBySameStateMachine" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.TargetStateNotContainedBySameStateMachineConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.targetStateNotContainedBySameStateMachine"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.multipleApplicationInstanceInCommunicationGroup" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.MultipleApplicationInstanceInCommunicationGroupConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.multipleApplicationInstanceInCommunicationGroup"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.initialStateNotContainedByStateMachine" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.InitialStateNotContainedByStateMachineConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.initialStateNotContainedByStateMachine"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.multipleTransitionsWithSameAction" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.MultipleTransitionsWithSameActionConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.multipleTransitionsWithSameAction"/>
+  </extension>
+  <extension id="validation.constraint.org.eclipse.viatra.examples.cps.tests.queries.availableGreaterThanTotalRam" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="org.eclipse.viatra.examples.cps.tests.queries.AvailableGreaterThanTotalRamConstraint0" name="org.eclipse.viatra.examples.cps.tests.queries.availableGreaterThanTotalRam"/>
+  </extension>
+</plugin>
