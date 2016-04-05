@@ -63,9 +63,6 @@ class CPS2DeploymentTransformationViatra {
         this.factory = factory
     }
     
-    def setExecutor(Executor executor){
-        this.executor = executor
-    }
 
     private def createTransformation() {
         val fixedPriorityResolver = new PerJobFixedPriorityConflictResolver
