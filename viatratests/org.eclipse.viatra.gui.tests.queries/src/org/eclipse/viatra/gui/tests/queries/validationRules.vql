@@ -1,4 +1,4 @@
-package org.eclipse.viatra.examples.cps.tests.queries
+package org.eclipse.viatra.gui.tests.queries
 
 import "http://org.eclipse.viatra/model/cps"
 
