@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses
 
 @RunWith(Suite)
 @SuiteClasses(#[
-    //AnonymousVariablesCpsTest,
+    AnonymousVariablesCpsTest,
     APICpsTest,
     BasicCpsTest,
     ModelManipulationCpsTest,
