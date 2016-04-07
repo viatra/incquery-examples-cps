@@ -24,7 +24,6 @@ class CPS2DeploymentTransformationViatra {
     ViatraQueryEngine engine
     EventDrivenTransformation transform
     ISchedulerFactory factory;
-    Executor executor;
 
     private var initialized = false;
 
@@ -54,7 +53,7 @@ class CPS2DeploymentTransformationViatra {
 
     def execute() {
         debug('''Executing transformation on: Cyber-physical system: «cps2dep.cps.identifier»''')
-        if(executor == null && factory ==null){
+        if(factory == null){
             transform.executionSchema.startUnscheduledExecution
         }
     }
@@ -73,7 +72,7 @@ class CPS2DeploymentTransformationViatra {
         fixedPriorityResolver.setPriority(transitionRule.ruleSpecification, 5)
         fixedPriorityResolver.setPriority(triggerRule.ruleSpecification, 6)
 
-        transform = EventDrivenTransformation.forEngine(engine)
+        val builder =  EventDrivenTransformation.forEngine(engine)
              .setConflictResolver(fixedPriorityResolver)
              .addRule(hostRule)
              .addRule(applicationRule)
@@ -81,7 +80,11 @@ class CPS2DeploymentTransformationViatra {
              .addRule(stateRule)
              .addRule(transitionRule)
              .addRule(triggerRule)
-             .build 
+         if(factory!=null){
+             builder.schedulerFactory = factory
+         }
+         
+         transform = builder.build 
        }
 
     def dispose() {
