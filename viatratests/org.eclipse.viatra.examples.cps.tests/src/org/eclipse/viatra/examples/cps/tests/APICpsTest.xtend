@@ -1,8 +1,8 @@
 package org.eclipse.viatra.examples.cps.tests
 
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.eclipse.viatra.examples.cps.queries.TransitionsOfApplicationTypeMatcher
-import org.eclipse.viatra.examples.cps.queries.util.TransitionsOfApplicationTypeQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.TransitionsOfApplicationTypeMatcher
+import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicationTypeQuerySpecification
 import org.eclipse.viatra.query.patternlanguage.emf.eMFPatternLanguage.PatternModel
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
@@ -19,9 +19,9 @@ class APICpsTest {
     extension ModelLoadHelper = new ModelLoadHelper
     extension SnapshotHelper = new SnapshotHelper
 
-    public static val TESTED_PATTERN = "org.eclipse.viatra.examples.cps.queries.transitionsOfApplicationType"
-    public static val TESTED_QUERY_FILE = "org.eclipse.viatra.examples.cps.queries/org/eclipse/viatra/examples/cps/queries/simpleCpsQueries.vql"
-    public static val TESTED_SNAPSHOT = "org.eclipse.viatra.examples.cps.queries/snapshots/test.snapshot"
+    public static val TESTED_PATTERN = "org.eclipse.viatra.examples.cps.tests.queries.transitionsOfApplicationType"
+    public static val TESTED_QUERY_FILE = "org.eclipse.viatra.examples.cps.tests.queries/org/eclipse/viatra/examples/cps/tests/queries/simpleCpsQueries.vql"
+    public static val TESTED_SNAPSHOT = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test.snapshot"
 
     def snapshot() {
         val snp = TESTED_SNAPSHOT

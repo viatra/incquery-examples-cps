@@ -2,16 +2,16 @@ package org.eclipse.viatra.examples.cps.tests
 
 import org.junit.Test
 import org.eclipse.viatra.query.testing.core.api.ViatraQueryTest
-import org.eclipse.viatra.examples.cps.queries.util.IncreasingAlphabeticalCommunicationChainRecQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.IncreasingAlphabeticalCommunicationChainRecQuerySpecification
 import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance
-import org.eclipse.viatra.examples.cps.queries.util.IncreasingAlphabeticalCommunicationChainTCQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.IncreasingAlphabeticalCommunicationChainTCQuerySpecification
 
 class RecursionCpsTest {
-	String snpRecOrig = "org.eclipse.viatra.examples.cps.queries/snapshots/test_recursion_chainRec.snapshot"
-	String snpRecModified = "org.eclipse.viatra.examples.cps.queries/snapshots/test_recursion_communicationRemoved_chainRec.snapshot"
-	String snpTCOrig = "org.eclipse.viatra.examples.cps.queries/snapshots/test_recursion_chainTC.snapshot"
-	String snpTCModified = "org.eclipse.viatra.examples.cps.queries/snapshots/test_recursion_communicationRemoved_chainTC.snapshot"
+	String snpRecOrig = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_recursion_chainRec.snapshot"
+	String snpRecModified = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_recursion_communicationRemoved_chainRec.snapshot"
+	String snpTCOrig = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_recursion_chainTC.snapshot"
+	String snpTCModified = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_recursion_communicationRemoved_chainTC.snapshot"
 	
 	@Test
 	def void staticRecursionTest() {

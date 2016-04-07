@@ -7,30 +7,30 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFa
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostType
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.State
-import org.eclipse.viatra.examples.cps.queries.util.ApplicationInstancesIdentifiersQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.ApplicationInstancesOfApplicationTypeQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.ApplicationInstancesQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.ApplicationTypeWithHostedInstancesQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.ApplicationTypesIdentifiersQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.CommunicateWithQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.HostedApplicationsQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.TransitionsOfApplicationTypeIdentifiersQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationInstancesIdentifiersQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationInstancesOfApplicationTypeQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationInstancesQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationTypeWithHostedInstancesQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationTypesIdentifiersQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.CommunicateWithQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.HostedApplicationsQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicationTypeIdentifiersQuerySpecification
 import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory
 import org.eclipse.viatra.query.testing.core.api.ViatraQueryTest
 import org.junit.Test
-import org.eclipse.viatra.examples.cps.queries.util.InTheCommunicationChainsQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.HostInstanceWithAtLeastAsMuchTotalRamAsTotalHddQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.FinalPatternQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.HostInstancesWithZeroTotalRamQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.HasTheMostHostedApplicationsQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.ApplicationTypeWithoutHostedInstanceQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.InTheCommunicationChainsQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.HostInstanceWithAtLeastAsMuchTotalRamAsTotalHddQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.FinalPatternQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.HostInstancesWithZeroTotalRamQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.HasTheMostHostedApplicationsQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationTypeWithoutHostedInstanceQuerySpecification
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.viatra.examples.cps.queries.util.HasTheMostHostedApplicationInstancesQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.TransitionsOfApplicationTypeQuerySpecification
-import org.eclipse.viatra.examples.cps.queries.util.InstancesQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.HasTheMostHostedApplicationInstancesQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicationTypeQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.InstancesQuerySpecification
 
 class ModelManipulationCpsTest {
-	public static val SNAPSHOT_PATH = "org.eclipse.viatra.examples.cps.queries/snapshots/test.snapshot"
+	public static val SNAPSHOT_PATH = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test.snapshot"
 
 	@Test
 	def void test_newAppInstance() {
@@ -44,7 +44,7 @@ class ModelManipulationCpsTest {
 					it.type = appType
 				]
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_newAppInstance.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_newAppInstance.snapshot").assertEquals
 	}
 
 	@Test
@@ -56,7 +56,7 @@ class ModelManipulationCpsTest {
 				// change the Application Instance "simple.cps.app.FirstAppClass0.inst1" identifier to "simple.cps.app.FirstAppClass0.instModified"
 				appInst.identifier = "simple.cps.app.FirstAppClass0.instModified"
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_changeAppInstanceIdentifier.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_changeAppInstanceIdentifier.snapshot").assertEquals
 	}
 
 	@Test
@@ -68,7 +68,7 @@ class ModelManipulationCpsTest {
 				// change the Application Type "simple.cps.app.FirstAppClass0" identifier to "simple.cps.app.FirstAppClassModified"
 				appType.identifier = "simple.cps.app.FirstAppClassModified"
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_changeAppTypeIdentifier.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_changeAppTypeIdentifier.snapshot").assertEquals
 	}
 	
 	@Test
@@ -80,7 +80,7 @@ class ModelManipulationCpsTest {
 				// delete the Application Instance "simple.cps.app.FirstAppClass0.inst1"
 				EcoreUtil.delete(appInst)
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_deleteAppInstance.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteAppInstance.snapshot").assertEquals
 	}
 
 	@Test
@@ -92,7 +92,7 @@ class ModelManipulationCpsTest {
 				// delete the Application Type "simple.cps.app.FirstAppClass0"
 				EcoreUtil.delete(appType)
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_deleteAppType.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteAppType.snapshot").assertEquals
 	}
 	
 	@Test
@@ -109,7 +109,7 @@ class ModelManipulationCpsTest {
 					it.communicateWith += hostInst
 				]
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_newHostInstance.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_newHostInstance.snapshot").assertEquals
 	}
 	
 	@Test
@@ -121,7 +121,7 @@ class ModelManipulationCpsTest {
 				val hostInst = appInst.eResource.allContents.filter(HostInstance).findFirst[it.identifier == "simple.cps.host.SecondHostClass0.inst0"]
 				appInst.allocatedTo = hostInst
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_changeAppInstanceAllocationLocation.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_changeAppInstanceAllocationLocation.snapshot").assertEquals
 	}
 	
 	@Test
@@ -133,7 +133,7 @@ class ModelManipulationCpsTest {
 				val appType = appInst.eResource.allContents.filter(ApplicationType).findFirst[it.identifier == "simple.cps.app.SecondAppClass0"]
 				appInst.type = appType
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_changeAppInstanceType.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_changeAppInstanceType.snapshot").assertEquals
 	}
 	
 	@Test
@@ -148,7 +148,7 @@ class ModelManipulationCpsTest {
 					state.outgoingTransitions += it
 				]
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_newTransition.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_newTransition.snapshot").assertEquals
 	}
 	
 	@Test
@@ -156,7 +156,7 @@ class ModelManipulationCpsTest {
 		ViatraQueryTest.test(InTheCommunicationChainsQuerySpecification.instance)
 		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 		.modify(HostType, [it.identifier == "simple.cps.host.FirstHostClass0"], [ EcoreUtil.delete(it) ])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_deleteHostType.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteHostType.snapshot").assertEquals
 	}
 	
 	@Test
@@ -172,7 +172,7 @@ class ModelManipulationCpsTest {
 					hostType.instances += it
 				]
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_newHostInstanceWithMoreRamThanHdd.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_newHostInstanceWithMoreRamThanHdd.snapshot").assertEquals
 	}
 	
 	@Test
@@ -189,7 +189,7 @@ class ModelManipulationCpsTest {
 					hostType.instances += it
 				]
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_newHostInstanceWithMoreHddThanRam.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_newHostInstanceWithMoreHddThanRam.snapshot").assertEquals
 	}
 	
 	@Test
@@ -197,7 +197,7 @@ class ModelManipulationCpsTest {
 		ViatraQueryTest.test(FinalPatternQuerySpecification.instance)
 		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 		.modify(HostInstance, [it.identifier == "simple.cps.host.SecondHostClass0.inst1"], [ EcoreUtil.delete(it) ])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_deleteHostInstanceWithTheMostHostedApplication.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteHostInstanceWithTheMostHostedApplication.snapshot").assertEquals
 	}
 	
 	@Test
@@ -208,7 +208,7 @@ class ModelManipulationCpsTest {
 		.and(HasTheMostHostedApplicationsQuerySpecification.instance)
 		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 		.modify(HostType, [true], [ EcoreUtil.delete(it) ])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_deleteAllHostType.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteAllHostType.snapshot").assertEquals
 	}
 	
 	@Test
@@ -217,7 +217,7 @@ class ModelManipulationCpsTest {
 		.and(HasTheMostHostedApplicationsQuerySpecification.instance)
 		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 		.modify(HostInstance, [true], [ EcoreUtil.delete(it) ])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_deleteAllHostInstance.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteAllHostInstance.snapshot").assertEquals
 	}
 	
 	@Test
@@ -268,6 +268,6 @@ class ModelManipulationCpsTest {
 				    ]
 				]
 			])
-		.with("org.eclipse.viatra.examples.cps.queries/snapshots/test_newComplexStructure.snapshot").assertEquals
+		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_newComplexStructure.snapshot").assertEquals
 	}
 }

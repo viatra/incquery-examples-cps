@@ -18,8 +18,8 @@ class TestingFrameworkTest {
     @Parameters(name = "{0}")
     def static Collection<Object[]> testData() {
         newArrayList(
-            #[ "org.eclipse.viatra.examples.cps.instances/demo.cyberphysicalsystem" ],
-            #[ "org.eclipse.viatra.examples.cps.instances/demo.cyberphysicalsystem" ]
+            #[ "org.eclipse.viatra.examples.cps.tests.instances/demo.cyberphysicalsystem" ],
+            #[ "org.eclipse.viatra.examples.cps.tests.instances/demo.cyberphysicalsystem" ]
         )
     }
     

@@ -1,4 +1,4 @@
-package org.eclipse.viatra.examples.cps.queries
+package org.eclipse.viatra.examples.cps.tests.queries
 // This tests the 398745 bug
 
 import "http://org.eclipse.viatra/model/cps"
