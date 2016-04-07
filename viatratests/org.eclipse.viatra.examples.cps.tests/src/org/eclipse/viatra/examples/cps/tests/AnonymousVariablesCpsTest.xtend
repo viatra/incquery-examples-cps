@@ -47,10 +47,7 @@ class AnonymousVariablesCpsTest {
 	
 	@Before
 	def void prepareTest() {
-	    switch(backendType) {
-	        case Rete: queryBackendFactory = new ReteBackendFactory
-	        case LocalSearch: queryBackendFactory = LocalSearchBackendFactory.INSTANCE
-	    }
+	    queryBackendFactory = backendType.newBackendInstance
 	    val modelUri = XmiModelUtil::resolvePlatformURI(XmiModelUtilRunningOptionEnum.BOTH, modelPath)
 	    rs = new ResourceSetImpl
 	    rs.getResource(modelUri, true)
@@ -66,9 +63,5 @@ class AnonymousVariablesCpsTest {
 		if (!diff.empty) {
             throw new AssertionFailedError(diff.toString)
         }
-	}
-	
-	private enum BackendType {
-	    Rete, LocalSearch
 	}
 }

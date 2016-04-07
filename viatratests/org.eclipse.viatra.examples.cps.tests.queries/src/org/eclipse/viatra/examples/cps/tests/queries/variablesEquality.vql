@@ -1,0 +1,10 @@
+package org.eclipse.viatra.examples.cps.tests.queries
+// This tests 481263 and 491248 bugs
+
+import "http://org.eclipse.viatra/model/cps"
+
+pattern sameVariables(a1, a2) {
+	HostType(a1);
+	HostType(a2);
+	a1 == a2;
+}

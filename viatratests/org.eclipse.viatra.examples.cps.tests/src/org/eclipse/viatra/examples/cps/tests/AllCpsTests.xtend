@@ -9,7 +9,9 @@ import org.junit.runners.Suite.SuiteClasses
     AnonymousVariablesCpsTest,
     APICpsTest,
     BasicCpsTest,
+    FlattenedPatternCallCpsTest,
     ModelManipulationCpsTest,
-    RecursionCpsTest
+    RecursionCpsTest,
+    VariableEqualityCpsTest
 ])
 class AllCpsTests {}

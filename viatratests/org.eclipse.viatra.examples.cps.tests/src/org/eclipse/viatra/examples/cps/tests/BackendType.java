@@ -1,0 +1,17 @@
+package org.eclipse.viatra.examples.cps.tests;
+
+import org.eclipse.viatra.query.runtime.localsearch.matcher.integration.LocalSearchBackendFactory;
+import org.eclipse.viatra.query.runtime.matchers.backend.IQueryBackendFactory;
+import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory;
+
+public enum BackendType {
+    Rete, LocalSearch;
+    
+    public IQueryBackendFactory getNewBackendInstance() {
+        switch(this) {
+            case Rete: return new ReteBackendFactory();
+            case LocalSearch: return LocalSearchBackendFactory.INSTANCE;
+            default: return null;
+        }
+    }
+}
