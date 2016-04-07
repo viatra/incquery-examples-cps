@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <vqSnapshot:QuerySnapshot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vqSnapshot="http://www.eclipse.org/viatra/query/snapshot" inputSpecification="ResourceSet">
-  <matchSetRecords patternQualifiedName="org.eclipse.viatra.examples.cps.queries.finalPattern">
+  <matchSetRecords patternQualifiedName="org.eclipse.viatra.examples.cps.tests.queries.finalPattern">
     <matches>
       <substitutions xsi:type="vqSnapshot:EMFSubstitution" parameterName="HI">
-        <value href="../../org.eclipse.viatra.examples.cps.instances/demo.cyberphysicalsystem#simple.cps.host.SecondHostClass0.inst2"/>
+        <value href="../../org.eclipse.viatra.examples.cps.tests.instances/demo.cyberphysicalsystem#simple.cps.host.SecondHostClass0.inst2"/>
       </substitutions>
       <substitutions xsi:type="vqSnapshot:IntSubstitution" parameterName="CPU"/>
       <substitutions xsi:type="vqSnapshot:IntSubstitution" parameterName="RAM"/>
@@ -11,5 +11,5 @@
     </matches>
     <filter/>
   </matchSetRecords>
-  <modelRoots href="../../org.eclipse.viatra.examples.cps.instances/demo.cyberphysicalsystem#testModel6504822858552"/>
+  <modelRoots href="../../org.eclipse.viatra.examples.cps.tests.instances/demo.cyberphysicalsystem#testModel6504822858552"/>
 </vqSnapshot:QuerySnapshot>

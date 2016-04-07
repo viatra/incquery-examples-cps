@@ -35,7 +35,7 @@ import org.eclipse.viatra.query.runtime.localsearch.matcher.integration.LocalSea
 
 class BasicCpsTest {
 	
-	val snapshot = "org.eclipse.viatra.examples.cps.queries/snapshots/test.snapshot"
+	val snapshot = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test.snapshot"
 	
 	@Test
 	def void testAllQueries() {
