@@ -1,10 +1,10 @@
-package org.eclipse.viatra.examples.cps.integration.eventdriven.scheduled;
+package org.eclipse.viatra.examples.cps.integration.eventdriven;
 
 import org.eclipse.emf.mwe2.runtime.workflow.IWorkflowContext;
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.viatra.CPS2DeploymentTransformationViatra;
 import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment;
-import org.eclipse.viatra.integration.mwe2.eventdriven.mwe2impl.MWE2BaseControllableScheduler.MWEBaseControllableSchedulerFactory;
+import org.eclipse.viatra.integration.mwe2.eventdriven.MWE2BaseControllableScheduler.MWEBaseControllableSchedulerFactory;
 import org.eclipse.viatra.integration.mwe2.mwe2impl.TransformationStep;
 
 public class M2MScheduledEventDrivenViatraTransformationStep extends TransformationStep {

@@ -4,7 +4,7 @@ import org.eclipse.viatra.integration.mwe2.*
 import org.eclipse.viatra.integration.mwe2.mwe2impl.*
 import org.eclipse.viatra.examples.cps.integration.*
 import org.eclipse.viatra.examples.cps.integration.messages.*
-import org.eclipse.viatra.examples.cps.integration.eventdriven.scheduled.*
+import org.eclipse.viatra.examples.cps.integration.eventdriven.*
 
 Workflow {
 	component = InitializerComponent{
