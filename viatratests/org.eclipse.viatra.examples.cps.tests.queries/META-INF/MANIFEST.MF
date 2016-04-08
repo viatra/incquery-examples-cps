@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.eclipse.viatra.examples.cps.queries
+Bundle-Name: org.eclipse.viatra.examples.cps.tests.queries
 Bundle-SymbolicName: org.eclipse.viatra.examples.cps.tests.queries;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Export-Package: org.eclipse.viatra.examples.cps.tests.queries,
