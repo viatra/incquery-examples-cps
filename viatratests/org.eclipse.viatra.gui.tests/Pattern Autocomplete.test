@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _DHI3kPBQEeWlEbYJ7IoFCQ
 Runtime-Version: 2.0.2.201511100828
-Save-Time: 3/23/16 3:26 PM
+Save-Time: 4/8/16 2:23 PM
 Testcase-Type: ecl
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
@@ -73,12 +73,13 @@ with [get-window -class WizardDialog] {
 }
 with [get-window "Select packages to import"] {
     get-editbox -after [get-label "Select one or more package(s) (* = any string, ? = any char):"] | set-text cps
-    get-table | get-cell 1 0 | click
+    get-table | get-cell 0 0 | click
     get-button OK | click
 }
 get-window -class WizardDialog | get-button Finish | click
 with [get-editor "test.vql" | get-text-viewer] {
-    set-caret-pos 3 45
+    set-caret-pos 3 1
+    key-type End
     key-type Enter -times 2
     type-text "pattern AllocatedApplicationInstances("
     key-type Enter
@@ -87,9 +88,10 @@ with [get-editor "test.vql" | get-text-viewer] {
     type-text " {"
     key-type Enter
     type-text "ApplicationInstance.allocatedTo(inst, _);"
-}
-with [get-editor "test.vql" | get-text-viewer] {
-    set-caret-pos 9 2
+//}
+//with [get-editor "test.vql" | get-text-viewer] {
+//    set-caret-pos 9 2
+    key-type Down
     key-type Enter -times 2
     type-text "pattern NotAllocatedApplicationInstances("
     key-type Enter
@@ -99,8 +101,7 @@ with [get-editor "test.vql" | get-text-viewer] {
     key-type Up
     key-type Enter
     key-type Down
-    type-text " "
-    key-type "M1+M3+b" "{"
+    type-text " {"
     key-type Enter
     type-text "neg fin"
     key-type "M1+SPACE"
@@ -120,8 +121,7 @@ get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table 
     -default
 with [get-editor "test.vql" | get-text-viewer] {
     key-type Down
-    type-text " "
-    key-type "M1+M3+b" "{"
+    type-text " {"
     key-type Enter
     type-text App
     key-type "M1+SPACE"
@@ -136,7 +136,7 @@ get-window -from "CompletionProposalPopup.createProposalSelector()" | get-table 
 with [get-editor "test.vql" | get-text-viewer] {
     type-text "(app, inst"
     key-type Right
-    key-type "M1+M3+," ";"
+    type-text ";"
     key-type Enter
     key-type "M1+SPACE"
 }
@@ -153,4 +153,9 @@ with [get-editor "test.vql" | get-text-viewer] {
     type-text inst
 }
 get-button "Save (M1+S)" | click
+get-view "Project Explorer" | get-tree 
+    | select "org.eclipse.viatra.examples.cps.testqueries/src-gen/org.eclipse.viatra.examples.cps.testqueries/.*.java$"
+get-view "Project Explorer" | get-tree 
+    | get-item "org.eclipse.viatra.examples.cps.testqueries/src-gen/org.eclipse.viatra.examples.cps.testqueries" 
+    | get-property childCount | equals 7 | verify-true
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

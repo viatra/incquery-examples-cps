@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _-a1aIPBHEeWlEbYJ7IoFCQ
 Runtime-Version: 2.0.2.201511100828
-Save-Time: 3/23/16 2:12 PM
+Save-Time: 4/8/16 2:10 PM
 Testcase-Type: ecl
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
@@ -73,12 +73,13 @@ with [get-window -class WizardDialog] {
 }
 with [get-window "Select packages to import"] {
     get-editbox -after [get-label "Select one or more package(s) (* = any string, ? = any char):"] | set-text cps
-    get-table | get-cell 1 0 | click
+    get-table | get-cell 0 0 | click
     get-button OK | click
 }
 get-window -class WizardDialog | get-button Finish | click
 with [get-editor "test.vql" | get-text-viewer] {
-    set-caret-pos 3 45
+    set-caret-pos 3 1
+    key-type End
     key-type Enter -times 2
     type-text "pattern AllocatedApplicationInstances("
     key-type Enter

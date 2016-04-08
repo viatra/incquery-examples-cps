@@ -6,7 +6,7 @@ Element-Type: context
 Element-Version: 2.0
 Id: _NN2OQO9SEeW7SP0a5rPzzg
 Runtime-Version: 2.0.2.201511100828
-Save-Time: 3/24/16 3:14 PM
+Save-Time: 4/8/16 1:40 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -23,8 +23,6 @@ Entry-Name: .ecl.context
  *   Tamas Borbas - Testing VIATRA GUI
  *******************************************************************************/
 
-get-button "View Menu" | click
 get-view "Query Explorer" | get-menu "Reset UI" | click
-get-button "View Menu"  | click
 get-view "Query Explorer" | get-menu "Patterns viewer presentation/Flat" | click
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--
