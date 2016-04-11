@@ -156,32 +156,11 @@
       <plugin id="org.eclipse.equinox.simpleconfigurator"/>
       <plugin id="org.eclipse.equinox.simpleconfigurator.manipulator"/>
       <plugin id="org.eclipse.equinox.util"/>
-      <plugin id="org.eclipse.gef"/>
-      <plugin id="org.eclipse.gef4.geometry"/>
-      <plugin id="org.eclipse.gef4.graph"/>
-      <plugin id="org.eclipse.gef4.layout"/>
-      <plugin id="org.eclipse.gef4.zest.core"/>
-      <plugin id="org.eclipse.gef4.zest.jface"/>
-      <plugin id="org.eclipse.gmf.runtime.common.core"/>
-      <plugin id="org.eclipse.gmf.runtime.common.ui"/>
-      <plugin id="org.eclipse.gmf.runtime.common.ui.action"/>
-      <plugin id="org.eclipse.gmf.runtime.common.ui.services"/>
-      <plugin id="org.eclipse.gmf.runtime.common.ui.services.action"/>
-      <plugin id="org.eclipse.gmf.runtime.common.ui.services.properties"/>
-      <plugin id="org.eclipse.gmf.runtime.diagram.core"/>
-      <plugin id="org.eclipse.gmf.runtime.diagram.ui"/>
-      <plugin id="org.eclipse.gmf.runtime.diagram.ui.properties"/>
-      <plugin id="org.eclipse.gmf.runtime.diagram.ui.resources.editor"/>
-      <plugin id="org.eclipse.gmf.runtime.draw2d.ui"/>
-      <plugin id="org.eclipse.gmf.runtime.draw2d.ui.render"/>
-      <plugin id="org.eclipse.gmf.runtime.emf.clipboard.core"/>
-      <plugin id="org.eclipse.gmf.runtime.emf.commands.core"/>
-      <plugin id="org.eclipse.gmf.runtime.emf.core"/>
-      <plugin id="org.eclipse.gmf.runtime.emf.type.core"/>
-      <plugin id="org.eclipse.gmf.runtime.emf.ui"/>
-      <plugin id="org.eclipse.gmf.runtime.emf.ui.properties"/>
-      <plugin id="org.eclipse.gmf.runtime.gef.ui"/>
-      <plugin id="org.eclipse.gmf.runtime.notation"/>
+      <plugin id="org.eclipse.gef4.geometry" version="0.1.0.201406280202"/>
+      <plugin id="org.eclipse.gef4.graph" version="0.1.0.201406280202"/>
+      <plugin id="org.eclipse.gef4.layout" version="0.1.0.201406280202"/>
+      <plugin id="org.eclipse.gef4.zest.core" version="0.1.0.201406280202"/>
+      <plugin id="org.eclipse.gef4.zest.jface" version="0.1.0.201406280202"/>
       <plugin id="org.eclipse.help"/>
       <plugin id="org.eclipse.help.base"/>
       <plugin id="org.eclipse.help.ui"/>
@@ -262,7 +241,6 @@
       <plugin id="org.eclipse.viatra.examples.cps.model.editor"/>
       <plugin id="org.eclipse.viatra.gui.tests.queries"/>
       <plugin id="org.eclipse.viatra.gui.tests.queries.validation"/>
-      <plugin id="org.eclipse.viatra.integration.gmf"/>
       <plugin id="org.eclipse.viatra.integration.uml"/>
       <plugin id="org.eclipse.viatra.query.patternlanguage"/>
       <plugin id="org.eclipse.viatra.query.patternlanguage.emf"/>
