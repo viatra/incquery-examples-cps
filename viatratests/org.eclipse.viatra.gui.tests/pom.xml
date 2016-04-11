@@ -13,7 +13,7 @@
 
     <properties>
         <rootPath>${basedir}/..</rootPath>
-        <autPath>../org.eclipse.viatra.gui.tests.product/target/products/org.eclipse.viatra.gui.tests.product-[platform].zip</autPath>
+        <autPath>../org.eclipse.viatra.gui.tests.product/target/products/org.eclipse.viatra.gui.tests.rcp.product-[platform].zip</autPath>
     </properties>
 
     <build>
