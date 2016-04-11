@@ -3,7 +3,6 @@
 
 <product name="VIATRA Product" uid="org.eclipse.viatra.gui.tests.rcp.product" id="org.eclipse.platform.ide" application="org.eclipse.ui.ide.workbench" version="0.0.1" useFeatures="false" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -14,7 +13,6 @@
 
    <windowImages/>
 
-
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -22,10 +20,8 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
       <plugin id="com.google.guava"/>
@@ -261,15 +257,9 @@
       <plugin id="org.eclipse.viatra.addon.viewers.runtime.zest"/>
       <plugin id="org.eclipse.viatra.addon.viewers.tooling.ui"/>
       <plugin id="org.eclipse.viatra.addon.viewers.tooling.ui.zest"/>
-      <plugin id="org.eclipse.viatra.examples.cps.deployment"/>
-      <plugin id="org.eclipse.viatra.examples.cps.deployment.edit"/>
-      <plugin id="org.eclipse.viatra.examples.cps.deployment.editor"/>
       <plugin id="org.eclipse.viatra.examples.cps.model"/>
       <plugin id="org.eclipse.viatra.examples.cps.model.edit"/>
       <plugin id="org.eclipse.viatra.examples.cps.model.editor"/>
-      <plugin id="org.eclipse.viatra.examples.cps.traceability"/>
-      <plugin id="org.eclipse.viatra.examples.cps.traceability.edit"/>
-      <plugin id="org.eclipse.viatra.examples.cps.traceability.editor"/>
       <plugin id="org.eclipse.viatra.gui.tests.queries"/>
       <plugin id="org.eclipse.viatra.gui.tests.queries.validation"/>
       <plugin id="org.eclipse.viatra.integration.gmf"/>
