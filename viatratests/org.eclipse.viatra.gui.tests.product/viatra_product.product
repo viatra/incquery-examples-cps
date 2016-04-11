@@ -3,6 +3,7 @@
 
 <product name="VIATRA Product" uid="org.eclipse.viatra.gui.tests.rcp.product" id="org.eclipse.platform.ide" application="org.eclipse.ui.ide.workbench" version="0.0.1" useFeatures="false" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
@@ -13,12 +14,18 @@
 
    <windowImages/>
 
+
    <launcher>
       <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
+
+
+   <vm>
+   </vm>
+
 
    <plugins>
       <plugin id="com.google.guava"/>
@@ -184,7 +191,7 @@
       <plugin id="org.eclipse.help.ui"/>
       <plugin id="org.eclipse.jdt.compiler.apt" fragment="true"/>
       <plugin id="org.eclipse.jdt.compiler.tool" fragment="true"/>
-      <plugin id="org.eclipse.jdt.core"/>
+      <plugin id="org.eclipse.jdt.core" version="3.11.2.v20160128-0629"/>
       <plugin id="org.eclipse.jdt.core.manipulation"/>
       <plugin id="org.eclipse.jdt.debug"/>
       <plugin id="org.eclipse.jdt.debug.ui"/>
@@ -270,7 +277,6 @@
       <plugin id="org.eclipse.viatra.query.patternlanguage"/>
       <plugin id="org.eclipse.viatra.query.patternlanguage.emf"/>
       <plugin id="org.eclipse.viatra.query.patternlanguage.emf.ui"/>
-      <plugin id="org.eclipse.viatra.query.patternlanguage.generator"/>
       <plugin id="org.eclipse.viatra.query.patternlanguage.ui"/>
       <plugin id="org.eclipse.viatra.query.runtime"/>
       <plugin id="org.eclipse.viatra.query.runtime.base"/>

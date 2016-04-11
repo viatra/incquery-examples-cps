@@ -30,6 +30,7 @@
 		<cps.version>0.1.0-SNAPSHOT</cps.version>
 		<viatra.repository.url>http://download.eclipse.org/viatra/updates/integration</viatra.repository.url>
 		<mars.repository.url>http://download.eclipse.org/releases/mars/</mars.repository.url>
+		<itemis.repository.url>http://download.itemis.com/updates/releases</itemis.repository.url>
 		<cps.domain.repository.url>https://build.incquerylabs.com/jenkins/job/CPS-Demonstrator/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.examples.cps.update/target/repository/</cps.domain.repository.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sonar.skippedModules></sonar.skippedModules>
@@ -54,17 +55,6 @@
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
-				<configuration>
-					<target>
-						<artifact>
-							<groupId>com.incquerylabs.modelpatch</groupId>
-							<artifactId>com.incquerylabs.modelpatch.target</artifactId>
-							<version>0.1.0-SNAPSHOT</version>
-<!-- TODO: what should be here? -->
-							<relativePath>TODO/pom.xml</relativePath>
-						</artifact>
-					</target>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -110,6 +100,11 @@
 		<repository>
 			<id>mars</id>
 			<url>${mars.repository.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>itemis</id>
+			<url>${itemis.repository.url}</url>
 			<layout>p2</layout>
 		</repository>
 		<repository>
