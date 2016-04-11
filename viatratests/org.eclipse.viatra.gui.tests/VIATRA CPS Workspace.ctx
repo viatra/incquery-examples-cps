@@ -6,8 +6,21 @@ Element-Type: context
 Element-Version: 2.0
 Id: _E-YjgPBEEeWlEbYJ7IoFCQ
 Runtime-Version: 2.0.2.201511100828
-Save-Time: 3/22/16 6:07 PM
+Save-Time: 4/11/16 2:39 PM
 
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Copyright (c) 2010-2016, Tamas Borbas, IncQuery Labs Ltd.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+  Tamas Borbas - Testing VIATRA GUI
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
 ------=_contents/org.eclipse.viatra.examples.cps.instances/.project-3e764c88-faca-3de7-a6b8-b784cc705139
 Content-Type: q7/binary
 Entry-Name: contents/org.eclipse.viatra.examples.cps.instances/.project
