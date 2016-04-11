@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CPS Based Tests
 Bundle-SymbolicName: org.eclipse.viatra.examples.cps.tests
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.viatra.query.testing.core;bundle-version="1.2.0",
  com.google.guava,
@@ -14,5 +14,6 @@ Require-Bundle: org.eclipse.viatra.query.testing.core;bundle-version="1.2.0",
  org.eclipse.viatra.examples.cps.tests.queries;bundle-version="0.0.1",
  org.eclipse.viatra.examples.cps.model;bundle-version="0.1.0",
  org.eclipse.viatra.query.runtime.localsearch;bundle-version="1.2.0",
- org.eclipse.viatra.query.patternlanguage.emf;bundle-version="1.2.0"
+ org.eclipse.viatra.query.patternlanguage.emf;bundle-version="1.2.0",
+ org.eclipse.viatra.examples.cps.tests.instances;bundle-version="0.0.1"
 
