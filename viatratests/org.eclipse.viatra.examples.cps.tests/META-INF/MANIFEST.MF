@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CPS Based Tests
 Bundle-SymbolicName: org.eclipse.viatra.examples.cps.tests
 Bundle-Version: 0.0.1.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.viatra.query.testing.core;bundle-version="1.2.0",
  com.google.guava,
  org.eclipse.xtend.lib,
