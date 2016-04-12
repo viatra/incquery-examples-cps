@@ -10,7 +10,7 @@
         <relativePath>../org.eclipse.viatra.tests.parent/</relativePath>
     </parent>
     <artifactId>org.eclipse.viatra.examples.cps.tests</artifactId>
-    <packaging>eclipse-plugin</packaging>
+    <packaging>eclipse-test-plugin</packaging>
     <build>
         <plugins>
             <plugin>
@@ -30,6 +30,14 @@
             <plugin>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>xtend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-surefire-plugin</artifactId>
+                <version>${tycho.version}</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
             </plugin>
         </plugins>
     </build>
