@@ -28,10 +28,10 @@ import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicati
 import org.eclipse.viatra.query.runtime.api.IPatternMatch
 import org.eclipse.viatra.query.runtime.api.IQuerySpecification
 import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher
+import org.eclipse.viatra.query.runtime.localsearch.matcher.integration.LocalSearchBackendFactory
 import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory
 import org.eclipse.viatra.query.testing.core.api.ViatraQueryTest
 import org.junit.Test
-import org.eclipse.viatra.query.runtime.localsearch.matcher.integration.LocalSearchBackendFactory
 
 class BasicCpsTest {
 	

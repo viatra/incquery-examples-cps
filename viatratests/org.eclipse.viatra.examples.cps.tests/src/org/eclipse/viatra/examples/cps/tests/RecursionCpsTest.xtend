@@ -1,11 +1,11 @@
 package org.eclipse.viatra.examples.cps.tests
 
-import org.junit.Test
-import org.eclipse.viatra.query.testing.core.api.ViatraQueryTest
-import org.eclipse.viatra.examples.cps.tests.queries.util.IncreasingAlphabeticalCommunicationChainRecQuerySpecification
-import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance
+import org.eclipse.viatra.examples.cps.tests.queries.util.IncreasingAlphabeticalCommunicationChainRecQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.IncreasingAlphabeticalCommunicationChainTCQuerySpecification
+import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory
+import org.eclipse.viatra.query.testing.core.api.ViatraQueryTest
+import org.junit.Test
 
 class RecursionCpsTest {
 	String snpRecOrig = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_recursion_chainRec.snapshot"

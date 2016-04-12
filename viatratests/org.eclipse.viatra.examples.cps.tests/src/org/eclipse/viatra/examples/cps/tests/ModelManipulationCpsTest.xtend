@@ -3,6 +3,7 @@ package org.eclipse.viatra.examples.cps.tests
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationInstance
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.ApplicationType
+import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemFactory
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostType
@@ -11,23 +12,22 @@ import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationInstancesId
 import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationInstancesOfApplicationTypeQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationInstancesQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationTypeWithHostedInstancesQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationTypeWithoutHostedInstanceQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationTypesIdentifiersQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.CommunicateWithQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.FinalPatternQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.HasTheMostHostedApplicationInstancesQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.HasTheMostHostedApplicationsQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.HostInstanceWithAtLeastAsMuchTotalRamAsTotalHddQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.HostInstancesWithZeroTotalRamQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.HostedApplicationsQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.InTheCommunicationChainsQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.InstancesQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicationTypeIdentifiersQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicationTypeQuerySpecification
 import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory
 import org.eclipse.viatra.query.testing.core.api.ViatraQueryTest
 import org.junit.Test
-import org.eclipse.viatra.examples.cps.tests.queries.util.InTheCommunicationChainsQuerySpecification
-import org.eclipse.viatra.examples.cps.tests.queries.util.HostInstanceWithAtLeastAsMuchTotalRamAsTotalHddQuerySpecification
-import org.eclipse.viatra.examples.cps.tests.queries.util.FinalPatternQuerySpecification
-import org.eclipse.viatra.examples.cps.tests.queries.util.HostInstancesWithZeroTotalRamQuerySpecification
-import org.eclipse.viatra.examples.cps.tests.queries.util.HasTheMostHostedApplicationsQuerySpecification
-import org.eclipse.viatra.examples.cps.tests.queries.util.ApplicationTypeWithoutHostedInstanceQuerySpecification
-import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem
-import org.eclipse.viatra.examples.cps.tests.queries.util.HasTheMostHostedApplicationInstancesQuerySpecification
-import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicationTypeQuerySpecification
-import org.eclipse.viatra.examples.cps.tests.queries.util.InstancesQuerySpecification
 
 class ModelManipulationCpsTest {
 	public static val SNAPSHOT_PATH = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test.snapshot"

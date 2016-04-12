@@ -1,10 +1,14 @@
 package org.eclipse.viatra.examples.cps.tests
 
 import java.util.Collection
+import junit.framework.AssertionFailedError
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.viatra.examples.cps.tests.queries.util.CalleeQuerySpecification
+import org.eclipse.viatra.examples.cps.tests.queries.util.FlattenedQuerySpecification
 import org.eclipse.viatra.query.runtime.matchers.backend.IQueryBackendFactory
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint
+import org.eclipse.viatra.query.testing.core.MatchSetRecordDiff
 import org.eclipse.viatra.query.testing.core.PatternBasedMatchSetModelProvider
 import org.eclipse.viatra.query.testing.core.XmiModelUtil
 import org.eclipse.viatra.query.testing.core.XmiModelUtil.XmiModelUtilRunningOptionEnum
@@ -14,10 +18,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameter
 import org.junit.runners.Parameterized.Parameters
-import org.eclipse.viatra.examples.cps.tests.queries.util.CalleeQuerySpecification
-import org.eclipse.viatra.examples.cps.tests.queries.util.FlattenedQuerySpecification
-import org.eclipse.viatra.query.testing.core.MatchSetRecordDiff
-import junit.framework.AssertionFailedError
 
 // This test is necessary because of 481265 bug
 @RunWith(Parameterized)

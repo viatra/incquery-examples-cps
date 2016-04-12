@@ -1,26 +1,23 @@
 package org.eclipse.viatra.examples.cps.tests
 
+import java.util.Collection
 import junit.framework.AssertionFailedError
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.viatra.examples.cps.tests.queries.util.AllVariablesNamedQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.AnonymousVariablesQuerySpecification
 import org.eclipse.viatra.query.runtime.matchers.backend.IQueryBackendFactory
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint
-//import org.eclipse.viatra.query.testing.core.MatchSetRecordHelper
+import org.eclipse.viatra.query.testing.core.MatchSetRecordDiff
 import org.eclipse.viatra.query.testing.core.PatternBasedMatchSetModelProvider
-import org.junit.Test
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.junit.runners.Parameterized.Parameter
-import org.junit.Before
-import org.eclipse.viatra.query.testing.core.XmiModelUtil.XmiModelUtilRunningOptionEnum
 import org.eclipse.viatra.query.testing.core.XmiModelUtil
+import org.eclipse.viatra.query.testing.core.XmiModelUtil.XmiModelUtilRunningOptionEnum
+import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.junit.runners.Parameterized.Parameter
 import org.junit.runners.Parameterized.Parameters
-import java.util.Collection
-import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory
-import org.eclipse.viatra.query.runtime.localsearch.matcher.integration.LocalSearchBackendFactory
-import org.eclipse.viatra.query.testing.core.MatchSetRecordDiff
 
 // This test is necessary because of 398745 bug
 @RunWith(Parameterized)

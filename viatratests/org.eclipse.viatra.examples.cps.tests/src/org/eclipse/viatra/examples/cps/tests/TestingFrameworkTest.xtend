@@ -6,6 +6,7 @@ import org.eclipse.viatra.query.testing.core.SnapshotHelper
 import org.eclipse.viatra.query.testing.core.XmiModelUtil
 import org.eclipse.viatra.query.testing.core.XmiModelUtil.XmiModelUtilRunningOptionEnum
 import org.eclipse.viatra.query.testing.snapshot.QuerySnapshot
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runners.Parameterized.Parameter
 import org.junit.runners.Parameterized.Parameters
@@ -28,6 +29,7 @@ class TestingFrameworkTest {
     
     // XXX This test is meaningless because derived features has been removed from the snapshot model
     @Test
+    @Ignore
     def queryBasedFeatureTest() {
         val modelUri = XmiModelUtil::resolvePlatformURI(XmiModelUtilRunningOptionEnum.BOTH, snp)
         val rs = new ResourceSetImpl
