@@ -25,7 +25,6 @@ import org.eclipse.viatra.examples.cps.tests.queries.util.InTheCommunicationChai
 import org.eclipse.viatra.examples.cps.tests.queries.util.InstancesQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicationTypeIdentifiersQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicationTypeQuerySpecification
-import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory
 import org.eclipse.viatra.query.testing.core.api.ViatraQueryTest
 import org.junit.Test
 
@@ -35,7 +34,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_newAppInstance() {
 		ViatraQueryTest.test(ApplicationInstancesQuerySpecification.instance).and(ApplicationInstancesOfApplicationTypeQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(ApplicationType, [true], [appType |
 				// MODEL MODIFICATION HERE
 				// add a new Application Instance to all Application Types in the model
@@ -50,7 +49,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_changeAppInstanceIdentifier() {
 		ViatraQueryTest.test(ApplicationInstancesIdentifiersQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(ApplicationInstance, [it.identifier == "simple.cps.app.FirstAppClass0.inst1"], [appInst |
 				// MODEL MODIFICATION HERE
 				// change the Application Instance "simple.cps.app.FirstAppClass0.inst1" identifier to "simple.cps.app.FirstAppClass0.instModified"
@@ -62,7 +61,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_changeAppTypeIdentifier() {
 		ViatraQueryTest.test(ApplicationTypesIdentifiersQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(ApplicationType, [it.identifier == "simple.cps.app.FirstAppClass0"], [appType |
 				// MODEL MODIFICATION HERE
 				// change the Application Type "simple.cps.app.FirstAppClass0" identifier to "simple.cps.app.FirstAppClassModified"
@@ -74,7 +73,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_deleteAppInstance() {
 		ViatraQueryTest.test(ApplicationInstancesQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(ApplicationInstance, [it.identifier == "simple.cps.app.FirstAppClass0.inst0"], [appInst |
 				// MODEL MODIFICATION HERE
 				// delete the Application Instance "simple.cps.app.FirstAppClass0.inst1"
@@ -86,7 +85,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_deleteAppType() {
 		ViatraQueryTest.test(ApplicationTypesIdentifiersQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(ApplicationType, [it.identifier == "simple.cps.app.FirstAppClass0"], [appType |
 				// MODEL MODIFICATION HERE
 				// delete the Application Type "simple.cps.app.FirstAppClass0"
@@ -98,7 +97,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_newHostInstance() {
 		ViatraQueryTest.test(CommunicateWithQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(HostInstance, [it.identifier == "simple.cps.host.FirstHostClass0.inst0"], [hostInst |
 				// MODEL MODIFICATION HERE
 				// add a new Host Instance as communication partner to Host Instance "simple.cps.host.FirstHostClass0.inst0"
@@ -115,7 +114,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_changeAppInstanceAllocationLocation() {
 		ViatraQueryTest.test(HostedApplicationsQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(ApplicationInstance, [it.identifier == "simple.cps.app.FirstAppClass0.inst0"], [appInst |
 				// MODEL MODIFICATION HERE
 				val hostInst = appInst.eResource.allContents.filter(HostInstance).findFirst[it.identifier == "simple.cps.host.SecondHostClass0.inst0"]
@@ -127,7 +126,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_changeAppInstanceType() {
 		ViatraQueryTest.test(ApplicationTypeWithHostedInstancesQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(ApplicationInstance, [it.identifier == "simple.cps.app.FirstAppClass0.inst1"], [appInst |
 				// MODEL MODIFICATION HERE
 				val appType = appInst.eResource.allContents.filter(ApplicationType).findFirst[it.identifier == "simple.cps.app.SecondAppClass0"]
@@ -139,7 +138,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_newTransition() {
 		ViatraQueryTest.test(TransitionsOfApplicationTypeIdentifiersQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(State, [it.identifier == "simple.cps.app.FirstAppClass0.sm0.s1"], [state |
 				// MODEL MODIFICATION HERE
 				CyberPhysicalSystemFactory::eINSTANCE.createTransition => [
@@ -154,7 +153,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_deleteHostType() {
 		ViatraQueryTest.test(InTheCommunicationChainsQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 		.modify(HostType, [it.identifier == "simple.cps.host.FirstHostClass0"], [ EcoreUtil.delete(it) ])
 		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteHostType.snapshot").assertEquals
 	}
@@ -162,7 +161,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_newHostInstanceWithMoreRamThanHdd() {
 		ViatraQueryTest.test(HostInstanceWithAtLeastAsMuchTotalRamAsTotalHddQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(HostType, [it.identifier == "simple.cps.host.FirstHostClass0"], [hostType |
 				// MODEL MODIFICATION HERE
 				CyberPhysicalSystemFactory::eINSTANCE.createHostInstance => [
@@ -178,7 +177,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_newHostInstanceWithMoreHddThanRam() {
 		ViatraQueryTest.test(HostInstanceWithAtLeastAsMuchTotalRamAsTotalHddQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(HostType, [it.identifier == "simple.cps.host.FirstHostClass0"], [hostType |
 				// MODEL MODIFICATION HERE
 				CyberPhysicalSystemFactory::eINSTANCE.createHostInstance => [
@@ -195,7 +194,7 @@ class ModelManipulationCpsTest {
 	@Test
 	def void test_deleteHostInstanceWithTheMostHostedApplication() {
 		ViatraQueryTest.test(FinalPatternQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 		.modify(HostInstance, [it.identifier == "simple.cps.host.SecondHostClass0.inst1"], [ EcoreUtil.delete(it) ])
 		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteHostInstanceWithTheMostHostedApplication.snapshot").assertEquals
 	}
@@ -206,7 +205,7 @@ class ModelManipulationCpsTest {
 		.and(HostInstancesWithZeroTotalRamQuerySpecification.instance)
 		.and(InTheCommunicationChainsQuerySpecification.instance)
 		.and(HasTheMostHostedApplicationsQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 		.modify(HostType, [true], [ EcoreUtil.delete(it) ])
 		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteAllHostType.snapshot").assertEquals
 	}
@@ -215,7 +214,7 @@ class ModelManipulationCpsTest {
 	def void test_deleteAllHostInstance() {
 		ViatraQueryTest.test(ApplicationTypeWithoutHostedInstanceQuerySpecification.instance)
 		.and(HasTheMostHostedApplicationsQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 		.modify(HostInstance, [true], [ EcoreUtil.delete(it) ])
 		.with("org.eclipse.viatra.examples.cps.tests.queries/snapshots/test_deleteAllHostInstance.snapshot").assertEquals
 	}
@@ -225,7 +224,7 @@ class ModelManipulationCpsTest {
 		ViatraQueryTest.test(HasTheMostHostedApplicationInstancesQuerySpecification.instance)
 		.and(TransitionsOfApplicationTypeQuerySpecification.instance)
 		.and(InstancesQuerySpecification.instance)
-		.with(new ReteBackendFactory).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
+		.with(BackendType.Rete.newBackendInstance).with(SNAPSHOT_PATH).assumeInputs.assertEqualsThen
 			.modify(CyberPhysicalSystem, [true], [cps |
 				// MODEL MODIFICATION HERE
 				extension val factory =  CyberPhysicalSystemFactory::eINSTANCE

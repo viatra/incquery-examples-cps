@@ -3,7 +3,6 @@ package org.eclipse.viatra.examples.cps.tests
 import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.HostInstance
 import org.eclipse.viatra.examples.cps.tests.queries.util.IncreasingAlphabeticalCommunicationChainRecQuerySpecification
 import org.eclipse.viatra.examples.cps.tests.queries.util.IncreasingAlphabeticalCommunicationChainTCQuerySpecification
-import org.eclipse.viatra.query.runtime.rete.matcher.ReteBackendFactory
 import org.eclipse.viatra.query.testing.core.api.ViatraQueryTest
 import org.junit.Test
 
@@ -16,19 +15,19 @@ class RecursionCpsTest {
 	@Test
 	def void staticRecursionTest() {
 		ViatraQueryTest.test(IncreasingAlphabeticalCommunicationChainRecQuerySpecification.instance)
-			.with(new ReteBackendFactory).with(snpRecOrig).assertEquals
+			.with(BackendType.Rete.newBackendInstance).with(snpRecOrig).assertEquals
 	}
 	
 	@Test
 	def void staticTransitiveClosureTest() {
 		ViatraQueryTest.test(IncreasingAlphabeticalCommunicationChainTCQuerySpecification.instance)
-			.with(new ReteBackendFactory).with(snpTCOrig).assertEquals
+			.with(BackendType.Rete.newBackendInstance).with(snpTCOrig).assertEquals
 	}
 	
 	@Test
 	def void removeCommunicationRecursionTest() {
 		ViatraQueryTest.test(IncreasingAlphabeticalCommunicationChainRecQuerySpecification.instance)
-			.with(new ReteBackendFactory).with(snpRecOrig).assertEqualsThen
+			.with(BackendType.Rete.newBackendInstance).with(snpRecOrig).assertEqualsThen
 			.modify(HostInstance, [it.identifier == "simple.cps.host.SecondHostClass0.inst1"], [ hostInst | hostInst.communicateWith.clear ])
 			.with(snpRecModified).assertEquals
 	}
@@ -36,7 +35,7 @@ class RecursionCpsTest {
 	@Test
 	def void removeCommunicationTransitiveClosureTest() {
 		ViatraQueryTest.test(IncreasingAlphabeticalCommunicationChainTCQuerySpecification.instance)
-			.with(new ReteBackendFactory).with(snpTCOrig).assertEqualsThen
+			.with(BackendType.Rete.newBackendInstance).with(snpTCOrig).assertEqualsThen
 			.modify(HostInstance, [it.identifier == "simple.cps.host.SecondHostClass0.inst1"], [ hostInst | hostInst.communicateWith.clear ])
 			.with(snpTCModified).assertEquals
 	}
