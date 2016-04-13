@@ -12,6 +12,7 @@ import org.junit.runners.Suite.SuiteClasses
     FlattenedPatternCallCpsTest,
     ModelManipulationCpsTest,
     RecursionCpsTest,
+    TestingFrameworkTest,
     VariableEqualityCpsTest
 ])
 class AllCpsTests {}
