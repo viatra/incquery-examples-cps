@@ -14,6 +14,8 @@ import org.eclipse.viatra.query.testing.snapshot.QuerySnapshot
 import org.junit.Test
 
 import static org.junit.Assert.*
+import org.junit.BeforeClass
+import org.eclipse.viatra.query.patternlanguage.emf.EMFPatternLanguageStandaloneSetup
 
 class APICpsTest {
     extension ModelLoadHelper = new ModelLoadHelper
@@ -22,6 +24,11 @@ class APICpsTest {
     public static val TESTED_PATTERN = "org.eclipse.viatra.examples.cps.tests.queries.transitionsOfApplicationType"
     public static val TESTED_QUERY_FILE = "org.eclipse.viatra.examples.cps.tests.queries/org/eclipse/viatra/examples/cps/tests/queries/simpleCpsQueries.vql"
     public static val TESTED_SNAPSHOT = "org.eclipse.viatra.examples.cps.tests.queries/snapshots/test.snapshot"
+
+    @BeforeClass
+    static def initParser() {
+        EMFPatternLanguageStandaloneSetup.doSetup
+    }
 
     def snapshot() {
         val snp = TESTED_SNAPSHOT
