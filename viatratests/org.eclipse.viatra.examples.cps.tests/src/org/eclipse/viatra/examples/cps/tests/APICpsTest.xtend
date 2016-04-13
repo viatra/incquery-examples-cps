@@ -3,6 +3,7 @@ package org.eclipse.viatra.examples.cps.tests
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.viatra.examples.cps.tests.queries.TransitionsOfApplicationTypeMatcher
 import org.eclipse.viatra.examples.cps.tests.queries.util.TransitionsOfApplicationTypeQuerySpecification
+import org.eclipse.viatra.query.patternlanguage.emf.EMFPatternLanguageStandaloneSetup
 import org.eclipse.viatra.query.patternlanguage.emf.eMFPatternLanguage.PatternModel
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
@@ -11,11 +12,10 @@ import org.eclipse.viatra.query.testing.core.SnapshotHelper
 import org.eclipse.viatra.query.testing.core.XmiModelUtil
 import org.eclipse.viatra.query.testing.core.XmiModelUtil.XmiModelUtilRunningOptionEnum
 import org.eclipse.viatra.query.testing.snapshot.QuerySnapshot
+import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.junit.Assert.*
-import org.junit.BeforeClass
-import org.eclipse.viatra.query.patternlanguage.emf.EMFPatternLanguageStandaloneSetup
 
 class APICpsTest {
     extension ModelLoadHelper = new ModelLoadHelper

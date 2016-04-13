@@ -34,31 +34,31 @@ class AnonymousVariablesCpsTest {
         )
     }
     
-	@Parameter(0)
-	public BackendType backendType
-	IQueryBackendFactory queryBackendFactory
-	@Parameter(1)
-	public String modelPath
-	ResourceSet rs
-	
-	
-	@Before
-	def void prepareTest() {
-	    queryBackendFactory = backendType.newBackendInstance
-	    val modelUri = XmiModelUtil::resolvePlatformURI(XmiModelUtilRunningOptionEnum.BOTH, modelPath)
-	    rs = new ResourceSetImpl
-	    rs.getResource(modelUri, true)
-	}
+    @Parameter(0)
+    public BackendType backendType
+    IQueryBackendFactory queryBackendFactory
+    @Parameter(1)
+    public String modelPath
+    ResourceSet rs
+    
+    
+    @Before
+    def void prepareTest() {
+        queryBackendFactory = backendType.newBackendInstance
+        val modelUri = XmiModelUtil::resolvePlatformURI(XmiModelUtilRunningOptionEnum.BOTH, modelPath)
+        rs = new ResourceSetImpl
+        rs.getResource(modelUri, true)
+    }
 
-	@Test
-	def void anonymousVariablesTest() {
-		val hint = new QueryEvaluationHint(queryBackendFactory, emptyMap)
-		val modelProvider = new PatternBasedMatchSetModelProvider(hint)
-		val anonymousMatchSet = modelProvider.getMatchSetRecord(rs, AnonymousVariablesQuerySpecification.instance, null)
-		val namedMatchSet = modelProvider.getMatchSetRecord(rs, AllVariablesNamedQuerySpecification.instance, null)
-		val diff = MatchSetRecordDiff.compute(anonymousMatchSet, namedMatchSet)
-		if (!diff.empty) {
+    @Test
+    def void anonymousVariablesTest() {
+        val hint = new QueryEvaluationHint(queryBackendFactory, emptyMap)
+        val modelProvider = new PatternBasedMatchSetModelProvider(hint)
+        val anonymousMatchSet = modelProvider.getMatchSetRecord(rs, AnonymousVariablesQuerySpecification.instance, null)
+        val namedMatchSet = modelProvider.getMatchSetRecord(rs, AllVariablesNamedQuerySpecification.instance, null)
+        val diff = MatchSetRecordDiff.compute(anonymousMatchSet, namedMatchSet)
+        if (!diff.empty) {
             throw new AssertionFailedError(diff.toString)
         }
-	}
+    }
 }
