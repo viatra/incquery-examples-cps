@@ -7,18 +7,18 @@ Element-Version: 3.0
 External-Reference: 
 Id: _DHI3kPBQEeWlEbYJ7IoFCQ
 Runtime-Version: 2.0.2.201511100828
-Save-Time: 4/11/16 2:39 PM
+Save-Time: 4/13/16 8:47 AM
 Testcase-Type: ecl
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
 Content-Type: text/plain
 Entry-Name: .description
 
-This test case creates a "simplequery.eiq" pattern file and fills it with coursesOfTeacherNames pattern.
+This test case creates a "test.vql" pattern file and fills it with AllocatedApplicationInstances, NotAllocatedApplicationInstances and ApplicationsWithAllocatedInstances pattern.
 
 Asserts:
-* "simplequery.eiq" caption is created
-* text of "simplequery.eiq"
+ * Some java file has been generated into the "src-gen" folder.
+ * 7 file has been generated into "org.eclipse.viatra.examples.cps.testqueries/src-gen/org.eclipse.viatra.examples.cps.testqueries".
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
@@ -88,9 +88,6 @@ with [get-editor "test.vql" | get-text-viewer] {
     type-text " {"
     key-type Enter
     type-text "ApplicationInstance.allocatedTo(inst, _);"
-//}
-//with [get-editor "test.vql" | get-text-viewer] {
-//    set-caret-pos 9 2
     key-type Down
     key-type Enter -times 2
     type-text "pattern NotAllocatedApplicationInstances("

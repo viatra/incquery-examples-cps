@@ -7,18 +7,18 @@ Element-Version: 3.0
 External-Reference: 
 Id: _-a1aIPBHEeWlEbYJ7IoFCQ
 Runtime-Version: 2.0.2.201511100828
-Save-Time: 4/11/16 2:39 PM
+Save-Time: 4/13/16 8:38 AM
 Testcase-Type: ecl
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
 Content-Type: text/plain
 Entry-Name: .description
 
-This test case creates a "simplequery.eiq" pattern file and fills it with coursesOfTeacherNames pattern.
+This test case creates a "test.vql" pattern file and fills it with AllocatedApplicationInstances pattern.
 
 Asserts:
-* "simplequery.eiq" caption is created
-* text of "simplequery.eiq"
+ * A match and matcher has been generated for the pattern
+ * "Test.java" has been generated for the vql file
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
