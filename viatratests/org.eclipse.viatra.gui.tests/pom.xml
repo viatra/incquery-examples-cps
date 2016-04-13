@@ -29,6 +29,7 @@
                         <vmArgs>
                             <vmArg>-Xmx2048m</vmArg>
                             <vmArg>-XX:MaxPermSize=512m</vmArg>
+                            <vmArg>${argLine}</vmArg>
                         </vmArgs>
                     </aut>
                     <runner>
