@@ -23,8 +23,8 @@ class ClientServerModificationPhase extends AtomicPhase{
 		
 //		info("Adding new host instance")
 		modifyTimer.startMeasure
-		val appType = cpsToken.cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
-		val hostInstance = cpsToken.cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
+		val appType = cpsToken.cps2dep.cps.appTypes.findFirst[it.identifier.contains("Client")]
+		val hostInstance = cpsToken.cps2dep.cps.hostTypes.findFirst[it.identifier.contains("client")].instances.head
 		
 		editTimer.startMeasure
 		val index = cpsToken.modificationIndex

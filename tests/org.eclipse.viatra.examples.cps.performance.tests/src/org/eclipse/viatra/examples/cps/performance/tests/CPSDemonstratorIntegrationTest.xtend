@@ -62,7 +62,7 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 		val trcRes = rs.createResource(URI.createURI("trace.traceability"))
 		
 		val cps = createCyberPhysicalSystem => [
-			id = "cps"
+			identifier = "cps"
 		]
 		cpsRes.contents += cps
 		
@@ -137,8 +137,8 @@ class CPSDemonstratorIntegrationTest extends CPS2DepTest {
 		changeMonitor.startMonitoring
 
 		info("Adding new host instance")
-		val appType = cps2dep.cps.appTypes.findFirst[it.id.contains("Client")]
-		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.id.contains("client")].instances.head
+		val appType = cps2dep.cps.appTypes.findFirst[it.identifier.contains("Client")]
+		val hostInstance = cps2dep.cps.hostTypes.findFirst[it.identifier.contains("client")].instances.head
 		appType.prepareApplicationInstanceWithId("new.app.instance", hostInstance)
 
 		executeTransformation
