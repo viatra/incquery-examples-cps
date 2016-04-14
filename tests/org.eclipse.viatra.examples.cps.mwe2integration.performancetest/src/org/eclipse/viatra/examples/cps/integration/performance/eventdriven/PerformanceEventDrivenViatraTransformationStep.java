@@ -1,10 +1,9 @@
 package org.eclipse.viatra.examples.cps.integration.performance.eventdriven;
 
 import org.eclipse.emf.mwe2.runtime.workflow.IWorkflowContext;
-import org.eclipse.viatra.examples.cps.integration.eventdriven.controllable.M2MControllableEventDrivenViatraTransformationStep;
+import org.eclipse.viatra.examples.cps.integration.eventdriven.M2MScheduledEventDrivenViatraTransformationStep;
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.viatra.CPS2DeploymentTransformationViatra;
-import org.eclipse.viatra.integration.mwe2.eventdriven.mwe2impl.MWE2ControlledExecutor;
 import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine;
 import org.eclipse.viatra.query.runtime.emf.EMFScope;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -15,7 +14,7 @@ import eu.mondo.sam.core.metrics.TimeMetric;
 import eu.mondo.sam.core.results.BenchmarkResult;
 import eu.mondo.sam.core.results.PhaseResult;
 
-public class PerformanceEventDrivenViatraTransformationStep extends M2MControllableEventDrivenViatraTransformationStep {
+public class PerformanceEventDrivenViatraTransformationStep extends M2MScheduledEventDrivenViatraTransformationStep {
     @Override
     public void initialize(IWorkflowContext ctx) {
 
@@ -34,9 +33,8 @@ public class PerformanceEventDrivenViatraTransformationStep extends M2MControlla
         initTimer.startMeasure();	
         try {
             engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(cps2dep.eResource().getResourceSet()));
-            executor = new MWE2ControlledExecutor(ViatraQueryEventRealm.create(engine));
             transformation = new CPS2DeploymentTransformationViatra();
-            transformation.setExecutor(executor);
+            transformation.setScheduler(factory);
             transformation.initialize(cps2dep,engine);
         } catch (ViatraQueryException e) {
             e.printStackTrace();
@@ -63,9 +61,9 @@ public class PerformanceEventDrivenViatraTransformationStep extends M2MControlla
         MemoryMetric mtmMemory = new MemoryMetric("Memory");
         
         mtmTimer.startMeasure();
-        executor.run();
+        factory.run();
      
-        while(!executor.isFinished()){
+        while(!factory.isFinished()){
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
