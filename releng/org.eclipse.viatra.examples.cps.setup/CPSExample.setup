@@ -182,51 +182,6 @@
       option="-XX:MaxPermSize="
       value="256M"
       vm="true"/>
-  <setupTask
-      xsi:type="setup.workingsets:WorkingSetTask">
-    <workingSet
-        name="CPS Domains">
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/domains/.*"/>
-    </workingSet>
-    <workingSet
-        name="CPS Queries">
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/queries/.*"/>
-    </workingSet>
-    <workingSet
-        name="CPS Transformations">
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/transformations/.*"/>
-    </workingSet>
-    <workingSet
-        name="CPS Tests">
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/tests/.*"/>
-    </workingSet>
-    <workingSet
-        name="CPS Addons">
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/addons/.*"/>
-    </workingSet>
-    <workingSet
-        name="CPS Generator">
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/generator/.*"/>
-    </workingSet>
-    <workingSet
-        name="CPS Prototypes">
-      <predicate
-          xsi:type="predicates:LocationPredicate"
-          pattern=".*/prototypes/.*"/>
-    </workingSet>
-  </setupTask>
   <project name="mylyn">
     <setupTask
         xsi:type="setup:CompoundTask"
@@ -386,7 +341,53 @@
     <stream
         name="0.1-maintenance"/>
   </project>
-  <stream name="master"/>
+  <stream name="master">
+    <setupTask
+        xsi:type="setup.workingsets:WorkingSetTask">
+      <workingSet
+          name="CPS Domains">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/domains/.*"/>
+      </workingSet>
+      <workingSet
+          name="CPS Queries">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/queries/.*"/>
+      </workingSet>
+      <workingSet
+          name="CPS Transformations">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/transformations/.*"/>
+      </workingSet>
+      <workingSet
+          name="CPS Tests">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/tests/.*"/>
+      </workingSet>
+      <workingSet
+          name="CPS Addons">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/addons/.*"/>
+      </workingSet>
+      <workingSet
+          name="CPS Generator">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/generator/.*"/>
+      </workingSet>
+      <workingSet
+          name="CPS Prototypes">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/prototypes/.*"/>
+      </workingSet>
+    </setupTask>
+  </stream>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
