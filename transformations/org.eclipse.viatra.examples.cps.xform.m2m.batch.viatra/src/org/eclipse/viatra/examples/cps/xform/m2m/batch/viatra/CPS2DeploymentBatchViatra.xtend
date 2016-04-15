@@ -11,6 +11,7 @@ import org.eclipse.viatra.transformation.runtime.emf.transformation.batch.BatchT
 import org.eclipse.viatra.transformation.runtime.emf.transformation.batch.BatchTransformationStatements
 
 import static com.google.common.base.Preconditions.*
+import org.eclipse.viatra.transformation.runtime.emf.rules.batch.BatchTransformationStatements
 
 class CPS2DeploymentBatchViatra {
 	extension Logger logger = Logger.getLogger("cps.xform.m2m.batch.viatra")
