@@ -72,7 +72,7 @@
     <repository
         url="http://download.eclipse.org/viatra/dependency"/>
     <repository
-        url="https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/"/>
+        url="http://download.eclipse.org/viatra/updates/integration"/>
   </setupTask>
   <setupTask
       xsi:type="setup.targlets:TargletTask">
