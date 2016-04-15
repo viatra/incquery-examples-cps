@@ -50,7 +50,7 @@ class RuleProvider {
 	
 	public def getHostRule() {
 		if (hostRule == null) {
-			hostRule = createRule(HostInstanceMatcher.querySpecification)[
+			hostRule = createRule.precondition(HostInstanceMatcher.querySpecification).action[
 				val cpsHostInstance = it.hostInstance
 				val nodeIp = it.hostInstance.nodeIp
 				debug('''Mapping host with IP: «nodeIp»''')
@@ -62,7 +62,7 @@ class RuleProvider {
 					cpsElements += cpsHostInstance
 					deploymentElements += deploymentHost
 				]
-			]
+			].build
 		}
 		return hostRule
 	}
