@@ -69,7 +69,7 @@ class RuleProvider {
 	
 	public def getApplicationRule() {
 		if (applicationRule == null) {
-			applicationRule = createRule(ApplicationInstanceMatcher.querySpecification)[
+			applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification).action[
 				val cpsApplicationInstance = it.appInstance
 				val appId = it.appInstance.identifier
 				
@@ -88,14 +88,14 @@ class RuleProvider {
 				]
 				depHost.applications += deploymentApplication
 				debug('''Mapped application with ID: «appId»''')
-			]
+			].build
 		}
 		return applicationRule
 	}
 	
 	public def getStateMachineRule() {
 		if (stateMachineRule == null) {
-			stateMachineRule = createRule(AppInstanceWithStateMachineMatcher.querySpecification)[
+			stateMachineRule = createRule.precondition(AppInstanceWithStateMachineMatcher.querySpecification).action[
 				val cpsApplicationInstance = it.appInstance
 				val cpsStateMachine = it.stateMachine
 				
@@ -116,14 +116,14 @@ class RuleProvider {
 					trace.deploymentElements += depBehavior
 				}
 				
-			]
+			].build
 		}
 		return stateMachineRule
 	}
 	
 	public def getStateRule() {
 		if (stateRule == null) {
-			stateRule = createRule(StateMatcher.querySpecification)[
+			stateRule = createRule.precondition(StateMatcher.querySpecification).action[
 				val cpsStateMachine = it.stateMachine
 				val cpsAppInstance = it.appInstance
 				val cpsState = it.state
@@ -151,14 +151,14 @@ class RuleProvider {
 				if (cpsStateMachine.initial == cpsState) {
 					depBehavior.current = behaviorState
 				}
-			]
+			].build
 		}
 		return stateRule
 	}
 	
 	public def getTransitionRule() {
 		if (transitionRule == null) {
-			transitionRule = createRule(TransitionMatcher.querySpecification)[
+			transitionRule = createRule.precondition(TransitionMatcher.querySpecification).action[
 				val cpsAppInstance = it.appInstance
 				val cpsState = it.sourceState
 				val cpsTargetState = it.targetState
@@ -189,14 +189,14 @@ class RuleProvider {
 				
 				depSourceState.outgoing += behaviorTransition
 				behaviorTransition.to = depTargetState
-			]
+			].build
 		}
 		return transitionRule
 	}
 	
 	public def getActionRule() {
 		if (actionRule == null) {
-			actionRule = createRule(ActionPairMatcher.querySpecification)[
+			actionRule = createRule.precondition(ActionPairMatcher.querySpecification).action[
 				val cpsSendTransition = sendTransition
 				val cpsSendAppInstance = sendAppInstance
 				val cpsWaitTransition = waitTransition
@@ -220,7 +220,7 @@ class RuleProvider {
 				]
 				
 				depSendTransition.trigger += depWaitTransition
-			]
+			].build
 		}
 		return actionRule
 	}
