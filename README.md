@@ -1,8 +1,8 @@
-# EMF-IncQuery CPS Demonstrator
+VIATRA CPS Demonstrator
 
 [![Build Status](https://build.inf.mit.bme.hu/jenkins/job/CPS-Demonstrator/badge/icon)](https://build.inf.mit.bme.hu/jenkins/job/CPS-Demonstrator/)
 
-A comprehensive example showing off EMF-IncQuery features on a Cyber Physical System modeling domain.
+A comprehensive example showing off VIATRA features on a Cyber Physical System modeling domain.
 Includes:
   * live validation
   * query-based viewers
