@@ -1,4 +1,4 @@
-VIATRA CPS Demonstrator
+# VIATRA CPS Demonstrator
 
 [![Build Status](https://build.inf.mit.bme.hu/jenkins/job/CPS-Demonstrator/badge/icon)](https://build.inf.mit.bme.hu/jenkins/job/CPS-Demonstrator/)
 
