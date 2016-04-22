@@ -49,7 +49,7 @@
     <requirement
         name="org.eclipse.viatra.query.testing.sdk.feature.feature.group"/>
     <requirement
-        name="org.eclipse.viatra.addon.viewers.tooling.zest.feature.feature.group"/>
+        name="org.eclipse.viatra.addon.viewers.tooling.feature.feature.group"/>
     <requirement
         name="org.eclipse.xtext.sdk.feature.group"
         versionRange="[2.9.0,2.10.0)"/>
