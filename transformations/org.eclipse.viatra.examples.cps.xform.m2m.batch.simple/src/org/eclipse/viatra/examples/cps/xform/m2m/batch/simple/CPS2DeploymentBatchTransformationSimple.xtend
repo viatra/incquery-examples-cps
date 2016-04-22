@@ -16,7 +16,7 @@ import org.eclipse.viatra.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.viatra.examples.cps.deployment.DeploymentElement
 import org.eclipse.viatra.examples.cps.deployment.DeploymentFactory
 import org.eclipse.viatra.examples.cps.deployment.DeploymentHost
-import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace
+import org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityFactory
 
@@ -98,7 +98,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	 * triggered behavior transition
 	 * @param senderTrace the trace that contains the sender transition
 	 */
-	private def findAndAssignReceivers(CPS2DeplyomentTrace senderTrace) {
+	private def findAndAssignReceivers(CPS2DeploymentTrace senderTrace) {
 		traceBegin('''findReceivers(«senderTrace.name»)''')
 
 		var receiverTraces = mapping.traces.filter[deploymentElements.head instanceof BehaviorTransition]
@@ -115,7 +115,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	 * @param senderTrace the trace that contains the sender transition
 	 * @param receiverTrace the trace that contains the receiver transition
 	 */
-	private def void setTriggerIfConnected(CPS2DeplyomentTrace receiverTrace, CPS2DeplyomentTrace senderTrace) {
+	private def void setTriggerIfConnected(CPS2DeploymentTrace receiverTrace, CPS2DeploymentTrace senderTrace) {
 		traceBegin('''setTriggerIfConnected(«receiverTrace.name»,«senderTrace.name»)''')
 
 		if (!isTraceForReceiver(receiverTrace))
@@ -162,7 +162,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	 * Returns if a trace contains a transition that sends a message
 	 * @param trace the trace that links transitions and behavior transitions
 	 */
-	private def isTraceForSender(CPS2DeplyomentTrace trace) {
+	private def isTraceForSender(CPS2DeploymentTrace trace) {
 		traceBegin('''isTraceForSender«trace.name»''')
 		var isSender = false;
 		var elements = trace.cpsElements
@@ -195,7 +195,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	 * Returns if a trace contains a transition that waits for a message
 	 * @param trace the trace that links transitions and behavior transitions
 	 */
-	private def isTraceForReceiver(CPS2DeplyomentTrace trace) {
+	private def isTraceForReceiver(CPS2DeploymentTrace trace) {
 		traceBegin('''isTraceForReceiver(«trace.name»)''')
 		var isReceiver = false;
 		var elements = trace.cpsElements
@@ -396,7 +396,7 @@ class CPS2DeploymentBatchTransformationSimple {
 	private def createTrace(Identifiable identifiable, DeploymentElement deploymentElement) {
 		traceBegin('''createTrace(«identifiable.name», «deploymentElement.name»)''')
 
-		var trace = TraceabilityFactory.eINSTANCE.createCPS2DeplyomentTrace
+		var trace = TraceabilityFactory.eINSTANCE.createCPS2DeploymentTrace
 		trace.cpsElements += identifiable
 		trace.deploymentElements += deploymentElement
 		mapping.traces += trace

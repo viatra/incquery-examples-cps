@@ -5,7 +5,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable
 import org.eclipse.viatra.examples.cps.deployment.DeploymentApplication
 import org.eclipse.viatra.examples.cps.deployment.DeploymentFactory
 import org.eclipse.viatra.examples.cps.deployment.DeploymentHost
-import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace
+import org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityFactory
 import org.eclipse.viatra.examples.cps.xform.m2m.batch.viatra.patterns.ActionPairMatcher
@@ -58,7 +58,7 @@ class RuleProvider {
 					ip = nodeIp
 				]
 				mapping.deployment.hosts += deploymentHost
-				mapping.traces += createCPS2DeplyomentTrace => [
+				mapping.traces += createCPS2DeploymentTrace => [
 					cpsElements += cpsHostInstance
 					deploymentElements += deploymentHost
 				]
@@ -82,7 +82,7 @@ class RuleProvider {
 				]
 				
 				
-				mapping.traces += createCPS2DeplyomentTrace => [
+				mapping.traces += createCPS2DeploymentTrace => [
 					cpsElements += cpsApplicationInstance
 					deploymentElements += deploymentApplication
 				]
@@ -108,7 +108,7 @@ class RuleProvider {
 				
 				val trace = getTraceForCPSElement(cpsStateMachine)
 				if (trace == null){
-					mapping.traces += createCPS2DeplyomentTrace => [
+					mapping.traces += createCPS2DeploymentTrace => [
 						cpsElements += cpsStateMachine
 						deploymentElements += depBehavior
 					]
@@ -140,7 +140,7 @@ class RuleProvider {
 				
 				val trace = getTraceForCPSElement(cpsState)
 				if (trace == null) {
-					mapping.traces += createCPS2DeplyomentTrace => [
+					mapping.traces += createCPS2DeploymentTrace => [
 						cpsElements += cpsState
 						deploymentElements += behaviorState
 					]
@@ -176,7 +176,7 @@ class RuleProvider {
 				
 				val trace = getTraceForCPSElement(cpsTransition)
 				if (trace == null){
-					mapping.traces += createCPS2DeplyomentTrace => [
+					mapping.traces += createCPS2DeploymentTrace => [
 						cpsElements += cpsTransition
 						deploymentElements += behaviorTransition
 					]
@@ -226,6 +226,6 @@ class RuleProvider {
 	}
 	
 	def getTraceForCPSElement(Identifiable cpsElement) {
-		engine.cps2depTrace.getAllValuesOftrace(null, cpsElement, null).filter(CPS2DeplyomentTrace).head
+		engine.cps2depTrace.getAllValuesOftrace(null, cpsElement, null).filter(CPS2DeploymentTrace).head
 	}
 }

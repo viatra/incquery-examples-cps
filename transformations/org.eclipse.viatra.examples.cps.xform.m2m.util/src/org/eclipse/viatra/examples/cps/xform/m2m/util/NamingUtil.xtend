@@ -5,7 +5,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable
 import org.eclipse.viatra.examples.cps.deployment.DeploymentApplication
 import org.eclipse.viatra.examples.cps.deployment.DeploymentElement
 import org.eclipse.viatra.examples.cps.deployment.DeploymentHost
-import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace
+import org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace
 
 class NamingUtil {
 
@@ -29,7 +29,7 @@ class NamingUtil {
 		depElement.description
 	}
 
-	static dispatch def String name(CPS2DeplyomentTrace trace) {
+	static dispatch def String name(CPS2DeploymentTrace trace) {
 		'''[«FOR ce : trace.cpsElements SEPARATOR ", "»«ce.name»«ENDFOR»]->[«FOR de : trace.deploymentElements SEPARATOR ", "»«de.
 			name»«ENDFOR»]'''
 	}

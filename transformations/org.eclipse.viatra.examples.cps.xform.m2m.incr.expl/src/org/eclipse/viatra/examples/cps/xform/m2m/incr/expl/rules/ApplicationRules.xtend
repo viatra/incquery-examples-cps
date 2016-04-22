@@ -42,7 +42,7 @@ class ApplicationMapping extends AbstractRule<UnmappedApplicationInstanceMatch> 
 				id = appId
 			]
 			match.depHost.applications += app
-			rootMapping.traces += createCPS2DeplyomentTrace => [
+			rootMapping.traces += createCPS2DeploymentTrace => [
 				cpsElements += match.appInstance
 				deploymentElements += app
 			]

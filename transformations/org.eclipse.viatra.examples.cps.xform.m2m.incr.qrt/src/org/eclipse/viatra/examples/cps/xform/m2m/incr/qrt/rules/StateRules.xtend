@@ -48,7 +48,7 @@ class StateMapping extends AbstractRule<StateMatch> {
 				val traces = engine.cps2depTrace.getAllValuesOftrace(null, state, null)
 				if (traces.empty) {
 					trace('''Creating new trace for state ''')
-					rootMapping.traces += createCPS2DeplyomentTrace => [
+					rootMapping.traces += createCPS2DeploymentTrace => [
 						cpsElements += state
 						deploymentElements += depState
 					]

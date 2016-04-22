@@ -45,7 +45,7 @@ class StateMachineMapping extends AbstractRule<UnmappedStateMachineMatch> {
 			val traces = engine.cps2depTrace.getAllValuesOftrace(null, match.stateMachine, null)
 			if(traces.empty){
 				trace('''Creating new trace for state machine''')
-				rootMapping.traces += createCPS2DeplyomentTrace => [
+				rootMapping.traces += createCPS2DeploymentTrace => [
 					cpsElements += match.stateMachine
 					deploymentElements += behavior
 				]

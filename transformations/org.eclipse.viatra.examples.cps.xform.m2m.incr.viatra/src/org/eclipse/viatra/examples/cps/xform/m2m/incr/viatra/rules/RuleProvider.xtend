@@ -7,7 +7,7 @@ import org.eclipse.viatra.examples.cps.deployment.DeploymentApplication
 import org.eclipse.viatra.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.viatra.examples.cps.deployment.DeploymentHost
 import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage
-import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace
+import org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.viatra.patterns.ApplicationInstanceMatcher
@@ -60,9 +60,9 @@ public class RuleProvider {
 				val deploymentHost = cps2dep.deployment.createChild(deployment_Hosts, deploymentHost)
 				deploymentHost.set(deploymentHost_Ip, hostInstance.nodeIp)
 				
-				val hostTrace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace)
-				hostTrace.addTo(CPS2DeplyomentTrace_CpsElements, hostInstance)
-				hostTrace.addTo(CPS2DeplyomentTrace_DeploymentElements, deploymentHost)
+				val hostTrace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace)
+				hostTrace.addTo(CPS2DeploymentTrace_CpsElements, hostInstance)
+				hostTrace.addTo(CPS2DeploymentTrace_DeploymentElements, deploymentHost)
 				
 			].action(CRUDActivationStateEnum.UPDATED) [
 				val depHost = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, hostInstance, null).depElement as DeploymentHost
@@ -92,16 +92,16 @@ public class RuleProvider {
 				val deploymentApplication = depHost.createChild(deploymentHost_Applications, deploymentApplication)
 				deploymentApplication.set(deploymentApplication_Id, appInstance.identifier)
 				
-				val hostTrace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace)
-				hostTrace.addTo(CPS2DeplyomentTrace_CpsElements, appInstance)
-				hostTrace.addTo(CPS2DeplyomentTrace_DeploymentElements, deploymentApplication)
+				val hostTrace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace)
+				hostTrace.addTo(CPS2DeploymentTrace_CpsElements, appInstance)
+				hostTrace.addTo(CPS2DeploymentTrace_DeploymentElements, deploymentApplication)
 				debug('''Mapped application with ID: «appInstance.identifier»''')
 			].action(CRUDActivationStateEnum.UPDATED) [
 				val depApp = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, appInstance, null).depElement as DeploymentApplication
 				if (depApp.id != appInstance.identifier)
 					depApp.set(deploymentApplication_Id, appInstance.identifier)
 			].action(CRUDActivationStateEnum.DELETED) [
-				val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeplyomentTrace
+				val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeploymentTrace
 				val depApp = trace.deploymentElements.head as DeploymentApplication
 				engine.allocatedDeploymentApplication.getAllValuesOfdepHost(depApp).head.remove(deploymentHost_Applications, depApp)
 				cps2dep.remove(CPSToDeployment_Traces, trace)
@@ -124,13 +124,13 @@ public class RuleProvider {
 				val traces = engine.cps2depTrace.getAllValuesOftrace(null, stateMachine, null)
 				if (traces.empty) {
 					trace('''Creating new trace for state machine''')
-					val trace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace)
-					trace.addTo(CPS2DeplyomentTrace_CpsElements, stateMachine)
-					trace.addTo(CPS2DeplyomentTrace_DeploymentElements, behavior)
+					val trace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace)
+					trace.addTo(CPS2DeploymentTrace_CpsElements, stateMachine)
+					trace.addTo(CPS2DeploymentTrace_DeploymentElements, behavior)
 
 				} else {
 					trace('''Adding new behavior to existing trace''')
-					traces.head.addTo(CPS2DeplyomentTrace_DeploymentElements, behavior)
+					traces.head.addTo(CPS2DeploymentTrace_DeploymentElements, behavior)
 				}
 				debug('''Mapped state machine with ID: «stateMachine.identifier»''')
 			].action(CRUDActivationStateEnum.UPDATED) [
@@ -154,7 +154,7 @@ public class RuleProvider {
 				depApp.set(deploymentApplication_Behavior, null)
 
 				val smTrace = engine.cps2depTrace.getAllValuesOftrace(null, stateMachine, null).head
-				smTrace.remove(CPS2DeplyomentTrace_DeploymentElements, depBehavior)
+				smTrace.remove(CPS2DeploymentTrace_DeploymentElements, depBehavior)
 				if (smTrace.deploymentElements.empty) {
 					trace('''Removing empty trace''')
 					cps2dep.remove(CPSToDeployment_Traces, smTrace)
@@ -181,12 +181,12 @@ public class RuleProvider {
 				val traces = engine.cps2depTrace.getAllValuesOftrace(null, state, null)
 				if (traces.empty) {
 					trace('''Creating new trace for state ''')
-					val trace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace)
-					trace.addTo(CPS2DeplyomentTrace_CpsElements, state)
-					trace.addTo(CPS2DeplyomentTrace_DeploymentElements, depState)
+					val trace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace)
+					trace.addTo(CPS2DeploymentTrace_CpsElements, state)
+					trace.addTo(CPS2DeploymentTrace_DeploymentElements, depState)
 				} else {
 					trace('''Adding new state to existing trace''')
-					traces.head.addTo(CPS2DeplyomentTrace_DeploymentElements, depState)
+					traces.head.addTo(CPS2DeploymentTrace_DeploymentElements, depState)
 				}
 				debug('''Mapped state with ID: «state.identifier»''')
 			].action(CRUDActivationStateEnum.UPDATED) [
@@ -224,7 +224,7 @@ public class RuleProvider {
 					}
 				}
 				val smTrace = engine.cps2depTrace.getAllValuesOftrace(null, state, null).head
-				smTrace.remove(CPS2DeplyomentTrace_DeploymentElements, depState)
+				smTrace.remove(CPS2DeploymentTrace_DeploymentElements, depState)
 				if (smTrace.deploymentElements.empty) {
 					trace('''Removing empty trace''')
 					cps2dep.remove(CPSToDeployment_Traces, smTrace)
@@ -260,12 +260,12 @@ public class RuleProvider {
 				val traces = engine.cps2depTrace.getAllValuesOftrace(null, transition, null)
 				if (traces.empty) {
 					trace('''Creating new trace for transition ''')
-					val trace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace)
-					trace.addTo(CPS2DeplyomentTrace_CpsElements, transition)
-					trace.addTo(CPS2DeplyomentTrace_DeploymentElements, depTransition)
+					val trace = cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace)
+					trace.addTo(CPS2DeploymentTrace_CpsElements, transition)
+					trace.addTo(CPS2DeploymentTrace_DeploymentElements, depTransition)
 				} else {
 					trace('''Adding new transition to existing trace''')
-					traces.head.addTo(CPS2DeplyomentTrace_DeploymentElements, depTransition)
+					traces.head.addTo(CPS2DeploymentTrace_DeploymentElements, depTransition)
 				}
 				debug('''Mapped transition with ID: «transitionId»''')
 			].action(CRUDActivationStateEnum.UPDATED) [
@@ -313,7 +313,7 @@ public class RuleProvider {
 				depSource?.remove(behaviorState_Outgoing, depTransition)
 				depApp.behavior.remove(deploymentBehavior_Transitions, depTransition)
 				val smTrace = engine.cps2depTrace.getAllValuesOftrace(null, transition, null).head
-				smTrace.remove(CPS2DeplyomentTrace_DeploymentElements, depTransition)
+				smTrace.remove(CPS2DeploymentTrace_DeploymentElements, depTransition)
 				if (smTrace.deploymentElements.empty) {
 					trace('''Removing empty trace''')
 					cps2dep.remove(CPSToDeployment_Traces, smTrace)

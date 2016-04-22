@@ -39,7 +39,7 @@ class HostMapping extends AbstractRule<HostInstanceMatch> {
 					ip = nodeIp
 				]
 				rootMapping.deployment.hosts += host
-				rootMapping.traces += createCPS2DeplyomentTrace => [
+				rootMapping.traces += createCPS2DeploymentTrace => [
 					cpsElements += match.hostInstance
 					deploymentElements += host
 				]

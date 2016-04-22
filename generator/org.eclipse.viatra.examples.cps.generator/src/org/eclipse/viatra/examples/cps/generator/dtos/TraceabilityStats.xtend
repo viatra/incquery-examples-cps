@@ -33,19 +33,19 @@ class TraceabilityStats extends ModelStats {
 		
 		// EClasses
 		val sumProcessor = new SumProcessor
-		baseIndex.processAllInstances(TraceabilityPackage.Literals.CPS2_DEPLYOMENT_TRACE, sumProcessor)	
+		baseIndex.processAllInstances(TraceabilityPackage.Literals.CPS2_DEPLOYMENT_TRACE, sumProcessor)	
 		this.traceabilityCPSDepTrace = sumProcessor.sum
 		sumProcessor.resetSum
 		
 		
 		// EFeatures
 		val sp2 = new SumProcessor
-		baseIndex.processAllFeatureInstances(TraceabilityPackage.Literals.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS, sp2)	
+		baseIndex.processAllFeatureInstances(TraceabilityPackage.Literals.CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS, sp2)	
 		this.traceabilityCPSDepTraceCPSElements = sp2.sum
 		sp2.resetSum
 		
 		val sp3 = new SumProcessor
-		baseIndex.processAllFeatureInstances(TraceabilityPackage.Literals.CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS, sp3)	
+		baseIndex.processAllFeatureInstances(TraceabilityPackage.Literals.CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS, sp3)	
 		this.traceabilityDeploymentElements = sp3.sum
 		sp3.resetSum
 		

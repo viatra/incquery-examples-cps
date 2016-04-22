@@ -60,7 +60,7 @@ class TransitionMapping extends AbstractRule<TransitionMatch> {
 			val traces = engine.cps2depTrace.getAllValuesOftrace(null, transition, null)
 			if (traces.empty) {
 				trace('''Creating new trace for transition ''')
-				rootMapping.traces += createCPS2DeplyomentTrace => [
+				rootMapping.traces += createCPS2DeploymentTrace => [
 					cpsElements += transition
 					deploymentElements += depTransition
 				]

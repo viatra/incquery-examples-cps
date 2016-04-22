@@ -54,8 +54,8 @@ pattern transition2AppType(trans, appType){
 
 pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 	CPSToDeployment.traces(cps2dep, trace);
-	CPS2DeplyomentTrace.cpsElements(trace, cpsElement);
-	CPS2DeplyomentTrace.deploymentElements(trace, depElement);
+	CPS2DeploymentTrace.cpsElements(trace, cpsElement);
+	CPS2DeploymentTrace.deploymentElements(trace, depElement);
 }
 
 pattern cps2depApplicationTrace(cps2dep, trace, cpsAppInstance, depApp) {

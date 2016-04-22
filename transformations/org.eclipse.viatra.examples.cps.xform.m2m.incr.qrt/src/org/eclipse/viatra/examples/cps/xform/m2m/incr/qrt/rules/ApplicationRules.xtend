@@ -2,7 +2,7 @@ package org.eclipse.viatra.examples.cps.xform.m2m.incr.qrt.rules
 
 import org.eclipse.viatra.examples.cps.deployment.DeploymentApplication
 import org.eclipse.viatra.examples.cps.deployment.DeploymentHost
-import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace
+import org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.qrt.queries.ApplicationInstanceMatch
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.transformation.evm.specific.Jobs
@@ -42,7 +42,7 @@ class ApplicationMapping extends AbstractRule<ApplicationInstanceMatch> {
 					id = appId
 				]
 				depHost.applications += app
-				rootMapping.traces += createCPS2DeplyomentTrace => [
+				rootMapping.traces += createCPS2DeploymentTrace => [
 					cpsElements += match.appInstance
 					deploymentElements += app
 				]
@@ -63,7 +63,7 @@ class ApplicationMapping extends AbstractRule<ApplicationInstanceMatch> {
 	private def getDisappearedJob() {
 		Jobs.newStatelessJob(CRUDActivationStateEnum.DELETED,
 			[ ApplicationInstanceMatch match |
-				val trace = engine.cps2depTrace.getAllValuesOftrace(null, match.appInstance, null).filter(CPS2DeplyomentTrace).head
+				val trace = engine.cps2depTrace.getAllValuesOftrace(null, match.appInstance, null).filter(CPS2DeploymentTrace).head
 				val depApp = trace.deploymentElements.head as DeploymentApplication
 				engine.allocatedDeploymentApplication.getAllValuesOfdepHost(depApp).head.applications -= depApp
 				rootMapping.traces -= trace

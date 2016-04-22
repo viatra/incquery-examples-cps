@@ -4,6 +4,6 @@ import "http://org.eclipse.viatra/model/cps-traceability"
 
 @Edge(source = identifiable, target = element, label = "cps2depl")
 pattern identifiableToDeplymentElement(trace, identifiable, element) {
-	CPS2DeplyomentTrace.cpsElements(trace, identifiable);
-	CPS2DeplyomentTrace.deploymentElements(trace, element);
+	CPS2DeploymentTrace.cpsElements(trace, identifiable);
+	CPS2DeploymentTrace.deploymentElements(trace, element);
 }

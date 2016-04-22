@@ -26,7 +26,7 @@ import org.eclipse.viatra.examples.cps.deployment.DeploymentBehavior
 import org.eclipse.viatra.examples.cps.deployment.DeploymentElement
 import org.eclipse.viatra.examples.cps.deployment.DeploymentFactory
 import org.eclipse.viatra.examples.cps.deployment.DeploymentHost
-import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace
+import org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityFactory
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.aggr.queries.CpsXformM2M
@@ -77,7 +77,7 @@ class CPS2DeploymentPartialBatchTransformation {
 	Stopwatch otherTimer
 
 	Table<State, DeploymentBehavior, BehaviorState> stateTable
-	Map<Identifiable, CPS2DeplyomentTrace> traceTable
+	Map<Identifiable, CPS2DeploymentTrace> traceTable
 	Map<Transition, String> transitionMap
 
 	/**
@@ -419,8 +419,8 @@ class CPS2DeploymentPartialBatchTransformation {
 				engine.communicatingAppInstances.hasMatch(cpsSendAppInstance, it)
 			]
 			communicatingWaitAppInstances.forEach[cpsWaitAppInstance |
-				val waitTransitionTrace = engine.cps2depTrace.getAllValuesOftrace(mapping, cpsWaitTransition, null).filter(CPS2DeplyomentTrace).head
-				val waitAppInstanceTrace = engine.cps2depTrace.getAllValuesOftrace(mapping, cpsWaitAppInstance, null).filter(CPS2DeplyomentTrace).head 
+				val waitTransitionTrace = engine.cps2depTrace.getAllValuesOftrace(mapping, cpsWaitTransition, null).filter(CPS2DeploymentTrace).head
+				val waitAppInstanceTrace = engine.cps2depTrace.getAllValuesOftrace(mapping, cpsWaitAppInstance, null).filter(CPS2DeploymentTrace).head 
 				
 				val depWaitApp = waitAppInstanceTrace.deploymentElements.filter(DeploymentApplication).head
 				val depWaitTransition = waitTransitionTrace.deploymentElements.filter(BehaviorTransition).findFirst[
@@ -717,7 +717,7 @@ class CPS2DeploymentPartialBatchTransformation {
 		//var trace = engine.cps2depTrace.getOneArbitraryMatch(mapping, null, cpsElement, null)?.trace
 		var trace = traceTable.get(cpsElement)
 		if (trace == null) {
-			trace = tracFactory.createCPS2DeplyomentTrace
+			trace = tracFactory.createCPS2DeploymentTrace
 			traceTable.put(cpsElement, trace)
 
 			trace.cpsElements += cpsElement
@@ -737,7 +737,7 @@ class CPS2DeploymentPartialBatchTransformation {
  	 */
 	private def addTrace(Identifiable cpsElement, DeploymentElement depElement) {
 		trace('''Executing: addTrace(cpsElement = «cpsElement.name», depElement = «depElement.name»)''')
-		val trace = tracFactory.createCPS2DeplyomentTrace
+		val trace = tracFactory.createCPS2DeploymentTrace
 
 		trace.cpsElements += cpsElement
 		trace.deploymentElements += depElement
