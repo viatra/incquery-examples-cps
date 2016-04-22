@@ -111,14 +111,14 @@ public interface TraceabilityPackage extends EPackage {
 	int CPS_TO_DEPLOYMENT_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeplyomentTraceImpl <em>CPS2 Deplyoment Trace</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeploymentTraceImpl <em>CPS2 Deployment Trace</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeplyomentTraceImpl
-	 * @see org.eclipse.viatra.examples.cps.traceability.impl.TraceabilityPackageImpl#getCPS2DeplyomentTrace()
+	 * @see org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeploymentTraceImpl
+	 * @see org.eclipse.viatra.examples.cps.traceability.impl.TraceabilityPackageImpl#getCPS2DeploymentTrace()
 	 * @generated
 	 */
-	int CPS2_DEPLYOMENT_TRACE = 1;
+	int CPS2_DEPLOYMENT_TRACE = 1;
 
 	/**
 	 * The feature id for the '<em><b>Cps Elements</b></em>' reference list.
@@ -127,7 +127,7 @@ public interface TraceabilityPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS = 0;
+	int CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS = 0;
 
 	/**
 	 * The feature id for the '<em><b>Deployment Elements</b></em>' reference list.
@@ -136,26 +136,25 @@ public interface TraceabilityPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS = 1;
+	int CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS = 1;
 
 	/**
-	 * The number of structural features of the '<em>CPS2 Deplyoment Trace</em>' class.
+	 * The number of structural features of the '<em>CPS2 Deployment Trace</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CPS2_DEPLYOMENT_TRACE_FEATURE_COUNT = 2;
+	int CPS2_DEPLOYMENT_TRACE_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of operations of the '<em>CPS2 Deplyoment Trace</em>' class.
+	 * The number of operations of the '<em>CPS2 Deployment Trace</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CPS2_DEPLYOMENT_TRACE_OPERATION_COUNT = 0;
-
+	int CPS2_DEPLOYMENT_TRACE_OPERATION_COUNT = 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.viatra.examples.cps.traceability.CPSToDeployment <em>CPS To Deployment</em>}'.
@@ -201,36 +200,36 @@ public interface TraceabilityPackage extends EPackage {
 	EReference getCPSToDeployment_Traces();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace <em>CPS2 Deplyoment Trace</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace <em>CPS2 Deployment Trace</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>CPS2 Deplyoment Trace</em>'.
-	 * @see org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace
+	 * @return the meta object for class '<em>CPS2 Deployment Trace</em>'.
+	 * @see org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace
 	 * @generated
 	 */
-	EClass getCPS2DeplyomentTrace();
+	EClass getCPS2DeploymentTrace();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace#getCpsElements <em>Cps Elements</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace#getCpsElements <em>Cps Elements</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Cps Elements</em>'.
-	 * @see org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace#getCpsElements()
-	 * @see #getCPS2DeplyomentTrace()
+	 * @see org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace#getCpsElements()
+	 * @see #getCPS2DeploymentTrace()
 	 * @generated
 	 */
-	EReference getCPS2DeplyomentTrace_CpsElements();
+	EReference getCPS2DeploymentTrace_CpsElements();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace#getDeploymentElements <em>Deployment Elements</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace#getDeploymentElements <em>Deployment Elements</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Deployment Elements</em>'.
-	 * @see org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace#getDeploymentElements()
-	 * @see #getCPS2DeplyomentTrace()
+	 * @see org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace#getDeploymentElements()
+	 * @see #getCPS2DeploymentTrace()
 	 * @generated
 	 */
-	EReference getCPS2DeplyomentTrace_DeploymentElements();
+	EReference getCPS2DeploymentTrace_DeploymentElements();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -290,14 +289,14 @@ public interface TraceabilityPackage extends EPackage {
 		EReference CPS_TO_DEPLOYMENT__TRACES = eINSTANCE.getCPSToDeployment_Traces();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeplyomentTraceImpl <em>CPS2 Deplyoment Trace</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeploymentTraceImpl <em>CPS2 Deployment Trace</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeplyomentTraceImpl
-		 * @see org.eclipse.viatra.examples.cps.traceability.impl.TraceabilityPackageImpl#getCPS2DeplyomentTrace()
+		 * @see org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeploymentTraceImpl
+		 * @see org.eclipse.viatra.examples.cps.traceability.impl.TraceabilityPackageImpl#getCPS2DeploymentTrace()
 		 * @generated
 		 */
-		EClass CPS2_DEPLYOMENT_TRACE = eINSTANCE.getCPS2DeplyomentTrace();
+		EClass CPS2_DEPLOYMENT_TRACE = eINSTANCE.getCPS2DeploymentTrace();
 
 		/**
 		 * The meta object literal for the '<em><b>Cps Elements</b></em>' reference list feature.
@@ -305,7 +304,7 @@ public interface TraceabilityPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS = eINSTANCE.getCPS2DeplyomentTrace_CpsElements();
+		EReference CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS = eINSTANCE.getCPS2DeploymentTrace_CpsElements();
 
 		/**
 		 * The meta object literal for the '<em><b>Deployment Elements</b></em>' reference list feature.
@@ -313,7 +312,7 @@ public interface TraceabilityPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS = eINSTANCE.getCPS2DeplyomentTrace_DeploymentElements();
+		EReference CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS = eINSTANCE.getCPS2DeploymentTrace_DeploymentElements();
 
 	}
 

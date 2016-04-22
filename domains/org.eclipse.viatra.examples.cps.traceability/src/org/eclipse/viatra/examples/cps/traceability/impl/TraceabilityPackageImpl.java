@@ -12,7 +12,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystemPa
 
 import org.eclipse.viatra.examples.cps.deployment.DeploymentPackage;
 
-import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace;
+import org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace;
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityFactory;
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage;
@@ -36,7 +36,7 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass cps2DeplyomentTraceEClass = null;
+	private EClass cps2DeploymentTraceEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -144,8 +144,8 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getCPS2DeplyomentTrace() {
-		return cps2DeplyomentTraceEClass;
+	public EClass getCPS2DeploymentTrace() {
+		return cps2DeploymentTraceEClass;
 	}
 
 	/**
@@ -153,8 +153,8 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCPS2DeplyomentTrace_CpsElements() {
-		return (EReference)cps2DeplyomentTraceEClass.getEStructuralFeatures().get(0);
+	public EReference getCPS2DeploymentTrace_CpsElements() {
+		return (EReference)cps2DeploymentTraceEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -162,8 +162,8 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getCPS2DeplyomentTrace_DeploymentElements() {
-		return (EReference)cps2DeplyomentTraceEClass.getEStructuralFeatures().get(1);
+	public EReference getCPS2DeploymentTrace_DeploymentElements() {
+		return (EReference)cps2DeploymentTraceEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -199,9 +199,9 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 		createEReference(cpsToDeploymentEClass, CPS_TO_DEPLOYMENT__DEPLOYMENT);
 		createEReference(cpsToDeploymentEClass, CPS_TO_DEPLOYMENT__TRACES);
 
-		cps2DeplyomentTraceEClass = createEClass(CPS2_DEPLYOMENT_TRACE);
-		createEReference(cps2DeplyomentTraceEClass, CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS);
-		createEReference(cps2DeplyomentTraceEClass, CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS);
+		cps2DeploymentTraceEClass = createEClass(CPS2_DEPLOYMENT_TRACE);
+		createEReference(cps2DeploymentTraceEClass, CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS);
+		createEReference(cps2DeploymentTraceEClass, CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS);
 	}
 
 	/**
@@ -241,11 +241,11 @@ public class TraceabilityPackageImpl extends EPackageImpl implements Traceabilit
 		initEClass(cpsToDeploymentEClass, CPSToDeployment.class, "CPSToDeployment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCPSToDeployment_Cps(), theCyberPhysicalSystemPackage.getCyberPhysicalSystem(), null, "cps", null, 0, 1, CPSToDeployment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCPSToDeployment_Deployment(), theDeploymentPackage.getDeployment(), null, "deployment", null, 0, 1, CPSToDeployment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCPSToDeployment_Traces(), this.getCPS2DeplyomentTrace(), null, "traces", null, 0, -1, CPSToDeployment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCPSToDeployment_Traces(), this.getCPS2DeploymentTrace(), null, "traces", null, 0, -1, CPSToDeployment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(cps2DeplyomentTraceEClass, CPS2DeplyomentTrace.class, "CPS2DeplyomentTrace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCPS2DeplyomentTrace_CpsElements(), theCyberPhysicalSystemPackage.getIdentifiable(), null, "cpsElements", null, 0, -1, CPS2DeplyomentTrace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getCPS2DeplyomentTrace_DeploymentElements(), theDeploymentPackage.getDeploymentElement(), null, "deploymentElements", null, 0, -1, CPS2DeplyomentTrace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(cps2DeploymentTraceEClass, CPS2DeploymentTrace.class, "CPS2DeploymentTrace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCPS2DeploymentTrace_CpsElements(), theCyberPhysicalSystemPackage.getIdentifiable(), null, "cpsElements", null, 0, -1, CPS2DeploymentTrace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCPS2DeploymentTrace_DeploymentElements(), theDeploymentPackage.getDeploymentElement(), null, "deploymentElements", null, 0, -1, CPS2DeploymentTrace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

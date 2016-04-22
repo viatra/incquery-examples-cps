@@ -16,24 +16,24 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable;
 
 import org.eclipse.viatra.examples.cps.deployment.DeploymentElement;
 
-import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace;
+import org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace;
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>CPS2 Deplyoment Trace</b></em>'.
+ * An implementation of the model object '<em><b>CPS2 Deployment Trace</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeplyomentTraceImpl#getCpsElements <em>Cps Elements</em>}</li>
- *   <li>{@link org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeplyomentTraceImpl#getDeploymentElements <em>Deployment Elements</em>}</li>
+ *   <li>{@link org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeploymentTraceImpl#getCpsElements <em>Cps Elements</em>}</li>
+ *   <li>{@link org.eclipse.viatra.examples.cps.traceability.impl.CPS2DeploymentTraceImpl#getDeploymentElements <em>Deployment Elements</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implements CPS2DeplyomentTrace {
+public class CPS2DeploymentTraceImpl extends MinimalEObjectImpl.Container implements CPS2DeploymentTrace {
 	/**
 	 * The cached value of the '{@link #getCpsElements() <em>Cps Elements</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -59,7 +59,7 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected CPS2DeplyomentTraceImpl() {
+	protected CPS2DeploymentTraceImpl() {
 		super();
 	}
 
@@ -70,7 +70,7 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return TraceabilityPackage.Literals.CPS2_DEPLYOMENT_TRACE;
+		return TraceabilityPackage.Literals.CPS2_DEPLOYMENT_TRACE;
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	 */
 	public EList<Identifiable> getCpsElements() {
 		if (cpsElements == null) {
-			cpsElements = new EObjectResolvingEList<Identifiable>(Identifiable.class, this, TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS);
+			cpsElements = new EObjectResolvingEList<Identifiable>(Identifiable.class, this, TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS);
 		}
 		return cpsElements;
 	}
@@ -92,7 +92,7 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	 */
 	public EList<DeploymentElement> getDeploymentElements() {
 		if (deploymentElements == null) {
-			deploymentElements = new EObjectResolvingEList<DeploymentElement>(DeploymentElement.class, this, TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS);
+			deploymentElements = new EObjectResolvingEList<DeploymentElement>(DeploymentElement.class, this, TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS);
 		}
 		return deploymentElements;
 	}
@@ -105,9 +105,9 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS:
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS:
 				return getCpsElements();
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS:
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS:
 				return getDeploymentElements();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -122,11 +122,11 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS:
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS:
 				getCpsElements().clear();
 				getCpsElements().addAll((Collection<? extends Identifiable>)newValue);
 				return;
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS:
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS:
 				getDeploymentElements().clear();
 				getDeploymentElements().addAll((Collection<? extends DeploymentElement>)newValue);
 				return;
@@ -142,10 +142,10 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS:
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS:
 				getCpsElements().clear();
 				return;
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS:
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS:
 				getDeploymentElements().clear();
 				return;
 		}
@@ -160,12 +160,12 @@ public class CPS2DeplyomentTraceImpl extends MinimalEObjectImpl.Container implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS:
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS:
 				return cpsElements != null && !cpsElements.isEmpty();
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS:
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS:
 				return deploymentElements != null && !deploymentElements.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //CPS2DeplyomentTraceImpl
+} //CPS2DeploymentTraceImpl

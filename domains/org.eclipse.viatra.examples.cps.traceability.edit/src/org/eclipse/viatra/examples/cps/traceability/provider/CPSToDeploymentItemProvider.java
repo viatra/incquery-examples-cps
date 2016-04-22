@@ -198,7 +198,7 @@ public class CPSToDeploymentItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TraceabilityPackage.Literals.CPS_TO_DEPLOYMENT__TRACES,
-				 TraceabilityFactory.eINSTANCE.createCPS2DeplyomentTrace()));
+				 TraceabilityFactory.eINSTANCE.createCPS2DeploymentTrace()));
 	}
 
 	/**

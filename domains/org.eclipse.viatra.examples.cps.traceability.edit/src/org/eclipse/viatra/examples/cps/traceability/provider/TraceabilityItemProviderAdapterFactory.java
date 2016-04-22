@@ -95,26 +95,26 @@ public class TraceabilityItemProviderAdapterFactory extends TraceabilityAdapterF
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace} instances.
+	 * This keeps track of the one adapter used for all {@link org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected CPS2DeplyomentTraceItemProvider cps2DeplyomentTraceItemProvider;
+	protected CPS2DeploymentTraceItemProvider cps2DeploymentTraceItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace}.
+	 * This creates an adapter for a {@link org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createCPS2DeplyomentTraceAdapter() {
-		if (cps2DeplyomentTraceItemProvider == null) {
-			cps2DeplyomentTraceItemProvider = new CPS2DeplyomentTraceItemProvider(this);
+	public Adapter createCPS2DeploymentTraceAdapter() {
+		if (cps2DeploymentTraceItemProvider == null) {
+			cps2DeploymentTraceItemProvider = new CPS2DeploymentTraceItemProvider(this);
 		}
 
-		return cps2DeplyomentTraceItemProvider;
+		return cps2DeploymentTraceItemProvider;
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class TraceabilityItemProviderAdapterFactory extends TraceabilityAdapterF
 	 */
 	public void dispose() {
 		if (cpsToDeploymentItemProvider != null) cpsToDeploymentItemProvider.dispose();
-		if (cps2DeplyomentTraceItemProvider != null) cps2DeplyomentTraceItemProvider.dispose();
+		if (cps2DeploymentTraceItemProvider != null) cps2DeploymentTraceItemProvider.dispose();
 	}
 
 }

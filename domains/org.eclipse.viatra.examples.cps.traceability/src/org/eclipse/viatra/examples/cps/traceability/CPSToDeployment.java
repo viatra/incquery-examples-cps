@@ -83,7 +83,7 @@ public interface CPSToDeployment extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Traces</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace}.
+	 * The list contents are of type {@link org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Traces</em>' containment reference list isn't clear,
@@ -95,6 +95,6 @@ public interface CPSToDeployment extends EObject {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<CPS2DeplyomentTrace> getTraces();
+	EList<CPS2DeploymentTrace> getTraces();
 
 } // CPSToDeployment

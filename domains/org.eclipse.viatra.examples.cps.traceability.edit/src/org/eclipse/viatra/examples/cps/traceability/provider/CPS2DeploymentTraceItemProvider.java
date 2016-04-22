@@ -23,12 +23,12 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace} object.
+ * This is the item provider adapter for a {@link org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class CPS2DeplyomentTraceItemProvider 
+public class CPS2DeploymentTraceItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -42,7 +42,7 @@ public class CPS2DeplyomentTraceItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CPS2DeplyomentTraceItemProvider(AdapterFactory adapterFactory) {
+	public CPS2DeploymentTraceItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -74,9 +74,9 @@ public class CPS2DeplyomentTraceItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CPS2DeplyomentTrace_cpsElements_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CPS2DeplyomentTrace_cpsElements_feature", "_UI_CPS2DeplyomentTrace_type"),
-				 TraceabilityPackage.Literals.CPS2_DEPLYOMENT_TRACE__CPS_ELEMENTS,
+				 getString("_UI_CPS2DeploymentTrace_cpsElements_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CPS2DeploymentTrace_cpsElements_feature", "_UI_CPS2DeploymentTrace_type"),
+				 TraceabilityPackage.Literals.CPS2_DEPLOYMENT_TRACE__CPS_ELEMENTS,
 				 true,
 				 false,
 				 true,
@@ -96,9 +96,9 @@ public class CPS2DeplyomentTraceItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CPS2DeplyomentTrace_deploymentElements_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CPS2DeplyomentTrace_deploymentElements_feature", "_UI_CPS2DeplyomentTrace_type"),
-				 TraceabilityPackage.Literals.CPS2_DEPLYOMENT_TRACE__DEPLOYMENT_ELEMENTS,
+				 getString("_UI_CPS2DeploymentTrace_deploymentElements_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CPS2DeploymentTrace_deploymentElements_feature", "_UI_CPS2DeploymentTrace_type"),
+				 TraceabilityPackage.Literals.CPS2_DEPLOYMENT_TRACE__DEPLOYMENT_ELEMENTS,
 				 true,
 				 false,
 				 true,
@@ -108,14 +108,14 @@ public class CPS2DeplyomentTraceItemProvider
 	}
 
 	/**
-	 * This returns CPS2DeplyomentTrace.gif.
+	 * This returns CPS2DeploymentTrace.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CPS2DeplyomentTrace"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CPS2DeploymentTrace"));
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class CPS2DeplyomentTraceItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_CPS2DeplyomentTrace_type");
+		return getString("_UI_CPS2DeploymentTrace_type");
 	}
 	
 

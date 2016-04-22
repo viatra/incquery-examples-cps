@@ -31,13 +31,13 @@ public interface TraceabilityFactory extends EFactory {
 	CPSToDeployment createCPSToDeployment();
 
 	/**
-	 * Returns a new object of class '<em>CPS2 Deplyoment Trace</em>'.
+	 * Returns a new object of class '<em>CPS2 Deployment Trace</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CPS2 Deplyoment Trace</em>'.
+	 * @return a new object of class '<em>CPS2 Deployment Trace</em>'.
 	 * @generated
 	 */
-	CPS2DeplyomentTrace createCPS2DeplyomentTrace();
+	CPS2DeploymentTrace createCPS2DeploymentTrace();
 
 	/**
 	 * Returns the package supported by this factory.

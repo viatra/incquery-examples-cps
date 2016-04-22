@@ -12,22 +12,22 @@ import org.eclipse.viatra.examples.cps.deployment.DeploymentElement;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>CPS2 Deplyoment Trace</b></em>'.
+ * A representation of the model object '<em><b>CPS2 Deployment Trace</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace#getCpsElements <em>Cps Elements</em>}</li>
- *   <li>{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace#getDeploymentElements <em>Deployment Elements</em>}</li>
+ *   <li>{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace#getCpsElements <em>Cps Elements</em>}</li>
+ *   <li>{@link org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace#getDeploymentElements <em>Deployment Elements</em>}</li>
  * </ul>
  *
- * @see org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage#getCPS2DeplyomentTrace()
+ * @see org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage#getCPS2DeploymentTrace()
  * @model
  * @generated
  */
-public interface CPS2DeplyomentTrace extends EObject {
+public interface CPS2DeploymentTrace extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Cps Elements</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.viatra.examples.cps.cyberPhysicalSystem.Identifiable}.
@@ -38,7 +38,7 @@ public interface CPS2DeplyomentTrace extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Cps Elements</em>' reference list.
-	 * @see org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage#getCPS2DeplyomentTrace_CpsElements()
+	 * @see org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage#getCPS2DeploymentTrace_CpsElements()
 	 * @model
 	 * @generated
 	 */
@@ -54,10 +54,10 @@ public interface CPS2DeplyomentTrace extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Deployment Elements</em>' reference list.
-	 * @see org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage#getCPS2DeplyomentTrace_DeploymentElements()
+	 * @see org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage#getCPS2DeploymentTrace_DeploymentElements()
 	 * @model
 	 * @generated
 	 */
 	EList<DeploymentElement> getDeploymentElements();
 
-} // CPS2DeplyomentTrace
+} // CPS2DeploymentTrace

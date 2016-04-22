@@ -72,9 +72,9 @@ public class TraceabilitySwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE: {
-				CPS2DeplyomentTrace cps2DeplyomentTrace = (CPS2DeplyomentTrace)theEObject;
-				T result = caseCPS2DeplyomentTrace(cps2DeplyomentTrace);
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE: {
+				CPS2DeploymentTrace cps2DeploymentTrace = (CPS2DeploymentTrace)theEObject;
+				T result = caseCPS2DeploymentTrace(cps2DeploymentTrace);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -98,17 +98,17 @@ public class TraceabilitySwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>CPS2 Deplyoment Trace</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>CPS2 Deployment Trace</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>CPS2 Deplyoment Trace</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>CPS2 Deployment Trace</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCPS2DeplyomentTrace(CPS2DeplyomentTrace object) {
+	public T caseCPS2DeploymentTrace(CPS2DeploymentTrace object) {
 		return null;
 	}
 

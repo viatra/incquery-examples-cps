@@ -57,7 +57,7 @@ public class TraceabilityFactoryImpl extends EFactoryImpl implements Traceabilit
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case TraceabilityPackage.CPS_TO_DEPLOYMENT: return createCPSToDeployment();
-			case TraceabilityPackage.CPS2_DEPLYOMENT_TRACE: return createCPS2DeplyomentTrace();
+			case TraceabilityPackage.CPS2_DEPLOYMENT_TRACE: return createCPS2DeploymentTrace();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -78,9 +78,9 @@ public class TraceabilityFactoryImpl extends EFactoryImpl implements Traceabilit
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public CPS2DeplyomentTrace createCPS2DeplyomentTrace() {
-		CPS2DeplyomentTraceImpl cps2DeplyomentTrace = new CPS2DeplyomentTraceImpl();
-		return cps2DeplyomentTrace;
+	public CPS2DeploymentTrace createCPS2DeploymentTrace() {
+		CPS2DeploymentTraceImpl cps2DeploymentTrace = new CPS2DeploymentTraceImpl();
+		return cps2DeploymentTrace;
 	}
 
 	/**

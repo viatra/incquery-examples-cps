@@ -22,7 +22,7 @@ import org.eclipse.viatra.examples.cps.cyberPhysicalSystem.CyberPhysicalSystem;
 
 import org.eclipse.viatra.examples.cps.deployment.Deployment;
 
-import org.eclipse.viatra.examples.cps.traceability.CPS2DeplyomentTrace;
+import org.eclipse.viatra.examples.cps.traceability.CPS2DeploymentTrace;
 import org.eclipse.viatra.examples.cps.traceability.CPSToDeployment;
 import org.eclipse.viatra.examples.cps.traceability.TraceabilityPackage;
 
@@ -70,7 +70,7 @@ public class CPSToDeploymentImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<CPS2DeplyomentTrace> traces;
+	protected EList<CPS2DeploymentTrace> traces;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -172,9 +172,9 @@ public class CPSToDeploymentImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<CPS2DeplyomentTrace> getTraces() {
+	public EList<CPS2DeploymentTrace> getTraces() {
 		if (traces == null) {
-			traces = new EObjectContainmentEList<CPS2DeplyomentTrace>(CPS2DeplyomentTrace.class, this, TraceabilityPackage.CPS_TO_DEPLOYMENT__TRACES);
+			traces = new EObjectContainmentEList<CPS2DeploymentTrace>(CPS2DeploymentTrace.class, this, TraceabilityPackage.CPS_TO_DEPLOYMENT__TRACES);
 		}
 		return traces;
 	}
@@ -230,7 +230,7 @@ public class CPSToDeploymentImpl extends MinimalEObjectImpl.Container implements
 				return;
 			case TraceabilityPackage.CPS_TO_DEPLOYMENT__TRACES:
 				getTraces().clear();
-				getTraces().addAll((Collection<? extends CPS2DeplyomentTrace>)newValue);
+				getTraces().addAll((Collection<? extends CPS2DeploymentTrace>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
