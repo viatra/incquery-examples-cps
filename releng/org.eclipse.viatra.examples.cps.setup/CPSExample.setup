@@ -49,7 +49,8 @@
     <requirement
         name="org.eclipse.viatra.query.testing.sdk.feature.feature.group"/>
     <requirement
-        name="org.eclipse.viatra.addon.viewers.tooling.feature.feature.group"/>
+        name="org.eclipse.viatra.addon.viewers.tooling.feature.feature.group"
+        versionRange="[0.13.0,0.14.0)"/>
     <requirement
         name="org.eclipse.xtext.sdk.feature.group"
         versionRange="[2.9.0,2.10.0)"/>
@@ -72,7 +73,7 @@
     <repository
         url="http://download.eclipse.org/viatra/dependency"/>
     <repository
-        url="https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/"/>
+        url="http://download.eclipse.org/viatra/updates/integration"/>
   </setupTask>
   <setupTask
       xsi:type="setup.targlets:TargletTask">
