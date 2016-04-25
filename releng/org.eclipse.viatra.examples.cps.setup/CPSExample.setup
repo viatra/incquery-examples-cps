@@ -130,7 +130,7 @@
       <requirement
           name="org.eclipse.viatra.query.tooling.ui.visualization.feature.feature.group"/>
       <requirement
-          name="org.eclipse.viatra.addon.viewers.runtime.zest.feature.feature.group"
+          name="org.eclipse.viatra.addon.viewers.tooling.feature.feature.group"
           versionRange="[0.13.0,0.14.0)"/>
       <repositoryList
           name="Dependencies">
