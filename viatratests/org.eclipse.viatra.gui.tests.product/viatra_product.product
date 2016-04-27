@@ -3,6 +3,7 @@
 
 <product name="VIATRA Product" uid="org.eclipse.viatra.gui.tests.rcp.product" id="org.eclipse.platform.ide" application="org.eclipse.ui.ide.workbench" version="0.0.1" useFeatures="false" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
@@ -13,6 +14,7 @@
 
    <windowImages/>
 
+
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -20,8 +22,13 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
+
+   <license>
+        <url>http://www.eclipse.org/legal/epl-v10.html</url>
+   </license>
 
    <plugins>
       <plugin id="com.google.guava"/>
