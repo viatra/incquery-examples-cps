@@ -3,7 +3,7 @@ package org.eclipse.viatra.examples.cps.model.validation
 import "http://org.eclipse.viatra/model/cps"
 
 @Constraint(
-	location = app,
+	key = {app},
 	message = "$app.identifier$ is not allocated but it is running",
 	severity = "error"
 )
@@ -17,7 +17,7 @@ private pattern allocatedApplication(app : ApplicationInstance) {
 }
 
 @Constraint(
-	location = host,
+	key = {host},
 	message = "The available CPU ($host.availableCpu$) of $host.identifier$ is greater than the total ($host.totalCpu$)",
 	severity = "error"
 )
@@ -29,7 +29,7 @@ pattern availableGreaterThanTotalCpu(host : HostInstance) {
 }
 
 @Constraint(
-	location = host,
+	key = {host},
 	message = "The available HDD ($host.availableHdd$) of $host.identifier$ is greater than the total ($host.totalHdd$)",
 	severity = "error"
 )
@@ -41,7 +41,7 @@ pattern availableGreaterThanTotalHdd(host : HostInstance) {
 }
 
 @Constraint(
-	location = host,
+	key = {host},
 	message = "The available RAM ($host.availableRam$) of $host.identifier$ is greater than the total ($host.totalRam$)",
 	severity = "error"
 )
@@ -53,7 +53,7 @@ pattern availableGreaterThanTotalRam(host : HostInstance) {
 }
 
 @Constraint(
-	location = host,
+	key = {host},
 	message = "The IP address $host.nodeIp$ of $host.identifier$ is not unique",
 	severity = "error"
 )
@@ -68,7 +68,7 @@ private pattern nodeIpOfHost(host, ip){
 }
 
 @Constraint(
-	location = identifiable,
+	key = {identifiable},
 	message = "The ID of $identifiable.identifier$ is not unique",
 	severity = "error"
 )
@@ -83,7 +83,7 @@ private pattern identifiableId(identifiable, id) {
 }
 
 @Constraint(
-	location = statemachine,
+	key = {statemachine},
 	message = "The initial state $state.identifier$ of $statemachine.identifier$ is not included in its states",
 	severity = "error"
 )
@@ -97,7 +97,7 @@ private pattern statemachineState(statemachine, state) {
 }
 
 @Constraint(
-	location = transition,
+	key = {transition},
 	message = "No target state set for $transition.identifier$",
 	severity = "error"
 )
@@ -112,7 +112,7 @@ private pattern stateTransition(source, transition, target) {
 }
 
 @Constraint(
-	location = transition,
+	key = {transition},
 	message = "The target state $target.identifier$ of $transition.identifier$ is not in the same state machine",
 	severity = "error"
 )
@@ -123,7 +123,7 @@ pattern targetStateNotContainedBySameStateMachine(transition, target) {
 }
 
 @Constraint(
-	location = state,
+	key = {state},
 	message = "Multiple outgoing transitions of $state.identifier$ define the same action ($action$)",
 	severity = "error"
 )
@@ -140,7 +140,7 @@ private pattern actionOfTransition(transition, action) {
 }
 
 @Constraint(
-	location = sourceHostInstance,
+	key = {sourceHostInstance},
 	message = "Multiple instances of $app.identifier$ are reachable from $sourceHostInstance.identifier$",
 	severity = "error"
 )
