@@ -3,9 +3,9 @@ package org.eclipse.viatra.examples.cps.performance.tests
 import com.google.common.collect.ImmutableSet
 import com.google.common.collect.Sets
 import org.eclipse.viatra.examples.cps.performance.tests.config.GeneratorType
-import org.eclipse.viatra.examples.cps.performance.tests.config.TransformationType
 import org.eclipse.viatra.examples.cps.tests.PropertiesUtil
 import org.junit.runners.Parameterized.Parameters
+import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.TransformationType
 
 abstract class PropertiesBasedTest extends CPSPerformanceTest {
 	

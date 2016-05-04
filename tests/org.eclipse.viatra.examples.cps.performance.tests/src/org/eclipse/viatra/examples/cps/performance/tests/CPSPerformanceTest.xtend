@@ -7,16 +7,16 @@ import java.util.Random
 import org.apache.log4j.Logger
 import org.eclipse.viatra.examples.cps.performance.tests.config.CPSDataToken
 import org.eclipse.viatra.examples.cps.performance.tests.config.GeneratorType
-import org.eclipse.viatra.examples.cps.performance.tests.config.TransformationType
 import org.eclipse.viatra.examples.cps.tests.CPSTestBase
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.CPSTransformationWrapper
+import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.TransformationType
 import org.junit.After
 import org.junit.AfterClass
+import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.junit.Before
 
 @RunWith(Parameterized)
 abstract class CPSPerformanceTest extends CPSTestBase {

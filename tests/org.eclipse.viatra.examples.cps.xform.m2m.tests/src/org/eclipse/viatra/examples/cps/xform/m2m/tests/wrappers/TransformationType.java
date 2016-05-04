@@ -1,4 +1,4 @@
-package org.eclipse.viatra.examples.cps.performance.tests.config;
+package org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers;
 
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.BatchIncQuery;
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.BatchOptimized;

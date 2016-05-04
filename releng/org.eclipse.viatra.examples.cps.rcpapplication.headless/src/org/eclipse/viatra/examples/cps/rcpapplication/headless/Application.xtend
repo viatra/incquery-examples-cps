@@ -9,7 +9,7 @@ import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.viatra.examples.cps.performance.tests.ToolchainPerformanceStatisticsBasedTest
 import org.eclipse.viatra.examples.cps.performance.tests.config.GeneratorType
-import org.eclipse.viatra.examples.cps.performance.tests.config.TransformationType
+import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.TransformationType
 
 /** 
  * This class controls all aspects of the application's execution
