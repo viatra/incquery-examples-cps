@@ -16,3 +16,5 @@ MANIFEST.MF_gen
 hs_err_pid*
 
 diagrams
+
+cps2dep.properties
