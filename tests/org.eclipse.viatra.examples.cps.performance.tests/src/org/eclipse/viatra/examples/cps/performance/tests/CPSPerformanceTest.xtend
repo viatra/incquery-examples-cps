@@ -17,6 +17,8 @@ import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.junit.Rule
+import org.junit.rules.Timeout
 
 @RunWith(Parameterized)
 abstract class CPSPerformanceTest extends CPSTestBase {
@@ -78,8 +80,8 @@ abstract class CPSPerformanceTest extends CPSTestBase {
 			Logger.getLogger("cps.performance.tests.CPSPerformanceTest").warn("Sleep after System GC interrupted")
 		}
 	}
-
-	@Test(timeout=600000)
+	
+	@Test
 	def void completeToolchainIntegrationTest() {
 		val jsonResultFolder="./results/json/"
 		completeToolchainIntegrationTest(jsonResultFolder)
