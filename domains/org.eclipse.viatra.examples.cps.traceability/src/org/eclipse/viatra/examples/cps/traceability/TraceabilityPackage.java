@@ -1,4 +1,12 @@
 /**
+ * Copyright (c) 2014-2016 IncQuery Labs Ltd.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Akos Horvath, Abel Hegedus, Tamas Borbas, Zoltan Ujhelyi - initial API and implementation
  */
 package org.eclipse.viatra.examples.cps.traceability;
 
@@ -155,6 +163,7 @@ public interface TraceabilityPackage extends EPackage {
 	 * @ordered
 	 */
 	int CPS2_DEPLOYMENT_TRACE_OPERATION_COUNT = 0;
+
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.viatra.examples.cps.traceability.CPSToDeployment <em>CPS To Deployment</em>}'.
