@@ -25,7 +25,7 @@ import org.eclipse.viatra.examples.cps.generator.utils.CPSModelBuilderUtil
 import org.eclipse.viatra.examples.cps.generator.utils.StatsUtil
 import org.eclipse.viatra.examples.cps.performance.tests.config.cases.StatisticBasedCase
 import org.eclipse.viatra.examples.cps.planexecutor.PlanExecutor
-import org.eclipse.viatra.examples.cps.tests.CPSTestBase
+import org.eclipse.viatra.examples.cps.tests.util.CPSTestBase
 import org.eclipse.viatra.examples.cps.xform.m2m.incr.viatra.patterns.CpsXformM2M
 import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
 import org.eclipse.viatra.query.runtime.api.GenericQueryGroup

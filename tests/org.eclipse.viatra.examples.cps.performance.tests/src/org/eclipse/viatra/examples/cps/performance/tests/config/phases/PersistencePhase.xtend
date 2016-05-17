@@ -18,7 +18,7 @@ import eu.mondo.sam.core.phases.AtomicPhase
 import eu.mondo.sam.core.phases.OptionalPhase
 import eu.mondo.sam.core.results.PhaseResult
 import org.eclipse.viatra.examples.cps.performance.tests.config.CPSDataToken
-import org.eclipse.viatra.examples.cps.tests.PropertiesUtil
+import org.eclipse.viatra.examples.cps.tests.util.PropertiesUtil
 
 class PersistencePhase extends OptionalPhase{
 	
