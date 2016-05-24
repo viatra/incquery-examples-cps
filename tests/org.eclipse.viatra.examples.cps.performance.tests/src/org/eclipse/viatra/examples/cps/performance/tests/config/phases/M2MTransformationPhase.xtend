@@ -25,7 +25,7 @@ class M2MTransformationPhase extends AtomicPhase{
 	}
 	
 	override execute(DataToken token, PhaseResult phaseResult) {
-		val cpsToken =token as CPSDataToken
+		val cpsToken = token as CPSDataToken
 		val timer = new TimeMetric("Time")
 		val memory = new MemoryMetric("Memory")
 		

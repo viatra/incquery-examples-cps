@@ -18,14 +18,12 @@ import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.CPSTransformatio
 import org.eclipse.viatra.examples.cps.xform.m2m.tests.wrappers.TransformationType
 import org.eclipse.viatra.examples.cps.xform.m2t.api.ICPSGenerator
 import org.eclipse.viatra.examples.cps.xform.m2t.monitor.DeploymentChangeMonitor
-import org.eclipse.viatra.query.runtime.api.AdvancedViatraQueryEngine
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
 class CPSDataToken implements DataToken{
 	
 	GeneratorType generatorType
-	AdvancedViatraQueryEngine engine
 	TransformationType transformationType
 	String scenarioName
 	CPSToDeployment cps2dep

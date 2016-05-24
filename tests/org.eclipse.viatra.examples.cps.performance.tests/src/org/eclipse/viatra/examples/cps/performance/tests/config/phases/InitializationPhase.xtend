@@ -30,7 +30,6 @@ class InitializationPhase extends AtomicPhase{
 		val transformInitTimer = new TimeMetric("Time")
 		
 		transformInitTimer.startMeasure
-		cpsToken.engine = AdvancedViatraQueryEngine.createUnmanagedEngine(new EMFScope(cpsToken.cps2dep.eResource.resourceSet))
 		cpsToken.xform.initializeTransformation(cpsToken.cps2dep)
 		transformInitTimer.stopMeasure
 		
